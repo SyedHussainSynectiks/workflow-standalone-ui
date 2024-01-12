@@ -28,7 +28,7 @@ const Resources = () => {
     }, []);
     return (
         <>
-            <div style={{ background: '#FFF', padding: '25px' }}>
+            <div style={{ background: '#FFF', padding: '20px' }}>
                 <Row gutter={16}>
                     <div className="flex flex-row justify-between items-center w-full">
                         <Title level={2}>Project Resources Lists</Title>
@@ -41,7 +41,7 @@ const Resources = () => {
                 </Row>
                 <Row gutter={16} className='gap-6 mt-6'>
 
-                    {/* {data.map((item, index) => (
+                    {data.map((item, index) => (
                         <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
                             <Card className='w-full flex justify-center'
                                 bordered={false}
@@ -114,7 +114,7 @@ const Resources = () => {
 
                             </Card>
                         </Col>
-                    ))} */}
+                    ))}
 
                 </Row>
             </div>,
