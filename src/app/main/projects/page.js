@@ -80,7 +80,9 @@ const ProjectLayout = () => {
         <>
             <div style={{ margin: '18px 16px', padding: '0px 10px', minHeight: 280 }}>
                 <h1 className='ml-2 uppercase text-3xl'>workflow Management</h1>
-                <div className='bg-white flex flex-row justify-between items-center py-2 px-5'>
+               
+               {/* Total Projects Card */}
+                <div className='bg-white flex flex-row justify-between items-center py-2 px-5  '>
                     <Title level={3}>All Projects</Title>
                     {/* <div><Button> All Project</Button></div> */}
                     <Dropdown menu={menuProps}>
@@ -92,6 +94,8 @@ const ProjectLayout = () => {
                         </Button>
                     </Dropdown>
                 </div>
+
+                {/* Complete Projects, In Progress Projects, & UnAssign Projects */}
                 <div className='my-5'>
                     <Row gutter={16}>
                         {data.map((item, index) => (

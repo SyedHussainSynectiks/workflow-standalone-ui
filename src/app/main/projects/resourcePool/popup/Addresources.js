@@ -1,6 +1,11 @@
+// useState
 
-const Projectmanager = () => {
+export const Projectmanager = () => {
+
+  // get api functionality 
+
     return (
+
       <div className='flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]'>
         <div className='flex items-center justify-between'>
           <h1 className='text-slate-700 text-xl non-italic font-semibold leading-none'>List Of Project Managers</h1>
@@ -105,6 +110,5 @@ const Projectmanager = () => {
     )
   }
   
-  export default Projectmanager
   
   
