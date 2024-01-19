@@ -9,10 +9,13 @@ import { baseUrl } from "@/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import useProject, {project, setProject} from '@/HOC/Project/Project'
+import useProject, { project, setProject } from "@/HOC/Project/Project";
+
+import { DatePicker } from "antd";
+const { RangePicker } = DatePicker;
 
 export default function ProjectForm() {
-    const router = useRouter();
+  const router = useRouter();
 
   const [project, setProject] = useProject({
     projectName: "",
@@ -25,7 +28,7 @@ export default function ProjectForm() {
   });
 
   console.log(project);
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -82,12 +85,12 @@ export default function ProjectForm() {
         <div className="text-black font-sans text-xl font-semibold not-italic leading-7 w-40  flex items-center  gap-1 h-10">
           Add New Project
         </div>
-        <div className="flex flex-row items-center justify-center bg-white border rounded-sm shadow-sm border-slate-200   w-28 h-8 px-1 py-4 flex-shrink-0 text-black font-sans  text-sm font-normal leading-snug gap-2">
+        {/* <div className="flex flex-row items-center justify-center bg-white border rounded-sm shadow-sm border-slate-200   w-28 h-8 px-1 py-4 flex-shrink-0 text-black font-sans  text-sm font-normal leading-snug gap-2">
           All Project{" "}
           <span className="w-2 h-3">
             <img src="/Images/downarrow.svg" />{" "}
           </span>{" "}
-        </div>
+        </div> */}
       </section>
       {/* Shows a Details of Project */}
       <section className="flex flex-col items-center flex-shrink-0 justify-between w-auto py-1 bg-white ">
@@ -185,23 +188,51 @@ export default function ProjectForm() {
             >
               Project Duration :
             </label>
+            {/* <RangePicker
+            id="projectDuration"
+              className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
+              onChange={(values) => {
+                endDate( values.map(item=> {
+                  console.log(item)
+                    return moment(item).format("YYYY-DD-MM");
+                  }));
+              }}
+            /> */}
             <div>
-              <input
-                type="date"
-                name="startDate"
-                id="startDate" // Unique ID for each input
+              <DatePicker
+                id="projectStartDate"
+                placeholder="Start Date"
+                
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
-                value={project.startDate}
-                onChange={handleChange}
+                
+                onChange={(values) => {
+                  endDate(
+                    values.map((item) => {
+                      console.log(item);
+                      return moment(item).format("YYYY-DD-MM");
+                    })
+                  );
+                }}
+                // value={project.startDate}
+
+
+               
               />
               <span>-</span>
-              <input
-                type="date"
-                name="endDate"
-                id="endDate" // Unique ID for each input
+
+              <DatePicker
+                id="projectEndDate"
+                placeholder="End Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
-                value={project.endDate}
-                onChange={handleChange}
+                onChange={(values) => {
+                  endDate(
+                    values.map((item) => {
+                      console.log(item);
+                      return moment(item).format("YYYY-DD-MM");
+                    })
+                  );
+                }}
+                // value={project.endDate}
               />
             </div>
           </div>

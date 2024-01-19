@@ -2,18 +2,19 @@
 import React from "react";
 import { useState , useEffect } from "react";
 
-const Projectmanager = () => {
+const UiDesignResourcePool = () => {
 
-  const [projectManager, setprojectManager] = useState([]);
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
-
+    // /get_resource_by_role
+    
+    const [uiDesigner, setUiDesigners] = useState([]);
+    const [selectedUserIds, setSelectedUserIds] = useState([]);
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch("https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Project Manager");
+        const response = await fetch("https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Designer");
         const data = await response.json();
-        setprojectManager(data);
+        setUiDesigners(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -31,7 +32,6 @@ const Projectmanager = () => {
     console.log("Selected IDs:", userId);
   };
 
- 
   return (
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
       <div className="flex items-center justify-between">
@@ -63,35 +63,34 @@ const Projectmanager = () => {
             </div>
           </div>
           <div>
-            {projectManager.map((Manager, index) => (
+            {uiDesigner.map((desigers, index) => (
               <div key={index} className="flex items-center justify-start py-6 pr-20 pl-4 gap-40">
                 <div className="flex items-center gap-6 pl-3">
                   <div>
                     <input type="checkbox" 
-                    checked={selectedUserIds.includes(Manager.resource_id)}
-                    onChange={() => handleCheckboxChange(Manager.resource_id)}
-                  />
+                    checked={selectedUserIds.includes(desigers.resource_id)}
+                    onChange={() => handleCheckboxChange(desigers.resource_id)}/>
                   </div>
                   <div className="flex items-center gap-3">
                     <img
                       className="rounded-full w-16 h-16"
-                      src={Manager.image_url}></img>
+                      src={desigers.image_url}></img>
                     <div>
                       <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.resource_name}
+                        {desigers.resource_name}
                       </h1>
                       <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                        {Manager.email}
+                        {desigers.email}
                       </h3>
                     </div>
                   </div>
                 </div>
                 <div className="flex justify-between w-[52%] ">
                   <div className="text-sm non-italic font-normal leading-none text-blue-500 align-">
-                    {Manager.lastActive}
+                    {desigers.lastActive}
                   </div>
                   <div className="text-neutral-400 font-segoe-ui text-base font-normal mr-1">
-                  Product Manager
+                    UI Designer
                   </div>
                 </div>
               </div>
@@ -104,6 +103,6 @@ const Projectmanager = () => {
   );
 };
 
-  export default Projectmanager
-  
-  
+export default UiDesignResourcePool;
+
+
