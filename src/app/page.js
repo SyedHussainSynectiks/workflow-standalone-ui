@@ -10,12 +10,12 @@ import ProjectForm from "../app/main/projects/addNewProject/page";
 import App from "@/Components/Projects/calendar";
 import Page from "./main/projects/marketingUseCase/page";
 import Projectmanager from "./main/projects/resourcePool/popup/Addresources";
-import UiDeveloperResourcePool from "./main/projects/resourcePool/popup/uiDeveloperResourcePool";
-import CiCdResourcePool from "./main/projects/resourcePool/popup/Ci-CdResourcePool";
-import TesterResourcePool from "./main/projects/resourcePool/popup/TesterResourcePool";
+import UiDeveloperResourcePool from "./main/projects/resourcePool/popup/Addresources";
+import CiCdResourcePool from "./main/projects/resourcePool/popup/Addresources";
+import TesterResourcePool from "./main/projects/resourcePool/popup/Addresources";
 import AssineTo from "@/Components/useCaseAssine/assineTo";
 
-import UiResourcePool from "./main/projects/resourcePool/popup/uiDesignResourcePool";
+import UiResourcePool from "./main/projects/resourcePool/popup/Addresources";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-12">
@@ -24,10 +24,11 @@ export default function Home() {
       {/* <ProjectResours /> */}
       {/* <TabsComponent/> */}
       <UiResourcePool/>
-      <Projectmanager/>
+      
+      {/* <Projectmanager/>
       <UiDeveloperResourcePool/>
       <CiCdResourcePool/>
-      <TesterResourcePool/>
+      <TesterResourcePool/> */}
       {/* <App /> */}
 {/* <ProjectForm/> */}
       {/* <AssineTo /> */}

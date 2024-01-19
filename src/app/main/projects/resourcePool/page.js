@@ -3,13 +3,14 @@
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { Button, Modal } from "antd";
 import { useState } from "react";
-import Projectmanager from "./popup/Addresources";
-import ApiDeveloper from "./popup/ApiDeveloper";
-import CiCdResourcePool from "./popup/Ci-CdResourcePool";
-import TesterResourcePool from "./popup/TesterResourcePool";
-import UiDesignResourcePool from "./popup/uiDesignResourcePool";
-import UiDeveloperResourcePool from "./popup/uiDeveloperResourcePool";
-import UxResearcher from "./popup/uxResearcher";
+import {Projectmanager} from "./popup/Addresources";
+import {ApiDeveloper} from "./popup/Addresources";
+import {CiCdResourcePool} from "./popup/Addresources";
+import {TesterResourcePool} from "./popup/Addresources";
+import {UiDesignResourcePool} from "./popup/Addresources";
+import {UiDeveloperResourcePool} from "./popup/Addresources";
+import {UxResearcher} from "./popup/Addresources";
+
 
 import Link from "next/link";
 
@@ -30,6 +31,7 @@ export default function Home() {
   };
 
   // Function to close all modals
+  
   const handleCloseModals = () => {
     setIsProjectManagerModalOpen(false);
     setIsUiDesignerModalOpen(false);
@@ -38,45 +40,33 @@ export default function Home() {
     setIsTesterModalOpen(false);
     setIsUxResearcherModalOpen(false);
     setIsCiCdModalOpen(false);
+
+    
   };
+  // function getDataFromModal (data){
+  //   console.log(data)
+  // }
   return (
     <>
       <div className="main flex flex-col bg-white w-full rounded-lg  ">
-        <h2 className="ml-4 mt-5 text-black font-segoe-ui text-2xl font-semibold leading-24">
+      <h2 className="ml-4 mt-5 text-black font-segoe-ui text-2xl font-semibold leading-24">
           Resource Pool
         </h2>
 
         <div className="flex mt-8">
-          <div className="flex flex-col items-start ml-4 gap-14 justify-center">
-            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
+          
+          
+          <div className="div flex flex-col gap-4  justify-center ml-8">
+          
+            <div className=" flex flex-row items-center">
+            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32 ">
               Project Manager
             </h3>
-            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
-              UI Designer
-            </h3>
-            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
-              UI Developer
-            </h3>
-            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
-              API Developer
-            </h3>
-            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
-              Tester
-            </h3>
-            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
-              UX Researcher
-            </h3>
-            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-10">
-              CI/CD
-            </h3>
-          </div>
-          <div className="div flex flex-col gap-4">
-            <div className=" flex flex-row">
               <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
                 <a
                   href="#"
                   className="flex justify-between items-center"
-                  onClick={() => openModal(setIsProjectManagerModalOpen)}
+                  // onClick={() => openModal(setIsProjectManagerModalOpen)}
                 >
                   <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
                     Add Project Manager
@@ -88,14 +78,18 @@ export default function Home() {
                   onCancel={handleCloseModals}
                   width={1000}
                 >
-                  <Projectmanager />
+                  <Projectmanager  onSubmit={handleCloseModals}/>
                 </Modal>
               </div>
               <div className=" text-gray-300 rounded-md bg-neutral-1 shadow-md px-6 py-5">
                 <span>00</span>
               </div>
+          
             </div>
-            <div className=" flex flex-row">
+            <div className=" flex flex-row items-center">
+            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+              UI Designer
+            </h3>
               <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
                 <a
                   href="#"
@@ -120,7 +114,10 @@ export default function Home() {
                 <span>00</span>
               </div>
             </div>
-            <div className=" flex flex-row">
+            <div className=" flex flex-row items-center">
+            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+              UI Developer
+            </h3>
               <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
                 <a
                   href="#"
@@ -144,7 +141,10 @@ export default function Home() {
                 <span>00</span>
               </div>
             </div>
-            <div className=" flex flex-row">
+            <div className=" flex flex-row items-center">
+            <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+              API Developer
+            </h3>
             <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
               <a href="#" className="flex justify-between items-center" onClick={()=>openModal(setIsApiDeveloperModalOpen)}>    
                    <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">Add API Developer</span>
@@ -161,7 +161,10 @@ export default function Home() {
               <span>00</span>
             </div>
           </div>
-          <div className=" flex flex-row">
+          <div className=" flex flex-row items-center">
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+              Tester
+            </h3>
             <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
               <a href="#" className="flex justify-between items-center" onClick={()=>openModal(setIsTesterModalOpen)}>               <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">Add Tester</span>
                 <TbTriangleInvertedFilled className=" text-gray-300 text-sm" /></a>
@@ -177,7 +180,10 @@ export default function Home() {
               <span>00</span>
             </div>
           </div>
-          <div className=" flex flex-row">
+          <div className=" flex flex-row items-center">
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+              UX Researcher
+            </h3>
             <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
               <a href="#" className="flex justify-between items-center" onClick={()=>openModal(setIsUxResearcherModalOpen)}>               <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">Add UX Researcher</span>
                 <TbTriangleInvertedFilled className=" text-gray-300 text-sm" /></a>
@@ -193,7 +199,10 @@ export default function Home() {
               <span>00</span>
             </div>
           </div>
-          <div className=" flex flex-row mb-5">
+          <div className=" flex flex-row mb-5 items-center">
+          <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+              CI/CD
+            </h3>
             <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
               <a href="#" className="flex justify-between items-center" onClick={()=>openModal(setIsCiCdModalOpen)}>              
                <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">Add CI/CD</span>
