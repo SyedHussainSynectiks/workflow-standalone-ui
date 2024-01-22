@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-// import useProject from "@/HOC/Project/Project";
+// import { withFormData } from "@/HOC/Project/Project";
 
-export const Projectmanager = (props) => {
+export const Projectmanager = ()=> {
   const [projectManager, setprojectManager] = useState([]);
   const [selectedUserName, setSelectedUserIds] = useState([]);
 
@@ -16,14 +16,22 @@ export const Projectmanager = (props) => {
     } else {
       setSelectedUserIds([...selectedUserName, userId]);
     }
+    props.handleInputChange(selectedUserName)
+    console.log(handleInputChange)
     
   };
     // Function to handle selection and close the modal
-    const handleSelectionAndClose = (selectedUserName) => {
- 
-        props.onSubmit(selectedUserName);
-    };
-    
+    // const handleSelectionAndClose = () => {
+    //   // const selectedProjectManagers = projectManager.filter((Manager) =>
+    //   // selectedUserName.includes(Manager.resource_name)
+    //   // );
+    //   // selectedProjectManagers(selectedProjectManagers);
+    //   props.onSubmit(selectedUserName);
+    // };
+    // const selectedData = (selectedUserName)=>{
+    //   selectedUserName = (selectedUserName)
+    // }
+    // getDataFromModal(selectedData)
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
@@ -48,7 +56,7 @@ export const Projectmanager = (props) => {
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
           List Of Project Managers
         </h1>
-        <button onClick={handleSelectionAndClose}className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
           Add
         </button>
       </div>
@@ -121,6 +129,7 @@ export const Projectmanager = (props) => {
     </div>
   );
 };
+
 
 export const ApiDeveloper= () => {
 
