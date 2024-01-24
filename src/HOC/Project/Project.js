@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-export const useProject = () => {
+const useProject = () => {
+  // Check if we are in a browser environment
+  const isBrowser = typeof window !== 'undefined';
+
   // Check if there is any data in localStorage for 'project' key
-  const storedProject = JSON.parse(localStorage.getItem('project')) || [];
+  const storedProject = isBrowser ? JSON.parse(localStorage.getItem('project')) || [] : [];
 
   const [project, setProject] = useState(storedProject);
 
@@ -13,7 +16,7 @@ export const useProject = () => {
 
   return [project, setProject];
 };
-
+export default useProject;
 
 
 // export const withFormData = (WrappedComponent) => {

@@ -1,11 +1,21 @@
 import React from "react";
 import user from "../../../public/assets/user1.svg";
+import UsecaseList from "../usecaseList/usecaseList";
 import Image from "next/image";
+
+import Check from "../../../public/assets/Check.svg";
+import search from "../../../public/assets/search2.svg";
 
 const AssineTo = () => {
   return (
     <>
-      <div className="w-[100%]">
+
+
+          <h3 className="text-blue-600 text-2xl font-bold">Development Workflow Overview</h3>
+          <div className="my-6"> <UsecaseList/></div>
+         
+     
+      <div className="w-[100%] flex gap-8">
         <div>
           <h2 className="text-blue-400 text-xl font-normal leading-snu w-[100%]">
             Assigned to :
@@ -47,8 +57,39 @@ const AssineTo = () => {
             </div>
           </div>
         </div>
-        <div>
-          <button className="bg-blue-400 text-white p-3">View Detailed Log</button>
+        <div className="w-[100%]">
+          <button className="bg-blue-400 text-white p-3">
+            View Detailed Log
+          </button>
+          <div className=" py-3 px-6 flex flex-col gap-2 mt-3 w-[100%]">
+            <div className="flex gap-2 items-center">
+              <h2 className="text-black-500 text-m font-bold ">Task Created</h2>
+              <p>Day 1</p>
+            </div>
+            <p>Created by Zakir on 25 Feb 2021 at 03.00PM</p>
+          </div>
+          <div className=" py-3 px-6 flex flex-col gap-2  bg-neutral-100">
+            <div className="flex gap-2 items-center">
+              <h2 className="text-black-500 text-m font-bold ">Task Created</h2>
+              <p>Day 1</p>
+            </div>
+            <p>Created by Zakir on 25 Feb 2021 at 03.00PM</p>
+          </div>
+          <div className=" py-3 px-6 flex flex-col gap-2 ">
+            <div className="flex gap-2 items-center">
+              <h2 className="text-black-500 text-m font-bold ">Task Created</h2>
+              <p>Day 1</p>
+            </div>
+            <p>Created by Zakir on 25 Feb 2021 at 03.00PM</p>
+          </div>
+          <div className=" py-3 px-6 flex flex-col gap-2  bg-neutral-100">
+            <div className="flex gap-2 items-center">
+              <h2 className="text-black-500 text-m font-bold ">Task Created</h2>
+              <p>Day 1</p>
+            </div>
+            <p>Created by Zakir on 25 Feb 2021 at 03.00PM</p>
+          </div>
+
         </div>
       </div>
       <div className="w-[100%] p-6 border shadow-md mb-6 mt-4">

@@ -9,7 +9,7 @@ import { baseUrl } from "@/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import {useProject,project , setProject } from "@/HOC/Project/Project";
+import useProject,{ project , setProject } from "@/HOC/Project/Project";
 
 import { DatePicker } from "antd";
 const { RangePicker } = DatePicker;
@@ -27,6 +27,7 @@ export default function ProjectForm() {
   const handleCloseModals = () => {
     setIsPrjectIconModalOpen(false);
   };
+  const router = useRouter();
   const [project, setProject] = useProject({
     projectName: "",
     projectManager: "",

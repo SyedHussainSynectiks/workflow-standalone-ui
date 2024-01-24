@@ -3,7 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 // import { withFormData } from "@/HOC/Project/Project";
 
-export const Projectmanager = ()=> {
+// import withSelectedData from "@/HOC/Project/selectedDetails";
+export const Projectmanager = (props) => {
   const [projectManager, setprojectManager] = useState([]);
   const [selectedUserName, setSelectedUserIds] = useState([]);
 
@@ -16,23 +17,23 @@ export const Projectmanager = ()=> {
     } else {
       setSelectedUserIds([...selectedUserName, userId]);
     }
-    props.handleInputChange(selectedUserName)
-    console.log(handleInputChange)
-    
+  
   };
-    // Function to handle selection and close the modal
-    // const handleSelectionAndClose = () => {
-    //   // const selectedProjectManagers = projectManager.filter((Manager) =>
-    //   // selectedUserName.includes(Manager.resource_name)
-    //   // );
-    //   // selectedProjectManagers(selectedProjectManagers);
-    //   props.onSubmit(selectedUserName);
-    // };
+   
+    const handleSelectionAndClose = () => {
+      // const selectedProjectManagers = projectManager.filter((Manager) =>
+      // selectedUserName.includes(Manager.resource_name)
+      // );
+      // selectedProjectManagers(selectedProjectManagers);
+      props.onSubmit();
+    };
     // const selectedData = (selectedUserName)=>{
     //   selectedUserName = (selectedUserName)
     // }
     // getDataFromModal(selectedData)
+
   useEffect(() => {
+    
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
@@ -45,10 +46,10 @@ export const Projectmanager = ()=> {
         console.error("Error fetching data:", error);
       }
     };
-
-    fetchData();
+    fetchData(); 
   }, []);
-
+  
+ 
 
   return (
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
@@ -56,7 +57,7 @@ export const Projectmanager = ()=> {
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
           List Of Project Managers
         </h1>
-        <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button onSubmit={handleSelectionAndClose} className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
           Add
         </button>
       </div>
@@ -129,6 +130,8 @@ export const Projectmanager = ()=> {
     </div>
   );
 };
+
+
 
 
 export const ApiDeveloper= () => {
