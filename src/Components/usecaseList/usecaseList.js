@@ -7,17 +7,7 @@ const UsecaseList = () => {
   return (
     <>
       <div className={style.listTable}>
-        <div className="flex justify-between">
-          <h3 className={style.heading}>Development Workflow Overview</h3>
-          <div className="flex gap-x-2">
-            <input type="text" placeholder="Sort By" className="border-2" />
-            <input
-              type="text"
-              placeholder="Search Usecase"
-              className="border-2"
-            />
-          </div>
-        </div>
+       
         {/* <div className={style.headingRow}>
             <div className="flex justify-evenly">
               <div className="w-full border-2 ">
@@ -94,7 +84,7 @@ const UsecaseList = () => {
               <div className={style.tableCell2}>
                 {/* <Image src={Check} alt="" /> */}
               </div>
-              
+
               <div className={style.tableCell}>
                 <h4 className={style.usecaseNo}>Usecse2</h4>
               </div>
