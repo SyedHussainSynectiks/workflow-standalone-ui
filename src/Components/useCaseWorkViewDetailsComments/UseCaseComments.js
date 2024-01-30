@@ -8,6 +8,20 @@ export const UseCase1Comments = () => {
   return (
     <div>
        <div className="w-[100%] border shadow-md mb-6 mt-4">
+        <details>
+          <summary className="text-black-500 text-m font-bold p-2 border bg-neutral-200">Usecase Development
+          </summary>
+          <p>
+            <span>
+            <div className='flex items-center gap-3 py-6 '>
+                <h2>Assign Name :</h2>
+                <Image src={use} className='rounded-full w-10 '/>
+                <p>Angela Moss</p>
+            </div>
+            </span>
+          </p>
+        </details>
+
         <h2 className="text-black-500 text-m font-bold p-2 border bg-neutral-200">
         Usecase Development
         </h2>

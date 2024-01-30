@@ -28,7 +28,7 @@ const { Title, Paragraph, Text } = Typography;
 const getData = async () => {
 
     try {
-        const response = await axios.get('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/project');
+        const response = await axios.get('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/project');
         console.log(response.data);
         return response.data;
     } catch (error) {

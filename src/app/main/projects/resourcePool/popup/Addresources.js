@@ -38,7 +38,7 @@ export const Projectmanager = (props) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Project Manager"
+          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Project Manager"
         );
         const data = await response.json();
         setprojectManager(data);
@@ -144,7 +144,7 @@ export const ApiDeveloper= () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
+          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
         );
         const data = await response.json();
         setApiDeveloper(data);
@@ -252,7 +252,7 @@ export const CiCdResourcePool = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=CI/CD"
+          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=CI/CD"
         );
         const data = await response.json();
         setCiCd(data);
@@ -357,7 +357,7 @@ export const TesterResourcePool = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Tester"
+          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Tester"
         );
         const data = await response.json();
         setTester(data);
@@ -465,7 +465,7 @@ export const UiDesignResourcePool = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Designer"
+          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Designer"
         );
         const data = await response.json();
         setUiDesigners(data);
@@ -573,7 +573,7 @@ export const UiDeveloperResourcePool = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
+          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
         );
         const data = await response.json();
         setuiDeveloper(data);
@@ -682,7 +682,7 @@ export const UxResearcher = ()=> {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
+          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
         );
         const data = await response.json();
         setuxResearcher(data);

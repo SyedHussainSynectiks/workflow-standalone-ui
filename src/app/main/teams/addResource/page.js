@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const handleSubmit = async (values) => {
     try {
-        const response = await axios.post('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/resource', values);
+        const response = await axios.post('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/resource', values);
         console.log(response.data);
     } catch (error) {
         console.error(error);

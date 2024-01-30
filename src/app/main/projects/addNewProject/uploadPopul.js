@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // images
-import uploadImg from "../../../../../public/assets/upload.svg";
+import uploadImg from "../../../../../public/assets/documentUpload.svg";
 import imageIcon from "../../../../../public/assets/imgeUpload.png";
 import xIcon from "../../../../../public/assets/xIcon.svg";
 
@@ -85,6 +85,8 @@ export const UploadCompleted = () => {
     </div>
   );
 };
+
+
 
 // uploadePopup other ui design
 

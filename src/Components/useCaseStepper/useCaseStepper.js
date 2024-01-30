@@ -65,11 +65,7 @@ const Stepper = ({ popoverVisible }) => {
     handleChangeStep();
   }, [currentStep]); // Re-run effect when current step changes
 
-  const popoverStyle = () => ({
-    background: "white",
-    border: "1px solid #399EF7",
-    borderRadius: "5px",
-  });
+  
   return (
     <>
       <div className="flex justify-between h-[5rem] w-[100%]">
