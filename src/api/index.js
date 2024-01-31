@@ -1,1 +1,1 @@
-const baseUrl = 'https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev';
+const baseUrl = 'https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev';

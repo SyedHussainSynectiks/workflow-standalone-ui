@@ -12,15 +12,16 @@ const DashCards = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/org_projects_overview');
+        const result = await axios.get('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/org_projects_overview');
         setData(result.data);
+        console.log(result.data)
       } catch (error) {
         // handle error
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchData();
   }, []);
   return (

@@ -28,7 +28,7 @@ const { Title, Paragraph, Text } = Typography;
 const getData = async () => {
 
     try {
-        const response = await axios.get('https://23t3zw1dvd.execute-api.us-east-1.amazonaws.com/dev/project');
+        const response = await axios.get('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/project');
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -80,19 +80,19 @@ const ProjectLayout = () => {
         <>
             <div style={{ margin: '18px 16px', padding: '0px 10px', minHeight: 280 }}>
                 <h1 className='ml-2 uppercase text-3xl'>workflow Management</h1>
-               
-               {/* Total Projects Card */}
+
+                {/* Total Projects Card */}
                 <div className='bg-white flex flex-row justify-between items-center py-2 px-5  '>
                     <Title level={3}>All Projects</Title>
                     {/* <div><Button> All Project</Button></div> */}
-                    <Dropdown menu={menuProps}>
+                    {/* <Dropdown menu={menuProps}>
                         <Button>
                             <Space>
                                 All Project
                                 <DownOutlined />
                             </Space>
                         </Button>
-                    </Dropdown>
+                    </Dropdown> */}
                 </div>
 
                 {/* Complete Projects, In Progress Projects, & UnAssign Projects */}

@@ -23,7 +23,7 @@ const Dashboard = () => {
             <div className="flex flex-col space-y-6">
                 <div className="bg-white my-6 p-10">
                     <div className="flex flex-col">
-                        <h2 className="text-3xl">Project Overview</h2>  
+                        <h2 className="text-3xl">Project Overview</h2>
                         <Barchart />
                     </div>
                 </div>
@@ -43,7 +43,7 @@ const Dashboard = () => {
                 <ProjectsList />
             </div>
             <div>
-                <Resources />
+                {/* <Resources /> */}
             </div>
         </>
     );

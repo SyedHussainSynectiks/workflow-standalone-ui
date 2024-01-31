@@ -9,7 +9,7 @@ const AddUserPage = () => {
         // Save user data to local storage
         const data = JSON.parse(localStorage.getItem('userData')) || [];
         data.push(formData);
-        localStorage.setItem('userData', JSON.stringify(data));
+        // localStorage.setItem('userData', JSON.stringify(data));
     };
 
     return (
