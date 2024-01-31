@@ -4,12 +4,20 @@ import { Button, Steps, Popover } from "antd";
 
 const { Step } = Steps;
 
-const WorkViewDetails = ({ popoverVisible, onPopoverVisibilityChange }) => {
+const WorkViewDetails = ({ popoverVisible, onPopoverVisibilityChange, stepsNext }) => {
   const [current, setCurrent] = useState(0);
 
+  
   const onChange = (value) => {
     console.log("onChange:", value);
     setCurrent(value);
+  };
+  const onNext = () => {
+    setCurrent((prevCurrent) => prevCurrent + 1);
+  };
+
+  const onPrevious = () => {
+    setCurrent((prevCurrent) => prevCurrent - 1);
   };
 
   const renderStepContent = (index) => (
@@ -52,24 +60,65 @@ const WorkViewDetails = ({ popoverVisible, onPopoverVisibilityChange }) => {
               <Popover
                 content={renderStepContent(index)}
                 placement={index % 2 === 0 ? "top" : "bottom"}
-                className="sticky"
+                className="absolute	"
                 visible={popoverVisible}
                 overlayStyle={popoverStyle(index)}
               >
                 <span className="my-[2rem]">{`Step ${index + 1}`}</span>
               </Popover>
             }
-            status={index === current ? "process" : index < current ? "finish" : "wait"}
-            // style={{ background: customColors[index === current ? "process" : index < current ? "finish" : "wait"] }}
-
+            status={
+              index === current
+                ? "process"
+                : index < current
+                ? "finish"
+                : "wait"
+            }
           >
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ background: customColors[index === current ? "process" : index < current ? "finish" : "wait"], width: "20px", height: "20px", borderRadius: "50%" }}></div>
-              {index < 5 && <div style={{ background: customColors[index < current ? "finish" : "wait"], flex: 1, width: "15rem" }}></div>}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  background:
+                    customColors[
+                      index === current
+                        ? "process"
+                        : index < current
+                        ? "finish"
+                        : "wait"
+                    ],
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                }}
+              ></div>
+              {index < 5 && (
+                <div
+                  style={{
+                    background:
+                      customColors[index < current ? "finish" : "wait"],
+                    flex: 1,
+                    width: "2px",
+                  }}
+                ></div>
+              )}
             </div>
           </Step>
         ))}
       </Steps>
+      <div className="mt-6">
+        <Button type="primary" disabled={current === 0} onClick={onPrevious}>
+          Previous
+        </Button>
+        <Button type="primary" disabled={current === 5} onClick={onNext} className="ml-2">
+          Next
+        </Button>
+      </div>
     </>
   );
 };

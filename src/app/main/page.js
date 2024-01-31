@@ -39,10 +39,10 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="my-5">
-                <ProjectsList />
+                {/* <ProjectsList /> */}
             </div>
             <div>
-                <Resources />
+                {/* <Resources /> */}
             </div>
         </>
     );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // images
-import uploadImg from "../../../../../public/assets/upload.svg";
+import uploadImg from "../../../../../public/assets/documentUpload.svg";
 import imageIcon from "../../../../../public/assets/imgeUpload.png";
 import xIcon from "../../../../../public/assets/xIcon.svg";
 
@@ -86,16 +86,25 @@ export const UploadCompleted = () => {
   );
 };
 
+
+
 // uploadePopup other ui design
 
 import ReactDOM from "react-dom";
-import { Dropzone, FileMosaic, FileInputButton } from "@dropzone-ui/react";
+import { Dropzone, FileMosaic, FileInputButton,FileCard } from "@dropzone-ui/react";
 
-export const UploadPopul2 = () => {
+export function UploadPopul2 (){
   const [files, setFiles] = React.useState([]);
   const updateFiles = (incommingFiles) => {
+     //do something with the files
     setFiles(incommingFiles);
-  };
+     //even your own upload implementation
+   };
+  const removeFile = (id) => {
+    setFiles(files.filter((x) => x.id !== id));
+   };
+  
+  
   return (
     <div className="bg-white p-5 w-96 h-[584px] border flex flex-col items-center gap-12 ">
       <h2 className="text-black text-slate-600 text-xl">Upload Document</h2>
@@ -106,6 +115,7 @@ export const UploadPopul2 = () => {
           <Image src={xIcon} />
         </a>
       </div>
+      {/* <div id="uploadFile"></div> */}
       <Dropzone minHeight="200px"header={false}footer={false}
        onChange={updateFiles} value={files}>
       {files.length === 0 ? (
@@ -120,7 +130,7 @@ export const UploadPopul2 = () => {
       </Dropzone>
 
       <FileInputButton onChange={updateFiles} value={files} 
-      className="w-[120px] px-1 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm w-16 h-8 font-sans text-center text-white text-m font-normal not-italic leading-3 flex-row-reverse"/>
+      className="w-[120px] h-[2rem] px-1 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm w-16  font-sans text-center text-white text-m font-normal not-italic leading-3 flex-row-reverse"/>
 
       {files.map((file) => (
         <FileCard key={file.id} {...file} onDelete={removeFile} info />
@@ -133,4 +143,4 @@ export const UploadPopul2 = () => {
   );
 };
 
-//   ReactDOM.render(<UploadPopul2 />, document.querySelector("#app"));
+  // ReactDOM.render(<UploadPopul2 />, document.querySelector("#uploadFile"));

@@ -42,8 +42,21 @@ const Page = () => {
   
         <div className='flex flex-col w-[100%] items-start gap-2.5 shrink-0'>
           <form>
-            <div className='flex gap-3 ml-10 mt-5 '>
-              <div className='flex flex-col text-end justify-between mb-11 gap-2'>
+            <div className='flex flex-col items-end gap-3 ml-10 mt-5 '>
+              <div className='flex  text-center items-center  mb-11 gap-2'>
+              <label>UserCase Name:</label>
+              <input type='text' className='w-[35.5rem] h-[3rem] p-1 border border-white shadow-md' placeholder='Admin name'></input>
+              </div>
+              <div className='flex  text-center items-center  mb-11 gap-2'>
+              <label>Assign to:</label>
+              <input type='text' className='w-[35.5rem] h-[3rem] p-1 border border-white shadow-md' placeholder='Project name'></input>
+              </div>
+              <div className='flex  text-center items-top  mb-11 gap-2'>
+              <label>UserCase description:</label>
+              <textarea className='w-[35.5rem] h-[4.7500rem] p-1 border border-white shadow-md' placeholder='Description.....'></textarea>
+                </div>
+
+              {/* <div className='flex flex-col text-end justify-between mb-11 gap-2'>
                 <label>UserCase Name:</label>
                 <label>Assign to:</label>
                 <label>UserCase description:</label>
@@ -52,7 +65,7 @@ const Page = () => {
                 <input type='text' className='w-[35.5rem] p-1 border border-white shadow-md' placeholder='Admin name'></input>
                 <input type='text' className='w-[35.5rem] p-1 border border-white shadow-md' placeholder='Project name'></input>
                 <textarea className='w-[35.5rem] h-[4.7500rem] p-1 border border-white shadow-md' placeholder='Description.....'></textarea>
-              </div>
+              </div> */}
             </div>
           </form>
         </div>
@@ -68,7 +81,7 @@ const Page = () => {
           <div className='flex w-[100%] flex-col items-center shrink-0  gap-8 bg-white mb-4'>
             <div className='w-[100%] px-6 py-4  flex items-center  justify-between border-y border-b-neutral-300 border border-t-0 border-x-0'>
               <div className='text-blue-500 text-xl non-italic font-medium leading-normal '>1. Idea</div>
-              <div className='text-blue-500'>View More</div>
+              <button><div className='text-blue-500'>View More</div></button>
             </div>
   
             <div className='flex px-6 items-start self-stretch w-[100%] gap-4 border-y border-t-neutral-300 border-b-0'>
@@ -145,7 +158,7 @@ const Page = () => {
           <div className='flex w-[100%] flex-col items-center shrink-0  gap-8 bg-white mb-4'>
             <div className='w-[100%] px-6 py-4  flex items-center  justify-between border-y border-b-neutral-300 border border-t-0 border-x-0'>
               <div className='text-blue-500 text-xl non-italic font-medium leading-normal '>2. Plan & Assign</div>
-              <div className='text-blue-500'>View More</div>
+              <button><div className='text-blue-500'>View More</div></button>
             </div>
   
             <div className='flex px-6 items-start self-stretch w-[100%] gap-4 border-y border-t-neutral-300 border-b-0'>
@@ -226,7 +239,7 @@ const Page = () => {
           <div className='flex w-[100%] flex-col items-center shrink-0  gap-8 bg-white mb-4'>
             <div className='w-[100%] px-6 py-4  flex items-center  justify-between border-y border-b-neutral-300 border border-t-0 border-x-0'>
               <div className='text-blue-500 text-xl non-italic font-medium leading-normal '>3.Create</div>
-              <div className='text-blue-500'>View More</div>
+              <button><div className='text-blue-500'>View More</div></button>
             </div>
   
             <div className='flex px-6 items-start self-stretch w-[100%] gap-4 border-y border-t-neutral-300 border-b-0'>
@@ -306,7 +319,7 @@ const Page = () => {
           <div className='flex w-[100%] flex-col items-center shrink-0  gap-8 bg-white mb-4'>
             <div className='w-[100%] px-6 py-4  flex items-center  justify-between border-y border-b-neutral-300 border border-t-0 border-x-0'>
               <div className='text-blue-500 text-xl non-italic font-medium leading-normal '>4. Review & Approve</div>
-              <div className='text-blue-500'>View More</div>
+             <button> <div className='text-blue-500'>View More</div></button>
             </div>
   
             <div className='flex px-6 items-start self-stretch w-[100%] gap-4 border-y border-t-neutral-300 border-b-0'>
@@ -388,7 +401,7 @@ const Page = () => {
           <div className='flex w-[100%] flex-col items-center shrink-0  gap-8 bg-white mb-4'>
             <div className='w-[100%] px-6 py-4  flex items-center  justify-between border-y border-b-neutral-300 border border-t-0 border-x-0'>
               <div className='text-blue-500 text-xl non-italic font-medium leading-normal '>5. Publish & Promote</div>
-              <div className='text-blue-500'>View More</div>
+              <button><div className='text-blue-500'>View More</div></button>
             </div>
   
             <div className='flex px-6 items-start self-stretch w-[100%] gap-4 border-y border-t-neutral-300 border-b-0'>
@@ -470,7 +483,7 @@ const Page = () => {
           <div className='flex w-[100%] flex-col items-center shrink-0  gap-8 bg-white mb-4'>
             <div className='w-[100%] px-6 py-4  flex items-center  justify-between border-y border-b-neutral-300 border border-t-0 border-x-0'>
               <div className='text-blue-500 text-xl non-italic font-medium leading-normal '>6. Measure & Archive</div>
-              <div className='text-blue-500'>View More</div>
+              <button><div className='text-blue-500'>View More</div></button>
             </div>
   
             <div className='flex px-6 items-start self-stretch w-[100%] gap-4 border-y border-t-neutral-300 border-b-0'>
