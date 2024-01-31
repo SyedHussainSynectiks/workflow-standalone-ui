@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <>
       <Header className='flex flex-row items-center justify-between w-full '
-        style={{ padding: 32, position: 'sticky', top: 0, right: 0, zIndex: 1 }}>
+        style={{ padding: 32, position: 'sticky', top: 0, right: 0, zIndex: 10 }}>
 
         <div className='w-11'></div>
         {/* <Button theme="light" className='w-1/3' icon={<SearchOutlined />}>Search</Button> */}
