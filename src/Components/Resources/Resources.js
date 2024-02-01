@@ -9,7 +9,6 @@ const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
 const getData = async () => {
     try {
-        // const response = await axios.get('https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/projects_resource_overview');
         const response = await api.get('/projects_resource_overview');
         console.log(response.data);
         return response.data;
@@ -18,33 +17,28 @@ const getData = async () => {
     }
 };
 
-// const getData = async () => {
-//     try {
-//         const response = await fetch('https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/projects_resource_overview');
-
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
-
-//         const data = await response.json();
-//         console.log(data);
-//         return data;
-//     } catch (error) {
-//         console.error('Error fetching data: ', error);
-//     }
-// };
-
 const Resources = () => {
     const [size, setSize] = useState('large');
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await getData();
             setData(result);
+            setFilteredData(result);
         };
         fetchData();
     }, []);
+    useEffect(() => {
+        // Filter data based on the selected size (All, In Progress, Completed)
+        if (size === 'All Projects') {
+            setFilteredData(data);
+        } else {
+            const filtered = data.filter(item => item.status === size.toLowerCase());
+            setFilteredData(filtered);
+        }
+    }, [size, data]);
     return (
         <>
             <div style={{ background: '#FFF', padding: '25px' }}>
@@ -54,13 +48,13 @@ const Resources = () => {
                         <Radio.Group value={size} onChange={(e) => setSize(e.target.value)}>
                             <Radio.Button value="All Projects">All</Radio.Button>
                             <Radio.Button value="In Progress">Inprogress</Radio.Button>
-                            <Radio.Button value="Completed">Completed</Radio.Button>
+                            <Radio.Button value="Comlpeted">Completed</Radio.Button>
                         </Radio.Group>
                     </div>
                 </Row>
                 <Row gutter={16} className='gap-6 mt-6'>
 
-                    {data.map((item, index) => (
+                    {filteredData.map((item, index) => (
                         <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
                             <Card className='w-full flex justify-center'
                                 bordered={false}

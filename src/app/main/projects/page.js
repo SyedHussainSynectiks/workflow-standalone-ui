@@ -1,16 +1,3 @@
-// import React from 'react'
-// import ProjectLayout from './layout'
-// import allProjects from '@/Components/Projects/allProject'
-// const page = () => {
-//     return (
-//         <>
-//             <allProjects />
-//             <ProjectLayout />
-//         </>
-//     )
-// }
-
-// export default page
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -18,7 +5,7 @@ import {
     PlusSquareFilled,
     DownOutlined,
 } from '@ant-design/icons';
-import { Avatar, Space, Button, Card, Typography, Col, Row, Dropdown, message, } from 'antd';
+import { Avatar, Space, Button, Card, Typography, Col, Row, Dropdown, message, Menu, } from 'antd';
 import axios from 'axios';
 
 
@@ -26,6 +13,7 @@ import { InProgress, Completed, Unassigned } from '@/Components/Badges';
 import api from '@/api';
 import Meta from 'antd/es/card/Meta';
 import Image from 'next/image';
+import slice from '@/Context/slice';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -45,7 +33,7 @@ const ProjectLayout = () => {
 
     const [collapsed, setCollapsed] = useState(false);
     const [data, setData] = useState([]);
-
+    const [selectedStatus, setSelectedStatus] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             const result = await getData();
@@ -58,14 +46,21 @@ const ProjectLayout = () => {
     };
 
     const handleMenuClick = (e) => {
-        message.info('Click on menu item.');
-        console.log('click', e);
+        // message.info('Click on menu item.');
+        // console.log('click', e);
+        setSelectedStatus(e.key === 'all' ? null : e.key);
     };
+    const capitalizeText = (text) => {
+        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    };
+    const dropdownText = selectedStatus ? `${capitalizeText(selectedStatus)}` : 'All Projects';
     const menuProps = {
         // items,
         onClick: handleMenuClick,
     };
-
+    const filteredData = selectedStatus
+        ? data.filter((item) => item.status.toLowerCase() === selectedStatus)
+        : data;
     // Check Status and return badge according to the badge
     const checkStatus = (status) => {
         switch (status.toLowerCase()) {
@@ -88,27 +83,35 @@ const ProjectLayout = () => {
                 {/* Total Projects Card */}
                 <div className='bg-white flex flex-row justify-between items-center py-2 px-5  '>
                     <Title level={3}>All Projects</Title>
-                    {/* <div><Button> All Project</Button></div> */}
-                    {/* <Dropdown menu={menuProps}>
-                        <Button>
+                    <Dropdown overlay={
+                        <Menu onClick={handleMenuClick}>
+                            <Menu.Item key="all">All Projects</Menu.Item>
+                            <Menu.Item key="inprogress">In Progress</Menu.Item>
+                            <Menu.Item key="completed">Completed</Menu.Item>
+                            <Menu.Item key="unassigned">Unassigned</Menu.Item>
+                        </Menu>
+                    }>
+
+                        <a key="all" onClick={(e) => e.preventDefault()}>
                             <Space>
-                                All Project
+                                {dropdownText}
                                 <DownOutlined />
                             </Space>
-                        </Button>
-                    </Dropdown> */}
+                        </a>
+                    </Dropdown>
+
                 </div>
 
                 {/* Complete Projects, In Progress Projects, & UnAssign Projects */}
                 <div className='my-5'>
                     <Row gutter={16}>
-                        {data.map((item, index) => (
+                        {filteredData.map((item, index) => (
                             <Col span={6} className='mb-4'>
                                 <Card headerFontSize={22} bordered={false} >
 
                                     <Meta
-                                        avatar={<Avatar src={item.image_url} size={64} shape="square" />}
-                                        title={item.name} className='text-lg' />
+                                        avatar={<Avatar src={item.image_url} size={32} shape="square" />}
+                                        title={item.name} className='text-lg flex align-middle' />
                                     <div className='w-full h-[2px] bg-gray-100 mt-2 mb-4'></div>
                                     <div className='flex flex-row justify-start items-center p-0'>
                                         <Text className='text-xl'>Total Usecases {item.total_usecases}</Text>
@@ -132,11 +135,11 @@ const ProjectLayout = () => {
                                 </Link>
                             </Card>
                         </Col>
-                </Row>
-            </div>
-            {/* <allProjects /> */}
-            {/* <projectLayout /> */}
-        </div >
+                    </Row>
+                </div>
+                {/* <allProjects /> */}
+                {/* <projectLayout /> */}
+            </div >
         </>
     );
 };
