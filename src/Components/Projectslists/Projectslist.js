@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Typography, Button, Progress, Radio } from 'antd';
 import axios from 'axios';
 const { Title, Paragraph, Text } = Typography;
-
 import { InProgress, Completed, Unassigned } from '@/Components/Badges'
+import api from '@/api';
 
 const getData = async () => {
     try {
-        const response = await axios.get('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/projects_overview?');
+        // const response = await axios.get('https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/projects_overview?');
+        const response = await api.get('/projects_overview');
         console.log(response.data);
         return response.data;
     } catch (error) {

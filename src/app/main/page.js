@@ -43,7 +43,7 @@ const Dashboard = () => {
                 <ProjectsList />
             </div>
             <div>
-                {/* <Resources /> */}
+                <Resources />
             </div>
         </>
     );

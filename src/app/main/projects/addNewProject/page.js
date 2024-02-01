@@ -56,7 +56,7 @@ export default function ProjectForm() {
 
     try {
       const response = await fetch(
-        "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/project",
+        "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/project",
         {
           method: "POST",
           headers: {
@@ -267,8 +267,10 @@ export default function ProjectForm() {
                   id="projectIcon"
                   open={isPrjectIconModalOpen}
                   onCancel={handleCloseModals}
+                  closable={false}
                   onOk={handleCloseModals}
                   width={430}
+                  okButtonProps={{ className:'bg-blue-500' }}
                 >
                   <UploadPopul2 onSubmit={handleCloseModals} />
                 </Modal>

@@ -1,4 +1,5 @@
 "use client";
+import api from "@/api";
 import React from "react";
 import { useState, useEffect } from "react";
 // import { withFormData } from "@/HOC/Project/Project";
@@ -7,8 +8,6 @@ import { useState, useEffect } from "react";
 export const Projectmanager = (props) => {
   const [projectManager, setprojectManager] = useState([]);
   const [selectedUserName, setSelectedUserIds] = useState([]);
-
-
 
   const handleCheckboxChange = (userId) => {
     // Update the selectedUserIds array when a checkbox is checked or unchecked
@@ -37,9 +36,7 @@ export const Projectmanager = (props) => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Project Manager"
-        );
+        const response = await api.get("/get_resource_by_role?role=Project Manager");
         const data = await response.json();
         setprojectManager(data);
       } catch (error) {
@@ -143,8 +140,7 @@ export const ApiDeveloper = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
+        const response = await api.get("/get_resource_by_role?role=UI Developer"
         );
         const data = await response.json();
         setApiDeveloper(data);
@@ -251,8 +247,7 @@ export const CiCdResourcePool = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=CI/CD"
+        const response = await api.get("/get_resource_by_role?role=CI/CD"
         );
         const data = await response.json();
         setCiCd(data);
@@ -356,8 +351,8 @@ export const TesterResourcePool = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Tester"
+        const response = await api.get(
+          "/get_resource_by_role?role=Tester"
         );
         const data = await response.json();
         setTester(data);
@@ -464,8 +459,7 @@ export const UiDesignResourcePool = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Designer"
+        const response = await api.get("/get_resource_by_role?role=UI Designer"
         );
         const data = await response.json();
         setUiDesigners(data);
@@ -572,9 +566,7 @@ export const UiDeveloperResourcePool = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
-        );
+        const response = await api.get("/get_resource_by_role?role=UI Developer");
         const data = await response.json();
         setuiDeveloper(data);
       } catch (error) {
@@ -681,8 +673,8 @@ export const UxResearcher = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
+        const response = await api.get(
+          "/get_resource_by_role?role=UI Developer"
         );
         const data = await response.json();
         setuxResearcher(data);

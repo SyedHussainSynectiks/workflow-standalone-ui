@@ -18,17 +18,21 @@ import {
     PlusSquareFilled,
     DownOutlined,
 } from '@ant-design/icons';
-import { Space, Button, Card, Typography, Col, Row, Dropdown, message, } from 'antd';
+import { Avatar, Space, Button, Card, Typography, Col, Row, Dropdown, message, } from 'antd';
 import axios from 'axios';
 
+
 import { InProgress, Completed, Unassigned } from '@/Components/Badges';
+import api from '@/api';
+import Meta from 'antd/es/card/Meta';
+import Image from 'next/image';
 
 const { Title, Paragraph, Text } = Typography;
 
 const getData = async () => {
 
     try {
-        const response = await axios.get('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/project');
+        const response = await api.get('/project');
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -100,7 +104,12 @@ const ProjectLayout = () => {
                     <Row gutter={16}>
                         {data.map((item, index) => (
                             <Col span={6} className='mb-4'>
-                                <Card title={item.proejct_name} headerFontSize={22} bordered={false} >
+                                <Card headerFontSize={22} bordered={false} >
+
+                                    <Meta
+                                        avatar={<Avatar src={item.image_url} size={64} shape="square" />}
+                                        title={item.name} className='text-lg' />
+                                    <div className='w-full h-[2px] bg-gray-100 mt-2 mb-4'></div>
                                     <div className='flex flex-row justify-start items-center p-0'>
                                         <Text className='text-xl'>Total Usecases {item.total_usecases}</Text>
                                     </div>
@@ -123,11 +132,11 @@ const ProjectLayout = () => {
                                 </Link>
                             </Card>
                         </Col>
-                    </Row>
-                </div>
-                {/* <allProjects /> */}
-                {/* <projectLayout /> */}
+                </Row>
             </div>
+            {/* <allProjects /> */}
+            {/* <projectLayout /> */}
+        </div >
         </>
     );
 };

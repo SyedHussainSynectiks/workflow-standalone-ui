@@ -2,34 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { Avatar, Card, Col, Row, Typography, Tooltip, Button, Divider, Flex, Radio } from 'antd';
 import { AntDesignOutlined, UserOutlined, } from '@ant-design/icons';
 import axios from 'axios';
+import api from '@/api';
 
 
 const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
-// const getData = async () => {
-//     try {
-//         const response = await axios.get('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/projects_resource_overview');
-//         console.log(response.data);
-//         return response.data;
-//     } catch (error) {
-//         console.error('Error fetching data: ', error);
-//     }
-// };
 const getData = async () => {
     try {
-        const response = await fetch('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/projects_resource_overview');
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log(data);
-        return data;
+        // const response = await axios.get('https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/projects_resource_overview');
+        const response = await api.get('/projects_resource_overview');
+        console.log(response.data);
+        return response.data;
     } catch (error) {
         console.error('Error fetching data: ', error);
     }
 };
+
+// const getData = async () => {
+//     try {
+//         const response = await fetch('https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/projects_resource_overview');
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         const data = await response.json();
+//         console.log(data);
+//         return data;
+//     } catch (error) {
+//         console.error('Error fetching data: ', error);
+//     }
+// };
 
 const Resources = () => {
     const [size, setSize] = useState('large');
@@ -57,7 +60,7 @@ const Resources = () => {
                 </Row>
                 <Row gutter={16} className='gap-6 mt-6'>
 
-                      {data.map((item, index) => (
+                    {data.map((item, index) => (
                         <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
                             <Card className='w-full flex justify-center'
                                 bordered={false}

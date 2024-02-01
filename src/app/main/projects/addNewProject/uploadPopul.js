@@ -103,10 +103,10 @@ export const UploadPopul2 = () => {
         setFiles(files.filter((x) => x.id !== id));
     };
     return (
-        <div className="bg-white p-5 w-96 h-[584px] border flex flex-col items-center gap-12 ">
+        <div className="bg-white p-5 w-96  border flex flex-col items-center gap-12 ">
             <h2 className="text-black text-slate-600 text-xl">Upload Document</h2>
             <div className="flex justify-between w-[85%]">
-                <Image src={imageIcon} />
+                <Image src={imageIcon} alt="Uploaded Document Type" />
                 <p>Image1.pdf</p>
                 <a href="">
                     <Image src={xIcon} />
@@ -116,8 +116,8 @@ export const UploadPopul2 = () => {
                 onChange={updateFiles} value={files}>
                 {files.length === 0 ? (
                     <div className="flex flex-col  justify-center items-center">
-                        <Image src={uploadImg} className="w-16 " />
-                        <p className="text-sm text-slate-400">Drag and drop documents here</p>
+                        <Image src={uploadImg} className="w-16 " alt="Drag and Drop" />
+                        <p className="text-sm text-slate-400">Drag and drop documents here</p>gfn
                     </div>
                 ) : (
                     files.map((file) => (
@@ -132,8 +132,8 @@ export const UploadPopul2 = () => {
                 <FileCard key={file.id} {...file} onDelete={removeFile} info />
             ))}
             <div className="flex gap-6">
-                <Image src={driversIcon} />
-                <Image src={cloudUpload} />
+                <Image src={driversIcon} alt="Drivers Icon" />
+                <Image src={cloudUpload} alt="upload images" />
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
 "use client"
+import api from '@/api';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer, Rectangle } from 'recharts';
 
