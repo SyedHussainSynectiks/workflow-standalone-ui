@@ -66,7 +66,7 @@ const ProjectsList = () => {
                         <Radio.Group value={size} onChange={(e) => setSize(e.target.value)}>
                             <Radio.Button value="All Projects">All</Radio.Button>
                             <Radio.Button value="In Progress">Inprogress</Radio.Button>
-                            <Radio.Button value="Unassigned">Un Assigned</Radio.Button>
+                            {/* <Radio.Button value="Unassigned">Un Assigned</Radio.Button> */}
                             <Radio.Button value="Completed">Completed</Radio.Button>
                         </Radio.Group>
                     </div>
@@ -87,7 +87,8 @@ const ProjectsList = () => {
                                 <Title level={5}>Total Usecase {item.total_usecases} </Title>
                                 <Paragraph>Due Date {item.due_date}</Paragraph>
                                 <Progress type="circle" percent={item.completed_tasks_percentage} strokeWidth={16} strokeLinecap='square' strokeColor="#F8D236" trailColor='#F6EEFF' />
-                                <Title level={4} className='mt-2 mx-auto'>{item.completed_usecases}  Task Completed</Title>
+                                <Title level={4} className='mt-2 mx-auto'>
+                                    Task Completed</Title>
                             </Card>
                         </Col>
                     ))}

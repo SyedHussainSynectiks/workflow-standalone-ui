@@ -24,21 +24,36 @@ const Resources = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await getData();
-            setData(result);
-            setFilteredData(result);
+            try {
+                const response = await api.get('/projects_resource_overview');
+                console.log(response.data);
+                setData(response.data);
+                setFilteredData(response.data);
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
         };
         fetchData();
     }, []);
+
     useEffect(() => {
-        // Filter data based on the selected size (All, In Progress, Completed)
-        if (size === 'All Projects') {
-            setFilteredData(data);
-        } else {
-            const filtered = data.filter(item => item.status === size.toLowerCase());
-            setFilteredData(filtered);
-        }
-    }, [size, data]);
+        const filterData = async () => {
+            try {
+                if (size === 'All Projects') {
+                    const response = await api.get('/projects_resource_overview');
+                    setFilteredData(response.data);
+                } else {
+                    const response = await api.get(`/projects_resource_overview?status=${size.toLowerCase()}`);
+                    setFilteredData(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching filtered data: ', error);
+            }
+        };
+
+        filterData();
+    }, [size]);
+
     return (
         <>
             <div style={{ background: '#FFF', padding: '25px' }}>
@@ -48,7 +63,7 @@ const Resources = () => {
                         <Radio.Group value={size} onChange={(e) => setSize(e.target.value)}>
                             <Radio.Button value="All Projects">All</Radio.Button>
                             <Radio.Button value="In Progress">Inprogress</Radio.Button>
-                            <Radio.Button value="Comlpeted">Completed</Radio.Button>
+                            <Radio.Button value="Completed">Completed</Radio.Button>
                         </Radio.Group>
                     </div>
                 </Row>
@@ -80,35 +95,7 @@ const Resources = () => {
                                         backgroundColor: '#fde3cf',
                                     }}
                                 >
-                                    <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
-                                    <Avatar
-                                        style={{
-                                            backgroundColor: '#f56a00',
-                                        }}
-                                    >
-                                        K
-                                    </Avatar>
-                                    <Avatar
-                                        style={{
-                                            backgroundColor: '#f56a00',
-                                        }}
-                                    >
-                                        K
-                                    </Avatar>
-                                    <Avatar
-                                        style={{
-                                            backgroundColor: '#f56a00',
-                                        }}
-                                    >
-                                        K
-                                    </Avatar>
-                                    <Avatar
-                                        style={{
-                                            backgroundColor: '#f56a00',
-                                        }}
-                                    >
-                                        K
-                                    </Avatar>
+                                    <Avatar src={item.project_resources} />
                                     <Tooltip title="Ant User" placement="top">
                                         <Avatar
                                             style={{
@@ -117,21 +104,14 @@ const Resources = () => {
                                             icon={<UserOutlined />}
                                         />
                                     </Tooltip>
-                                    <Avatar
-                                        style={{
-                                            backgroundColor: '#1677ff',
-                                        }}
-                                        icon={<AntDesignOutlined />}
-                                    />
+                                   
                                 </Avatar.Group>
-
                             </Card>
                         </Col>
                     ))}
 
                 </Row>
             </div>,
-
         </>
     )
 }
