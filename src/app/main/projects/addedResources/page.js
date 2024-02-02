@@ -242,7 +242,7 @@ const page = () => {
           </div>
           {/* UI Designer */}
           <div className="relative">
-            <Link href='/main/projects/addingStages' className='px-5 py-3 bg-blue-600 text-white absolute right-0 bottom-0'>Next</Link>
+            <Link href='/main/projects/workFlowOverView' className='px-5 py-3 bg-blue-600 text-white absolute right-0 bottom-0'>Next</Link>
           </div>
         </div>
       </section>

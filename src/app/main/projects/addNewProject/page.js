@@ -126,24 +126,6 @@ export default function ProjectForm() {
             />
           </div>
 
-          <div className="flex flex-row items-center justify-between">
-            <label
-              className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
-              htmlFor="Project"
-            >
-              Project Manager :
-            </label>
-            <input
-              type="text"
-              name="projectManager"
-              id="projectManager" // Unique ID for each input
-              placeholder="Admin name"
-              className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
-              value={project.projectManager}
-              onChange={handleChange}
-            />
-          </div>
-
           <div className="flex flex-row items-baseline justify-between">
             <label
               className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"

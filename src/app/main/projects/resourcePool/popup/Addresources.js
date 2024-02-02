@@ -1,13 +1,12 @@
 "use client";
 import api from "@/api";
 import React from "react";
-import { useState, useEffect } from "react";
-// import { withFormData } from "@/HOC/Project/Project";
-
-// import withSelectedData from "@/HOC/Project/selectedDetails";
+import { useState, useEffect } from "react"; 
 export const Projectmanager = (props) => {
   const [projectManager, setprojectManager] = useState([]);
   const [selectedUserName, setSelectedUserIds] = useState([]);
+
+
 
   const handleCheckboxChange = (userId) => {
     // Update the selectedUserIds array when a checkbox is checked or unchecked
@@ -20,24 +19,23 @@ export const Projectmanager = (props) => {
   };
 
   const handleSelectionAndClose = () => {
-    // const selectedProjectManagers = projectManager.filter((Manager) =>
-    // selectedUserName.includes(Manager.resource_name)
-    // );
-    // selectedProjectManagers(selectedProjectManagers);
     props.onSubmit();
   };
-  // const selectedData = (selectedUserName)=>{
-  //   selectedUserName = (selectedUserName)
-  // }
-  // getDataFromModal(selectedData)
+
 
   useEffect(() => {
-
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await api.get("/get_resource_by_role?role=Project Manager");
-        const data = await response.json();
+        const response = await api.get(
+          "/get_resource_by_role",
+          {
+            params: {
+              role: "Project Manager"
+            }
+          }
+        );
+        const data = response.data;
         setprojectManager(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,8 +43,6 @@ export const Projectmanager = (props) => {
     };
     fetchData();
   }, []);
-
-
 
   return (
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
@@ -122,7 +118,6 @@ export const Projectmanager = (props) => {
         </div>
       </div>
       <div>
-        <span>Selected User IDs Length: {selectedUserName.length}</span>
       </div>
     </div>
   );
@@ -140,7 +135,8 @@ export const ApiDeveloper = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await api.get("/get_resource_by_role?role=UI Developer"
+        const response = await fetch(
+          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
         );
         const data = await response.json();
         setApiDeveloper(data);
@@ -151,6 +147,27 @@ export const ApiDeveloper = () => {
 
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   // Fetch data when the component mounts
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await api.get(
+  //         "/get_resource_by_role",
+  //         {
+  //           params: {
+  //             role: "Api Developer"
+  //           }
+  //         }
+  //       );
+  //       const data = response.data;
+  //       setprojectManager(data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
   const handleCheckboxChange = (userId) => {
     // Update the selectedUserIds array when a checkbox is checked or unchecked
     if (selectedUserIds.includes(userId)) {
@@ -165,7 +182,7 @@ export const ApiDeveloper = () => {
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of Project Managers
+          List Of Api Developers
         </h1>
         <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
           Add
@@ -247,7 +264,8 @@ export const CiCdResourcePool = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await api.get("/get_resource_by_role?role=CI/CD"
+        const response = await fetch(
+          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=CI/CD"
         );
         const data = await response.json();
         setCiCd(data);
@@ -272,7 +290,7 @@ export const CiCdResourcePool = () => {
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of Project Managers
+          List Of CI/CD  Resources
         </h1>
         <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
           Add
@@ -351,8 +369,8 @@ export const TesterResourcePool = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await api.get(
-          "/get_resource_by_role?role=Tester"
+        const response = await fetch(
+          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Tester"
         );
         const data = await response.json();
         setTester(data);
@@ -377,7 +395,7 @@ export const TesterResourcePool = () => {
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of Project Managers
+          List Of Testers
         </h1>
         <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
           Add
@@ -459,7 +477,8 @@ export const UiDesignResourcePool = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await api.get("/get_resource_by_role?role=UI Designer"
+        const response = await fetch(
+          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Designer"
         );
         const data = await response.json();
         setUiDesigners(data);
@@ -484,7 +503,7 @@ export const UiDesignResourcePool = () => {
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of Project Managers
+          List Of Ui Designers
         </h1>
         <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
           Add
@@ -564,16 +583,32 @@ export const UiDeveloperResourcePool = () => {
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   useEffect(() => {
     // Fetch data when the component mounts
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
+    //     );
+    //     const data = await response.json();
+    //     setuiDeveloper(data);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // };
     const fetchData = async () => {
       try {
-        const response = await api.get("/get_resource_by_role?role=UI Developer");
-        const data = await response.json();
+        const response = await api.get("/get_resource_by_role",
+          {
+            params: {
+              role: "UI Developer"
+            }
+          }
+        );
+        const data = response.data;
         setuiDeveloper(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
   const handleCheckboxChange = (userId) => {
@@ -590,7 +625,7 @@ export const UiDeveloperResourcePool = () => {
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of Project Managers
+          List Of Ui Developers
         </h1>
         <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
           Add
@@ -673,8 +708,8 @@ export const UxResearcher = () => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await api.get(
-          "/get_resource_by_role?role=UI Developer"
+        const response = await fetch(
+          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Ux Researcher"
         );
         const data = await response.json();
         setuxResearcher(data);
@@ -699,7 +734,7 @@ export const UxResearcher = () => {
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of Project Managers
+          List Of Ux Research
         </h1>
         <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
           Add

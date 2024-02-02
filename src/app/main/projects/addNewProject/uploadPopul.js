@@ -117,7 +117,7 @@ export const UploadPopul2 = () => {
                 {files.length === 0 ? (
                     <div className="flex flex-col  justify-center items-center">
                         <Image src={uploadImg} className="w-16 " alt="Drag and Drop" />
-                        <p className="text-sm text-slate-400">Drag and drop documents here</p>gfn
+                        <p className="text-sm text-slate-400">Drag and drop documents here</p>
                     </div>
                 ) : (
                     files.map((file) => (
