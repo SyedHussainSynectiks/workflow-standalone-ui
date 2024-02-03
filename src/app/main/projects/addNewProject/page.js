@@ -201,7 +201,7 @@ export default function ProjectForm() {
                   project.startDate(
                     values.map((item) => {
                       console.log(item);
-                      return moment(item).format("YYYY-MM-DD");
+                      return moment(item).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
                     })
                     // ,{handleChange}
                     // , values={project:project.startDate}
@@ -219,7 +219,7 @@ export default function ProjectForm() {
                   endDate(
                     values.map((item) => {
                       console.log(item);
-                      return moment(item).format("YYYY-MM-DD");
+                      return moment(item).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
                     })
                   );
                 }}
