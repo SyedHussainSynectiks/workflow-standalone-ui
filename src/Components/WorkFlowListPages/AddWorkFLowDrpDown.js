@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Button, Dropdown, Menu, Modal } from "antd";
 import { FileTextOutlined, PlusOutlined } from "@ant-design/icons";
 import { SelectTemplateDropDown } from "./../WorkFlowListPages/SelectTemplateDropDown";
+import Link from 'next/link';
 import DropDownSelectSaveWFL from "./DropDownSelectSaveWFL"; // Importing the modified DropDownSelectSaveWFL component
 import SavedComponentDisplay from "./SavedComponet";
 import SelectTamplate from "./SelectTamplate";
 
-const WorkFlowDropDown = ({onSelect, setunSavedTamplate}) => {
-  
+const WorkFlowDropDown = ({ onSelect, setunSavedTamplate }) => {
+
   const [visible, setVisible] = useState(false);
   const [showSelectTemplate, setShowSelectTemplate] = useState(false);
   const [savedWorkflow, setSavedWorkflow] = useState(null);
@@ -18,7 +19,7 @@ const WorkFlowDropDown = ({onSelect, setunSavedTamplate}) => {
     // Here, you can save the workflow data to your backend or do any other necessary processing
     setSavedWorkflow(workflowData);
   };
-  
+
   const openModal = (modalSetter) => {
     modalSetter(true);
   };
@@ -43,7 +44,7 @@ const WorkFlowDropDown = ({onSelect, setunSavedTamplate}) => {
     }
   };
 
-  
+
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item
@@ -54,9 +55,9 @@ const WorkFlowDropDown = ({onSelect, setunSavedTamplate}) => {
         Select Template
       </Menu.Item>
       <Menu.Item key="createNewTemplate" icon={<PlusOutlined />}>
-        <a href="/main/projects/addingStages">
-        Create New Template
-        </a>
+        <Link href="/main/projects/addingStages">
+          Create New Template
+        </Link>
       </Menu.Item>
     </Menu>
   );
@@ -69,11 +70,11 @@ const WorkFlowDropDown = ({onSelect, setunSavedTamplate}) => {
     handleCloseModals();
     setVisible(false); // Close the modal
   };
-  
+
   return (
-    
+
     <>
-    
+
       <Dropdown
         overlay={menu}
         placement="bottomCenter"
@@ -96,25 +97,25 @@ const WorkFlowDropDown = ({onSelect, setunSavedTamplate}) => {
         width={1000}
         footer={null}
         closable={false}
-        
+
       >
         <div className="flex flex-row justify-center items-center  bg-slate-100">
-        {!selectedWorkflow && (
-        <SelectTemplateDropDown onCloseModal={handleCloseModals}
-        setunSavedTamplate={setunSavedTamplate}
- 
-        title="Your Title"
-        onSave={handleSaveWorkflow} />)}
+          {!selectedWorkflow && (
+            <SelectTemplateDropDown onCloseModal={handleCloseModals}
+              setunSavedTamplate={setunSavedTamplate}
 
-        <section className="relative flex flex-col w-[256px] h-[316px] justify-center text-center gap-3 shadow-lg p-3 items-center bg-white rounded-lg border border-slate-100">
-          <Button
-            href="/main/projects/addingStages"
-            type="default"
-            className="text-black font-roboto font-medium text-base leading-6"
-          >
-            Create New Template
-          </Button>
-        </section>
+              title="Your Title"
+              onSave={handleSaveWorkflow} />)}
+
+          <section className="relative flex flex-col w-[256px] h-[316px] justify-center text-center gap-3 shadow-lg p-3 items-center bg-white rounded-lg border border-slate-100">
+            <Link
+              href="/main/projects/addingStages"
+              type="default"
+              className="text-black border p-2 rounded-md border-cyan-600 font-roboto font-medium text-base leading-6"
+            >
+              Create New Template
+            </Link>
+          </section>
         </div>
       </Modal>
       {/* <SavedComponentDisplay savedWorkflow={savedWorkflow} /> */}

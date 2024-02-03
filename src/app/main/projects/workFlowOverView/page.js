@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StackedBarChart from "../../../../Components/Graphs/BarChart";
 import Image from "next/image";
 import { Button } from "antd";
@@ -19,6 +19,7 @@ const WorkFlowList3 = () => {
     setIsAddWorkFlow(false);
   };
 
+
   // toggal function
   const [activeSection, setActiveSection] = useState("Procurement");
   const [unSavedTamplate, setunSavedTamplate] = useState(false);
@@ -29,6 +30,8 @@ const WorkFlowList3 = () => {
   const toggleSection = (section) => {
     setActiveSection(section);
   };
+
+  
 
   return (
     <main className=" bg-gray-200 p-2">
@@ -112,10 +115,10 @@ const WorkFlowList3 = () => {
           <Hamburger />
         </div>
           <section className="flex flex-row justify-start items-center  bg-white gap-3 w-auto h-[350px]  p-5">
-  
+
             <SelectTamplate/>
               <section className="relative flex flex-col w-[256px] h-[316px] justify-center text-center gap-3 shadow-lg p-3 items-center bg-white rounded-lg border border-slate-100">
-          
+
                 <Button
                 href="/main/projects/addingStages"
                   type="default"
@@ -124,7 +127,7 @@ const WorkFlowList3 = () => {
                   Create New Template
                 </Button>
               </section>
-            
+
           </section>
           </>
         )}

@@ -932,12 +932,6 @@ const newform = () => {
                     </div>
                 </div>
             </form>
-
-
-
-
-
-
         </div>
     )
 }
