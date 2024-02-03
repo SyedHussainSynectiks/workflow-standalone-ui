@@ -3,46 +3,38 @@
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { Button, Modal } from "antd";
 import { useState } from "react";
-import { Projectmanager } from "./popup/Addresources";
-import { ApiDeveloper } from "./popup/Addresources";
-import { CiCdResourcePool } from "./popup/Addresources";
-import { TesterResourcePool } from "./popup/Addresources";
-import { UiDesignResourcePool } from "./popup/Addresources";
-import { UiDeveloperResourcePool } from "./popup/Addresources";
-import { UxResearcher } from "./popup/Addresources";
+// import { AddResources } from "./popup/Addresources";
 
-import Link from "next/link";
+import AddResourceModal from "@/Components/main/projects/resourcePool/AddResourceModal";
+
+// ResourceField Components
+import ResourceField from "@/Components/main/projects/resourcePool/ResourceField";
+
+// Array of ResourcePoolData
+export const resourcePoolData = [
+  "Project Manager",
+  "UX Researcher",
+  "UI Designer",
+  "UI Developer",
+  "API Developer",
+  "Tester",
+  "CI/CD",
+];
 
 export default function Home() {
-  // State variables to control the visibility of each modal
-  const [isProjectManagerModalOpen, setIsProjectManagerModalOpen] =
-    useState(false);
-  const [isUiDesignerModalOpen, setIsUiDesignerModalOpen] = useState(false);
-  const [isUiDeveloperModalOpen, setIsUiDeveloperModalOpen] = useState(false);
-  const [isApiDeveloperModalOpen, setIsApiDeveloperModalOpen] = useState(false);
-  const [isTesterModalOpen, setIsTesterModalOpen] = useState(false);
-  const [isUxResearcherModalOpen, setIsUxResearcherModalOpen] = useState(false);
-  const [isCiCdModalOpen, setIsCiCdModalOpen] = useState(false);
+  // Hooks
+  const [modalOpen, setModalOepn] = useState(false);
 
   // Function to open the corresponding modal
   const openModal = (modalSetter) => {
     modalSetter(true);
   };
 
-  // Function to close all modals
-
+  // Function to close modals
   const handleCloseModals = () => {
-    setIsProjectManagerModalOpen(false);
-    setIsUiDesignerModalOpen(false);
-    setIsUiDeveloperModalOpen(false);
-    setIsApiDeveloperModalOpen(false);
-    setIsTesterModalOpen(false);
-    setIsUxResearcherModalOpen(false);
-    setIsCiCdModalOpen(false);
+    setModalOepn(false);
   };
-  // function getDataFromModal (data){
-  //   console.log(data)
-  // }
+
   return (
     <>
       <div className="main flex flex-col bg-white w-full rounded-lg  ">
@@ -52,219 +44,22 @@ export default function Home() {
 
         <div className="flex mt-8">
           <div className="div flex flex-col gap-4  justify-center ml-8">
-            <div className=" flex flex-row items-center">
-              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32 ">
-                Project Manager
-              </h3>
-              <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
-                <a
-                  href="#"
-                  className="flex justify-between items-center"
-                  onClick={() => openModal(setIsProjectManagerModalOpen)}
-                >
-                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
-                    Add Project Manager
-                  </span>
-                  <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
-                </a>
-                <Modal
-                  open={isProjectManagerModalOpen}
-                  onCancel={handleCloseModals}
-                  footer={null}
-                  closable={false}
-                  width={1000}
-                >
-                  <Projectmanager onSubmit={handleCloseModals} />
-                </Modal>
-              </div>
-              <div className=" text-gray-300 rounded-md bg-neutral-1 shadow-md px-6 py-5">
-                <span>00</span>
-              </div>
-            </div>
-            <div className=" flex flex-row items-center">
-              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
-                UI Designer
-              </h3>
-              <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
-                <a
-                  href="#"
-                  className="flex justify-between items-center"
-                  onClick={() => openModal(setIsUiDesignerModalOpen)}
-                >
-                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
-                    Add UI Designer
-                  </span>
-                  <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
-                </a>
-                <Modal
-                  open={isUiDesignerModalOpen}
-                  onCancel={handleCloseModals}
-                  footer={null}
-                  closable={false}
-                  width={1000}
-                >
-                  <UiDesignResourcePool />
-                </Modal>
-              </div>
-              <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
-                <span>00</span>
-              </div>
-            </div>
-            <div className=" flex flex-row items-center">
-              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
-                UI Developer
-              </h3>
-              <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
-                <a
-                  href="#"
-                  className="flex justify-between items-center"
-                  onClick={() => openModal(setIsUiDeveloperModalOpen)}
-                >
-                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
-                    Add UI Developer
-                  </span>
-                  <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
-                </a>
-                <Modal
-                  open={isUiDeveloperModalOpen}
-                  onCancel={handleCloseModals}
-                  footer={null}
-                  closable={false}
-                  width={1000}
-                >
-                  <UiDeveloperResourcePool />
-                </Modal>
-              </div>
-              <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
-                <span>00</span>
-              </div>
-            </div>
-            <div className=" flex flex-row items-center">
-              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
-                API Developer
-              </h3>
-              <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
-                <a
-                  href="#"
-                  className="flex justify-between items-center"
-                  onClick={() => openModal(setIsApiDeveloperModalOpen)}
-                >
-                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
-                    Add API Developer
-                  </span>
-                  <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
-                </a>
-                <Modal
-                  open={isApiDeveloperModalOpen}
-                  onCancel={handleCloseModals}
-                  footer={null}
-                  closable={false}
-                  width={1000}
-                >
-                  <ApiDeveloper />
-                </Modal>
-              </div>
-              <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
-                <span>00</span>
-              </div>
-            </div>
-            <div className=" flex flex-row items-center">
-              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
-                Tester
-              </h3>
-              <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
-                <a
-                  href="#"
-                  className="flex justify-between items-center"
-                  onClick={() => openModal(setIsTesterModalOpen)}
-                > 
-                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
-                    Add Tester
-                  </span>
-                  <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
-                </a>
-                <Modal
-                  open={isTesterModalOpen}
-                  onCancel={handleCloseModals}
-                  footer={null}
-                  closable={false}
-                  width={1000}
-                >
-                  <TesterResourcePool />
-                </Modal>
-              </div>
-              <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
-                <span>00</span>
-              </div>
-            </div>
-            <div className=" flex flex-row items-center">
-              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
-                UX Researcher
-              </h3>
-              <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
-                <a
-                  href="#"
-                  className="flex justify-between items-center"
-                  onClick={() => openModal(setIsUxResearcherModalOpen)}
-                >
-                  {" "}
-                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
-                    Add UX Researcher
-                  </span>
-                  <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
-                </a>
-                <Modal
-                  open={isUxResearcherModalOpen}
-                  onCancel={handleCloseModals}
-                  footer={null}
-                  closable={false}
-                  width={1000}
-                >
-                  <UxResearcher />
-                </Modal>
-              </div>
-              <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
-                <span>00</span>
-              </div>
-            </div>
-            <div className=" flex flex-row mb-5 items-center">
-              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
-                CI/CD
-              </h3>
-              <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
-                <a
-                  href="#"
-                  className="flex justify-between items-center"
-                  onClick={() => openModal(setIsCiCdModalOpen)}
-                >
-                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
-                    Add CI/CD
-                  </span>
-                  <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
-                </a>
-                <Modal
-                  open={isCiCdModalOpen}
-                  onCancel={handleCloseModals}
-                  footer={null}
-                  closable={false}
-                  width={1000}
-                >
-                  <CiCdResourcePool />
-                </Modal>
-              </div>
-              <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
-                <span>00</span>
-              </div>
-            </div>
+        
+            {resourcePoolData.map((resource, index) => (
+              <ResourceField
+                key={index} // It's a good practice to provide a unique key when mapping over an array in React
+                resource={resource}
+                onClick={() => openModal(setModalOepn)}
+              />
+            ))}
           </div>
         </div>
+
+        {/* Next button */}
         <div className="btn relative bg-white mb-10">
-          <Link
-            href="/main/projects/addedResources"
-            className=" absolute right-0 top-0   py-1  px-4 bg-blue-500 text-white bg-primary-6   "
-          >
+          <button className=" absolute right-0 top-0   py-1  px-4 bg-blue-500 text-white bg-primary-6   ">
             Next
-          </Link>
+          </button>
         </div>
       </div>
     </>
