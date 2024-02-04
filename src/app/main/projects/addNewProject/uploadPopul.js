@@ -89,7 +89,6 @@ import {
 } from "@dropzone-ui/react";
 
 export const UploadPopul2 = () => {
-<<<<<<< HEAD
   const [files, setFiles] = React.useState([]);
   const updateFiles = (incommingFiles) => {
     //do something with the files
@@ -129,39 +128,6 @@ export const UploadPopul2 = () => {
           ))
         )}
       </Dropzone>
-=======
-    const [files, setFiles] = React.useState([]);
-    const updateFiles = (incommingFiles) => {
-        //do something with the files
-        setFiles(incommingFiles);
-        //even your own upload implementation
-    };
-    const removeFile = (id) => {
-        setFiles(files.filter((x) => x.id !== id));
-    };
-    return (
-        <div className="bg-white p-5 w-96  border flex flex-col items-center gap-12 ">
-            <h2 className="text-black text-slate-600 text-xl">Upload Document</h2>
-            <div className="flex justify-between w-[85%]">
-                <Image src={imageIcon} alt="Uploaded Document Type" />
-                <p>Image1.pdf</p>
-                <a href="">
-                    <Image src={xIcon} />
-                </a>
-            </div>
-            <Dropzone minHeight="200px" header={false} footer={false}
-                onChange={updateFiles} value={files}>
-                {files.length === 0 ? (
-                    <div className="flex flex-col  justify-center items-center">
-                        <Image src={uploadImg} className="w-16 " alt="Drag and Drop" />
-                        <p className="text-sm text-slate-400">Drag and drop documents here</p>
-                    </div>
-                ) : (
-                    files.map((file) => (
-                        <FileMosaic key={file.id} {...file} onDelete={removeFile} info />
-                    )))}
-            </Dropzone>
->>>>>>> origin/main
 
       <FileInputButton
         onChange={updateFiles}

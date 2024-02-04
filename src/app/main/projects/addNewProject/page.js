@@ -77,7 +77,7 @@ export default function ProjectForm() {
           ...prevProject,
           projectId: data.id, // Replace 'data.projectId' with the actual field from your response data
         }));
-        
+
         // ... rest of the code
       } else {
         console.error(
@@ -130,10 +130,7 @@ export default function ProjectForm() {
             />
           </div>
 
-<<<<<<< HEAD
           {/* Project Description */}
-=======
->>>>>>> origin/main
           <div className="flex flex-row items-baseline justify-between">
             <label
               className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
@@ -183,7 +180,6 @@ export default function ProjectForm() {
                 id="projectStartDate"
                 placeholder="Start Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
-<<<<<<< HEAD
                 onChange={(date, dateString) =>
                   setProject({
                     ...project,
@@ -192,18 +188,6 @@ export default function ProjectForm() {
                     ),
                   })
                 }
-=======
-                onChange={(values) => {
-                  project.startDate(
-                    values.map((item) => {
-                      console.log(item);
-                      return moment(item).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-                    })
-                    // ,{handleChange}
-                    // , values={project:project.startDate}
-                  );
-                }}
->>>>>>> origin/main
 
                 // value={project.startDate}
               />
@@ -212,7 +196,6 @@ export default function ProjectForm() {
                 id="projectEndDate"
                 placeholder="End Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
-<<<<<<< HEAD
                 onChange={(date, dateString) =>
                   setProject({
                     ...project,
@@ -222,17 +205,6 @@ export default function ProjectForm() {
                   })
                 }
                 // value={project.endDate}
-=======
-                onChange={(values) => {
-                  endDate(
-                    values.map((item) => {
-                      console.log(item);
-                      return moment(item).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-                    })
-                  );
-                }}
-              // value={project.endDate}
->>>>>>> origin/main
               />
             </div>
           </div>
@@ -273,19 +245,12 @@ export default function ProjectForm() {
           {/* HandleSubmit Button */}
           <Button
             type="submit"
-            className="ml-[90%] m-10 px-1 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm w-16 h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
+            className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
             onClick={handleSubmit}
           >
-            Save
+            Next
           </Button>
         </form>
-
-        <Link
-          className="px-6 py-3 bg-blue-500"
-          href="/main/projects/resourcePool"
-        >
-          Next
-        </Link>
       </section>
     </>
   );

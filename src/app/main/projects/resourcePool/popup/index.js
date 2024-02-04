@@ -1,40 +1,77 @@
 "use client";
 import api from "@/api";
 import React from "react";
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
+// import { withFormData } from "@/HOC/Project/Project";
+
+// import withSelectedData from "@/HOC/Project/selectedDetails";
+
+// HOC
+import useProject from "@/HOC/Project/Project";
+
 export const Projectmanager = (props) => {
+  // All Hooks
+  // project
   const [projectManager, setprojectManager] = useState([]);
-  const [selectedUserName, setSelectedUserIds] = useState([]);
 
+  // select User
+  const [selectUser, setSelectUser] = useState([]);
 
+  // useProject
+  const [project, setProject] = useProject({
+    resourcePool: {
+      projectManager: [],
+    },
+  });
 
+  // HandleCheckBoxChange
   const handleCheckboxChange = (userId) => {
-    // Update the selectedUserIds array when a checkbox is checked or unchecked
-    if (selectedUserName.includes(userId)) {
-      setSelectedUserIds(selectedUserName.filter((id) => id !== userId));
+    // Check if userId is already in selectUser
+    if (selectUser.includes(userId)) {
+      // If yes, remove it
+      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
     } else {
-      setSelectedUserIds([...selectedUserName, userId]);
+      // If no, add it
+      setSelectUser((prevState) => [...prevState, userId]);
     }
 
+    // console.log(userId)
+    // console.log(selectUser)
   };
 
+  console.log(selectUser);
+
   const handleSelectionAndClose = () => {
+    // console.log(selectUser);
+
+    setProject((prevProject) => {
+      const updatedResourcePool = {
+        ...prevProject.resourcePool,
+        projectManager: [selectUser],
+      };
+
+      return {
+        ...prevProject,
+        resourcePool: updatedResourcePool,
+      };
+    });
+
     props.onSubmit();
   };
 
+  // console.log(project);
 
+  // useEffect to fetch all users
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await api.get(
-          "/get_resource_by_role",
-          {
-            params: {
-              role: "Project Manager"
-            }
-          }
-        );
+        const response = await api.get("/get_resource_by_role", {
+          params: {
+            role: "Project Manager",
+          },
+        });
+        console.log(response.data);
         const data = response.data;
         setprojectManager(data);
       } catch (error) {
@@ -45,12 +82,15 @@ export const Projectmanager = (props) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
+    <div className="flex flex-col gap-4 bg-white p-5 w-[100%]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
           List Of Project Managers
         </h1>
-        <button onSubmit={handleSelectionAndClose} className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button
+          onClick={handleSelectionAndClose}
+          className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white cursor-pointer"
+        >
           Add
         </button>
       </div>
@@ -74,6 +114,8 @@ export const Projectmanager = (props) => {
               <div className="border border-gray-200 w-[95%] "></div>
             </div>
           </div>
+
+          {/* Project Manager useState Hook Data Map */}
           <div>
             {projectManager.map((Manager, index) => (
               <div
@@ -82,10 +124,12 @@ export const Projectmanager = (props) => {
               >
                 <div className="flex items-center gap-6 pl-3">
                   <div>
+                    {/* CheckBox Button */}
                     <input
                       type="checkbox"
-                      checked={selectedUserName.includes(Manager.resource_name)}
-                      onChange={() => handleCheckboxChange(Manager.resource_name)}
+                      checked={selectUser.includes(Manager.resource_id)}
+                      onChange={() => handleCheckboxChange(Manager.resource_id)}
+                      className="cursor-pointer"
                     />
                   </div>
                   <div className="flex items-center gap-3">
@@ -112,79 +156,91 @@ export const Projectmanager = (props) => {
                   </div>
                 </div>
               </div>
-
             ))}
           </div>
         </div>
-      </div>
-      <div>
       </div>
     </div>
   );
 };
 
+// Api Developer
+export const ApiDeveloper = (props) => {
+  // All Hooks
+  // API Developer
+  const [apiDeveloper, setApiDeveloper] = useState([]);
 
+  // select User
+  const [selectUser, setSelectUser] = useState([]);
 
+  // useProject
+  const [project, setProject] = useProject({
+    resourcePool: {
+      apiDeveloper: [],
+    },
+  });
 
-export const ApiDeveloper = () => {
-
-  const [ApiDeveloper, setApiDeveloper] = useState([]);
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
-
+  // useEffect to fetch all API Developers
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
-        );
-        const data = await response.json();
+        const response = await api.get("/get_resource_by_role", {
+          params: {
+            role: "API Developer",
+          },
+        });
+        console.log(response.data);
+        const data = response.data;
         setApiDeveloper(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   // Fetch data when the component mounts
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await api.get(
-  //         "/get_resource_by_role",
-  //         {
-  //           params: {
-  //             role: "Api Developer"
-  //           }
-  //         }
-  //       );
-  //       const data = response.data;
-  //       setprojectManager(data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  // HandleCheckBoxChanges
   const handleCheckboxChange = (userId) => {
-    // Update the selectedUserIds array when a checkbox is checked or unchecked
-    if (selectedUserIds.includes(userId)) {
-      setSelectedUserIds(selectedUserIds.filter((id) => id !== userId));
+    // Check if userId is already in selectUser
+    if (selectUser.includes(userId)) {
+      // If yes, remove it
+      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
     } else {
-      setSelectedUserIds([...selectedUserIds, userId]);
+      // If no, add it
+      setSelectUser((prevState) => [...prevState, userId]);
     }
-    console.log("Selected IDs:", userId);
+  };
+
+  // handleSelectionAndClose
+  const handleSelectionAndClose = () => {
+    // console.log(selectUser);
+
+    setProject((prevProject) => {
+      const updatedResourcePool = {
+        ...prevProject.resourcePool,
+        apiDeveloper: [selectUser],
+      };
+
+      return {
+        ...prevProject,
+        resourcePool: updatedResourcePool,
+      };
+    });
+
+    props.onSubmit();
   };
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
+    <div className="flex flex-col gap-4 bg-white p-5 w-[100%]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
           List Of Api Developers
         </h1>
-        <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button
+          onClick={handleSelectionAndClose}
+          className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white cursor-pointer"
+        >
           Add
         </button>
       </div>
@@ -209,7 +265,7 @@ export const ApiDeveloper = () => {
             </div>
           </div>
           <div>
-            {ApiDeveloper.map((Developer, index) => (
+            {apiDeveloper.map((Developer, index) => (
               <div
                 key={index}
                 className="flex items-center justify-start py-6 pr-20 pl-4 gap-40"
@@ -218,11 +274,11 @@ export const ApiDeveloper = () => {
                   <div>
                     <input
                       type="checkbox"
-                      id="checkBox"
-                      checked={selectedUserIds.includes(Developer.resource_id)}
+                      checked={selectUser.includes(Developer.resource_id)}
                       onChange={() =>
                         handleCheckboxChange(Developer.resource_id)
                       }
+                      className="cursor-pointer"
                     />
                   </div>
                   <div className="flex items-center gap-3">
@@ -257,42 +313,85 @@ export const ApiDeveloper = () => {
   );
 };
 
-export const CiCdResourcePool = () => {
+// cicd
+export const CiCdResourcePool = (props) => {
   const [CiCd, setCiCd] = useState([]);
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [selectUser, setSelectUser] = useState([]);
+
+  // useProject
+  const [project, setProject] = useProject({
+    resourcePool: {
+      cicd: [],
+    },
+  });
+
+  // handleSelectionAndCLose
+  const handleSelectionAndClose = () => {
+    // console.log(selectUser);
+
+    setProject((prevProject) => {
+      const updatedResourcePool = {
+        ...prevProject.resourcePool,
+        cicid: [selectUser],
+      };
+
+      return {
+        ...prevProject,
+        resourcePool: updatedResourcePool,
+      };
+    });
+
+    props.onSubmit();
+  };
+
+  // HandleCheckBoxChange
+  const handleCheckboxChange = (userId) => {
+    // Check if userId is already in selectUser
+    if (selectUser.includes(userId)) {
+      // If yes, remove it
+      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
+    } else {
+      // If no, add it
+      setSelectUser((prevState) => [...prevState, userId]);
+    }
+
+    // console.log(userId)
+    // console.log(selectUser)
+  };
+
+  // console.log(project);
+
+  // useEffect to fetch all users
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=CI/CD"
-        );
-        const data = await response.json();
+        const response = await api.get("/get_resource_by_role", {
+          params: {
+            role: "CI/CD",
+          },
+        });
+
+        console.log(response.data);
+        const data = response.data;
         setCiCd(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
-  const handleCheckboxChange = (userId) => {
-    // Update the selectedUserIds array when a checkbox is checked or unchecked
-    if (selectedUserIds.includes(userId)) {
-      setSelectedUserIds(selectedUserIds.filter((id) => id !== userId));
-    } else {
-      setSelectedUserIds([...selectedUserIds, userId]);
-    }
-    console.log("Selected IDs:", userId);
-  };
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
+    <div className="flex flex-col gap-4 bg-white p-5 w-[100%]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of CI/CD  Resources
+          List Of CI/CD
         </h1>
-        <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button
+          onClick={handleSelectionAndClose}
+          className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white cursor-pointer"
+        >
           Add
         </button>
       </div>
@@ -326,7 +425,7 @@ export const CiCdResourcePool = () => {
                   <div>
                     <input
                       type="checkbox"
-                      checked={selectedUserIds.includes(CiCd.resource_id)}
+                      checked={selectUser.includes(CiCd.resource_id)}
                       onChange={() => handleCheckboxChange(CiCd.resource_id)}
                     />
                   </div>
@@ -362,42 +461,85 @@ export const CiCdResourcePool = () => {
   );
 };
 
-export const TesterResourcePool = () => {
+// Tester
+export const TesterResourcePool = (props) => {
   const [Tester, setTester] = useState([]);
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [selectUser, setSelectUser] = useState([]);
+
+  // useProject
+  const [project, setProject] = useProject({
+    resourcePool: {
+      tester: [],
+    },
+  });
+
+  // HandleCheckBoxChange
+  const handleCheckboxChange = (userId) => {
+    // Check if userId is already in selectUser
+    if (selectUser.includes(userId)) {
+      // If yes, remove it
+      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
+    } else {
+      // If no, add it
+      setSelectUser((prevState) => [...prevState, userId]);
+    }
+
+    // console.log(userId)
+    // console.log(selectUser)
+  };
+
+  console.log(selectUser);
+
+  const handleSelectionAndClose = () => {
+    // console.log(selectUser);
+
+    setProject((prevProject) => {
+      const updatedResourcePool = {
+        ...prevProject.resourcePool,
+        tester: [selectUser],
+      };
+
+      return {
+        ...prevProject,
+        resourcePool: updatedResourcePool,
+      };
+    });
+
+    props.onSubmit();
+  };
+
+  // console.log(project);
+
+  // useEffect to fetch all users
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Tester"
-        );
-        const data = await response.json();
+        const response = await api.get("/get_resource_by_role", {
+          params: {
+            role: "Tester",
+          },
+        });
+        console.log(response.data);
+        const data = response.data;
         setTester(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
-  const handleCheckboxChange = (userId) => {
-    // Update the selectedUserIds array when a checkbox is checked or unchecked
-    if (selectedUserIds.includes(userId)) {
-      setSelectedUserIds(selectedUserIds.filter((id) => id !== userId));
-    } else {
-      setSelectedUserIds([...selectedUserIds, userId]);
-    }
-    console.log("Selected IDs:", userId);
-  };
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
+    <div className="flex flex-col gap-4 bg-white p-5 w-[100%]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of Testers
+          List Of Tester
         </h1>
-        <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button
+          onClick={handleSelectionAndClose}
+          className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white cursor-pointer"
+        >
           Add
         </button>
       </div>
@@ -431,9 +573,9 @@ export const TesterResourcePool = () => {
                   <div>
                     <input
                       type="checkbox"
-                      id="checkBox"
-                      checked={selectedUserIds.includes(Tester.resource_id)}
+                      checked={selectUser.includes(Tester.resource_id)}
                       onChange={() => handleCheckboxChange(Tester.resource_id)}
+                      className="cursor-pointer"
                     />
                   </div>
                   <div className="flex items-center gap-3">
@@ -468,44 +610,85 @@ export const TesterResourcePool = () => {
   );
 };
 
-export const UiDesignResourcePool = () => {
+export const UiDesignResourcePool = (props) => {
   // /get_resource_by_role
 
   const [uiDesigner, setUiDesigners] = useState([]);
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [selectUser, setSelectUser] = useState([]);
+
+  // useProject
+  const [project, setProject] = useProject({
+    resourcePool: {
+      uiDesigner: [],
+    },
+  });
+
+  // HandleCheckBoxChange
+  const handleCheckboxChange = (userId) => {
+    // Check if userId is already in selectUser
+    if (selectUser.includes(userId)) {
+      // If yes, remove it
+      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
+    } else {
+      // If no, add it
+      setSelectUser((prevState) => [...prevState, userId]);
+    }
+
+    // console.log(userId)
+    // console.log(selectUser)
+  };
+
+  console.log(selectUser);
+
+  const handleSelectionAndClose = () => {
+    // console.log(selectUser);
+
+    setProject((prevProject) => {
+      const updatedResourcePool = {
+        ...prevProject.resourcePool,
+        uiDesigner: [selectUser],
+      };
+
+      return {
+        ...prevProject,
+        resourcePool: updatedResourcePool,
+      };
+    });
+    props.onSubmit();
+  };
+
+  // console.log(project);
+
+  // useEffect to fetch all users
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Designer"
-        );
-        const data = await response.json();
+        const response = await api.get("/get_resource_by_role", {
+          params: {
+            role: "UI Designer",
+          },
+        });
+        console.log(response.data);
+        const data = response.data;
         setUiDesigners(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
-  const handleCheckboxChange = (userId) => {
-    // Update the selectedUserIds array when a checkbox is checked or unchecked
-    if (selectedUserIds.includes(userId)) {
-      setSelectedUserIds(selectedUserIds.filter((id) => id !== userId));
-    } else {
-      setSelectedUserIds([...selectedUserIds, userId]);
-    }
-    console.log("Selected IDs:", userId);
-  };
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
+    <div className="flex flex-col gap-4 bg-white p-5 w-[100%]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
-          List Of Ui Designers
+          List Of UI Designers
         </h1>
-        <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button
+          onClick={handleSelectionAndClose}
+          className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white cursor-pointer"
+        >
           Add
         </button>
       </div>
@@ -539,10 +722,11 @@ export const UiDesignResourcePool = () => {
                   <div>
                     <input
                       type="checkbox"
-                      checked={selectedUserIds.includes(desigers.resource_id)}
+                      checked={selectUser.includes(desigers.resource_id)}
                       onChange={() =>
                         handleCheckboxChange(desigers.resource_id)
                       }
+                      className="cursor-pointer"
                     />
                   </div>
                   <div className="flex items-center gap-3">
@@ -577,32 +761,65 @@ export const UiDesignResourcePool = () => {
   );
 };
 
-export const UiDeveloperResourcePool = () => {
-
+export const UiDeveloperResourcePool = (props) => {
   const [uiDeveloper, setuiDeveloper] = useState([]);
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [selectUser, setSelectUser] = useState([]);
+
+  // useProject
+  const [project, setProject] = useProject({
+    resourcePool: {
+      uiDeveloper: [],
+    },
+  });
+
+  // HandleCheckBoxChange
+  const handleCheckboxChange = (userId) => {
+    // Check if userId is already in selectUser
+    if (selectUser.includes(userId)) {
+      // If yes, remove it
+      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
+    } else {
+      // If no, add it
+      setSelectUser((prevState) => [...prevState, userId]);
+    }
+
+    // console.log(userId)
+    // console.log(selectUser)
+  };
+
+  console.log(selectUser);
+
+  // handleSelectionAndClose
+  const handleSelectionAndClose = () => {
+    // console.log(selectUser);
+
+    setProject((prevProject) => {
+      const updatedResourcePool = {
+        ...prevProject.resourcePool,
+        uiDeveloper: [selectUser],
+      };
+
+      return {
+        ...prevProject,
+        resourcePool: updatedResourcePool,
+      };
+    });
+    props.onSubmit();
+  };
+
+  // console.log(project);
+
+  // useEffect to fetch all users
   useEffect(() => {
     // Fetch data when the component mounts
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await fetch(
-    //       "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=UI Developer"
-    //     );
-    //     const data = await response.json();
-    //     setuiDeveloper(data);
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   }
-    // };
     const fetchData = async () => {
       try {
-        const response = await api.get("/get_resource_by_role",
-          {
-            params: {
-              role: "UI Developer"
-            }
-          }
-        );
+        const response = await api.get("/get_resource_by_role", {
+          params: {
+            role: "UI Developer",
+          },
+        });
+        console.log(response.data);
         const data = response.data;
         setuiDeveloper(data);
       } catch (error) {
@@ -611,23 +828,17 @@ export const UiDeveloperResourcePool = () => {
     };
     fetchData();
   }, []);
-  const handleCheckboxChange = (userId) => {
-    // Update the selectedUserIds array when a checkbox is checked or unchecked
-    if (selectedUserIds.includes(userId)) {
-      setSelectedUserIds(selectedUserIds.filter((id) => id !== userId));
-    } else {
-      setSelectedUserIds([...selectedUserIds, userId]);
-    }
-    console.log("Selected IDs:", userId);
-  };
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
+    <div className="flex flex-col gap-4 bg-white p-5 w-[100%]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
           List Of Ui Developers
         </h1>
-        <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button
+          onClick={handleSelectionAndClose}
+          className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white cursor-pointer"
+        >
           Add
         </button>
       </div>
@@ -661,11 +872,11 @@ export const UiDeveloperResourcePool = () => {
                   <div>
                     <input
                       type="checkbox"
-                      id="checkBox"
-                      checked={selectedUserIds.includes(Developer.resource_id)}
+                      checked={selectUser.includes(Developer.resource_id)}
                       onChange={() =>
                         handleCheckboxChange(Developer.resource_id)
                       }
+                      className="cursor-pointer"
                     />
                   </div>
                   <div className="flex items-center gap-3">
@@ -700,43 +911,80 @@ export const UiDeveloperResourcePool = () => {
   );
 };
 
-export const UxResearcher = () => {
-
+export const UxResearcher = (props) => {
   const [uxResearcher, setuxResearcher] = useState([]);
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [selectUser, setSelectUser] = useState([]);
+
+  // useProject
+  const [project, setProject] = useProject({
+    resourcePool: {
+      uxResearcher: [],
+    },
+  });
+
+  // HandleCheckBoxChange
+  const handleCheckboxChange = (userId) => {
+    // Check if userId is already in selectUser
+    if (selectUser.includes(userId)) {
+      // If yes, remove it
+      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
+    } else {
+      // If no, add it
+      setSelectUser((prevState) => [...prevState, userId]);
+    }
+  };
+
+  console.log(selectUser);
+
+  const handleSelectionAndClose = () => {
+    // console.log(selectUser);
+
+    setProject((prevProject) => {
+      const updatedResourcePool = {
+        ...prevProject.resourcePool,
+        uxResearcher: [selectUser],
+      };
+
+      return {
+        ...prevProject,
+        resourcePool: updatedResourcePool,
+      };
+    });
+    props.onSubmit();
+  };
+
+  // console.log(project);
+
+  // useEffect to fetch all users
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?role=Ux Researcher"
-        );
-        const data = await response.json();
+        const response = await api.get("/get_resource_by_role", {
+          params: {
+            role: "Project Manager",
+          },
+        });
+        console.log(response.data);
+        const data = response.data;
         setuxResearcher(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
-  const handleCheckboxChange = (userId) => {
-    // Update the selectedUserIds array when a checkbox is checked or unchecked
-    if (selectedUserIds.includes(userId)) {
-      setSelectedUserIds(selectedUserIds.filter((id) => id !== userId));
-    } else {
-      setSelectedUserIds([...selectedUserIds, userId]);
-    }
-    console.log("Selected IDs:", userId);
-  };
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
+    <div className="flex flex-col gap-4 bg-white p-5 w-[100%]">
       <div className="flex items-center justify-between">
         <h1 className="text-slate-700 text-xl non-italic font-semibold leading-none">
           List Of Ux Research
         </h1>
-        <button className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white">
+        <button
+          onClick={handleSelectionAndClose}
+          className="flex items-center justify-center py-1 px-[0.94rem] border border-blue-500 bg-blue-500 rounded-sm text-white cursor-pointer"
+        >
           Add
         </button>
       </div>
@@ -770,11 +1018,11 @@ export const UxResearcher = () => {
                   <div>
                     <input
                       type="checkbox"
-                      id="checkBox"
-                      checked={selectedUserIds.includes(Researcher.resource_id)}
+                      checked={selectUser.includes(Researcher.resource_id)}
                       onChange={() =>
                         handleCheckboxChange(Researcher.resource_id)
                       }
+                      className="cursor-pointer"
                     />
                   </div>
                   <div className="flex items-center gap-3">
