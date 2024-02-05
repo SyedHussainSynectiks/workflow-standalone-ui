@@ -117,7 +117,7 @@ const ProjectLayout = () => {
                                         <Text className='text-xl'>Total Usecases {item.total_usecases}</Text>
                                     </div>
                                     <div className='flex flex-row justify-start items-center my-4'>
-                                        <h4>Total Resources {item.total_resources}</h4>
+                                        <h4>Total Resourcessss {item.total_resources}</h4>
                                     </div>
                                     <div className='flex flex-row justify-start items-center'>
                                         {checkStatus(item.status)}

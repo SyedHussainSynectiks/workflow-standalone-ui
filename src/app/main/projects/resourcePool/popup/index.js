@@ -23,9 +23,6 @@ export const Projectmanager = (props) => {
       {
         projectManager: [],
       },
-      {
-        apiDeveloper: [],
-      },
     ],
   });
 
@@ -48,13 +45,12 @@ export const Projectmanager = (props) => {
 
   const handleSelectionAndClose = () => {
     // console.log(selectUser);
-
     setProject((prevProject) => {
-      const updatedResourcePool = {
-        ...prevProject.resourcePool,
-        projectManager: selectUser,
-      };
-
+      const updatedResourcePool = [
+        {
+          projectManager: selectUser,
+        },
+      ];
       return {
         ...prevProject,
         resourcePool: updatedResourcePool,
@@ -182,9 +178,6 @@ export const ApiDeveloper = (props) => {
   const [project, setProject] = useProject({
     resourcePool: [
       {
-        projectManager: [],
-      },
-      {
         apiDeveloper: [],
       },
     ],
@@ -225,13 +218,13 @@ export const ApiDeveloper = (props) => {
   // handleSelectionAndClose
   const handleSelectionAndClose = () => {
     // console.log(selectUser);
-
     setProject((prevProject) => {
-      const updatedResourcePool = {
-        ...prevProject.resourcePool,
-        apiDeveloper: selectUser,
-      };
-
+      const updatedResourcePool = [
+        ...prevProject.resourcePool, // Keep existing properties
+        {
+          apiDeveloper: selectUser,
+        },
+      ];
       return {
         ...prevProject,
         resourcePool: updatedResourcePool,
@@ -342,11 +335,11 @@ export const CiCdResourcePool = (props) => {
     // console.log(selectUser);
 
     setProject((prevProject) => {
-      const updatedResourcePool = {
-        ...prevProject.resourcePool,
-        cicid: selectUser,
-      };
-
+      const updatedResourcePool = [
+        {
+          cicid: selectUser,
+        },
+      ];
       return {
         ...prevProject,
         resourcePool: updatedResourcePool,
@@ -508,11 +501,11 @@ export const TesterResourcePool = (props) => {
     // console.log(selectUser);
 
     setProject((prevProject) => {
-      const updatedResourcePool = {
-        ...prevProject.resourcePool,
-        tester: selectUser,
-      };
-
+      const updatedResourcePool = [
+        {
+          tester: selectUser,
+        },
+      ];
       return {
         ...prevProject,
         resourcePool: updatedResourcePool,
@@ -660,16 +653,17 @@ export const UiDesignResourcePool = (props) => {
     // console.log(selectUser);
 
     setProject((prevProject) => {
-      const updatedResourcePool = {
-        ...prevProject.resourcePool,
-        uiDesigner: selectUser,
-      };
-
+      const updatedResourcePool = [
+        {
+          uiDesigner: selectUser,
+        },
+      ];
       return {
         ...prevProject,
         resourcePool: updatedResourcePool,
       };
     });
+
     props.onSubmit();
   };
 
@@ -812,16 +806,17 @@ export const UiDeveloperResourcePool = (props) => {
     // console.log(selectUser);
 
     setProject((prevProject) => {
-      const updatedResourcePool = {
-        ...prevProject.resourcePool,
-        uiDeveloper: selectUser,
-      };
-
+      const updatedResourcePool = [
+        {
+          uiDeveloper: selectUser,
+        },
+      ];
       return {
         ...prevProject,
         resourcePool: updatedResourcePool,
       };
     });
+
     props.onSubmit();
   };
 
@@ -960,16 +955,17 @@ export const UxResearcher = (props) => {
     // console.log(selectUser);
 
     setProject((prevProject) => {
-      const updatedResourcePool = {
-        ...prevProject.resourcePool,
-        uxResearcher: selectUser,
-      };
-
+      const updatedResourcePool = [
+        {
+          uxResearcher: selectUser,
+        },
+      ];
       return {
         ...prevProject,
         resourcePool: updatedResourcePool,
       };
     });
+
     props.onSubmit();
   };
 
