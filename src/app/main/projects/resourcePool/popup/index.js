@@ -19,9 +19,14 @@ export const Projectmanager = (props) => {
 
   // useProject
   const [project, setProject] = useProject({
-    resourcePool: {
-      projectManager: [],
-    },
+    resourcePool: [
+      {
+        projectManager: [],
+      },
+      {
+        apiDeveloper: [],
+      },
+    ],
   });
 
   // HandleCheckBoxChange
@@ -47,7 +52,7 @@ export const Projectmanager = (props) => {
     setProject((prevProject) => {
       const updatedResourcePool = {
         ...prevProject.resourcePool,
-        projectManager: [selectUser],
+        projectManager: selectUser,
       };
 
       return {
@@ -175,9 +180,14 @@ export const ApiDeveloper = (props) => {
 
   // useProject
   const [project, setProject] = useProject({
-    resourcePool: {
-      apiDeveloper: [],
-    },
+    resourcePool: [
+      {
+        projectManager: [],
+      },
+      {
+        apiDeveloper: [],
+      },
+    ],
   });
 
   // useEffect to fetch all API Developers
@@ -219,7 +229,7 @@ export const ApiDeveloper = (props) => {
     setProject((prevProject) => {
       const updatedResourcePool = {
         ...prevProject.resourcePool,
-        apiDeveloper: [selectUser],
+        apiDeveloper: selectUser,
       };
 
       return {
@@ -320,9 +330,11 @@ export const CiCdResourcePool = (props) => {
 
   // useProject
   const [project, setProject] = useProject({
-    resourcePool: {
-      cicd: [],
-    },
+    resourcePool: [
+      {
+        cicd: [],
+      },
+    ],
   });
 
   // handleSelectionAndCLose
@@ -332,7 +344,7 @@ export const CiCdResourcePool = (props) => {
     setProject((prevProject) => {
       const updatedResourcePool = {
         ...prevProject.resourcePool,
-        cicid: [selectUser],
+        cicid: selectUser,
       };
 
       return {
@@ -468,9 +480,11 @@ export const TesterResourcePool = (props) => {
 
   // useProject
   const [project, setProject] = useProject({
-    resourcePool: {
-      tester: [],
-    },
+    resourcePool: [
+      {
+        tester: [],
+      },
+    ],
   });
 
   // HandleCheckBoxChange
@@ -496,7 +510,7 @@ export const TesterResourcePool = (props) => {
     setProject((prevProject) => {
       const updatedResourcePool = {
         ...prevProject.resourcePool,
-        tester: [selectUser],
+        tester: selectUser,
       };
 
       return {
@@ -618,9 +632,11 @@ export const UiDesignResourcePool = (props) => {
 
   // useProject
   const [project, setProject] = useProject({
-    resourcePool: {
-      uiDesigner: [],
-    },
+    resourcePool: [
+      {
+        uiDesigner: [],
+      },
+    ],
   });
 
   // HandleCheckBoxChange
@@ -646,7 +662,7 @@ export const UiDesignResourcePool = (props) => {
     setProject((prevProject) => {
       const updatedResourcePool = {
         ...prevProject.resourcePool,
-        uiDesigner: [selectUser],
+        uiDesigner: selectUser,
       };
 
       return {
@@ -767,9 +783,11 @@ export const UiDeveloperResourcePool = (props) => {
 
   // useProject
   const [project, setProject] = useProject({
-    resourcePool: {
-      uiDeveloper: [],
-    },
+    resourcePool: [
+      {
+        uiDeveloper: [],
+      },
+    ],
   });
 
   // HandleCheckBoxChange
@@ -796,7 +814,7 @@ export const UiDeveloperResourcePool = (props) => {
     setProject((prevProject) => {
       const updatedResourcePool = {
         ...prevProject.resourcePool,
-        uiDeveloper: [selectUser],
+        uiDeveloper: selectUser,
       };
 
       return {
@@ -917,9 +935,11 @@ export const UxResearcher = (props) => {
 
   // useProject
   const [project, setProject] = useProject({
-    resourcePool: {
-      uxResearcher: [],
-    },
+    resourcePool: [
+      {
+        uxResearcher: [],
+      },
+    ],
   });
 
   // HandleCheckBoxChange
@@ -942,7 +962,7 @@ export const UxResearcher = (props) => {
     setProject((prevProject) => {
       const updatedResourcePool = {
         ...prevProject.resourcePool,
-        uxResearcher: [selectUser],
+        uxResearcher: selectUser,
       };
 
       return {
@@ -962,7 +982,7 @@ export const UxResearcher = (props) => {
       try {
         const response = await api.get("/get_resource_by_role", {
           params: {
-            role: "Project Manager",
+            role: "UX Researcher",
           },
         });
         console.log(response.data);
