@@ -5,14 +5,9 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Search from "../../../../../public/assets/Search3.svg";
 
-// HOC
-import useProject, { project, setProject } from "@/HOC/Project/Project";
-
 export default function page() {
   const [usecase, setUsecase] = useState([]);
   const [stages, setStages] = useState([]);
-
-  const [project, setProject] = useProject({});
 
   // useEffect to fetch all API Developers
 
@@ -22,8 +17,8 @@ export default function page() {
       try {
         const response = await api.get("/usecase", {
           params: {
-            project_id: project.projectId,
-            workflow_id: project.workflowId,
+            project_id: "7d3e0b6d-6aaf-425e-9187-7bd84427434f",
+            workflow_id: "1c286666-d68c-45f3-a8bc-f3d32ed6504b",
           },
         });
         console.log(response.data);
@@ -50,7 +45,7 @@ export default function page() {
           <div className="BtnSearchFlexLeft">
             <div className="SearchTxtSearchBarFlex">
               <input
-                className="SearchTxt ml-2 border border-neutral-500	"
+                className="SearchTxt ml-2 border border-neutral-500 "
                 type="text"
                 placeholder="Search text"
               />

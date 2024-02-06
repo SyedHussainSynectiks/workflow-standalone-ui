@@ -3,7 +3,48 @@ import AddStage from "./ModalStages/AddStages";
 import AddCheckList from "./ModalStages/AddChecklist";
 import SubStages from "./ModalStages/AddSubStage";
 import Image from "next/image";
+
+import useProject, { project, setProject } from "@/HOC/Project/Project";
+import { useState } from "react";
+
 export default function ProjectStages() {
+  const [project, setProject] = useProject([]);
+
+  const [workflow, setWorkflow] = useState({
+    name: project.projectName,
+    created_by_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    project_id: project.projectId,
+    stages: [
+      {
+        Requirement: {
+          tasks: [],
+          checklist: [],
+        },
+      },
+      {
+        "Mock Development": {
+          tasks: [],
+          checklist: [],
+        },
+      },
+
+      {
+        "Actual Development": {
+          tasks: [],
+          checklist: [],
+        },
+      },
+    ],
+  });
+
+  console.log("stages");
+  // console.log(stage);
+
+  console.log("project");
+  console.log(project);
+
+  console.log(workflow.stages);
+
   return (
     <>
       <div className="flex flex-row ">
@@ -20,62 +61,39 @@ export default function ProjectStages() {
 
             {/* Stages start */}
             <div className="px-6 py-4 ">
-              <div className="border border-blue-100 rounded-lg mb-4">
-                <div className="flex flex-col justify-center items-center w-[612px] h-[133px] gap-2">
-                  <div className=" text-blue-700 font-sans text-sm not-italic font-medium leading-7 px-2 w-[602px] h-[22] rounded-sm   bg-white ">
-                    Stage 1
+              {/* stages */}
+              <div>
+                {workflow.stages.map((stage, index) => (
+                  <div className="border border-blue-100 rounded-lg mb-4">
+                    <div
+                      className="flex flex-col justify-center items-center w-[612px] h-[133px] gap-2"
+                      key={index}
+                    >
+                      <div className=" text-blue-700 font-sans text-sm not-italic font-medium leading-7 px-2 w-[602px] h-[22] rounded-sm   bg-white ">
+                        Stage {index + 1}
+                      </div>
+
+                      {Object.entries(stage).map(([stageKey, stageValue]) => (
+                        <div key={stageKey}>
+                          <div className="text-blue-400  font-sans text-sm font-normal leading-6 flex-1 w-[612px] h-6 flex px-3 py-3 items-center gap-1  rounded-sm bg-white">
+                            {stageKey}
+                          </div>
+
+                          <div className="text-black font-sans text-sm font-medium not-italic leading-6 w-auto h-8 flex px-6 py-3 items-center gap-1  rounded-sm    bg-white">
+                            <SubStages />
+                          </div>
+
+                          <div className="text-black font-sans text-sm font-normal not-italic leading-6 w-auto h-10 flex px-10 py-3 items-center gap-1  rounded-sm  bg-white  border-slate-100">
+                            <AddCheckList />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-blue-400  font-sans text-sm font-normal leading-6 flex-1 w-[612px] h-6 flex px-3 py-3 items-center gap-1  rounded-sm bg-white">
-                      Requirement
-                    </div>
-                    <div className="text-black font-sans text-sm font-medium not-italic leading-6 w-auto h-8 flex px-6 py-3 items-center gap-1  rounded-sm    bg-white">
-                      <SubStages />
-                    </div>
-                    <div className="text-black font-sans text-sm font-normal not-italic leading-6 w-auto h-10 flex px-10 py-3 items-center gap-1  rounded-sm  bg-white  border-slate-100">
-                      <AddCheckList />
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
-              <div className="border border-blue-100 rounded-lg mb-4">
-                <div className="flex flex-col justify-center items-center w-[612px] h-[133px] gap-2">
-                  <div className="text-blue-700 font-sans text-sm not-italic font-medium leading-7 px-2 w-[602px] h-[22] rounded-sm   bg-white">
-                    Stage 2
-                  </div>
-                  <div>
-                    <div className="text-blue-400  font-sans text-sm font-normal leading-6 flex-1 w-[612px] h-6 flex px-3 py-3 items-center gap-1  rounded-sm bg-white">
-                      Mock Development
-                    </div>
-                    <div className="text-black font-sans text-sm font-medium not-italic leading-6 w-auto h-8 flex px-6 py-3 items-center gap-1  rounded-sm    bg-white">
-                      <SubStages />
-                    </div>
-                    <div className="text-black font-sans text-sm font-normal not-italic leading-6 w-auto h-10 flex px-10 py-3 items-center gap-1  rounded-sm  bg-white  border-slate-100">
-                      <AddCheckList />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="border border-blue-100 rounded-lg mb-4">
-                <div className="flex flex-col justify-center items-center w-[612px] h-[133px] gap-2  ">
-                  <div className="text-blue-700 font-sans text-sm not-italic font-medium leading-7 px-2 w-[602px] h-[22] rounded-sm   bg-white ">
-                    Stage 3
-                  </div>
-                  <div>
-                    <div className="text-blue-400  font-sans text-sm font-normal leading-6 flex-1 w-[612px] h-6 flex px-3 py-3 items-center gap-1  rounded-sm bg-white ">
-                      Actual Development
-                    </div>
-                    <div className="text-black font-sans text-sm font-medium not-italic leading-6 w-auto h-8 flex px-6 py-3 items-center gap-1  rounded-sm    bg-white ">
-                      {" "}
-                      <SubStages />
-                    </div>
-                    <div className="text-black font-sans text-sm font-normal not-italic leading-6 w-auto h-10 flex px-10 py-3 items-center gap-1  rounded-sm  bg-white  border-slate-100">
-                      {" "}
-                      <AddCheckList />
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+
               <div className="border border-blue-100 rounded-lg mb-4 ">
                 <div className="flex flex-col justify-center items-center w-[612px] h-[133px] gap-2">
                   <div className="text-blue-700 font-sans text-sm not-italic font-medium leading-7 px-2 w-[602px] h-[22] rounded-sm   bg-white">
@@ -89,6 +107,7 @@ export default function ProjectStages() {
                 </div>
               </div>
             </div>
+
             {/* left Conatiner Box  Stages */}
             <button
               className="flex  px-1 py-4 justify-center items-center gap-2
@@ -106,7 +125,4 @@ export default function ProjectStages() {
       </div>
     </>
   );
-}
-{
-  /* <StagesScr />; */
 }

@@ -2,8 +2,15 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+
+import useProject, { project, setProject } from "@/HOC/Project/Project";
+
 const AddCheckList = () => {
+  // HOC
+  const [project, setProject] = useProject({});
+
   const [isAddStageOpen, setIsAddStageOpen] = useState(false);
+
   const showAddStage = () => {
     setIsAddStageOpen(true);
   };
@@ -13,6 +20,10 @@ const AddCheckList = () => {
   const handleCancel = () => {
     setIsAddStageOpen(false);
   };
+
+  console.log("project");
+  console.log(project);
+
   return (
     <>
       <a className="text-black cursor-pointer " onClick={showAddStage}>
@@ -23,6 +34,8 @@ const AddCheckList = () => {
         open={isAddStageOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        footer={null}
+        closable={false}
       >
         <section className="flex flex-col justify-center items-start  ">
           <p className="w-auto text-black font-sans text-base not-italic font-medium leading-6 p-5">
@@ -85,4 +98,3 @@ const AddCheckList = () => {
   );
 };
 export default AddCheckList;
-

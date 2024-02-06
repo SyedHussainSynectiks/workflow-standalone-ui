@@ -19,7 +19,6 @@ const WorkFlowList3 = () => {
     setIsAddWorkFlow(false);
   };
 
-
   // toggal function
   const [activeSection, setActiveSection] = useState("Procurement");
   const [unSavedTamplate, setunSavedTamplate] = useState(false);
@@ -30,8 +29,6 @@ const WorkFlowList3 = () => {
   const toggleSection = (section) => {
     setActiveSection(section);
   };
-
-  
 
   return (
     <main className=" bg-gray-200 p-2">
@@ -108,27 +105,24 @@ const WorkFlowList3 = () => {
 
         {unSavedTamplate === true && (
           <>
-          <div className=" flex flex-row justify-between py-2 items-center w-auto bg-white  px-5">
-          <p className="text-black font-sans text-lg not-italic font-semibold ">
-          Procurement Workflows
-          </p>
-          <Hamburger />
-        </div>
-          <section className="flex flex-row justify-start items-center  bg-white gap-3 w-auto h-[350px]  p-5">
-
-            <SelectTamplate/>
+            <div className=" flex flex-row justify-between py-2 items-center w-auto bg-white  px-5">
+              <p className="text-black font-sans text-lg not-italic font-semibold ">
+                Procurement Workflows
+              </p>
+              <Hamburger />
+            </div>
+            <section className="flex flex-row justify-start items-center  bg-white gap-3 w-auto h-[350px]  p-5">
+              <SelectTamplate />
               <section className="relative flex flex-col w-[256px] h-[316px] justify-center text-center gap-3 shadow-lg p-3 items-center bg-white rounded-lg border border-slate-100">
-
                 <Button
-                href="/main/projects/addingStages"
+                  href="/main/projects/addingStages"
                   type="default"
                   className="text-black font-roboto font-medium text-base leading-6"
                 >
                   Create New Template
                 </Button>
               </section>
-
-          </section>
+            </section>
           </>
         )}
         {/* decelopment workflwo */}
