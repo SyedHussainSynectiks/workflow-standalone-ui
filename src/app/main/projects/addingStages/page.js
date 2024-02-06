@@ -93,7 +93,6 @@ export default function ProjectStages() {
                 ))}
               </div>
 
-
               <div className="border border-blue-100 rounded-lg mb-4 ">
                 <div className="flex flex-col justify-center items-center w-[612px] h-[133px] gap-2">
                   <div className="text-blue-700 font-sans text-sm not-italic font-medium leading-7 px-2 w-[602px] h-[22] rounded-sm   bg-white">

@@ -56,7 +56,6 @@ export const Projectmanager = (props) => {
         resourcePool: updatedResourcePool,
       };
     });
-
     props.onSubmit();
   };
 

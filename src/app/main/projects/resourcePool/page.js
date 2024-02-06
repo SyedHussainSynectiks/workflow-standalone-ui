@@ -19,8 +19,8 @@ import api from "@/api";
 // HOC
 import useProject from "@/HOC/Project/Project";
 
-  // useRouter
-  import { useRouter } from "next/navigation";
+// useRouter
+import { useRouter } from "next/navigation";
 import { stringify } from "postcss";
 
 export default function Home() {
@@ -73,7 +73,6 @@ export default function Home() {
     console.log(postData);
 
     console.log(JSON.stringify(postData));
-    router.push("/main/projects/addResource"); // Change '/new-route' to the desired route path
 
     fetch(
       `https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/project/${project.projectId}/team`,
@@ -103,6 +102,8 @@ export default function Home() {
         // Handle errors
         console.error("Error sending schema to API:", error);
       });
+
+    router.push("/main/projects/addResource"); // Change '/new-route' to the desired route path
   };
 
   return (
