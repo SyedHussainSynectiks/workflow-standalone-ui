@@ -9,7 +9,14 @@ import ProjectAddedResources from "../addResource/page";
 
 import SelectTamplate from "@/Components/WorkFlowListPages/SelectTamplate";
 import WorkFlowDropDown from "../../../../Components/WorkFlowListPages/AddWorkFLowDrpDown";
+
+import useProject, { project, setProject } from "@/HOC/Project/Project";
+
 const WorkFlowList3 = () => {
+  const [project, setProject] = useProject([]);
+
+  const projectVariable =
+    project.projectName !== "" ? project.projectName : " ";
   // modal function
   const [isAddWorkFlow, setIsAddWorkFlow] = useState(false);
   const openModal = (modalSetter) => {
@@ -33,7 +40,7 @@ const WorkFlowList3 = () => {
   return (
     <main className=" bg-gray-200 p-2">
       <div className="text-black font-sans text-3xl not-italic font-semibold  mb-2 px-1  ">
-        WorkFlow Management{" "}
+        {projectVariable}
       </div>
       <div className="flex  items-center justify-start w-full h-[56px]  bg-white px-4 py-6 flex-shrink-0 gap-3 rounded mb-3">
         <div className="flex flex-row  rounded p-2 items-center bg-gray-100 gap-3">
@@ -45,7 +52,7 @@ const WorkFlowList3 = () => {
             }`}
             onClick={() => toggleSection("Procurement")}
           >
-            Procurement Overview
+            {projectVariable} Overview
           </div>
           <div
             className={`flex px-[7px] py-1 items-center gap-[6px] rounded-sm cursor-pointer ${
@@ -62,7 +69,7 @@ const WorkFlowList3 = () => {
       <section className="w-auto border rounded-sm  bg-white p-5 leading-10 mb-3">
         <div className="flex  flex-row justify-between items-center">
           <div className="text-black font-sans  text-lg not-italic font-semibold ">
-            Procurement Solution{" "}
+            {projectVariable} Solution{" "}
           </div>
           {/* <Image src={hamburger} width={20} height={18} /> */}
           {/* <ListOfRole /> */}
@@ -107,7 +114,7 @@ const WorkFlowList3 = () => {
           <>
             <div className=" flex flex-row justify-between py-2 items-center w-auto bg-white  px-5">
               <p className="text-black font-sans text-lg not-italic font-semibold ">
-                Procurement Workflows
+                Workflows
               </p>
               <Hamburger />
             </div>
@@ -133,7 +140,7 @@ const WorkFlowList3 = () => {
             <section className=" flex flex-col mt-3 pt-3 bg-white">
               <div className="flex flex-row justify-between py-2 items-center w-auto bg-white  px-5">
                 <p className="text-black font-sans text-lg not-italic font-semibold  ">
-                  Procurement Resources
+                  {projectVariable} Resources
                 </p>
                 <button className="flex flex-row px-2 py-4 justify-center items-center gap-2 border rounded-sm border-slate-200 bg-gray-50 shadow-sm text-slate-400 text-center font-sans text-sm not-italic font-normal leading-5 h-[22px]">
                   Monthly{" "}
@@ -193,7 +200,7 @@ const WorkFlowList3 = () => {
         {activeSection === "ResourcePool" && (
           <section className=" w-auto overflow-x-hidden border rounded-sm  bg-white  leading-10 mt-3">
             <div className="text-black p-4 font-sans text-xl font-bold not-italic">
-              Procurement Resource Pool
+            {projectVariable}   Resource Pool
             </div>
             <div>
               <ProjectAddedResources />

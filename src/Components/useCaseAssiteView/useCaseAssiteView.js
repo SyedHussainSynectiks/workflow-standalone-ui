@@ -7,6 +7,7 @@ import rightarrowImage from "../../../public/assets/rightArrow.svg"
 import fourImage from "../../../public/assets/5.svg";
 import fiveImage from "../../../public/assets/5.svg";
 import sixImage from "../../../public/assets/6.svg";
+
 export default function AssestView() {
     return (
         <>

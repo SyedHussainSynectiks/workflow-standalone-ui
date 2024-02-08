@@ -16,33 +16,32 @@ export default function ProjectAddedResources() {
   const [addResource, setAddResource] = useState([]);
 
   const router = useRouter();
-
-  
-  useEffect(() => {
-    // Perform the GET request to /project/:id/team
+  // Function to fetch team data
+  const fetchTeamData = () => {
     api
       .get(`/project/${project.projectId}/team`)
       .then((response) => {
         // Handle the successful response
         setAddResource(response.data);
-
         console.log("Team data:", response.data);
       })
       .catch((error) => {
         // Handle the error
         console.error("Error fetching team data:", error);
       });
-  }, []);
+  };
+
+  // Call the function when the component mounts
+  React.useEffect(() => {
+    fetchTeamData();
+  }, []); // Empty dependency array to mimic componentDidMount behavior
 
   console.log("addResource");
   console.log(addResource);
 
-  const handleOnClickNext = () =>{
+  const handleOnClickNext = () => {
     router.push("/main/projects/workFlowOverView"); // Change '/new-route' to the desired route path
-    
-  }
-
-
+  };
 
   return (
     <>

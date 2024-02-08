@@ -6,33 +6,34 @@ import { TiTick } from "react-icons/ti";
 import { UseCase1Comments } from "../useCaseWorkViewDetailsComments/UseCaseComments";
 import { UseCase2Comments } from "../useCaseWorkViewDetailsComments/UseCaseComments";
 import { UseCase3Comments } from "../useCaseWorkViewDetailsComments/UseCaseComments";
-
+ 
 import CustomPopover from "./customPopover";
-
-const Stepper = ({ popoverVisible }) => {
+ 
+const Stepper = ({ popoverVisible, setWorkFlowView}) => {
+    console.log("PROP" , setWorkFlowView)
+    const newRRAY = setWorkFlowView.stages.map(obj => {
+        console.log("obj", Object.keys(obj)[0])
+        return Object.keys(obj)
+    })
+    console.log("RRay",newRRAY)
     const steps = [
-        "Requirements",
-        "Mock Development",
-        "Actual Development",
-        "CI/CD Tests",
-        "Staging/Release",
-        "Publish/Operate",
+        {newRRAY},
     ];
     const [currentStep, setCurrentStep] = useState(1); // Initialize currentStep with 1 to make step 1 active by default
     const [complete, setComplete] = useState(false);
     const [childComponent, setChildComponent] = useState(1);
-
+ 
     const nextStep = () => {
         setCurrentStep((prevStep) => prevStep + 1);
     };
-
+ 
     const prevStep = () => {
         setCurrentStep((prevStep) => prevStep - 1);
     };
     const handleStepClick = (stepIndex) => {
         setCurrentStep(stepIndex + 1);
     };
-
+ 
     const handleChangeStep = () => {
         // Logic to change child component based on current step
         switch (currentStep) {
@@ -60,16 +61,16 @@ const Stepper = ({ popoverVisible }) => {
                 break;
         }
     };
-
+ 
     useEffect(() => {
         handleChangeStep();
     }, [currentStep]); // Re-run effect when current step changes
-
-
+ 
+ 
     return (
         <>
             <div className="flex justify-between h-[5rem] w-[100%]">
-                {steps?.map((step, i) => (
+                {newRRAY ?.map((step, i) => (
                     <div
                         key={i}
                         className={`step-item ${currentStep === i + 1 && "active"} ${(i + 1 < currentStep || complete) && "complete"
@@ -91,7 +92,7 @@ const Stepper = ({ popoverVisible }) => {
                             visible={popoverVisible}
                             placement={i % 2 === 0 ? "top" : "bottom"}
                         ></CustomPopover>
-
+ 
                         <p className="text-gray-500">
                             <span>
                                 <div className="h-6 "></div>
@@ -122,5 +123,5 @@ const Stepper = ({ popoverVisible }) => {
         </>
     );
 };
-
+ 
 export default Stepper;

@@ -9,3 +9,70 @@
 }
 
 
+
+/* Use Cases */
+.ProcurWrongFlex{
+  @apply flex flex-row items-center justify-between  p-5
+}
+ 
+.ProcurWrkFlwTxt{
+  @apply flex w-80   h-8 flex-col justify-center flex-shrink-0 text-black font-sans text-3xl not-italic font-semibold leading-7
+}
+ 
+.TopBarMainSectionFlex{
+  @apply flex flex-row  justify-between items-center bg-white w-auto h-14 flex-shrink-0  px-3 mb-5
+}
+ 
+.UseCasesTxt{
+  @apply  text-black font-sans text-lg not-italic font-semibold  leading-7 h-10 flex  items-center gap-4 bg-white
+}
+ 
+.BtnSearchFlexLeft{
+  @apply flex flex-row justify-start items-center gap-2
+}
+ 
+ 
+ 
+.SearchTxtSearchBarFlex{
+  @apply flex flex-row justify-start items-center
+}
+ 
+.SearchTxt{
+  @apply text-black font-sans text-sm not-italic font-normal leading-7 w-52 h-8  flex px-1 py-3 items-start gap-[10px]  border-black  
+}
+ 
+.UseCaseBtnClr{
+  @apply flex px-0 py-4 justify-center items-center gap-2 self-start border rounded-sm bg-blue-500 w-11 h-8
+}
+ 
+.OrientViewBtn{
+  @apply flex px-1 py-4 items-center justify-center gap-2 rounded-sm border bg-blue-500 w-24 h-8 text-white text-center font-sans text-sm not-italic font-normal leading-7
+}
+ 
+.ResoucesViewBtn{
+  @apply flex px-1 py-4 items-center justify-center gap-2 rounded-sm border bg-blue-600 w-32 h-8 text-white text-center font-sans text-sm not-italic font-normal leading-7
+}
+/* Compoemet inside the UseCase */
+.RequirementText{
+  @apply text-blue-800 font-sans text-base not-italic font-semibold leading-6
+}
+ 
+.UseCaseTxt{
+  @apply text-black font-sans text-sm not-italic font-semibold leading-7  h-7
+}
+ 
+.AssignedColTxtUsecaseComp{
+  @apply text-black font-sans text-sm not-italic font-semibold leading-7 w-28 h-6 text-start
+}
+ 
+.NameProfileColUsecaseComp{
+  @apply text-black font-sans text-sm not-italic font-semibold leading-7 w-24 h-6 text-start
+}
+ 
+.NameProfileColUsecaseCompDate{
+  @apply  text-orange-500 font-sans text-sm not-italic font-semibold leading-7 h-6 text-start w-[100%]
+}
+ 
+.NameProfileColUsecaseCompDateGreenClrDate{
+@apply text-green-500 font-sans text-sm not-italic font-semibold leading-7 h-6 text-start
+}

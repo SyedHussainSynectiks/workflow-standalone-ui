@@ -64,7 +64,7 @@ export default function Home() {
   };
 
   console.log("project");
-  console.log(project);
+  console.log(project.resourcePool);
 
   const handleOnClickNext = () => {
     console.log(project.resourcePool);
