@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 import api from "@/api";
 import React from "react";
@@ -9,11 +8,8 @@ const { TabPane } = Tabs;
 import AssineTo from "../useCaseAssine/assineTo";
 import WorkViewDetails from "../useCaseWorkViewDetails/workViewDetails";
 import { UseCase1Comments } from "../useCaseWorkViewDetailsComments/UseCaseComments";
-// import AssestView from "../UseCaseAssiteView/UseCaseAssiteView";
-// import AssestView from "../useCaseAssiteView/UseCaseAssiteView";
-// import WorkViewDfrnt from "../useCaseWorkViewDetails/workViewDfrnt";
 import Stepper from "../useCaseStepper/useCaseStepper";
-import AssestView from "../useCaseAssiteView/useCaseAssiteView";
+import AssestView from "../useCaseAssiteView/useCaseassiteView";
 
 const UseCaseTabs = () => {
   const [usetabes, setUsetabes] = useState([]);
@@ -61,25 +57,6 @@ const UseCaseTabs = () => {
     };
     fetchData();
   }, []);
-=======
-// "use client";
-import React, { useState } from "react";
-import { Tabs, Button } from "antd";
-const { TabPane } = Tabs;
-import AssineTo from "../useCaseAssine/assineTo";
-import WorkViewDetails from "../useCaseWorkViewDetails/workViewDetails";
-import {UseCase1Comments} from "../useCaseWorkViewDetailsComments/UseCaseComments";
-import AssestView from "../useCaseAssiteView/useCaseassiteView";
-
-// import WorkViewDfrnt from "../useCaseWorkViewDetails/workViewDfrnt";
-import Stepper from "../useCaseStepper/useCaseStepper";
-
-const UseCaseTabs = () => {
-  const [activeTab, setActiveTab] = useState("1");
-  const [popoverVisible, setPopoverVisible] = useState(false);
-  const [stepsVisible, setStepsVisible] = useState(false);
-  const [stepsNext , setAtepsNext] = useState(0);
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
 
   const onChange = (key) => {
     setActiveTab(key);
@@ -95,23 +72,13 @@ const UseCaseTabs = () => {
   };
 
   const handleNext = () => {
-<<<<<<< HEAD
-=======
-
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
     // If steps are not visible, navigate to the next tab
     const nextTab = String(parseInt(activeTab, 10) + 1);
     setActiveTab(nextTab);
     if (nextTab === "2") {
       setPopoverVisible(true);
-<<<<<<< HEAD
     } else {
       setPopoverVisible(false);
-=======
-    } else{
-      setPopoverVisible(false);
-
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
     }
   };
 
@@ -127,14 +94,8 @@ const UseCaseTabs = () => {
     setActiveTab(prevTab);
     if (prevTab === "2") {
       setPopoverVisible(true);
-<<<<<<< HEAD
     } else {
       setPopoverVisible(false);
-=======
-    } else{
-      setPopoverVisible(false);
-
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
     }
   };
 
@@ -144,21 +105,12 @@ const UseCaseTabs = () => {
         defaultActiveKey="1"
         activeKey={activeTab}
         onChange={onChange}
-<<<<<<< HEAD
         tabBarStyle={{ margin: 10, fontSize: "2rem" }}
         tabBarGutter={150}
         className="bg-white p-6"
       >
         <TabPane tab="Overview" key="1" className="py-6 bg-white">
           <AssineTo setUseCaseAssin={useCaseAssin} />
-=======
-        tabBarStyle={{ margin: 10 , fontSize: '2rem' }}
-        tabBarGutter={250}
-       
-      >
-        <TabPane tab="Overview" key="1" className="py-6">
-          <AssineTo />
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
         </TabPane>
         <TabPane
           tab="Workflow View"
@@ -166,7 +118,6 @@ const UseCaseTabs = () => {
           className="py-10 relative"
           onClick={() => setPopoverVisible(!popoverVisible)}
         >
-<<<<<<< HEAD
           <div className="my-8 mb-[6rem] relative  px-6 pt-[1rem]">
             {/* <WorkViewDetails popoverVisible={popoverVisible}  stepsNext={stepsNext}/> */}
             <Stepper
@@ -174,11 +125,6 @@ const UseCaseTabs = () => {
               stepsNext={stepsNext}
               setWorkFlowView={workFlowView}
             />
-=======
-          <div className="my-8 mb-[6rem] px-3 relative  px-auto pt-[1rem]">
-            {/* <WorkViewDetails popoverVisible={popoverVisible}  stepsNext={stepsNext}/> */}
-            <Stepper popoverVisible={popoverVisible} stepsNext={stepsNext} />
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
           </div>
           <div className="border-t-2 border-dashed">
             {/* <UseCase1Comments />
@@ -186,13 +132,9 @@ const UseCaseTabs = () => {
           </div>
         </TabPane>
         <TabPane tab="Asset View" key="3">
-<<<<<<< HEAD
           <div className="my-8">
             <AssestView />
           </div>
-=======
-          <div className="my-8"><AssestView /></div>
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
         </TabPane>
         <TabPane tab="Planning" key="4">
           <div className="my-8">{/* <WorkViewDetails /> */}</div>
@@ -200,28 +142,20 @@ const UseCaseTabs = () => {
       </Tabs>
       <div className="flex gap-4 justify-end mt-4">
         {activeTab > "1" && (
-<<<<<<< HEAD
           <button
             className="bg-blue-400 text-white p-3 rounded-lg"
             onClick={handlePrev}
             onChange={onChange}
           >
-=======
-          <button className="bg-blue-400 text-white p-3 rounded-lg" onClick={handlePrev} onChange={onChange}>
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
             Previous
           </button>
         )}
         {activeTab < "4" && (
-<<<<<<< HEAD
           <button
             className="bg-blue-400 text-white p-3 rounded-lg"
             onClick={handleNext}
             onChange={onChange}
           >
-=======
-          <button className="bg-blue-400 text-white p-3 rounded-lg" onClick={handleNext} onChange={onChange}>
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
             Next
           </button>
         )}
