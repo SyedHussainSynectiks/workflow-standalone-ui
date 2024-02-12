@@ -6,6 +6,7 @@ import Image from "next/image";
 import Check from "../../../public/assets/Check.svg";
 import search from "../../../public/assets/search2.svg";
 
+<<<<<<< HEAD
 const AssineTo = ({setUseCaseAssin}) => {
 
  
@@ -24,11 +25,23 @@ const AssineTo = ({setUseCaseAssin}) => {
         <div>
           
 
+=======
+const AssineTo = () => {
+  return (
+    <>
+
+
+          <h3 className="text-blue-600 text-2xl font-bold">Development Workflow Overview</h3>
+          <div className="my-6"> <UsecaseList/></div>
+         
+     
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
       <div className="w-[100%] flex gap-8">
         <div>
           <h2 className="text-blue-400 text-xl font-normal leading-snu w-[100%]">
             Assigned to :
           </h2>
+<<<<<<< HEAD
        
           <div>
   
@@ -44,17 +57,37 @@ const AssineTo = ({setUseCaseAssin}) => {
                   {setUseCaseAssin.assignee_name}
                 </h3>
                 <p className="text-grey-300 text-xs">{setUseCaseAssin.role}</p>
+=======
+          <div className="w-80 p-6 border shadow-md mb-6 mt-4">
+            <div className="flex gap-12">
+              <div>
+                <Image src={user} />
+              </div>
+              <div>
+                <h3 className="text-blue-600 text-sl font-bold leading-snu">
+                  Angela Moss
+                </h3>
+                <p className="text-grey-300 text-xs">Project Manager</p>
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
               </div>
             </div>
             <div className="flex flex-col gap-4 mt-6">
               <h4 className="text-blue-400 text-xm font-normal">
                 Current Task - User Document{" "}
               </h4>
+<<<<<<< HEAD
               <p className="text-grey-300 text-sm">Total Task - {setUseCaseAssin.total_task} </p>
             </div>
           </div>
 
           <div className="w-auto p-6 border shadow-md mb-6 mt-6">
+=======
+              <p className="text-grey-300 text-sm">Total Task - 10 </p>
+            </div>
+          </div>
+
+          <div className="w-80 p-6 border shadow-md mb-6 mt-6">
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
             <div className="wraper flex justify-between">
               <div className="column1 text-grey-300 text-sl flex flex-col gap-2">
                 <p>Assigned date</p>
@@ -63,17 +96,26 @@ const AssineTo = ({setUseCaseAssin}) => {
                 <p>Deviation</p>
               </div>
               <div className="column2 text-grey-300 text-sl flex flex-col gap-2">
+<<<<<<< HEAD
                 <p>{setUseCaseAssin.useCase_AssinDate}</p>
                 <p>{setUseCaseAssin.useCase_PlanDate}</p>
                 <p>{setUseCaseAssin.useCase_ActualDate}</p>
+=======
+                <p>20/05/2022</p>
+                <p>27/05/2022</p>
+                <p>27/05/2022</p>
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                 <p>0 Days</p>
               </div>
             </div>
           </div>
+<<<<<<< HEAD
           </div>  
     
               </div>
              
+=======
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
         </div>
         <div className="w-[100%]">
           <button className="bg-blue-400 text-white p-3">
@@ -107,6 +149,10 @@ const AssineTo = ({setUseCaseAssin}) => {
             </div>
             <p>Created by Zakir on 25 Feb 2021 at 03.00PM</p>
           </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
         </div>
       </div>
       <div className="w-[100%] p-6 border shadow-md mb-6 mt-4">
@@ -121,9 +167,12 @@ const AssineTo = ({setUseCaseAssin}) => {
           className="mt-4 h-12 bg-slate-100 w-[100%] p-4"
         />
       </div>
+<<<<<<< HEAD
       </div>
 
     
+=======
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
     </>
   );
 };

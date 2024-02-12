@@ -2,10 +2,17 @@
     @apply relative flex flex-col justify-center items-center w-36;
   }
   .step-item:not(:first-child):before {
+<<<<<<< HEAD
     @apply content-[''] bg-slate-200 absolute w-[20rem] h-[3px] right-1/4 top-1/3 -translate-y-3/4 -z-0;
   }
   .step {
     @apply w-10 h-10 flex items-center justify-center z-[1] relative bg-blue-300 rounded-full font-semibold text-white cursor-pointer;
+=======
+    @apply content-[''] bg-slate-200 absolute w-[19rem] h-[3px] right-1/4 top-1/3 -translate-y-3/4;
+  }
+  .step {
+    @apply w-10 h-10 flex items-center justify-center z-10 relative bg-slate-700 rounded-full font-semibold text-white cursor-pointer;
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   }
   .active .step {
     @apply bg-red-600;
@@ -20,7 +27,11 @@
    .active:not(:first-child)::before{
     @apply bg-green-600;
   }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   .popover{
     position: absolute;
     bottom: 4rem;
@@ -29,21 +40,34 @@
   .custom-popover {
     position: absolute;
     background-color: #fff;
+<<<<<<< HEAD
     border: 1px solid  #399EF7 !important;
     border-radius: 5px;
     padding: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 0 !important;
+=======
+    border: 1px solid  #399EF7;
+    border-radius: 5px;
+    padding: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.2s ease-in-out;
   }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   .custom-popover.visible {
     visibility: visible;
     opacity: 1;
     border: 1px solid;
   }
+<<<<<<< HEAD
 
   .custom-popover.top {
     bottom: calc(100% + 6px);
@@ -53,6 +77,17 @@
     top: calc(100% + 2px);
   }
 
+=======
+  
+  .custom-popover.top {
+    bottom: calc(100% + 6px);
+  }
+  
+  .custom-popover.bottom {
+    top: calc(100% + 2px);
+  }
+  
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   .samosa-top{
     position: absolute;
     bottom:2rem ;
@@ -63,7 +98,11 @@
     position: absolute;
     top:2rem ;
     left: 45%;
+<<<<<<< HEAD
   }
   .uc-tr{
     fill :white;
   }
+=======
+  }
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74

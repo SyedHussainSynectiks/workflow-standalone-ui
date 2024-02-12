@@ -10,38 +10,60 @@ import api from "@/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+<<<<<<< HEAD
 import useProject from "@/HOC/Project/Project";
+=======
+import useProject,{ project , setProject } from "@/HOC/Project/Project";
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
 
 import { DatePicker } from "antd";
 const { RangePicker } = DatePicker;
 
 import { UploadPopul2 } from "./uploadPopul";
 import { UploadCompleted } from "./uploadPopul";
+<<<<<<< HEAD
 
 import moment from "moment";
+=======
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
 
 export default function ProjectForm() {
   // State variables to control the visibility of each modal
   const [isPrjectIconModalOpen, setIsPrjectIconModalOpen] = useState(false);
+<<<<<<< HEAD
 
   // Function to open the corresponding modal
   const openModal = (modalSetter) => {
     modalSetter(true);
   };
 
+=======
+  // Function to open the corresponding modal
+  const openModal = (modalSetter) => {
+    modalSetter(true);
+  };
+
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   const handleCloseModals = () => {
     setIsPrjectIconModalOpen(false);
   };
   const router = useRouter();
+<<<<<<< HEAD
 
   // useProject
+=======
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   const [project, setProject] = useProject({
     projectName: "",
     projectDescription: "",
     projectDepartment: "",
     startDate: "",
     endDate: "",
+<<<<<<< HEAD
     projectId: "",
+=======
+    projectIcon: "",
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   });
 
   console.log(project);
@@ -55,16 +77,33 @@ export default function ProjectForm() {
       department: project.projectDepartment,
       start_date: project.startDate,
       end_date: project.endDate,
+<<<<<<< HEAD
       image_url: "https://i.imgur.com/PujQY5Y.png",
+=======
+      projectIcon: project.projectIcon,
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
     };
 
     // Api Functions
     try {
+<<<<<<< HEAD
       const response = await api.post("/project", postData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
+=======
+      const response = await fetch(
+        "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/project",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
 
       if (response.status === 200) {
         const data = response.data;
@@ -105,6 +144,15 @@ export default function ProjectForm() {
         <div className="text-black font-sans text-xl font-semibold not-italic leading-7 w-40  flex items-center  gap-1 h-10">
           Add New Project
         </div>
+<<<<<<< HEAD
+=======
+        {/* <div className="flex flex-row items-center justify-center bg-white border rounded-sm shadow-sm border-slate-200   w-28 h-8 px-1 py-4 flex-shrink-0 text-black font-sans  text-sm font-normal leading-snug gap-2">
+          All Project{" "}
+          <span className="w-2 h-3">
+            <img src="/Images/downarrow.svg" />{" "}
+          </span>{" "}
+        </div> */}
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
       </section>
 
       {/* Shows a Details of Project */}
@@ -174,12 +222,26 @@ export default function ProjectForm() {
             >
               Project Duration :
             </label>
+<<<<<<< HEAD
 
+=======
+            {/* <RangePicker
+            id="projectDuration"
+              className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
+              onChange={(values) => {
+                endDate( values.map(item=> {
+                  console.log(item)
+                    return moment(item).format("YYYY-DD-MM");
+                  }));
+              }}
+            /> */}
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
             <div>
               <DatePicker
                 id="projectStartDate"
                 placeholder="Start Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
+<<<<<<< HEAD
                 onChange={(date, dateString) =>
                   setProject({
                     ...project,
@@ -188,6 +250,18 @@ export default function ProjectForm() {
                     ),
                   })
                 }
+=======
+                onChange={(values) => {
+                  project.startDate(
+                    values.map((item) => {
+                      console.log(item);
+                      return moment(item).format("YYYY-DD-MM");
+                    })
+                    // ,{handleChange}
+                    // , values={project:project.startDate}
+                  );
+                }}
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
 
                 // value={project.startDate}
               />
@@ -196,6 +270,7 @@ export default function ProjectForm() {
                 id="projectEndDate"
                 placeholder="End Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
+<<<<<<< HEAD
                 onChange={(date, dateString) =>
                   setProject({
                     ...project,
@@ -204,6 +279,16 @@ export default function ProjectForm() {
                     ),
                   })
                 }
+=======
+                onChange={(values) => {
+                  endDate(
+                    values.map((item) => {
+                      console.log(item);
+                      return moment(item).format("YYYY-DD-MM");
+                    })
+                  );
+                }}
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                 // value={project.endDate}
               />
             </div>
@@ -231,10 +316,15 @@ export default function ProjectForm() {
                   id="projectIcon"
                   open={isPrjectIconModalOpen}
                   onCancel={handleCloseModals}
+<<<<<<< HEAD
                   closable={false}
                   onOk={handleCloseModals}
                   width={430}
                   okButtonProps={{ className: "bg-blue-500" }}
+=======
+                  onOk={handleCloseModals}
+                  width={430}
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                 >
                   <UploadPopul2 onSubmit={handleCloseModals} />
                 </Modal>

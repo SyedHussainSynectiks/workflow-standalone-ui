@@ -20,7 +20,11 @@ const { Title, Paragraph, Text } = Typography;
 const getData = async () => {
 
     try {
+<<<<<<< HEAD
         const response = await api.get('/project');
+=======
+        const response = await axios.get('https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/project');
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
         console.log(response.data);
         return response.data;
     } catch (error) {

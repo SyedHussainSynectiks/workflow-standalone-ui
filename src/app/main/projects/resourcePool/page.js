@@ -2,6 +2,7 @@
 
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { Button, Modal } from "antd";
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { Projectmanager } from "./popup";
 import { ApiDeveloper } from "./popup";
@@ -22,12 +23,27 @@ import useProject from "@/HOC/Project/Project";
 // useRouter
 import { useRouter } from "next/navigation";
 import { stringify } from "postcss";
+=======
+import { useState } from "react";
+import  {Projectmanager}  from "./popup/Addresources";
+import { ApiDeveloper } from "./popup/Addresources";
+import { CiCdResourcePool } from "./popup/Addresources";
+import { TesterResourcePool } from "./popup/Addresources";
+import { UiDesignResourcePool } from "./popup/Addresources";
+import { UiDeveloperResourcePool } from "./popup/Addresources";
+import { UxResearcher } from "./popup/Addresources";
+
+import Link from "next/link";
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
 
 export default function Home() {
   // State variables to control the visibility of each modal
   const [isProjectManagerModalOpen, setIsProjectManagerModalOpen] =
     useState(false);
+<<<<<<< HEAD
 
+=======
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   const [isUiDesignerModalOpen, setIsUiDesignerModalOpen] = useState(false);
   const [isUiDeveloperModalOpen, setIsUiDeveloperModalOpen] = useState(false);
   const [isApiDeveloperModalOpen, setIsApiDeveloperModalOpen] = useState(false);
@@ -35,8 +51,11 @@ export default function Home() {
   const [isUxResearcherModalOpen, setIsUxResearcherModalOpen] = useState(false);
   const [isCiCdModalOpen, setIsCiCdModalOpen] = useState(false);
 
+<<<<<<< HEAD
   const [project, setProject] = useProject({});
 
+=======
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   // Function to open the corresponding modal
   const openModal = (modalSetter) => {
     modalSetter(true);
@@ -52,6 +71,7 @@ export default function Home() {
     setIsTesterModalOpen(false);
     setIsUxResearcherModalOpen(false);
     setIsCiCdModalOpen(false);
+<<<<<<< HEAD
   };
 
   const router = useRouter();
@@ -106,12 +126,19 @@ export default function Home() {
     router.push("/main/projects/addResource"); // Change '/new-route' to the desired route path
   };
 
+=======
+  };
+  // function getDataFromModal (data){
+  //   console.log(data)
+  // }
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   return (
     <>
       <div className="main flex flex-col bg-white w-full rounded-lg  ">
         <h2 className="ml-4 mt-5 text-black font-segoe-ui text-2xl font-semibold leading-24">
           Resource Pool
         </h2>
+<<<<<<< HEAD
 
         <div className="flex mt-8">
           <div className="div flex flex-col gap-4  justify-center ml-8">
@@ -150,19 +177,35 @@ export default function Home() {
             <div className=" flex flex-row items-center">
               <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
                 UI Designer
+=======
+
+        <div className="flex mt-8">
+          <div className="div flex flex-col gap-4  justify-center ml-8">
+            <div className=" flex flex-row items-center">
+              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32 ">
+                Project Manager
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
               </h3>
               <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
                 <a
                   href="#"
                   className="flex justify-between items-center"
+<<<<<<< HEAD
                   onClick={() => openModal(setIsUiDesignerModalOpen)}
                 >
                   <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
                     Add UI Designer
+=======
+                  onClick={() => openModal(setIsProjectManagerModalOpen)}
+                >
+                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                    Add Project Manager
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                   </span>
                   <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
                 </a>
                 <Modal
+<<<<<<< HEAD
                   open={isUiDesignerModalOpen}
                   onCancel={handleCloseModals}
                   footer={null}
@@ -181,19 +224,43 @@ export default function Home() {
             <div className=" flex flex-row items-center">
               <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
                 UI Developer
+=======
+                  open={isProjectManagerModalOpen}
+                  onCancel={handleCloseModals}
+                  width={1000}
+                >
+                  <Projectmanager onSubmit={handleCloseModals} />
+                </Modal>
+              </div>
+              <div className=" text-gray-300 rounded-md bg-neutral-1 shadow-md px-6 py-5">
+                <span>00</span>
+              </div>
+            </div>
+            <div className=" flex flex-row items-center">
+              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+                UI Designer
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
               </h3>
               <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
                 <a
                   href="#"
                   className="flex justify-between items-center"
+<<<<<<< HEAD
                   onClick={() => openModal(setIsUiDeveloperModalOpen)}
                 >
                   <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
                     Add UI Developer
+=======
+                  onClick={() => openModal(setIsUiDesignerModalOpen)}
+                >
+                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                    Add UI Designer
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                   </span>
                   <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
                 </a>
                 <Modal
+<<<<<<< HEAD
                   open={isUiDeveloperModalOpen}
                   onCancel={handleCloseModals}
                   footer={null}
@@ -201,30 +268,51 @@ export default function Home() {
                   width={1000}
                 >
                   <UiDeveloperResourcePool onSubmit={handleCloseModals} />
+=======
+                  open={isUiDesignerModalOpen}
+                  onCancel={handleCloseModals}
+                  width={1000}
+                >
+                  <UiDesignResourcePool />
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                 </Modal>
               </div>
               <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
                 <span>00</span>
               </div>
             </div>
+<<<<<<< HEAD
 
             {/* API Developer */}
             <div className=" flex flex-row items-center">
               <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
                 API Developer
+=======
+            <div className=" flex flex-row items-center">
+              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+                UI Developer
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
               </h3>
               <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
                 <a
                   href="#"
                   className="flex justify-between items-center"
+<<<<<<< HEAD
                   onClick={() => openModal(setIsApiDeveloperModalOpen)}
                 >
                   <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
                     Add API Developer
+=======
+                  onClick={() => openModal(setIsUiDeveloperModalOpen)}
+                >
+                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                    Add UI Developer
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                   </span>
                   <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
                 </a>
                 <Modal
+<<<<<<< HEAD
                   open={isApiDeveloperModalOpen}
                   onCancel={handleCloseModals}
                   footer={null}
@@ -232,30 +320,51 @@ export default function Home() {
                   width={1000}
                 >
                   <ApiDeveloper onSubmit={handleCloseModals} />
+=======
+                  open={isUiDeveloperModalOpen}
+                  onCancel={handleCloseModals}
+                  width={1000}
+                >
+                  <UiDeveloperResourcePool />
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                 </Modal>
               </div>
               <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
                 <span>00</span>
               </div>
             </div>
+<<<<<<< HEAD
 
             {/* Tester */}
             <div className=" flex flex-row items-center">
               <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
                 Tester
+=======
+            <div className=" flex flex-row items-center">
+              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+                API Developer
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
               </h3>
               <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
                 <a
                   href="#"
                   className="flex justify-between items-center"
+<<<<<<< HEAD
                   onClick={() => openModal(setIsTesterModalOpen)}
                 >
                   <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
                     Add Tester
+=======
+                  onClick={() => openModal(setIsApiDeveloperModalOpen)}
+                >
+                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                    Add API Developer
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                   </span>
                   <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
                 </a>
                 <Modal
+<<<<<<< HEAD
                   open={isTesterModalOpen}
                   onCancel={handleCloseModals}
                   footer={null}
@@ -263,14 +372,77 @@ export default function Home() {
                   width={1000}
                 >
                   <TesterResourcePool onSubmit={handleCloseModals} />
+=======
+                  open={isApiDeveloperModalOpen}
+                  onCancel={handleCloseModals}
+                  width={1000}
+                >
+                  <ApiDeveloper />
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                 </Modal>
               </div>
               <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
                 <span>00</span>
               </div>
             </div>
+<<<<<<< HEAD
 
             {/* UX Resercher */}
+            <div className=" flex flex-row items-center">
+              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+                UX Researcher
+=======
+            <div className=" flex flex-row items-center">
+              <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
+                Tester
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
+              </h3>
+              <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
+                <a
+                  href="#"
+                  className="flex justify-between items-center"
+<<<<<<< HEAD
+                  onClick={() => openModal(setIsUxResearcherModalOpen)}
+                >
+                  {" "}
+                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                    Add UX Researcher
+=======
+                  onClick={() => openModal(setIsTesterModalOpen)}
+                >
+                  {" "}
+                  <span className=" text-neutral-5 font-segoe-ui text-base italic font-semibold leading-6 text-gray-300">
+                    Add Tester
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
+                  </span>
+                  <TbTriangleInvertedFilled className=" text-gray-300 text-sm" />
+                </a>
+                <Modal
+<<<<<<< HEAD
+                  open={isUxResearcherModalOpen}
+                  onCancel={handleCloseModals}
+                  footer={null}
+                  closable={false}
+                  width={1000}
+                >
+                  <UxResearcher onSubmit={handleCloseModals} />
+=======
+                  open={isTesterModalOpen}
+                  onCancel={handleCloseModals}
+                  width={1000}
+                >
+                  <TesterResourcePool />
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
+                </Modal>
+              </div>
+              <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
+                <span>00</span>
+              </div>
+            </div>
+<<<<<<< HEAD
+
+            {/* CI / CD */}
+=======
             <div className=" flex flex-row items-center">
               <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
                 UX Researcher
@@ -290,19 +462,16 @@ export default function Home() {
                 <Modal
                   open={isUxResearcherModalOpen}
                   onCancel={handleCloseModals}
-                  footer={null}
-                  closable={false}
                   width={1000}
                 >
-                  <UxResearcher onSubmit={handleCloseModals} />
+                  <UxResearcher />
                 </Modal>
               </div>
               <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
                 <span>00</span>
               </div>
             </div>
-
-            {/* CI / CD */}
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
             <div className=" flex flex-row mb-5 items-center">
               <h3 className="text-black font-segoe-ui text-base font-normal leading-6 mr-5 w-32">
                 CI/CD
@@ -321,11 +490,17 @@ export default function Home() {
                 <Modal
                   open={isCiCdModalOpen}
                   onCancel={handleCloseModals}
+<<<<<<< HEAD
                   footer={null}
                   closable={false}
                   width={1000}
                 >
                   <CiCdResourcePool onSubmit={handleCloseModals} />
+=======
+                  width={1000}
+                >
+                  <CiCdResourcePool />
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                 </Modal>
               </div>
               <div className=" text-gray-300 rounded-5 border border-solid border-neutral-5 bg-neutral-1 shadow-md px-6 py-5">
@@ -334,6 +509,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
 
         {/* Next button */}
         <div className="btn relative bg-white mb-10">
@@ -343,6 +519,15 @@ export default function Home() {
           >
             Next
           </button>
+=======
+        <div className="btn relative bg-white mb-10">
+          <Link
+            href="/main/projects/addedResources"
+            className=" absolute right-0 top-0   py-1  px-4 bg-blue-500 text-white bg-primary-6   "
+          >
+            Next
+          </Link>
+>>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
         </div>
       </div>
     </>
