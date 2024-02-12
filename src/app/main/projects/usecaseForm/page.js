@@ -1,5 +1,7 @@
 'use client'
+import Link from 'next/link'
 import React, { useState } from 'react'
+
 
 const newform = () => {
 
@@ -930,6 +932,9 @@ const newform = () => {
                         <button className='w-28 h-10 border'>Cancel</button>
                         <button className='w-28 h-10 border bg-blue-500 text-white'>Save</button>
                     </div>
+                    <div className="relative">
+            <Link href='/main/projects/developmentUseCases' className='px-5 py-3 bg-blue-600 text-white aright-0 bottom-0'>Next</Link>
+          </div>
                 </div>
             </form>
         </div>

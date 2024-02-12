@@ -9,10 +9,10 @@ import AssineTo from "../useCaseAssine/assineTo";
 import WorkViewDetails from "../useCaseWorkViewDetails/workViewDetails";
 import { UseCase1Comments } from "../useCaseWorkViewDetailsComments/UseCaseComments";
 // import AssestView from "../UseCaseAssiteView/UseCaseAssiteView";
-import AssestView from "../useCaseAssiteView/UseCaseAssiteView";
-
+// import AssestView from "../useCaseAssiteView/UseCaseAssiteView";
 // import WorkViewDfrnt from "../useCaseWorkViewDetails/workViewDfrnt";
 import Stepper from "../useCaseStepper/useCaseStepper";
+import AssestView from "../useCaseAssiteView/useCaseAssiteView";
 
 const UseCaseTabs = () => {
   const [usetabes, setUsetabes] = useState([]);
@@ -109,8 +109,8 @@ const UseCaseTabs = () => {
         activeKey={activeTab}
         onChange={onChange}
         tabBarStyle={{ margin: 10, fontSize: "2rem" }}
-        tabBarGutter={250}
-        className="bg-white px-4"
+        tabBarGutter={150}
+        className="bg-white p-6"
       >
         <TabPane tab="Overview" key="1" className="py-6 bg-white">
           <AssineTo setUseCaseAssin={useCaseAssin} />

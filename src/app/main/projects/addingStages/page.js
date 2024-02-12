@@ -4,8 +4,10 @@ import AddCheckList from "./ModalStages/AddChecklist";
 import SubStages from "./ModalStages/AddSubStage";
 import Image from "next/image";
 
+
 import useProject, { project, setProject } from "@/HOC/Project/Project";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function ProjectStages() {
   const [project, setProject] = useProject([]);
@@ -114,6 +116,9 @@ export default function ProjectStages() {
             >
               Save
             </button>
+            <div className="relative">
+            <Link href='/main/projects/usecaseForm' className='px-5 py-3 bg-blue-600 text-white aright-0 bottom-0'>Next</Link>
+          </div>
           </section>
         </section>
       </div>
