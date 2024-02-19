@@ -69,11 +69,7 @@ const Resources = () => {
                 </Row>
                 <Row gutter={16} className='gap-6 mt-6'>
 
-<<<<<<< HEAD
                     {filteredData.map((item, index) => (
-=======
-                    {data.map((item, index) => (
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
                         <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
                             <Card className='w-full flex justify-center'
                                 bordered={false}

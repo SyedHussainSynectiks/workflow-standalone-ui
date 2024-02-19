@@ -1,282 +1,121 @@
-'use client';
-import React, { useState } from 'react';
-import Link from 'next/link';
-import {
-    AccountBookFilled,
-    BellFilled,
-    ProjectFilled,
-    IdcardFilled,
-    SignalFilled,
-    SearchOutlined,
-    VideoCameraOutlined,
-    RightOutlined,
-    LeftOutlined,
-} from '@ant-design/icons';
-import { Space, Layout, Menu, Button, theme, Card, Avatar, Badge, Input, Divider, Typography, Col, Row, Dropdown, message, Checkbox, Anchor, Modal } from 'antd';
-import Navbar from '@/Components/Navbar/Navbar';
-import ProjectResource from '@/Components/ProjectResource/ProjectResource'
-const { Sider, Content } = Layout;
-const { Title, Paragraph, Text } = Typography;
-export default function ProjectForm() {
-    const [collapsed, setCollapsed] = useState(false);
-    const onChange = (e) => {
-        console.log(`checked = ${e.target.checked}`);
-    };
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+"use client";
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
+import Image from "next/image";
+import AddStages from "../../../../../public/assets/createWorkflow.svg";
+import { HiPlusCircle } from "react-icons/hi2";
+import { MdCancel } from "react-icons/md";
+import react from "react";
+import { Input } from "antd";
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-    const toggleSider = () => {
-        setCollapsed(!collapsed);
-    };
-    const items = [
-        {
-            label: 'All Projects',
-            key: '1',
-        },
-        {
-            label: 'In Progress',
-            key: '1',
-        },
-        {
-            label: 'Completed',
-            key: '3',
-        },
+export default function page() {
+  return (
+    <>
+      <div className="w-[100] ">
+         <div className="flex items-center justify-between">
+         <h1 className="text-3xl mb-2 font-semibold">Workflow Management</h1>
+        <MdCancel className="text-3xl text-blue-400"  />
+         </div>
+        <div className="flex  w-[100%]  bg-white ">
+          <div className="p-10 w-[50%] mt-40 text-center item-ceter">
+            <h2 className="text-3xl mb-2 font-semibold">Create a New workflow</h2>
+            <p className="font-semibold text-start w-[405px] ml-28 mt-6 text-[#B8B8B8]">
+              Workflow entails the structured sequence of tasks and processes
+              required to complete a project or activity efficiently, ensuring
+              smooth coordination and optimal resource utilization.
+            </p>
+            <Image src={AddStages} className="ml-32 mt-4" />
+          </div>
 
-    ];
-    const handleMenuClick = (e) => {
-        message.info('Click on menu item.');
-        console.log('click', e);
-    };
-    const menuProps = {
-        items,
-        onClick: handleMenuClick,
-    };
-    return (
-        <>
-            <Layout theme="dark" style={{ minHeight: '100vh' }}>
-                <Sider
-                    trigger={null}
-                    collapsible
-                    collapsed={collapsed}
-                    theme="light"
-                    className="fixed "
-                    style={{ position: 'fixed', height: '100vh' }}
-                >
-                    <h5 className='uppercase bg-[#001529] text-white text-2xl p-4'>Synect<span className='text-red-700'>i</span>ks</h5>
-                    {/* ... your existing Sider content */}
-                    <Menu className='relative'
-                        theme="light"
-                        mode="inline"
-                        defaultSelectedKeys={['1']}
-                        items={[
-                            {
-                                key: '1',
-                                icon: <ProjectFilled />,
-                                label: 'Dashboard',
-                                path: '/'
-                            },
-                            {
-                                key: '2',
-                                icon: <VideoCameraOutlined />,
-                                label: 'Projects',
-                                path: '/projects'
-                            },
-                            {
-                                key: '3',
-                                icon: <SignalFilled />,
-                                label: 'Team',
-                            },
-                            {
-                                key: '4',
-                                icon: <IdcardFilled />,
-                                label: 'Reports',
-                            },
-                            {
-                                key: '5',
-                                icon: <AccountBookFilled />,
-                                label: 'Preference',
-                            },
-                            {
-                                key: '6',
-                                icon: <BellFilled />,
-                                label: 'Notifications',
-                                path: (
-                                    <Link href='/main'>Dashboard</Link>
-                                )
-                            },
-                        ]}
-                    />
-                    {/* <Menu className='relative'
-                        theme="light"
-                        mode="inline"
-                        defaultSelectedKeys={['1']}                    >
-                        <div className=''><ProjectFilled />
-                            <Link href='/main'>Dashboard</Link>
-                        </div>
-                        <div><VideoCameraOutlined />
-                            <Link href='/projects'>Projects</Link>
-                        </div>
-                    </Menu> */}
-                    <Button theme="dark"
-                        className='bg-white absolute top-2/4 -right-3'
-                        type="text"
-                        icon={collapsed ? < RightOutlined className='' /> : <LeftOutlined />}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: '16px',
-                            width: 16,
-                            height: 64,
-                            clipPath: `polygon(0 0, 100% 21%, 99% 80%, 0% 100%)`
-                        }}
-                    />
-                </Sider>
-                <Layout className="site-layout" style={{ marginLeft: collapsed ? 80 : 200 }}>
-                    <Navbar />
-                    <Content style={{ margin: '18px 16px', padding: '0px 10px', minHeight: 280 }} className='relative'>
-                        <h1 className='ml-2 uppercase text-3xl'>workflow Management</h1>
-                        <div className='bg-white flex flex-row justify-between items-center py-2 px-5 mb-5'>
-                            <Title level={3}>Stages</Title>
-                        </div>
+          <div className="p-8 m-0 w-[50%] text-center">
+            <h2 className="text-xl text-start font-medium">Workflow Name</h2>
+            <Input className="w-72 h-8 mt-2 font-semibold mr-[400px] border-blue-500 " placeholder="example" />
 
-                        {/* Shows a Details of Project */}
-                        <section>
-                            {/* left Conatiner Box  Stages */}
-                            <div className="AddSatge1Txt">Add Stages</div>
-                            <div className="flex flex-row">
-                                <div>
-                                    <div className="LeftStagesSection">
-                                        {/* Stages start */}
-                                        <div className="LeftSectionStagesStage1">
-                                            <div className="Satge1Txt">Stage 1</div>
-                                            <div>
-                                                <div className="RequirementStages">Requirement</div>
-                                                <div > <Button onClick={showModal}>
-                                                    +Add Sub Stages
-                                                </Button>
-                                                    <Modal title="Add Checklist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                                       <div className='my-4 flex flex-row  items-center justify-between'>
-                                                        <Checkbox/>
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <hr />
-                                                       </div>
-                                                        <div className='my-4 flex flex-row  items-center justify-between'>
-                                                        <Checkbox/>
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <hr />
-                                                       </div>
-                                                        <div className='my-4 flex flex-row  items-center justify-between'>
-                                                        <Checkbox/>
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <hr />
-                                                       </div>
-                                                    </Modal></div>
-                                                <div className="AddCheckListStages">+Add Check List</div>
-                                            </div>
-                                        </div>
-                                        <div className="LeftSectionStagesStage1">
-                                            <div className="Satge1Txt">Stage 2</div>
-                                            <div>
-                                                <div className="RequirementStages">Mock Development</div>
-                                                <div className="AddStages">+Add Sub Stages</div>
-                                                <div className="AddCheckListStages">+Add Check List</div>
-                                            </div>
-                                        </div>
-                                        <div className="LeftSectionStagesStage1">
-                                            <div className="Satge1Txt">Stage 3</div>
-                                            <div>
-                                                <div className="RequirementStages">Actual Development</div>
-                                                <div className="AddStages">+Add Sub Stages</div>
-                                                <div className="AddCheckListStages">+Add Check List</div>
-                                            </div>
-                                        </div>
-                                        <div className="LeftSectionStagesStage1">
-                                            <div className="Satge1Txt">+Add Stages</div>
-                                            <div>
-                                                <div className="RequirementStages"></div>
-                                                <div className="AddStages"></div>
-                                                <div className="AddCheckListStages"></div>
-                                            </div>
-                                        </div>
-                                        {/* Stages end */}
-                                    </div> </div>
-                                <div className="RightStagesSection w-full p-5">
-                                    <Title level={3}>Add Resources</Title>
+           <div className="text-start">
 
-                                    <div
-                                        style={{
-                                            padding: '20px',
-                                        }}
-                                    >
-                                        <Anchor
-                                            direction="horizontal"
-                                            items={[
-                                                {
-                                                    key: 'part-1',
-                                                    href: '#part-1',
-                                                    title: 'All',
-                                                },
-                                                {
-                                                    key: 'part-2',
-                                                    href: '#part-2',
-                                                    title: 'Selected',
-                                                },
-                                                {
-                                                    key: 'part-3',
-                                                    href: '#part-3',
-                                                    title: 'Available',
-                                                },
-                                            ]}
-                                        />
-                                    </div>
-                                    <div>
-                                        <div
-                                            id="part-1"
-                                            style={{
-                                                textAlign: 'center',
-                                                background: 'rgba(0,255,0,0.02)',
-                                            }}
+           <div className="relative top-5 ">
+              <h4 className="font-semibold">Add Stage</h4>
 
-                                        />
-                                        <div
-                                            id="part-2"
-                                            style={{
-                                                textAlign: 'center',
-                                                background: 'rgba(0,0,255,0.02)',
-                                            }}
-                                        >
-                                            <ProjectResource />
-                                        </div>
-                                        <div
-                                            id="part-3"
-                                            style={{
-                                                textAlign: 'center',
-                                                background: '#FFFBE9',
-                                            }}
-                                        />
-                                    </div>
+              <button className="w-16 h-14 mt-2 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
+                {" "}
+                <HiPlusCircle className="ml-4 text-white text-3xl " />
+              </button>
+              <div className=" left-24 relative mt-2">
+                <h6 className="font-medium">New Stage</h6>
+                <p className="text-[#B8B8B8]">No Sub-stages</p>
+              </div>
+            </div>
+
+            <div className="mt-14">
+              <h4 className="font-semibold" >Add Sub-Stage</h4>
+
+              <button className="w-16 mt-2 h-14 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
+                {" "}
+                <HiPlusCircle className="ml-4 text-white text-3xl " />
+              </button>
+              <div className=" left-24 mt-2 relative">
+                <h6 className="font-medium" >New Sub-Stage</h6>
+                <p className="text-[#B8B8B8]">No Task</p>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <h4 className="font-semibold" >Create Check List</h4>
+              <button className="w-16 h-14 mt-2 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
+                {" "}
+                <HiPlusCircle className="ml-4 text-white text-3xl " />
+              </button>
+              <div className=" left-24 relative mt-2">
+                <h6 className="font-medium" >Create Check List</h6>
+                <p className="text-[#B8B8B8]" >No Task</p>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <h4 className="font-semibold  ml-2" >Stages</h4>
+              <div className="mb-7  mt-2 ">
+              <button className="w-16  h-14 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
+                {" "}
+                <HiPlusCircle className="ml-4 text-white text-3xl " />
+              </button>
+              <div className=" left-24 relative  ">
+                <h6 className="font-medium" >To Do</h6>
+                <p className="text-[#B8B8B8]" >No Task</p>
+              </div>
+              </div>
+             
+
+              <div className="mb-7">
+             <button className="w-16 h-14 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
+                {" "}
+                <HiPlusCircle className="ml-4 text-white text-3xl " />
+              </button>
+              <div className=" left-24 relative mt-6">
+                <h6 className="font-medium" >In Progress</h6>
+                <p className="text-[#B8B8B8]" >No Task</p>
+              </div>
+             </div>
 
 
-                                </div>
-                                {/* <div className="AddStagsCol">+Add Stages</div> */}
-                            </div>
-                            <div>                     <Button className="absolute right-5 bottom-0 bg-blue-500 text-white my-4"><Link href='/projects/addStage'>Save</Link></Button>
-                            </div>
-                        </section>
+             <div>
+             <button className="w-16 h-14 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
+                {" "}
+                <HiPlusCircle className="ml-4 text-white text-3xl " />
+              </button>
+              <div className=" left-24 relative">
+                <h6 className="font-medium">Done</h6>
+                <p className="text-[#B8B8B8]" >No Task</p>
+              </div>
+             </div>
+            </div>
+
+           </div>
 
 
-                    </Content>
-                </Layout>
-            </Layout>
+            <button className="p-4 w-56 mt-14  bg-indigo-600 text-white rounded-md " > Create Workflow  </button>
 
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

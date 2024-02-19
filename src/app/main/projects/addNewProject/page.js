@@ -1,347 +1,88 @@
-"use client";
+"use client"
+import React, { useState, useEffect } from "react";
+import { Button, message, Steps, theme } from "antd";
+import AddResourcePool2 from "@/Components/AddResourcePool/AddresoucrePool2";;
+import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm";
+// import AddEmplyee from "@/app/main/projects/addEmployee/AddEmplyee";
+import pages from "@/app/main/projects/resourcePool/page"
+import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 
-import React, { useState } from "react";
-import Link from "next/link";
-import NavLink from "@/app/nav-link";
-import { Button, Modal } from "antd";
+const { Step } = Steps;
 
-import api from "@/api";
+const steps = [
+  {
+    title: "Set up Project",
+    content: <AddNewProjectForm />,
+  },
+  {
+    title: "Resource pool",
+    content: <AddResourcePool2/>,
+  },
+  {
+    title: "Review",
+    content: <AddEmployReview/>,
+  },
+];
 
-import axios from "axios";
-import { useRouter } from "next/navigation";
+export default function ProjectForm({ formNext }) {
+  const { token } = theme.useToken();
+  const [current, setCurrent] = useState(0);
 
-<<<<<<< HEAD
-import useProject from "@/HOC/Project/Project";
-=======
-import useProject,{ project , setProject } from "@/HOC/Project/Project";
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
+//   useEffect(() => {
+//     setCurrent(formNext);
+//   }, [formNext]);
 
-import { DatePicker } from "antd";
-const { RangePicker } = DatePicker;
-
-import { UploadPopul2 } from "./uploadPopul";
-import { UploadCompleted } from "./uploadPopul";
-<<<<<<< HEAD
-
-import moment from "moment";
-=======
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-
-export default function ProjectForm() {
-  // State variables to control the visibility of each modal
-  const [isPrjectIconModalOpen, setIsPrjectIconModalOpen] = useState(false);
-<<<<<<< HEAD
-
-  // Function to open the corresponding modal
-  const openModal = (modalSetter) => {
-    modalSetter(true);
+  const prev = () => {
+    setCurrent(current - 1);
   };
 
-=======
-  // Function to open the corresponding modal
-  const openModal = (modalSetter) => {
-    modalSetter(true);
+  const next = () => {
+    setCurrent(current + 1);
   };
 
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-  const handleCloseModals = () => {
-    setIsPrjectIconModalOpen(false);
-  };
-  const router = useRouter();
-<<<<<<< HEAD
+  const items = steps.map((item) => ({
+    key: item.title,
+    title: item.title,
+  }));
 
-  // useProject
-=======
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-  const [project, setProject] = useProject({
-    projectName: "",
-    projectDescription: "",
-    projectDepartment: "",
-    startDate: "",
-    endDate: "",
-<<<<<<< HEAD
-    projectId: "",
-=======
-    projectIcon: "",
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-  });
-
-  console.log(project);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const postData = {
-      name: project.projectName,
-      description: project.projectDescription,
-      department: project.projectDepartment,
-      start_date: project.startDate,
-      end_date: project.endDate,
-<<<<<<< HEAD
-      image_url: "https://i.imgur.com/PujQY5Y.png",
-=======
-      projectIcon: project.projectIcon,
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-    };
-
-    // Api Functions
-    try {
-<<<<<<< HEAD
-      const response = await api.post("/project", postData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-=======
-      const response = await fetch(
-        "https://siwuzhkr1i.execute-api.us-east-1.amazonaws.com/dev/project",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(postData),
-        }
-      );
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-
-      if (response.status === 200) {
-        const data = response.data;
-        console.log("API Response:", data);
-        console.log("API Response:", data.id);
-        console.log("API working");
-
-        // Update projectId in the project state
-        setProject((prevProject) => ({
-          ...prevProject,
-          projectId: data.id, // Replace 'data.projectId' with the actual field from your response data
-        }));
-
-        // ... rest of the code
-      } else {
-        console.error(
-          "Error sending data:",
-          response.status,
-          response.statusText
-        );
-      }
-
-      router.push("/main/projects/resourcePool");
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
-  };
-
-  const handleChange = (e) => {
-    // Update the project state as the user types
-    setProject({ ...project, [e.target.name]: e.target.value });
+  const contentStyle = {
+    textAlign: "center",
+    color: token.colorTextTertiary,
+    marginTop: 16,
   };
 
   return (
     <>
-      {/* This section shows Header of Adding New Projects   */}
-      <section className="flex flex-row w-[1218] h-14 px-3 py-6 justify-between items-center bg-white  mb-4">
-        <div className="text-black font-sans text-xl font-semibold not-italic leading-7 w-40  flex items-center  gap-1 h-10">
-          Add New Project
-        </div>
-<<<<<<< HEAD
-=======
-        {/* <div className="flex flex-row items-center justify-center bg-white border rounded-sm shadow-sm border-slate-200   w-28 h-8 px-1 py-4 flex-shrink-0 text-black font-sans  text-sm font-normal leading-snug gap-2">
-          All Project{" "}
-          <span className="w-2 h-3">
-            <img src="/Images/downarrow.svg" />{" "}
-          </span>{" "}
-        </div> */}
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-      </section>
-
-      {/* Shows a Details of Project */}
-      <section className="flex flex-col items-center flex-shrink-0 justify-between w-auto py-1 bg-white ">
-        <form className="flex flex-col px-6 py-5 items-center justify-center gap-3">
-          {/* Project Name */}
-          <div className="flex flex-row items-center justify-between">
-            <label
-              className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
-              htmlFor="Project"
-            >
-              Project Name:
-            </label>
-
-            <input
-              type="text"
-              name="projectName"
-              id="projectName" // Unique ID for each input
-              placeholder="Project name"
-              className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
-              value={project.projectName}
-              onChange={handleChange}
-            />
-          </div>
-
-          {/* Project Description */}
-          <div className="flex flex-row items-baseline justify-between">
-            <label
-              className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
-              htmlFor="Project"
-            >
-              Project Description :
-            </label>
-            <textarea
-              name="projectDescription"
-              id="projectDescription" // Unique ID for each input
-              placeholder="Description.."
-              className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-28 w-96 m-1"
-              value={project.projectDescription}
-              onChange={handleChange}
-            />
-          </div>
-
-          {/* Project Departement */}
-          <div className="flex flex-row items-center justify-between">
-            <label
-              className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
-              htmlFor="Project"
-            >
-              Project Department :
-            </label>
-            <input
-              type="text"
-              name="projectDepartment"
-              id="projectDepartment" // Unique ID for each input
-              placeholder=" Please describe your customer service, internal customers directly.."
-              className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
-              value={project.projectDepartment}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="flex flex-row items-center justify-between">
-            <label
-              className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
-              htmlFor="Project"
-            >
-              Project Duration :
-            </label>
-<<<<<<< HEAD
-
-=======
-            {/* <RangePicker
-            id="projectDuration"
-              className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-96 m-1"
-              onChange={(values) => {
-                endDate( values.map(item=> {
-                  console.log(item)
-                    return moment(item).format("YYYY-DD-MM");
-                  }));
-              }}
-            /> */}
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-            <div>
-              <DatePicker
-                id="projectStartDate"
-                placeholder="Start Date"
-                className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
-<<<<<<< HEAD
-                onChange={(date, dateString) =>
-                  setProject({
-                    ...project,
-                    startDate: moment(dateString).format(
-                      "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-                    ),
-                  })
-                }
-=======
-                onChange={(values) => {
-                  project.startDate(
-                    values.map((item) => {
-                      console.log(item);
-                      return moment(item).format("YYYY-DD-MM");
-                    })
-                    // ,{handleChange}
-                    // , values={project:project.startDate}
-                  );
-                }}
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-
-                // value={project.startDate}
-              />
-              <span>-</span>
-              <DatePicker
-                id="projectEndDate"
-                placeholder="End Date"
-                className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8 w-[184px] m-1"
-<<<<<<< HEAD
-                onChange={(date, dateString) =>
-                  setProject({
-                    ...project,
-                    endDate: moment(dateString).format(
-                      "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-                    ),
-                  })
-                }
-=======
-                onChange={(values) => {
-                  endDate(
-                    values.map((item) => {
-                      console.log(item);
-                      return moment(item).format("YYYY-DD-MM");
-                    })
-                  );
-                }}
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-                // value={project.endDate}
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-row items-center justify-between">
-            <label
-              className="text-black  text-left font-sans text-base font-normal not-italic leading-6 w-40 h-6"
-              htmlFor="projectIcon"
-            >
-              project Icon :
-            </label>
-            <div className="w-96">
-              <div className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 self-stretch items-center flex-1 border rounded-sm border-slate-200 bg-slate-100 shadow px-1 py-1 h-8  m-1">
-                <a
-                  href="#"
-                  className="flex justify-between items-center"
-                  onClick={() => openModal(setIsPrjectIconModalOpen)}
-                >
-                  <span className=" text-neutral-5 font-segoe-ui text-base  font-normal leading-6 text-gray-300">
-                    Upload Icons
-                  </span>
-                </a>
-                <Modal
-                  id="projectIcon"
-                  open={isPrjectIconModalOpen}
-                  onCancel={handleCloseModals}
-<<<<<<< HEAD
-                  closable={false}
-                  onOk={handleCloseModals}
-                  width={430}
-                  okButtonProps={{ className: "bg-blue-500" }}
-=======
-                  onOk={handleCloseModals}
-                  width={430}
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
-                >
-                  <UploadPopul2 onSubmit={handleCloseModals} />
-                </Modal>
-              </div>
-            </div>
-          </div>
-
-          {/* HandleSubmit Button */}
-          <Button
-            type="submit"
-            className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
-            onClick={handleSubmit}
-          >
+    <div className="w-auto py-2 px-1 mb-2 bg-white">
+        <h1 className="text-2xl font-semibold ">Create Project</h1>
+        <p>
+        Form pages are used to collect or verify information to users, and basic forms are common in scenarios where there are fewer data items.
+        </p>
+    </div>
+    <div className="w-auto py-1 bg-white">
+      <Steps current={current} items={items} className="px-[10rem] py-3" />
+      <div style={contentStyle}>
+        {/* Render content based on current step */}
+        {steps[current].content}
+      </div>
+      <div style={{ marginTop: 24 }}>
+        {current < steps.length - 1 && ( 
+          <Button type="primary" onClick={() => next()} className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse">
             Next
           </Button>
-        </form>
-      </section>
+        )}
+        {current === steps.length - 1 && (
+          <Button type="primary" onClick={() => message.success("Processing complete!")} className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse">
+            Done
+          </Button>
+        )}
+        {/* {current > 0 && (
+          <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+            Previous
+          </Button>
+        )} */}
+      </div>
+    </div>
     </>
   );
 }

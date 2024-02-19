@@ -10,6 +10,7 @@ import WorkViewDetails from "../useCaseWorkViewDetails/workViewDetails";
 import { UseCase1Comments } from "../useCaseWorkViewDetailsComments/UseCaseComments";
 import Stepper from "../useCaseStepper/useCaseStepper";
 import AssestView from "../useCaseAssiteView/useCaseassiteView";
+import user from "./user";
 
 const UseCaseTabs = () => {
   const [usetabes, setUsetabes] = useState([]);
@@ -109,7 +110,7 @@ const UseCaseTabs = () => {
         tabBarGutter={150}
         className="bg-white p-6"
       >
-        <TabPane tab="Overview" key="1" className="py-6 bg-white">
+        <TabPane tab={<user/>} key="1" className="py-6 bg-white">
           <AssineTo setUseCaseAssin={useCaseAssin} />
         </TabPane>
         <TabPane

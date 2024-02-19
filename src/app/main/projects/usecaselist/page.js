@@ -20,8 +20,4 @@ const UserListPage = () => {
     );
 };
 
-<<<<<<< HEAD
 export default UserListPage;
-=======
-export default UserListPage;
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74

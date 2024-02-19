@@ -21,7 +21,7 @@ export const Unassigned = () => {
 
     return (
         <div className="w-fit bg-red-50 rounded-md border border-red-300 text-center text-red-500 text-xs font-normal font-['Roboto'] leading-tight px-3 py-2">
-            Un-Assigned
+            Unassigned
         </div>
     )
 }
@@ -30,7 +30,7 @@ export const InProgressText = () => {
 
     return (
         <div className="text-gray-600 text-xs font-normal font-['Roboto'] leading-tight">
-            In-Progress
+            InProgress
         </div>
     )
 }
@@ -48,8 +48,8 @@ export const CompletedText = () => {
 export const UnassignedText = () => {
 
     return (
-        <div className="text-gray-600 text-xs font-normal font-['Roboto'] leading-tight">
-            Un-Assigned
+        <div className="text-gray-600 text-xs font-normal  leading-tight">
+            Unassigned
         </div>
     )
 }

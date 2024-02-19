@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@ant-design/icons": "^5.3.0",
     "@dropzone-ui/react": "^7.0.4",
     "@reduxjs/toolkit": "^2.0.1",
@@ -18,17 +17,9 @@
     "formik": "^2.4.5",
     "moment": "^2.30.1",
     "next": "14.0.4",
-=======
-    "@ant-design/icons": "^5.2.6",
-    "@dropzone-ui/react": "^7.0.4",
-    "@files-ui/react": "^1.2.1",
-    "@reduxjs/toolkit": "^2.0.1",
-    "antd": "^5.12.8",
-    "axios": "^1.6.5",
-    "next": "^14.0.4",
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.50.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.12.0",
     "react-redux": "^9.0.4",

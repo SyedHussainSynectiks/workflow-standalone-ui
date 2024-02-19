@@ -37,11 +37,6 @@ line-height: normal;
     /* border: 1px solid; */
     outline: 0;
   }
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   .tableRow {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -49,11 +44,6 @@ line-height: normal;
     outline: 0;
     column-gap: 0.5rem;
   }
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> aa2ce9168112359b54e43831b0aa84f316c69b74
   .tableCell {
     border-right: 2px solid #91D5FF;
     padding: 5px;
