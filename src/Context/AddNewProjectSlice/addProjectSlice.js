@@ -1,24 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  projectName: '',
-  projectDescription: '',
-  projectDepartment: '',
-  startDate: '',
-  endDate: '',
+  name: "",
+  description: "",
+  department: "",
+  start_date: "",
+  end_date: "",
+  image_url: "https://i.imgur.com/PujQY5Y.png"
 };
 
 const addProjectSlice = createSlice({
-  name: 'form',
+  name: 'addProject',
   initialState,
   reducers: {
     updateFormData: (state, action) => {
-      return { ...state, ...action.payload };
-      console.log(state)
+      // Update the form data in the state
+   console.log(action.payload)
+      return { ...state, ...action.payload }
+      ;
+      
     },
-    resetFormData: (state) => initialState,
-  },
+    
+  }
+  
 });
 
-export const { updateFormData, resetFormData } = addProjectSlice.actions;
+export const { updateFormData} = addProjectSlice.actions;
+
 export default addProjectSlice.reducer;

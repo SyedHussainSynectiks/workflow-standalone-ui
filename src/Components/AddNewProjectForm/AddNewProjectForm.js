@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import NavLink from "@/app/nav-link";
 
 import { Form, Input, Upload, Button, message, DatePicker } from "antd";
-
+import { useSelector } from "react-redux";
 import api from "@/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -41,88 +41,120 @@ const validateMessages = {
   },
 };
 
-const AddNewProjectForm = ({}) => {
-  const [current, setCurrent] = useState(0);
+const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
+  const formData = useSelector((state) => state.addProject);
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    // Update the form data in the Redux store
-    dispatch(updateFormData({ [e.target.name]: e.target.value }));
+    // Update the project state as the user types
+    setProject({ ...project, [e.target.name]: e.target.value });
+    dispatch(updateFormData({ ...project, [e.target.name]: e.target.value }));
+  };
+  const handleStartDateChange = (date, dateString) => {
+    setProject({
+      ...project,
+      startDate: moment(dateString).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),
+    });
+    // dispatch(updateFormData({ ...project, [date.target.name]: date.target.value }))
   };
 
-  const next = () => {
-    setCurrent(current + 1);
+  const handleEndDateChange = (date, dateString) => {
+    setProject({
+      ...project,
+      endDate: moment(dateString).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),
+    });
+    // dispatch(updateFormData({ ...project, [date.target.name]: date.target.value }))
   };
-  // State variables to control the visibility of each modal
-  const [isPrjectIconModalOpen, setIsPrjectIconModalOpen] = useState(false);
-
-  // Function to open the corresponding modal
-
   const router = useRouter();
 
   // useProject
-  const [project, setProject] = useProject({
+  const [project, setProject] = useState({
     projectName: "",
     projectDescription: "",
     projectDepartment: "",
     startDate: "",
     endDate: "",
     projectId: "",
+    image_url: "https://i.imgur.com/PujQY5Y.png",
   });
 
   console.log(project);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    const postData = {
-      name: project.projectName,
-      description: project.projectDescription,
-      department: project.projectDepartment,
-      start_date: project.startDate,
-      end_date: project.endDate,
-      image_url: "https://i.imgur.com/PujQY5Y.png",
-    };
+  //   const postData = {
+  //     name: project.projectName,
+  //     description: project.projectDescription,
+  //     department: project.projectDepartment,
+  //     start_date: project.startDate,
+  //     end_date: project.endDate,
+  //     image_url: "https://i.imgur.com/PujQY5Y.png",
+  //   };
 
-    // Api Functions
-    try {
-      const response = await api.post("/project", postData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  //   // Api Functions
+  //   try {
+  //     const response = await api.post("/project", postData, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
 
-      if (response.status === 200) {
-        const data = response.data;
-        console.log("API Response:", data);
-        console.log("API Response:", data.id);
-        console.log("API working");
+  //     if (response.status === 200) {
+  //       const data = response.data;
+  //       console.log("API Response:", data);
+  //       console.log("API Response:", data.id);
+  //       console.log("API working");
 
-        // Update projectId in the project state
-        setProject((prevProject) => ({
-          ...prevProject,
-          projectId: data.id, // Replace 'data.projectId' with the actual field from your response data
-        }));
+  //       // Update projectId in the project state
+  //       setProject((prevProject) => ({
+  //         ...prevProject,
+  //         projectId: data.id, // Replace 'data.projectId' with the actual field from your response data
+  //       }));
 
-        // ... rest of the code
-      } else {
-        console.error(
-          "Error sending data:",
-          response.status,
-          response.statusText
-        );
-      }
+  //       // ... rest of the code
+  //     } else {
+  //       console.error(
+  //         "Error sending data:",
+  //         response.status,
+  //         response.statusText
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error sending data:", error);
+  //   }
 
-      router.push("/main/projects/resourcePool");
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
-  };
+  //   setCurrent(current + 1);
 
-  // const handleChange = (e) => {
-  //   // Update the project state as the user types
-  //   setProject({ ...project, [e.target.name]: e.target.value });
   // };
+
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
+
+  //     try {
+  //         // Create a new Product instance with the base64-encoded image
+  //         const postData = {
+  //           name: project.projectName,
+  //           description: project.projectDescription,
+  //           department: project.projectDepartment,
+  //           start_date: project.startDate,
+  //           end_date: project.endDate,
+  //           image_url: "https://i.imgur.com/PujQY5Y.png",
+  //         };
+
+  //         console.log(postData)
+
+  //         // Save the new Product to the DataStore
+
+  //         console.log('Product created successfully!');
+  //         dispatch(updateFormData(postData))
+  //         console.log("dispached data", postData)
+  //     } catch (error) {
+  //         console.error('Error:', error);
+  //     }
+  // };
+
   return (
     <div>
       <section className="flex flex-col items-center flex-shrink-0  w-auto py-1 bg-white ">
@@ -135,7 +167,7 @@ const AddNewProjectForm = ({}) => {
           validateMessages={validateMessages}
         >
           <Form.Item
-            name={["user", "email"]}
+            name={["ProjectName"]}
             label="Project Name"
             rules={[
               {
@@ -191,14 +223,7 @@ const AddNewProjectForm = ({}) => {
                 id="projectStartDate"
                 placeholder="Start Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200  px-1 py-1 h-8 w-[184px] m-1"
-                onChange={(date, dateString) =>
-                  setProject({
-                    ...project,
-                    startDate: moment(dateString).format(
-                      "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-                    ),
-                  })
-                }
+                onChange={handleStartDateChange}
 
                 // value={project.startDate}
               />
@@ -207,15 +232,16 @@ const AddNewProjectForm = ({}) => {
                 id="projectEndDate"
                 placeholder="End Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200shadow px-1 py-1 h-8 w-[184px] m-1"
-                onChange={(date, dateString) =>
-                  setProject({
-                    ...project,
-                    endDate: moment(dateString).format(
-                      "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-                    ),
-                  })
-                }
+                // onChange={(date, dateString) =>
+                //   setProject({
+                //     ...project,
+                //     endDate: moment(dateString).format(
+                //       "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+                //     ),
+                //   })
+                // }
                 // value={project.endDate}
+                onChange={handleEndDateChange}
               />
             </div>
           </Form.Item>
@@ -249,12 +275,13 @@ const AddNewProjectForm = ({}) => {
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
+
           {/* <Button
             type="submit"
             className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
             onClick={handleSubmit}
           >
-            Next
+            Submit
           </Button> */}
         </Form>
       </section>
