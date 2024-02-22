@@ -6,7 +6,8 @@ const initialState = {
   department: "",
   start_date: "",
   end_date: "",
-  image_url: "https://i.imgur.com/PujQY5Y.png"
+  image_url: "",
+  id:""
 };
 
 const addProjectSlice = createSlice({
@@ -20,11 +21,15 @@ const addProjectSlice = createSlice({
       ;
       
     },
+    updateId: (state, action) => {
+      console.log("project d", action.payload)
+      state.id = action.payload;
+    },
     
   }
   
 });
 
-export const { updateFormData} = addProjectSlice.actions;
+export const { updateFormData , updateId} = addProjectSlice.actions;
 
 export default addProjectSlice.reducer;

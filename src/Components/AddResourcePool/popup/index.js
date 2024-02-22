@@ -5,6 +5,11 @@ import { useState, useEffect } from "react";
 import useProject from "@/HOC/Project/Project";
 import Image from "next/image";
 import user from "../../../../public/assets/profile1.svg"
+import { useDispatch } from "react-redux";
+import addResources from "@/Context/AddresourcesSlice/addresourcesSlice";
+
+
+
 
 export const Projectmanager = (props) => {
   // All Hooks
@@ -40,20 +45,9 @@ export const Projectmanager = (props) => {
 
   console.log(selectUser);
 
-  const handleSelectionAndClose = () => {
-    // console.log(selectUser);
-    setProject((prevProject) => {
-      const updatedResourcePool = [
-        {
-          projectManager: selectUser,
-        },
-      ];
-      return {
-        ...prevProject,
-        resourcePool: updatedResourcePool,
-      };
-    });
-    props.onSubmit();
+  const handleResourcesAdd = (emp_id) => {
+    dispatch(add(emp_id));
+    console.log(emp_id)
   };
 
   // console.log(project);
@@ -65,7 +59,7 @@ export const Projectmanager = (props) => {
       try {
         const response = await api.get("/get_resource_by_role", {
           params: {
-            role: "Project Manager",
+            designation: "Project Manager",
           },
         });
         console.log(response.data);
@@ -86,18 +80,17 @@ export const Projectmanager = (props) => {
       <div className="flex flex-col gap-6">
         {/* Display a static UI without mapping */}
         {projectManager.map((Manager, index) => (
-        <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
+        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
           <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
             
             <div className="flex items-center gap-3">
-             <Image src={user}/>
+             <Image src={Manager.image_url}/>
               <div>
                 <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  Olivia Rhye @olivia
+                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
                 </h1>
                 <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  hi.....
-                  olivia@example.com
+                  
                 </h3>
               </div>
             </div>
@@ -105,63 +98,13 @@ export const Projectmanager = (props) => {
               {/* CheckBox Button */}
               <input
                 type="checkbox"
-                // checked={selectUser.includes(someHardcodedResourceId)}
+                checked={()=>handleResourcesAdd(Manager.emp_id)}
                 className="cursor-pointer"
               />
             </div>
           </div>
         </div>
 ))}
-        <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={user}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  Olivia Rhye @olivia
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  hi.....
-                  olivia@example.com
-                </h3>
-              </div>
-            </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                // checked={selectUser.includes(someHardcodedResourceId)}
-                className="cursor-pointer"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={user}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  Olivia Rhye @olivia
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  hi.....
-                  olivia@example.com
-                </h3>
-              </div>
-            </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                // checked={selectUser.includes(someHardcodedResourceId)}
-                className="cursor-pointer"
-              />
-            </div>
-          </div>
-        </div>
         {/* Repeat the above structure for each item you want to display */}
       </div>
       
@@ -174,22 +117,25 @@ export const Projectmanager = (props) => {
 
 // Api Developer
 export const ApiDeveloper = (props) => {
+  const dispatch = useDispatch();
   // All Hooks
+  const handleResourcesAdd = (emplyyId) => {
+    console.log("dispatch",emplyyId)
+    if (emplyyId) {
+      console.log("If-Else -dispatch", emplyyId);
+      dispatch(addResources(emplyyId));
+    } else {
+      console.error("empId is undefined");
+    }
+    // dispatch(addResources({id:emplyyId}));
+    
+    
+  };
+
   // API Developer
   const [apiDeveloper, setApiDeveloper] = useState([]);
 
   // select User
-  const [selectUser, setSelectUser] = useState([]);
-
-  // useProject
-  const [project, setProject] = useProject({
-    resourcePool: [
-      {
-        apiDeveloper: [],
-      },
-    ],
-  });
-
   // useEffect to fetch all API Developers
   useEffect(() => {
     // Fetch data when the component mounts
@@ -197,7 +143,7 @@ export const ApiDeveloper = (props) => {
       try {
         const response = await api.get("/get_resource_by_role", {
           params: {
-            role: "API Developer",
+            designation: "API Developer",
           },
         });
         console.log(response.data);
@@ -211,35 +157,9 @@ export const ApiDeveloper = (props) => {
   }, []);
 
   // HandleCheckBoxChanges
-  const handleCheckboxChange = (userId) => {
-    // Check if userId is already in selectUser
-    if (selectUser.includes(userId)) {
-      // If yes, remove it
-      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
-    } else {
-      // If no, add it
-      setSelectUser((prevState) => [...prevState, userId]);
-    }
-  };
 
-  // handleSelectionAndClose
-  const handleSelectionAndClose = () => {
-    // console.log(selectUser);
-    setProject((prevProject) => {
-      const updatedResourcePool = [
-        ...prevProject.resourcePool, // Keep existing properties
-        {
-          apiDeveloper: selectUser,
-        },
-      ];
-      return {
-        ...prevProject,
-        resourcePool: updatedResourcePool,
-      };
-    });
 
-    props.onSubmit();
-  };
+
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
@@ -247,136 +167,41 @@ export const ApiDeveloper = (props) => {
       <div className=" w-[100%] ">
         {/* Project Manager useState Hook Data Map */}
         <div className="flex flex-col gap-6">
-          {/* Display a static UI without mapping */}
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-  
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          {/* Repeat the above structure for each item you want to display */}
-        </div>
+        {/* Display a static UI without mapping */}
         
+        {apiDeveloper.map((Manager, index) => {
+          const emplyyId = Manager.emp_id ;
+          console.log("employ_id" , Manager.emp_id);
+          return (
+        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
+          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+            
+            <div className="flex items-center gap-3">
+             <Image src={Manager.image_url}/>
+              <div>
+                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
+                </h1>
+                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
+                  
+                </h3>
+              </div>
+            </div>
+            <div>
+              {/* CheckBox Button */}
+              <input
+                type="checkbox"
+                // onChange={()=>{
+                //   console.log("on changed",emplyyId),handleResourcesAdd(emplyyId)}}
+                className="cursor-pointer"
+                onClick={()=>{handleResourcesAdd(emplyyId)}}
+              />
+            </div>
+          </div>
+        </div>)
+})}
+        {/* Repeat the above structure for each item you want to display */}
+      </div>
       </div>
     </div>
   </div>
@@ -417,18 +242,9 @@ export const CiCdResourcePool = (props) => {
   };
 
   // HandleCheckBoxChange
-  const handleCheckboxChange = (userId) => {
-    // Check if userId is already in selectUser
-    if (selectUser.includes(userId)) {
-      // If yes, remove it
-      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
-    } else {
-      // If no, add it
-      setSelectUser((prevState) => [...prevState, userId]);
-    }
-
-    // console.log(userId)
-    // console.log(selectUser)
+  const handleResourcesAdd = (emp_id) => {
+    dispatch(add(emp_id));
+    console.log(emp_id)
   };
 
   // console.log(project);
@@ -440,7 +256,7 @@ export const CiCdResourcePool = (props) => {
       try {
         const response = await api.get("/get_resource_by_role", {
           params: {
-            role: "CI/CD",
+            designation: "CI/CD",
           },
         });
 
@@ -460,111 +276,35 @@ export const CiCdResourcePool = (props) => {
       <div className=" w-[100%] ">
         {/* Project Manager useState Hook Data Map */}
         <div className="flex flex-col gap-6">
-          {/* Display a static UI without mapping */}
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
+        {/* Display a static UI without mapping */}
+        {CiCd.map((Manager, index) => (
+        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
+          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+            
+            <div className="flex items-center gap-3">
+             <Image src={Manager.image_url}/>
               <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
+                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
+                </h1>
+                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
+                  
+                </h3>
               </div>
             </div>
-          </div>
-  
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
+            <div>
+              {/* CheckBox Button */}
+              <input
+                type="checkbox"
+                checked={handleResourcesAdd(Manager.emp_id)}
+                className="cursor-pointer"
+              />
             </div>
           </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          {/* Repeat the above structure for each item you want to display */}
         </div>
-        
+))}
+        {/* Repeat the above structure for each item you want to display */}
+      </div>
       </div>
     </div>
   </div>
@@ -602,22 +342,9 @@ export const TesterResourcePool = (props) => {
 
   console.log(selectUser);
 
-  const handleSelectionAndClose = () => {
-    // console.log(selectUser);
-
-    setProject((prevProject) => {
-      const updatedResourcePool = [
-        {
-          tester: selectUser,
-        },
-      ];
-      return {
-        ...prevProject,
-        resourcePool: updatedResourcePool,
-      };
-    });
-
-    props.onSubmit();
+  const handleResourcesAdd = (emp_id) => {
+    dispatch(add(emp_id));
+    console.log(emp_id)
   };
 
   // console.log(project);
@@ -629,7 +356,7 @@ export const TesterResourcePool = (props) => {
       try {
         const response = await api.get("/get_resource_by_role", {
           params: {
-            role: "Tester",
+            designation: "Tester",
           },
         });
         console.log(response.data);
@@ -648,111 +375,35 @@ export const TesterResourcePool = (props) => {
       <div className=" w-[100%] ">
         {/* Project Manager useState Hook Data Map */}
         <div className="flex flex-col gap-6">
-          {/* Display a static UI without mapping */}
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
+        {/* Display a static UI without mapping */}
+        {Tester.map((Manager, index) => (
+        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
+          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+            
+            <div className="flex items-center gap-3">
+             <Image src={Manager.image_url}/>
               <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
+                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
+                </h1>
+                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
+                  
+                </h3>
               </div>
             </div>
-          </div>
-  
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
+            <div>
+              {/* CheckBox Button */}
+              <input
+                type="checkbox"
+                checked={handleResourcesAdd(Manager.emp_id)}
+                className="cursor-pointer"
+              />
             </div>
           </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          {/* Repeat the above structure for each item you want to display */}
         </div>
-        
+))}
+        {/* Repeat the above structure for each item you want to display */}
+      </div>
       </div>
     </div>
   </div>
@@ -762,7 +413,7 @@ export const TesterResourcePool = (props) => {
 export const UxDesignResourcePool = (props) => {
   // /get_resource_by_role
 
-  const [uiDesigner, setUiDesigners] = useState([]);
+  const [uxDesigner, setUxDesigners] = useState([]);
   const [selectUser, setSelectUser] = useState([]);
 
   // useProject
@@ -775,18 +426,9 @@ export const UxDesignResourcePool = (props) => {
   });
 
   // HandleCheckBoxChange
-  const handleCheckboxChange = (userId) => {
-    // Check if userId is already in selectUser
-    if (selectUser.includes(userId)) {
-      // If yes, remove it
-      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
-    } else {
-      // If no, add it
-      setSelectUser((prevState) => [...prevState, userId]);
-    }
-
-    // console.log(userId)
-    // console.log(selectUser)
+  const handleResourcesAdd = (emp_id) => {
+    dispatch(add(emp_id));
+    console.log(emp_id)
   };
 
   console.log(selectUser);
@@ -797,7 +439,7 @@ export const UxDesignResourcePool = (props) => {
     setProject((prevProject) => {
       const updatedResourcePool = [
         {
-          uiDesigner: selectUser,
+          uxDesigner: selectUser,
         },
       ];
       return {
@@ -818,12 +460,12 @@ export const UxDesignResourcePool = (props) => {
       try {
         const response = await api.get("/get_resource_by_role", {
           params: {
-            role: "UI Designer",
+            designation: "UI Designer",
           },
         });
         console.log(response.data);
         const data = response.data;
-        setUiDesigners(data);
+        setUxDesigners(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -841,15 +483,20 @@ export const UxDesignResourcePool = (props) => {
         <div className="flex items-center justify-start py-6 pr-4 pl-4 gap-40">
           <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
             
+          <div className="flex flex-col gap-6">
+        {/* Display a static UI without mapping */}
+        {uxDesigner.map((Manager, index) => (
+        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
+          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+            
             <div className="flex items-center gap-3">
-             <Image src={user}/>
+             <Image src={Manager.image_url}/>
               <div>
                 <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  Olivia Rhye @olivia
+                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
                 </h1>
                 <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  hi.....
-                  olivia@example.com
+                  
                 </h3>
               </div>
             </div>
@@ -857,10 +504,15 @@ export const UxDesignResourcePool = (props) => {
               {/* CheckBox Button */}
               <input
                 type="checkbox"
-                // checked={selectUser.includes(someHardcodedResourceId)}
+                checked={handleResourcesAdd(Manager.emp_id)}
                 className="cursor-pointer"
               />
             </div>
+          </div>
+        </div>
+))}
+        {/* Repeat the above structure for each item you want to display */}
+      </div>
           </div>
         </div>
         {/* Repeat the above structure for each item you want to display */}
@@ -885,18 +537,9 @@ export const UiDeveloperResourcePool = (props) => {
   });
 
   // HandleCheckBoxChange
-  const handleCheckboxChange = (userId) => {
-    // Check if userId is already in selectUser
-    if (selectUser.includes(userId)) {
-      // If yes, remove it
-      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
-    } else {
-      // If no, add it
-      setSelectUser((prevState) => [...prevState, userId]);
-    }
-
-    // console.log(userId)
-    // console.log(selectUser)
+  const handleResourcesAdd = (emp_id) => {
+    dispatch(add(emp_id));
+    console.log(emp_id)
   };
 
   console.log(selectUser);
@@ -929,7 +572,7 @@ export const UiDeveloperResourcePool = (props) => {
       try {
         const response = await api.get("/get_resource_by_role", {
           params: {
-            role: "UI Developer",
+            designation: "UI Developer",
           },
         });
         console.log(response.data);
@@ -948,135 +591,35 @@ export const UiDeveloperResourcePool = (props) => {
       <div className=" w-[100%] ">
         {/* Project Manager useState Hook Data Map */}
         <div className="flex flex-col gap-6">
-          {/* Display a static UI without mapping */}
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
+        {/* Display a static UI without mapping */}
+        {uiDeveloper.map((Manager, index) => (
+        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
+          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+            
+            <div className="flex items-center gap-3">
+             <Image src={Manager.image_url}/>
               <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
+                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
+                </h1>
+                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
+                  
+                </h3>
               </div>
             </div>
-          </div>
-  
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
+            <div>
+              {/* CheckBox Button */}
+              <input
+                type="checkbox"
+                checked={handleResourcesAdd(Manager.emp_id)}
+                className="cursor-pointer"
+              />
             </div>
           </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          {/* Repeat the above structure for each item you want to display */}
         </div>
+))}
+        {/* Repeat the above structure for each item you want to display */}
+      </div>
         
       </div>
     </div>
@@ -1098,35 +641,21 @@ export const UxResearcher = (props) => {
   });
 
   // HandleCheckBoxChange
-  const handleCheckboxChange = (userId) => {
-    // Check if userId is already in selectUser
-    if (selectUser.includes(userId)) {
-      // If yes, remove it
-      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
-    } else {
-      // If no, add it
-      setSelectUser((prevState) => [...prevState, userId]);
-    }
-  };
+  // const handleCheckboxChange = (userId) => {
+  //   // Check if userId is already in selectUser
+  //   if (selectUser.includes(userId)) {
+  //     // If yes, remove it
+  //     setSelectUser((prevState) => prevState.filter((id) => id !== userId));
+  //   } else {
+  //     // If no, add it
+  //     setSelectUser((prevState) => [...prevState, userId]);
+  //   }
+  // };
 
   console.log(selectUser);
-
-  const handleSelectionAndClose = () => {
-    // console.log(selectUser);
-
-    setProject((prevProject) => {
-      const updatedResourcePool = [
-        {
-          uxResearcher: selectUser,
-        },
-      ];
-      return {
-        ...prevProject,
-        resourcePool: updatedResourcePool,
-      };
-    });
-
-    props.onSubmit();
+  const handleResourcesAdd = (emp_id) => {
+    dispatch(addResources(emp_id));
+    console.log(emp_id)
   };
 
   // console.log(project);
@@ -1138,7 +667,7 @@ export const UxResearcher = (props) => {
       try {
         const response = await api.get("/get_resource_by_role", {
           params: {
-            role: "UX Researcher",
+            designation: "Ux Researcher",
           },
         });
         console.log(response.data);
@@ -1150,93 +679,42 @@ export const UxResearcher = (props) => {
     };
     fetchData();
   }, []);
-
+const dispatch = useDispatch()
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
     <div className="w-[100%] px-2 flex justify-center rounded">
       <div className=" w-[100%] ">
         {/* Project Manager useState Hook Data Map */}
         <div className="flex flex-col gap-6">
-          {/* Display a static UI without mapping */}
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
+        {/* Display a static UI without mapping */}
+        {uxResearcher.map((Manager, index) => (
+        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
+          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+            
+            <div className="flex items-center gap-3">
+             <Image src={Manager.image_url}/>
               <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
+                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
+                </h1>
+                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
+                  
+                </h3>
               </div>
             </div>
-          </div>
-  
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
+            <div>
+              {/* CheckBox Button */}
+              <input
+                type="checkbox"
+                checked={handleResourcesAdd(Manager.emp_id)}
+                className="cursor-pointer"
+              />
             </div>
           </div>
-          <div className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-            <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-              
-              <div className="flex items-center gap-3">
-               <Image src={user}/>
-                <div>
-                  <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                    Olivia Rhye @olivia
-                  </h1>
-                  <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                    hi.....
-                    olivia@example.com
-                  </h3>
-                </div>
-              </div>
-              <div>
-                {/* CheckBox Button */}
-                <input
-                  type="checkbox"
-                  // checked={selectUser.includes(someHardcodedResourceId)}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-          {/* Repeat the above structure for each item you want to display */}
         </div>
-        
+))}
+        {/* Repeat the above structure for each item you want to display */}
+      </div>
       </div>
     </div>
   </div>

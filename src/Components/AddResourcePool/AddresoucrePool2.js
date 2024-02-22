@@ -39,6 +39,7 @@ const items = [
     key: "1",
     label: (
       <span>
+        
         <div className=" flex flex-row items-center">
           <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
             <div className="flex justify-between items-center">
@@ -229,60 +230,62 @@ const onChange = (key) => {
   console.log(key);
 };
 
-export default function AddResourcePool2() {
+export default function AddResourcePool2({result}) {
   const [project, setProject] = useProject({});
+  console.log(result)
 
   const router = useRouter();
 
-  const postData = {
-    project_id: project.projectId,
-    team_name: project.projectName,
-    created_by_id: "550e8400-e29b-41d4-a716-446655440001",
-    roles: project.resourcePool,
-  };
+  // const postData = {
+  //   project_id: projectId,
+  //   team_name: project.projectName,
+  //   created_by_id: "550e8400-e29b-41d4-a716-446655440001",
+  //   roles: project.resourcePool,
+  // };
+  // console.log("post Data: " , postData)
 
-  console.log("project");
-  console.log(project.resourcePool);
+  // console.log("project");
+  // console.log(project.resourcePool);
 
-  const handleOnClickNext = () => {
-    console.log(project.resourcePool);
-    // post Data
-    console.log("post Data");
-    console.log(postData);
+  // const handleOnClickNext = () => {
+  //   console.log(project.resourcePool);
+  //   // post Data
+  //   console.log("post Data");
+  //   console.log(postData);
 
-    console.log(JSON.stringify(postData));
+  //   console.log(JSON.stringify(postData));
 
-    fetch(
-      `https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/project/${project.projectId}/team`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          // Add any other headers if needed
-        },
-        body: JSON.stringify(postData),
-      }
-    )
-      .then((response) => {
-        // Check if the response status is ok
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+  //   fetch(
+  //     `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${project.projectId}/team`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         // Add any other headers if needed
+  //       },
+  //       body: JSON.stringify(postData),
+  //     }
+  //   )
+  //     .then((response) => {
+  //       // Check if the response status is ok
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
 
-        // Parse the response JSON
-        return response.json();
-      })
-      .then((responseData) => {
-        // Handle the response if needed
-        console.log(responseData);
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error("Error sending schema to API:", error);
-      });
+  //       // Parse the response JSON
+  //       return response.json();
+  //     })
+  //     .then((responseData) => {
+  //       // Handle the response if needed
+  //       console.log(responseData);
+  //     })
+  //     .catch((error) => {
+  //       // Handle errors
+  //       console.error("Error sending schema to API:", error);
+  //     });
 
-    router.push("/main/projects/addResource"); // Change '/new-route' to the desired route path
-  };
+  //   // router.push("/main/projects/addResource"); // Change '/new-route' to the desired route path
+  // };
 
   return (
     <>

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { DataStore } from "@aws-amplify/datastore";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -42,6 +43,8 @@ const validateMessages = {
 };
 
 const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
+  const [imageBase64, setImageBase64] = useState();
+
   const formData = useSelector((state) => state.addProject);
 
   const dispatch = useDispatch();
@@ -66,6 +69,36 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     });
     // dispatch(updateFormData({ ...project, [date.target.name]: date.target.value }))
   };
+
+  
+  const handleImageUpload = async (e) => {
+    const file = e.file.originFileObj;
+    if (file) {
+    // Convert the image file to base64
+    const base64 = await convertImageToBase64(file);
+    setImageBase64(base64);
+    }
+    // dispatch(updateImage({ ...project, [e.target.name]: e.target.value }));
+    // console.log("setImage: ",setImageBase64)
+};
+
+const convertImageToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            resolve(reader.result.split(',')[1]);
+        };
+
+        reader.onerror = (error) => {
+            reject(error);
+        };
+
+        reader.readAsDataURL(file);
+    });
+};
+
+
   const router = useRouter();
 
   // useProject
@@ -252,25 +285,23 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
             valuePropName="fileList"
             getValueFromEvent={(e) => e?.fileList}
           >
-            <Upload
-              name="file"
-              className="flex items-start"
+            {/* <Upload
               action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-              headers={{
-                authorization: "authorization-text",
-              }}
-              onChange={(info) => {
-                if (info.file.status !== "uploading") {
-                  console.log(info.file, info.fileList);
-                }
-                if (info.file.status === "done") {
-                  message.success(
-                    `${info.file.name} file uploaded successfully`
-                  );
-                } else if (info.file.status === "error") {
-                  message.error(`${info.file.name} file upload failed.`);
-                }
-              }}
+              listType="picture"
+            >
+              <Button icon={<UploadOutlined />}>Upload</Button>
+            </Upload> */}
+            
+
+            <Upload
+              name="image_url"
+              type="file" 
+              accept="image/*"
+              className="flex flex-col items-start ml-1"
+              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+              listType="picture"
+              alt="Uploaded Image"
+              onChange={handleImageUpload}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
