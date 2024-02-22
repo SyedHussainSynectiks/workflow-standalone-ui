@@ -4,15 +4,24 @@ import React from "react";
 import { useState, useEffect } from "react";
 import useProject from "@/HOC/Project/Project";
 import Image from "next/image";
-import user from "../../../../public/assets/profile1.svg"
-import { useDispatch } from "react-redux";
-import addResources from "@/Context/AddresourcesSlice/addresourcesSlice";
+import { useSelector, useDispatch } from "react-redux";
 
-
-
+import user from "../../../../public/assets/profile1.svg";
+// import { useDispatch } from "react-redux";
+import {
+  addResources,
+} from "@/Context/AddresourcesSlice/addresourcesSlice";
 
 export const Projectmanager = (props) => {
   // All Hooks
+  const [projectResource, setprojectResource] = useState({
+    resourcePool: [
+      {
+        projectManager: [],
+      },
+    ],
+  });
+
   // project
   const [projectManager, setprojectManager] = useState([]);
 
@@ -20,13 +29,6 @@ export const Projectmanager = (props) => {
   const [selectUser, setSelectUser] = useState([]);
 
   // useProject
-  const [project, setProject] = useProject({
-    resourcePool: [
-      {
-        projectManager: [],
-      },
-    ],
-  });
 
   // HandleCheckBoxChange
   const handleCheckboxChange = (userId) => {
@@ -46,9 +48,36 @@ export const Projectmanager = (props) => {
   console.log(selectUser);
 
   const handleResourcesAdd = (emp_id) => {
-    dispatch(add(emp_id));
-    console.log(emp_id)
+    // Check if the employee ID is already in the projectResource
+    const existingIds = projectResource.resourcePool[0].projectManager;
+    if (existingIds.includes(emp_id)) {
+      // If yes, remove it
+      setprojectResource((prevState) => ({
+        ...prevState,
+        resourcePool: [
+          {
+            projectManager: prevState.resourcePool[0].projectManager.filter(
+              (id) => id !== emp_id
+            ),
+          },
+        ],
+      }));
+    } else {
+      // If no, add it
+      setprojectResource((prevState) => ({
+        ...prevState,
+        resourcePool: [
+          {
+            projectManager: [
+              ...prevState.resourcePool[0].projectManager,
+              emp_id,
+            ],
+          },
+        ],
+      }));
+    }
   };
+  console.log(projectResource);
 
   // console.log(project);
 
@@ -71,65 +100,63 @@ export const Projectmanager = (props) => {
     };
     fetchData();
   }, []);
+  const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
-  <div className="w-[100%] px-2 flex justify-center rounded">
-    <div className=" w-[100%] ">
-      {/* Project Manager useState Hook Data Map */}
-      <div className="flex flex-col gap-6">
-        {/* Display a static UI without mapping */}
-        {projectManager.map((Manager, index) => (
-        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={Manager.image_url}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  
-                </h3>
+      <div className="w-[100%] px-2 flex justify-center rounded">
+        <div className=" w-[100%] ">
+          {/* Project Manager useState Hook Data Map */}
+          <div className="flex flex-col gap-6">
+            {/* Display a static UI without mapping */}
+            {projectManager.map((Manager, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
+              >
+                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image_url} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.first_name} {Manager.last_name}
+                        <span className="text-blue-300">{Manager.email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
+                  </div>
+                  <div>
+                    {/* CheckBox Button */}
+                    <input
+                      type="checkbox"
+                      checked={() => handleResourcesAdd(Manager.emp_id)}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                checked={()=>handleResourcesAdd(Manager.emp_id)}
-                className="cursor-pointer"
-              />
-            </div>
+            ))}
+            {/* Repeat the above structure for each item you want to display */}
           </div>
         </div>
-))}
-        {/* Repeat the above structure for each item you want to display */}
       </div>
-      
     </div>
-  </div>
-</div>
-
   );
 };
 
 // Api Developer
 export const ApiDeveloper = (props) => {
-  const dispatch = useDispatch();
   // All Hooks
   const handleResourcesAdd = (emplyyId) => {
-    console.log("dispatch",emplyyId)
-    if (emplyyId) {
-      console.log("If-Else -dispatch", emplyyId);
-      dispatch(addResources(emplyyId));
-    } else {
-      console.error("empId is undefined");
-    }
+    dispatch(addResources({ id: emplyyId }));
+    // console.log("dispatch",emplyyId)
+    // if (emplyyId) {
+    //   console.log("If-Else -dispatch", emplyyId);
+    //   ;
+    // } else {
+    //   console.error("empId is undefined");
+    // }
     // dispatch(addResources({id:emplyyId}));
-    
-    
   };
 
   // API Developer
@@ -157,54 +184,55 @@ export const ApiDeveloper = (props) => {
   }, []);
 
   // HandleCheckBoxChanges
-
-
-
+  const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
-    <div className="w-[100%] px-2 flex justify-center rounded">
-      <div className=" w-[100%] ">
-        {/* Project Manager useState Hook Data Map */}
-        <div className="flex flex-col gap-6">
-        {/* Display a static UI without mapping */}
-        
-        {apiDeveloper.map((Manager, index) => {
-          const emplyyId = Manager.emp_id ;
-          console.log("employ_id" , Manager.emp_id);
-          return (
-        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={Manager.image_url}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  
-                </h3>
-              </div>
-            </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                // onChange={()=>{
-                //   console.log("on changed",emplyyId),handleResourcesAdd(emplyyId)}}
-                className="cursor-pointer"
-                onClick={()=>{handleResourcesAdd(emplyyId)}}
-              />
-            </div>
+      <div className="w-[100%] px-2 flex justify-center rounded">
+        <div className=" w-[100%] ">
+          {/* Project Manager useState Hook Data Map */}
+          <div className="flex flex-col gap-6">
+            {/* Display a static UI without mapping */}
+
+            {apiDeveloper.map((Manager, index) => {
+              console.log("employ_id", Manager.emp_id);
+              return (
+                <div
+                  key={index}
+                  className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
+                >
+                  <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+                    <div className="flex items-center gap-3">
+                      <Image src={Manager.image_url} />
+                      <div>
+                        <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                          {Manager.first_name} {Manager.last_name}
+                          <span className="text-blue-300">{Manager.email}</span>
+                        </h1>
+                        <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                      </div>
+                    </div>
+                    <div>
+                      {/* CheckBox Button */}
+                      <input
+                        type="checkbox"
+                        // onChange={()=>{
+                        //   console.log("on changed",emplyyId),handleResourcesAdd(emplyyId)}}
+                        className="cursor-pointer"
+                        onChange={() => {
+                          handleResourcesAdd(Manager.emp_id);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            {/* Repeat the above structure for each item you want to display */}
           </div>
-        </div>)
-})}
-        {/* Repeat the above structure for each item you want to display */}
-      </div>
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 
@@ -243,8 +271,8 @@ export const CiCdResourcePool = (props) => {
 
   // HandleCheckBoxChange
   const handleResourcesAdd = (emp_id) => {
-    dispatch(add(emp_id));
-    console.log(emp_id)
+    dispatch(addResources({ id: emp_id }));
+    console.log(emp_id);
   };
 
   // console.log(project);
@@ -269,45 +297,49 @@ export const CiCdResourcePool = (props) => {
     };
     fetchData();
   }, []);
+  const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
-    <div className="w-[100%] px-2 flex justify-center rounded">
-      <div className=" w-[100%] ">
-        {/* Project Manager useState Hook Data Map */}
-        <div className="flex flex-col gap-6">
-        {/* Display a static UI without mapping */}
-        {CiCd.map((Manager, index) => (
-        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={Manager.image_url}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  
-                </h3>
+      <div className="w-[100%] px-2 flex justify-center rounded">
+        <div className=" w-[100%] ">
+          {/* Project Manager useState Hook Data Map */}
+          <div className="flex flex-col gap-6">
+            {/* Display a static UI without mapping */}
+            {CiCd.map((Manager, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
+              >
+                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image_url} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.first_name} {Manager.last_name}
+                        <span className="text-blue-300">{Manager.email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
+                  </div>
+                  <div>
+                    {/* CheckBox Button */}
+                    <input
+                      type="checkbox"
+                      onChange={() => {
+                        handleResourcesAdd(Manager.emp_id);
+                      }}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                checked={handleResourcesAdd(Manager.emp_id)}
-                className="cursor-pointer"
-              />
-            </div>
+            ))}
+            {/* Repeat the above structure for each item you want to display */}
           </div>
         </div>
-))}
-        {/* Repeat the above structure for each item you want to display */}
-      </div>
       </div>
     </div>
-  </div>
   );
 };
 
@@ -317,35 +349,47 @@ export const TesterResourcePool = (props) => {
   const [selectUser, setSelectUser] = useState([]);
 
   // useProject
-  const [project, setProject] = useProject({
-    resourcePool: [
-      {
-        tester: [],
-      },
-    ],
+  const [projectResource, setprojectResource] = useState({
+    Tester: [],
   });
 
   // HandleCheckBoxChange
-  const handleCheckboxChange = (userId) => {
-    // Check if userId is already in selectUser
-    if (selectUser.includes(userId)) {
-      // If yes, remove it
-      setSelectUser((prevState) => prevState.filter((id) => id !== userId));
-    } else {
-      // If no, add it
-      setSelectUser((prevState) => [...prevState, userId]);
-    }
-
-    // console.log(userId)
-    // console.log(selectUser)
-  };
 
   console.log(selectUser);
-
-  const handleResourcesAdd = (emp_id) => {
-    dispatch(add(emp_id));
-    console.log(emp_id)
+  var handleResourcesAdd = (emp_id) => {
+    dispatch(addResources({ id: emp_id }));
+    console.log(emp_id);
   };
+  // const handleResourcesAdd = (emp_id) => {
+
+  //   setprojectResource((prevState) => ({
+  //     ...prevState,
+  //     Tester: [...prevState.Tester, emp_id],
+  //   }));
+  //   dispatch(addResources({ id: projectResource }));
+  // };
+  // const handleResourcesAdd = (emp_id) => {
+  //   console.log(emp_id);
+  //   // Check if the employee ID is already in the Tester array
+  //   const isChecked = projectResource.Tester.includes(emp_id);
+
+  //   if (isChecked) {
+  //     // If already checked, remove it
+  //     setprojectResource((prevState) => ({
+  //       ...prevState,
+  //       Tester: prevState.Tester.filter((id) => id !== emp_id),
+  //     }));
+  //   } else {
+  //     // If not checked, add it
+  //     setprojectResource((prevState) => ({
+  //       ...prevState,
+  //       Tester: [...prevState.Tester, emp_id],
+  //     }));
+  //   }
+  //   // Dispatch the updated Tester array
+  // };
+
+  // console.log(projectResource);
 
   // console.log(project);
 
@@ -368,45 +412,54 @@ export const TesterResourcePool = (props) => {
     };
     fetchData();
   }, []);
+  var dispatch = useDispatch();
+
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
-    <div className="w-[100%] px-2 flex justify-center rounded">
-      <div className=" w-[100%] ">
-        {/* Project Manager useState Hook Data Map */}
-        <div className="flex flex-col gap-6">
-        {/* Display a static UI without mapping */}
-        {Tester.map((Manager, index) => (
-        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={Manager.image_url}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  
-                </h3>
+      <div className="w-[100%] px-2 flex justify-center rounded">
+        <div className=" w-[100%] ">
+          {/* Project Manager useState Hook Data Map */}
+          <div className="flex flex-col gap-6">
+            {/* Display a static UI without mapping */}
+            {Tester.map((Manager, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
+              >
+                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image_url} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.first_name} {Manager.last_name}
+                        <span className="text-blue-300">{Manager.email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
+                  </div>
+                  <div>
+                    {/* CheckBox Button */}
+                    <input
+                      type="checkbox"
+                      onChange={() => {
+                        // handleResourcesAdd(Manager.emp_id);
+                        // dispatch(addResources( Manager.emp_id ));
+                        handleResourcesAdd(Manager.emp_id)
+
+                     
+                      }}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                checked={handleResourcesAdd(Manager.emp_id)}
-                className="cursor-pointer"
-              />
-            </div>
+            ))}
+            {/* Repeat the above structure for each item you want to display */}
           </div>
         </div>
-))}
-        {/* Repeat the above structure for each item you want to display */}
-      </div>
       </div>
     </div>
-  </div>
   );
 };
 
@@ -426,9 +479,9 @@ export const UxDesignResourcePool = (props) => {
   });
 
   // HandleCheckBoxChange
-  const handleResourcesAdd = (emp_id) => {
-    dispatch(add(emp_id));
-    console.log(emp_id)
+  var handleResourcesAdd = (emp_id) => {
+    dispatch(addResources({ id: emp_id }));
+    console.log(emp_id);
   };
 
   console.log(selectUser);
@@ -472,54 +525,59 @@ export const UxDesignResourcePool = (props) => {
     };
     fetchData();
   }, []);
+  const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
-  <div className="w-[100%] px-2 flex justify-center rounded">
-    <div className="rounded-lg bg-white shadow-md w-[100%] border border-gray-200 border-t-0">
-      {/* Project Manager useState Hook Data Map */}
-      <div>
-        {/* Display a static UI without mapping */}
-        <div className="flex items-center justify-start py-6 pr-4 pl-4 gap-40">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-          <div className="flex flex-col gap-6">
-        {/* Display a static UI without mapping */}
-        {uxDesigner.map((Manager, index) => (
-        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={Manager.image_url}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  
-                </h3>
+      <div className="w-[100%] px-2 flex justify-center rounded">
+        <div className="rounded-lg bg-white shadow-md w-[100%] border border-gray-200 border-t-0">
+          {/* Project Manager useState Hook Data Map */}
+          <div>
+            {/* Display a static UI without mapping */}
+            <div className="flex items-center justify-start py-6 pr-4 pl-4 gap-40">
+              <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+                <div className="flex flex-col gap-6">
+                  {/* Display a static UI without mapping */}
+                  {uxDesigner.map((Manager, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
+                    >
+                      <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+                        <div className="flex items-center gap-3">
+                          <Image src={Manager.image_url} />
+                          <div>
+                            <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                              {Manager.first_name} {Manager.last_name}
+                              <span className="text-blue-300">
+                                {Manager.email}
+                              </span>
+                            </h1>
+                            <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                          </div>
+                        </div>
+                        <div>
+                          {/* CheckBox Button */}
+                          <input
+                            type="checkbox"
+                            onChange={() => {
+                              handleResourcesAdd(Manager.emp_id);
+                            }}
+                            className="cursor-pointer"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {/* Repeat the above structure for each item you want to display */}
+                </div>
               </div>
             </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                checked={handleResourcesAdd(Manager.emp_id)}
-                className="cursor-pointer"
-              />
-            </div>
+            {/* Repeat the above structure for each item you want to display */}
           </div>
         </div>
-))}
-        {/* Repeat the above structure for each item you want to display */}
-      </div>
-          </div>
-        </div>
-        {/* Repeat the above structure for each item you want to display */}
       </div>
     </div>
-  </div>
-</div>
   );
 };
 
@@ -538,8 +596,8 @@ export const UiDeveloperResourcePool = (props) => {
 
   // HandleCheckBoxChange
   const handleResourcesAdd = (emp_id) => {
-    dispatch(add(emp_id));
-    console.log(emp_id)
+    dispatch(addResources({ id: emp_id }));
+    console.log(emp_id);
   };
 
   console.log(selectUser);
@@ -584,46 +642,49 @@ export const UiDeveloperResourcePool = (props) => {
     };
     fetchData();
   }, []);
+  const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
-    <div className="w-[100%] px-2 flex justify-center rounded">
-      <div className=" w-[100%] ">
-        {/* Project Manager useState Hook Data Map */}
-        <div className="flex flex-col gap-6">
-        {/* Display a static UI without mapping */}
-        {uiDeveloper.map((Manager, index) => (
-        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={Manager.image_url}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  
-                </h3>
+      <div className="w-[100%] px-2 flex justify-center rounded">
+        <div className=" w-[100%] ">
+          {/* Project Manager useState Hook Data Map */}
+          <div className="flex flex-col gap-6">
+            {/* Display a static UI without mapping */}
+            {uiDeveloper.map((Manager, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
+              >
+                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image_url} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.first_name} {Manager.last_name}
+                        <span className="text-blue-300">{Manager.email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
+                  </div>
+                  <div>
+                    {/* CheckBox Button */}
+                    <input
+                      type="checkbox"
+                      onChange={() => {
+                        handleResourcesAdd(Manager.emp_id);
+                      }}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                checked={handleResourcesAdd(Manager.emp_id)}
-                className="cursor-pointer"
-              />
-            </div>
+            ))}
+            {/* Repeat the above structure for each item you want to display */}
           </div>
         </div>
-))}
-        {/* Repeat the above structure for each item you want to display */}
-      </div>
-        
       </div>
     </div>
-  </div>
   );
 };
 
@@ -654,8 +715,8 @@ export const UxResearcher = (props) => {
 
   console.log(selectUser);
   const handleResourcesAdd = (emp_id) => {
-    dispatch(addResources(emp_id));
-    console.log(emp_id)
+    dispatch(addResources({ id: emp_id }));
+    console.log(emp_id);
   };
 
   // console.log(project);
@@ -679,44 +740,47 @@ export const UxResearcher = (props) => {
     };
     fetchData();
   }, []);
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
-    <div className="w-[100%] px-2 flex justify-center rounded">
-      <div className=" w-[100%] ">
-        {/* Project Manager useState Hook Data Map */}
-        <div className="flex flex-col gap-6">
-        {/* Display a static UI without mapping */}
-        {uxResearcher.map((Manager, index) => (
-        <div key={index} className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg">
-          <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-            
-            <div className="flex items-center gap-3">
-             <Image src={Manager.image_url}/>
-              <div>
-                <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                  {Manager.first_name} {Manager.last_name}<span className="text-blue-300">{Manager.email}</span>
-                </h1>
-                <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal">
-                  
-                </h3>
+      <div className="w-[100%] px-2 flex justify-center rounded">
+        <div className=" w-[100%] ">
+          {/* Project Manager useState Hook Data Map */}
+          <div className="flex flex-col gap-6">
+            {/* Display a static UI without mapping */}
+            {uxResearcher.map((Manager, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
+              >
+                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image_url} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.first_name} {Manager.last_name}
+                        <span className="text-blue-300">{Manager.email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
+                  </div>
+                  <div>
+                    {/* CheckBox Button */}
+                    <input
+                      type="checkbox"
+                      onChange={() => {
+                        handleResourcesAdd(Manager.emp_id);
+                      }}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              {/* CheckBox Button */}
-              <input
-                type="checkbox"
-                checked={handleResourcesAdd(Manager.emp_id)}
-                className="cursor-pointer"
-              />
-            </div>
+            ))}
+            {/* Repeat the above structure for each item you want to display */}
           </div>
         </div>
-))}
-        {/* Repeat the above structure for each item you want to display */}
-      </div>
       </div>
     </div>
-  </div>
   );
 };

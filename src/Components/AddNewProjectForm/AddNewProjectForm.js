@@ -53,6 +53,8 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     // Update the project state as the user types
     setProject({ ...project, [e.target.name]: e.target.value });
     dispatch(updateFormData({ ...project, [e.target.name]: e.target.value }));
+
+    console.log(project)
   };
   const handleStartDateChange = (date, dateString) => {
     setProject({
@@ -112,7 +114,8 @@ const convertImageToBase64 = (file) => {
     image_url: "https://i.imgur.com/PujQY5Y.png",
   });
 
-  console.log(project);
+  const projectData = useSelector(state => state.addProject);
+  console.log(projectData)
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();

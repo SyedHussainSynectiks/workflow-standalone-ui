@@ -7,7 +7,7 @@ import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm"
 import pages from "@/app/main/projects/resourcePool/page";
 import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 import { useDispatch, useSelector } from "react-redux";
-import { updateId } from "@/Context/AddNewProjectSlice/addProjectSlice"; 
+import { updateId } from "@/Context/AddNewProjectSlice/addProjectSlice";
 
 const { Step } = Steps;
 
@@ -26,11 +26,15 @@ const steps = [
   },
 ];
 
-
-export default function ProjectForm({ formNext }) {
+export default function page({ formNext }) {
   const projectData = useSelector((state) => state.addProject);
+  const resourcesId = useSelector((state) => state.addResources.Tester);
+  const str = useSelector((state) => state);
 
-  // console.log(projectData);
+  const projectId = useSelector((state) => state.addProject.id);
+  console.log("projectId : ", projectId);
+console.log("resourceIn Project",resourcesId )
+  console.log(projectData);
 
   const [toggleValue, setToggleValue] = useState(false);
   const [formData, setFormData] = useState({});
@@ -44,10 +48,7 @@ export default function ProjectForm({ formNext }) {
   const nonViewsteps = [
     {
       title: "Set up Project",
-      content: (
-        <AddNewProjectForm
-        />
-      ),
+      content: <AddNewProjectForm />,
     },
     {
       title: "Resource pool",
@@ -115,7 +116,7 @@ export default function ProjectForm({ formNext }) {
     // } catch (error) {
     //   console.error("Error sending data:", error);
     // }
-  
+
     if (
       !projectData.projectName ||
       !projectData.projectDescription ||
@@ -129,17 +130,66 @@ export default function ProjectForm({ formNext }) {
       return;
     }
     try {
+      // console.log(projectData)
       await Apisubmit(projectData);
-      // setCurrent(current + 1);
+      setCurrent(current + 1);
     } catch (error) {
       console.error("Error submitting data:", error);
     }
     // Apisubmit(projectData);
     // console.log(projectData);
     setCurrent(current + 1);
+    if (current === 1) {
+      const postData = {
+        project_id: projectId,
+        team_name: projectData.projectName,
+        created_by_id: "550e8400-e29b-41d4-a716-446655440001",
+        roles: resourcesId,
+      };
+
+      console.log("Before PUT request");
+      // console.log(project.projectId);
+      console.log(JSON.stringify(postData));
+      console.log(postData);
+
+      fetch(
+        `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: postData,
+        }
+      )
+        .then((response) => {
+          console.log("After PUT request");
+          console.log("This is the Response");
+          console.log(response);
+
+          // Check if the response indicates success (you can customize this check based on your API)
+          if (response.status === 200 || response.status === 201) {
+            // Navigating to the "/main/projects/addResource" route after the successful PUT request
+            console.log("success");
+            // router.push("/main/projects/addResource");
+          } else {
+            // If the response status is not successful, handle the error accordingly
+            console.error(
+              "PUT request was not successful. Status:",
+              response.status
+            );
+            // You can also log more details about the error response if needed
+            response.json().then((data) => console.error(data)); // Assuming there is a data property in the response
+          }
+        })
+        .catch((error) => {
+          // Catching and handling any errors that may occur during the PUT request
+          console.error("Error during PUT request:", error.message);
+          // You may want to log more details about the error or show a user-friendly error message
+        });
+    }
   };
 
- 
   const Apisubmit = async (project) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -169,79 +219,75 @@ export default function ProjectForm({ formNext }) {
     try {
       const response = await fetch(
         "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project",
-      requestOptions
+        requestOptions
       );
       const result = await response.json();
       console.log("success:", result, result.id);
-      dispatch(updateId(result.id))
+      dispatch(updateId(result.id));
       return result;
-    
-      
     } catch (error) {
       console.error("error:", error);
       throw error;
     } finally {
       console.log("Api.ENDING");
     }
- 
-    
   };
   const dispatch = useDispatch();
-  
-   // Api of resources
-   const handleOnClickNext = () => {
-    console.log(JSON.stringify(project.resourcePool));
 
-    console.log("resource pool");
-    console.log(project.resourcePool);
+  //  // Api of resources
+  //  const handleOnClickNext = () => {
+  //   console.log(JSON.stringify(project.resourcePool));
 
-    const postData = {
-      project_id: project.projectId,
-      team_name: project.projectName,
-      created_by_id: "550e8400-e29b-41d4-a716-446655440001",
-      roles: project.resourcePool,
-    };
+  //   console.log("resource pool");
+  //   console.log(project.resourcePool);
 
-    console.log("Before PUT request");
-    console.log(project.projectId);
-    console.log(JSON.stringify(postData));
-    console.log(postData);
+  //   const postData = {
+  //     project_id: project.projectId,
+  //     team_name: project.projectName,
+  //     created_by_id: "550e8400-e29b-41d4-a716-446655440001",
+  //     roles: project.resourcePool,
+  //   };
 
-    fetch(
-      `https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/project/${project.projectId}/team`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: postData,
-      }
-    )
-      .then((response) => {
-        console.log("After PUT request");
-        console.log("This is the Response");
-        console.log(response);
+  //   console.log("Before PUT request");
+  //   console.log(project.projectId);
+  //   console.log(JSON.stringify(postData));
+  //   console.log(postData);
 
-        // Check if the response indicates success (you can customize this check based on your API)
-        if (response.status === 200 || response.status === 201) {
-          // Navigating to the "/main/projects/addResource" route after the successful PUT request
-          router.push("/main/projects/addResource");
-        } else {
-          // If the response status is not successful, handle the error accordingly
-          console.error(
-            "PUT request was not successful. Status:",
-            response.status
-          );
-          // You can also log more details about the error response if needed
-          response.json().then((data) => console.error(data)); // Assuming there is a data property in the response
-        }
-      })
-      .catch((error) => {
-        // Catching and handling any errors that may occur during the PUT request
-        console.error("Error during PUT request:", error.message);
-        // You may want to log more details about the error or show a user-friendly error message
-      });
-  };
+  //   fetch(
+  //     `https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/project/${project.projectId}/team`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: postData,
+  //     }
+  //   )
+  //     .then((response) => {
+  //       console.log("After PUT request");
+  //       console.log("This is the Response");
+  //       console.log(response);
+
+  //       // Check if the response indicates success (you can customize this check based on your API)
+  //       if (response.status === 200 || response.status === 201) {
+  //         // Navigating to the "/main/projects/addResource" route after the successful PUT request
+  //         router.push("/main/projects/addResource");
+  //       } else {
+  //         // If the response status is not successful, handle the error accordingly
+  //         console.error(
+  //           "PUT request was not successful. Status:",
+  //           response.status
+  //         );
+  //         // You can also log more details about the error response if needed
+  //         response.json().then((data) => console.error(data)); // Assuming there is a data property in the response
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       // Catching and handling any errors that may occur during the PUT request
+  //       console.error("Error during PUT request:", error.message);
+  //       // You may want to log more details about the error or show a user-friendly error message
+  //     });
+  // };
   return (
     <>
       <div className="w-auto py-2 px-1 mb-2 bg-white">

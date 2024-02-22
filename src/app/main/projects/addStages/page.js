@@ -1,121 +1,205 @@
-"use client";
+"use client"
+import React, { useState } from 'react'
+import { CloseCircleFilled, SaveOutlined, DeleteFilled, PlusCircleFilled } from '@ant-design/icons'
+import { Input, Button, Form } from 'antd';
 
-import Image from "next/image";
-import AddStages from "../../../../../public/assets/createWorkflow.svg";
-import { HiPlusCircle } from "react-icons/hi2";
-import { MdCancel } from "react-icons/md";
-import react from "react";
-import { Input } from "antd";
+const onFinish = (values) => {
+  console.log('Received values of form:', values);
+};
 
-export default function page() {
+const page = () => {
+  const axios = require('axios');
+let data = JSON.stringify({
+  "example": {
+    "name": "string",
+    "created_by_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "project_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "stages": [
+      {
+        "Requirements1": {
+          "tasks": [
+            "task-1",
+            "task-2",
+            "task-3"
+          ],
+          "checklist": [
+            "thing 1",
+            "thing 2",
+            "thing 3"
+          ]
+        }
+      },
+      {
+        "mock1": {
+          "tasks": [
+            "mytask-1",
+            "task-2",
+            "task-3"
+          ],
+          "checklist": [
+            "thing 1",
+            "thing 2",
+            "thing 3"
+          ]
+        }
+      }
+    ]
+  }
+});
+
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: '{{baseUrl}}/workflow',
+  headers: { 
+    'Content-Type': 'application/json', 
+    'Accept': 'application/json'
+  },
+  data : data
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+  const [addStage, SetAddStage] = useState(false)
+  const [addchecklist, SetCheckList] = useState(false)
+  const [addsubstage, SetAddSubStage] = useState(false)
   return (
-    <>
-      <div className="w-[100] ">
-         <div className="flex items-center justify-between">
-         <h1 className="text-3xl mb-2 font-semibold">Workflow Management</h1>
-        <MdCancel className="text-3xl text-blue-400"  />
-         </div>
-        <div className="flex  w-[100%]  bg-white ">
-          <div className="p-10 w-[50%] mt-40 text-center item-ceter">
-            <h2 className="text-3xl mb-2 font-semibold">Create a New workflow</h2>
-            <p className="font-semibold text-start w-[405px] ml-28 mt-6 text-[#B8B8B8]">
-              Workflow entails the structured sequence of tasks and processes
-              required to complete a project or activity efficiently, ensuring
-              smooth coordination and optimal resource utilization.
-            </p>
-            <Image src={AddStages} className="ml-32 mt-4" />
-          </div>
-
-          <div className="p-8 m-0 w-[50%] text-center">
-            <h2 className="text-xl text-start font-medium">Workflow Name</h2>
-            <Input className="w-72 h-8 mt-2 font-semibold mr-[400px] border-blue-500 " placeholder="example" />
-
-           <div className="text-start">
-
-           <div className="relative top-5 ">
-              <h4 className="font-semibold">Add Stage</h4>
-
-              <button className="w-16 h-14 mt-2 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
-                {" "}
-                <HiPlusCircle className="ml-4 text-white text-3xl " />
-              </button>
-              <div className=" left-24 relative mt-2">
-                <h6 className="font-medium">New Stage</h6>
-                <p className="text-[#B8B8B8]">No Sub-stages</p>
-              </div>
-            </div>
-
-            <div className="mt-14">
-              <h4 className="font-semibold" >Add Sub-Stage</h4>
-
-              <button className="w-16 mt-2 h-14 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
-                {" "}
-                <HiPlusCircle className="ml-4 text-white text-3xl " />
-              </button>
-              <div className=" left-24 mt-2 relative">
-                <h6 className="font-medium" >New Sub-Stage</h6>
-                <p className="text-[#B8B8B8]">No Task</p>
-              </div>
-            </div>
-
-            <div className="mt-8">
-              <h4 className="font-semibold" >Create Check List</h4>
-              <button className="w-16 h-14 mt-2 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
-                {" "}
-                <HiPlusCircle className="ml-4 text-white text-3xl " />
-              </button>
-              <div className=" left-24 relative mt-2">
-                <h6 className="font-medium" >Create Check List</h6>
-                <p className="text-[#B8B8B8]" >No Task</p>
-              </div>
-            </div>
-
-            <div className="mt-8">
-              <h4 className="font-semibold  ml-2" >Stages</h4>
-              <div className="mb-7  mt-2 ">
-              <button className="w-16  h-14 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
-                {" "}
-                <HiPlusCircle className="ml-4 text-white text-3xl " />
-              </button>
-              <div className=" left-24 relative  ">
-                <h6 className="font-medium" >To Do</h6>
-                <p className="text-[#B8B8B8]" >No Task</p>
-              </div>
-              </div>
-             
-
-              <div className="mb-7">
-             <button className="w-16 h-14 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
-                {" "}
-                <HiPlusCircle className="ml-4 text-white text-3xl " />
-              </button>
-              <div className=" left-24 relative mt-6">
-                <h6 className="font-medium" >In Progress</h6>
-                <p className="text-[#B8B8B8]" >No Task</p>
-              </div>
-             </div>
-
-
-             <div>
-             <button className="w-16 h-14 border-[#d9d9d9] rounded-xl text-2xl absolute bg-[#d9d9d9]">
-                {" "}
-                <HiPlusCircle className="ml-4 text-white text-3xl " />
-              </button>
-              <div className=" left-24 relative">
-                <h6 className="font-medium">Done</h6>
-                <p className="text-[#B8B8B8]" >No Task</p>
-              </div>
-             </div>
-            </div>
-
-           </div>
-
-
-            <button className="p-4 w-56 mt-14  bg-indigo-600 text-white rounded-md " > Create Workflow  </button>
-
-          </div>
-        </div>
+    <div>
+      <div className='flex justify-between  items-center'>
+        <h1 className='text-3xl font-semibold leading-snug tracking-normal text-left'>Workflow Management</h1>
+        <CloseCircleFilled style={{ fontSize: "20px", color: 'blue' }} />
       </div>
-    </>
-  );
+      <h3 className='text-2xl font-medium leading-loose tracking-normal text-left pl-3'>Creating Workflow</h3>
+      <div className='flex justify-between p-4 items-center bg-white'>
+        <Input placeholder='example' className='w-1/2' />
+        <Button icon={<SaveOutlined />} type='primary' className='bg-blue-500' onClick={() => SetAddStage(true)}>Add Stage</Button>
+      </div>
+
+      {addStage && (<div className='py-2 mt-2 flex flex-col space-y-2'>
+        <h3 className='text-base font-medium leading-normal tracking-normal text-left'>Add Stage</h3>
+        <div className='bg-white p-4 flex items-center justify-between'>
+
+          <h4 className='text-sm font-normal leading-snug tracking-normal'>Stage Name :</h4>
+          <Input placeholder='Requirement' className='w-1/2' />
+          <DeleteFilled style={{ color: 'red' }} onClick={() => {
+            SetAddStage(false);
+            SetCheckList(false);
+            SetAddSubStage(false)
+          }} />
+
+          <Button type='primary' className='bg-blue-500' onClick={() => SetCheckList(true)}>Add Checklist</Button>
+          <Button type='primary' className='bg-blue-500' onClick={() => SetAddSubStage(true)}>Add Sub Stages </Button>
+
+        </div>
+      </div>)}
+
+
+
+      {addsubstage && (
+        <Form
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <Form.List name="users">
+            {(fields, { add, remove }) => (
+              <div className='py-2 mt-2 space-y-2'>
+                <h3 className='text-base font-medium leading-normal tracking-normal text-left'>Add Sub Stage</h3>
+                {fields.map(({ key, name, ...restField }) => (
+                  <div key={key} className='bg-white px-4 flex items-center justify-between'>
+                    <h4 className='text-sm font-normal leading-snug tracking-normal w-1/4'>Sub Stage Name :</h4>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'first']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Missing Requirement',
+                        },
+                      ]}
+                      style={{ margin: "10px" }}
+                      className='w-full'
+                    >
+                      <Input placeholder='Requirement' className='' />
+                    </Form.Item>
+                    <DeleteFilled style={{ color: 'red' }} className='w-1/4' onClick={() => remove(name)} />
+                    <Button type='primary' className='bg-blue-500' onClick={() => add()}>Add Sub Stage</Button>
+                  </div>
+                ))}
+                <div className='bg-white px-4 flex items-center justify-between'>
+                  <h4 className='text-sm font-normal leading-snug tracking-normal w-1/4'>Sub Stage Name :</h4>
+                  <Form.Item style={{ margin: "10px" }} className='w-full'>
+                    <Input placeholder='Requirement' className='' />
+                  </Form.Item>
+                  <DeleteFilled style={{ color: 'red' }} className='w-1/4' onClick={() => SetAddSubStage(false)} />
+                  <Button type='primary' className='bg-blue-500' onClick={() => add()}>Add Sub Stage</Button>
+                </div>
+              </div>
+            )}
+          </Form.List>
+          {/* <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item> */}
+        </Form>
+      )}
+
+      {addchecklist && (
+        <Form
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <Form.List name="users">
+            {(fields, { add, remove }) => (
+              <div className='py-2 mt-2 space-y-2'>
+                <h3 className='text-base font-medium leading-normal tracking-normal text-left'>Create check list</h3>
+                {fields.map(({ key, name, ...restField }) => (
+                  <div key={key} className='bg-white px-4 flex items-center justify-between'>
+                    <h4 className='text-sm font-normal leading-snug tracking-normal w-1/4'>Check List :</h4>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'first']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Missing Requirement',
+                        },
+                      ]}
+                      style={{ margin: "10px" }}
+                      className='w-full'
+                    >
+                      <Input placeholder='Requirement' className='' />
+                    </Form.Item>
+                    <DeleteFilled style={{ color: 'red' }} className='w-1/4' onClick={() => remove(name)} />
+                    <Button type='primary' className='bg-blue-500' onClick={() => add()}>Add Check List</Button>
+                  </div>
+                ))}
+                <div className='bg-white px-4 flex items-center justify-between'>
+                  <h4 className='text-sm font-normal leading-snug tracking-normal w-1/4'>Check List :</h4>
+                  <Form.Item style={{ margin: "10px" }} className='w-full'>
+                    <Input placeholder='Requirement' className='' />
+                  </Form.Item>
+                  <DeleteFilled style={{ color: 'red' }} className='w-1/4' onClick={() => SetCheckList(false)} />
+                  <Button type='primary' className='bg-blue-500' onClick={() => add()}>Add Check List</Button>
+                </div>
+              </div>
+            )}
+          </Form.List>
+          {/* <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item> */}
+        </Form>
+      )}
+    </div>
+  )
 }
+
+export default page
