@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Button, message, Steps, theme } from "antd";
 import AddResourcePool2 from "@/Components/AddResourcePool/AddresoucrePool2";
 import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm";
@@ -8,6 +9,8 @@ import pages from "@/app/main/projects/resourcePool/page";
 import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 import { useDispatch, useSelector } from "react-redux";
 import { updateId } from "@/Context/AddNewProjectSlice/addProjectSlice";
+import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
+import Link from "next/link";
 
 const { Step } = Steps;
 
@@ -29,7 +32,7 @@ const steps = [
 export default function page({ formNext }) {
   const projectData = useSelector((state) => state.addProject);
   const resourcesId = useSelector((state) => state.addResources.Tester);
-  const str = useSelector((state) => state);
+  // const str = useSelector((state) => state);
 
   const projectId = useSelector((state) => state.addProject.id);
   console.log("projectId : ", projectId);
@@ -44,6 +47,11 @@ console.log("resourceIn Project",resourcesId )
     console.log("Received data from child:", data);
     setFormData(data); // Update the state in the parent component
   };
+  const ProjectId= (ProjectId)=>{
+
+    dispatch(addProjectId(ProjectId))
+    // console.log(ProjectId)
+  }
 
   const nonViewsteps = [
     {
@@ -152,41 +160,61 @@ console.log("resourceIn Project",resourcesId )
       console.log(JSON.stringify(postData));
       console.log(postData);
 
-      fetch(
-        `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: postData,
-        }
-      )
-        .then((response) => {
-          console.log("After PUT request");
-          console.log("This is the Response");
-          console.log(response);
+      let config = {
+        method: 'put',
+        maxBodyLength: Infinity,
+        url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`,
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Accept': 'application/json'
+        },
+        data : postData
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-          // Check if the response indicates success (you can customize this check based on your API)
-          if (response.status === 200 || response.status === 201) {
-            // Navigating to the "/main/projects/addResource" route after the successful PUT request
-            console.log("success");
-            // router.push("/main/projects/addResource");
-          } else {
-            // If the response status is not successful, handle the error accordingly
-            console.error(
-              "PUT request was not successful. Status:",
-              response.status
-            );
-            // You can also log more details about the error response if needed
-            response.json().then((data) => console.error(data)); // Assuming there is a data property in the response
-          }
-        })
-        .catch((error) => {
-          // Catching and handling any errors that may occur during the PUT request
-          console.error("Error during PUT request:", error.message);
-          // You may want to log more details about the error or show a user-friendly error message
-        });
+      // fetch(
+      //   `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`,
+      //   {
+      //     method: "PUT",
+      //     headers: {
+      //       "Content-Type": "application/json",
+            
+      //     },
+      //     body: postData,
+      //   }
+      // )
+      //   .then((response) => {
+      //     console.log("After PUT request");
+      //     console.log("This is the Response");
+      //     console.log(response);
+
+      //     // Check if the response indicates success (you can customize this check based on your API)
+      //     if (response.status === 200 || response.status === 201) {
+      //       // Navigating to the "/main/projects/addResource" route after the successful PUT request
+      //       console.log("success");
+      //       // router.push("/main/projects/addResource");
+      //     } else {
+      //       // If the response status is not successful, handle the error accordingly
+      //       console.error(
+      //         "PUT request was not successful. Status:",
+      //         response.status
+      //       );
+      //       // You can also log more details about the error response if needed
+      //       response.json().then((data) => console.error(data)); // Assuming there is a data property in the response
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     // Catching and handling any errors that may occur during the PUT request
+      //     console.error("Error during PUT request:", error.message);
+      //     // You may want to log more details about the error or show a user-friendly error message
+      //   });
     }
   };
 
@@ -317,13 +345,14 @@ console.log("resourceIn Project",resourcesId )
           )}
 
           {current === steps.length - 1 && (
+            <Link href="/main/projects/workflowlist">
             <Button
               type="primary"
-              onClick={() => message.success("Processing complete!")}
+              onClick={()=>{ProjectId(projectId)}}
               className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
             >
               Done
-            </Button>
+            </Button></Link>
           )}
           {/* {current > 0 && (
           <Button style={{ margin: "0 8px" }} onClick={() => prev()}>

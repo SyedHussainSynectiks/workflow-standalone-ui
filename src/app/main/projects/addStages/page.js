@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { CloseCircleFilled, SaveOutlined, DeleteFilled, PlusCircleFilled } from '@ant-design/icons'
 import { Input, Button, Form } from 'antd';
-
+import { useSelector } from 'react-redux';
 ////////
 
 
@@ -21,52 +21,32 @@ const page = () => {
   const [checklistVal, setchecklistVal] = useState('')
   const [substageVal, setsubstageVal] = useState('')
 
-
+  const projectIds = useSelector((state)=>state.addResources)
+  console.log(projectIds.id[0].prjectId)
   ///////////
   
   const [api, contextHolder] = notification.useNotification();
  
 
 ///////////////
+
+const addingStage =(name)=>{
+  return stage = {
+    name : {
+    "tasks": [
+    ],
+    "checklist": [
+    ]
+  }}
+}
   const postworflow = (workFlowName,checklistVal,substageVal)=>{
     const axios = require('axios');
     let data = JSON.stringify({
       "name": `${workFlowName}`,
       "created_by_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "project_id": "fa2af9f4-9f94-459b-abb3-e2088f1bcc9b",
+      "project_id": `${projectIds.id[0].prjectId}`,
       "stages": [
-        {
-          "Requirements1": {
-            "tasks": [
-              `${checklistVal}`,
-              // "sdfsd",
-              "dsfdf",
-              "wfd"
-            ],
-            "checklist": [
-              "qerse",
-              "sfadqeqed",
-              // "sd2few"
-              `${substageVal}`
-            ]
-          }
-        },
-        {
-          "mock1": {
-            "tasks": [
-              "sdfkssd",
-              "sdfdwdqqewqdd",
-              "sdlkfdfs"
-              // ${checklistVal}
-            ],
-            "checklist": [
-              "dsfjdfs",
-              "sdfwkds",
-              "sfadfds"
-              // ${substageVal}
-            ]
-          }
-        }
+        
       ]
     });
     

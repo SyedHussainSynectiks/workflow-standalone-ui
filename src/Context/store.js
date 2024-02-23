@@ -10,5 +10,6 @@ export const store = configureStore({
   reducer: {
     addProject: addProjectReducer,
     addResources: addresourcesSlice,
+  
   },
 });

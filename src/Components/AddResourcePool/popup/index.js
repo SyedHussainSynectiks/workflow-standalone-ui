@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import user from "../../../../public/assets/profile1.svg";
 // import { useDispatch } from "react-redux";
 import {
-  addResources,
+  addResources,addResourcesData
 } from "@/Context/AddresourcesSlice/addresourcesSlice";
 
 export const Projectmanager = (props) => {
@@ -356,10 +356,14 @@ export const TesterResourcePool = (props) => {
   // HandleCheckBoxChange
 
   console.log(selectUser);
-  var handleResourcesAdd = (emp_id) => {
+  var handleResourcesAdd = (emp_id ) => {
     dispatch(addResources({ id: emp_id }));
+   
     console.log(emp_id);
   };
+  var handleResourcesInfo = (Tester) =>{
+    dispatch(addResourcesData(Tester))
+  }
   // const handleResourcesAdd = (emp_id) => {
 
   //   setprojectResource((prevState) => ({
@@ -423,6 +427,7 @@ export const TesterResourcePool = (props) => {
           <div className="flex flex-col gap-6">
             {/* Display a static UI without mapping */}
             {Tester.map((Manager, index) => (
+                
               <div
                 key={index}
                 className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
@@ -446,7 +451,7 @@ export const TesterResourcePool = (props) => {
                         // handleResourcesAdd(Manager.emp_id);
                         // dispatch(addResources( Manager.emp_id ));
                         handleResourcesAdd(Manager.emp_id)
-
+                        handleResourcesInfo(Tester)
                      
                       }}
                       className="cursor-pointer"
