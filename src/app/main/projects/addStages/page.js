@@ -3,72 +3,125 @@ import React, { useState } from 'react'
 import { CloseCircleFilled, SaveOutlined, DeleteFilled, PlusCircleFilled } from '@ant-design/icons'
 import { Input, Button, Form } from 'antd';
 
+////////
+
+
+
+import {  Divider, notification, Space } from 'antd';
+
+////////
+
 const onFinish = (values) => {
   console.log('Received values of form:', values);
 };
 
 const page = () => {
-  const axios = require('axios');
-let data = JSON.stringify({
-  "example": {
-    "name": "string",
-    "created_by_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "project_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "stages": [
-      {
-        "Requirements1": {
-          "tasks": [
-            "task-1",
-            "task-2",
-            "task-3"
-          ],
-          "checklist": [
-            "thing 1",
-            "thing 2",
-            "thing 3"
-          ]
+
+  const [workFlowName, setworkFlowName] = useState('')
+  const [checklistVal, setchecklistVal] = useState('')
+  const [substageVal, setsubstageVal] = useState('')
+
+
+  ///////////
+  
+  const [api, contextHolder] = notification.useNotification();
+ 
+
+///////////////
+  const postworflow = (workFlowName,checklistVal,substageVal)=>{
+    const axios = require('axios');
+    let data = JSON.stringify({
+      "name": `${workFlowName}`,
+      "created_by_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "project_id": "fa2af9f4-9f94-459b-abb3-e2088f1bcc9b",
+      "stages": [
+        {
+          "Requirements1": {
+            "tasks": [
+              `${checklistVal}`,
+              // "sdfsd",
+              "dsfdf",
+              "wfd"
+            ],
+            "checklist": [
+              "qerse",
+              "sfadqeqed",
+              // "sd2few"
+              `${substageVal}`
+            ]
+          }
+        },
+        {
+          "mock1": {
+            "tasks": [
+              "sdfkssd",
+              "sdfdwdqqewqdd",
+              "sdlkfdfs"
+              // ${checklistVal}
+            ],
+            "checklist": [
+              "dsfjdfs",
+              "sdfwkds",
+              "sfadfds"
+              // ${substageVal}
+            ]
+          }
         }
+      ]
+    });
+    
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/workflow',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Accept': 'application/json'
       },
-      {
-        "mock1": {
-          "tasks": [
-            "mytask-1",
-            "task-2",
-            "task-3"
-          ],
-          "checklist": [
-            "thing 1",
-            "thing 2",
-            "thing 3"
-          ]
-        }
-      }
-    ]
+      data : data
+    };
+    
+    axios.request(config)
+    .then((response) => {
+    openNotification('top')
+
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+   
+     
+
+
+  }   
+  
+  
+  const openNotification = (placement) => {
+    api.info({
+      message: `Success `,
+      description:
+        'Stage Added',
+      placement,
+    });
+
+    
+    
+  
+  
   }
-});
-
-let config = {
-  method: 'post',
-  maxBodyLength: Infinity,
-  url: '{{baseUrl}}/workflow',
-  headers: { 
-    'Content-Type': 'application/json', 
-    'Accept': 'application/json'
-  },
-  data : data
-};
-
-axios.request(config)
-.then((response) => {
-  console.log(JSON.stringify(response.data));
-})
-.catch((error) => {
-  console.log(error);
-});
-
   const [addStage, SetAddStage] = useState(false)
   const [addchecklist, SetCheckList] = useState(false)
   const [addsubstage, SetAddSubStage] = useState(false)
+
+
+    
+
+  /////////////Notification pop up for api success 
+
+
+
   return (
     <div>
       <div className='flex justify-between  items-center'>
@@ -77,7 +130,7 @@ axios.request(config)
       </div>
       <h3 className='text-2xl font-medium leading-loose tracking-normal text-left pl-3'>Creating Workflow</h3>
       <div className='flex justify-between p-4 items-center bg-white'>
-        <Input placeholder='example' className='w-1/2' />
+        <Input placeholder='example' className='w-1/2' onChange={(e)=>{setworkFlowName(e.target.value)}} />
         <Button icon={<SaveOutlined />} type='primary' className='bg-blue-500' onClick={() => SetAddStage(true)}>Add Stage</Button>
       </div>
 
@@ -86,15 +139,20 @@ axios.request(config)
         <div className='bg-white p-4 flex items-center justify-between'>
 
           <h4 className='text-sm font-normal leading-snug tracking-normal'>Stage Name :</h4>
-          <Input placeholder='Requirement' className='w-1/2' />
+          <Input placeholder='Requirement' className='w-1/2'  onChange={(e)=>{setchecklistVal(e.target.value)}} />
           <DeleteFilled style={{ color: 'red' }} onClick={() => {
             SetAddStage(false);
             SetCheckList(false);
             SetAddSubStage(false)
           }} />
 
-          <Button type='primary' className='bg-blue-500' onClick={() => SetCheckList(true)}>Add Checklist</Button>
+          <Button type='primary' className='bg-blue-500' onClick={() =>{ SetCheckList(true)
+            
+            postworflow(workFlowName,checklistVal,substageVal)
+           
+            }}>Add Checklist</Button>
           <Button type='primary' className='bg-blue-500' onClick={() => SetAddSubStage(true)}>Add Sub Stages </Button>
+          {contextHolder}
 
         </div>
       </div>)}
@@ -134,7 +192,7 @@ axios.request(config)
                 <div className='bg-white px-4 flex items-center justify-between'>
                   <h4 className='text-sm font-normal leading-snug tracking-normal w-1/4'>Sub Stage Name :</h4>
                   <Form.Item style={{ margin: "10px" }} className='w-full'>
-                    <Input placeholder='Requirement' className='' />
+                    <Input placeholder='Requirement' className=''  onChange={(e)=>{setsubstageVal(e.target.value)}} />
                   </Form.Item>
                   <DeleteFilled style={{ color: 'red' }} className='w-1/4' onClick={() => SetAddSubStage(false)} />
                   <Button type='primary' className='bg-blue-500' onClick={() => add()}>Add Sub Stage</Button>

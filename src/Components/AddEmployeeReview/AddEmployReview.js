@@ -4,12 +4,15 @@ import { Button } from 'antd'
 import { Input } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import Array from './array';
+import { useSelector } from 'react-redux';
 const { Search } = Input;
+
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 const AddEmployReview = () => {
     const [data, setData] = useState(Array);
-
+    const projectData = useSelector((state) => state.addProject);
+    console.log(projectData)
     const handleDelete = (id) => {
         const updatedData = data.filter(employee => employee.id !== id);
         console.log(updatedData);
@@ -19,7 +22,7 @@ const AddEmployReview = () => {
     return (
         <div>
             
-            <div>
+            <div >
                 <div className='rounded-md mt-5 space-y-5 p-5 bg-white'>
                     <div className='flex justify-between'>
                         <h1 className='text-xl font-bold leading-snug tracking-normal text-left'>Setup project</h1>
@@ -29,16 +32,16 @@ const AddEmployReview = () => {
                         </div>
                     </div>
                     <div className='flex space-x-10 w-screen items-center'>
-                        <div><img src='https://cdn.pixabay.com/photo/2015/07/20/12/53/gehlert-852762_1280.jpg' className='w-[7rem] h-[7rem] rounded-md' /></div>
+                        <div><img src={projectData.image_url} className='w-[7rem] h-[7rem] rounded-md' /></div>
                         <div className='flex  '>
                             <div className='p-5 space-y-10 mx-5'>
                                 <div>
                                     <p>Project Name</p>
-                                    <h3 className='font-semibold'>Procurement</h3>
+                                    <h3 className='font-semibold'>{projectData.projectName}</h3>
                                 </div>
                                 <div>
                                     <p>Project department</p>
-                                    <h3 className='font-semibold'>Department</h3>
+                                    <h3 className='font-semibold'>{projectData.projectDepartment}</h3>
                                 </div>
 
                             </div>
@@ -47,11 +50,11 @@ const AddEmployReview = () => {
                             <div className='p-5 space-y-10 mx-5'>
                                 <div>
                                     <p>Project Description</p>
-                                    <h3 className='font-semibold'>-----</h3>
+                                    <h3 className='font-semibold'>{projectData.projectDescription }</h3>
                                 </div>
                                 <div>
                                     <p>Project Duration</p>
-                                    <h3 className='font-semibold'>04/02/2023 TO 04/02/2024</h3>
+                                    <h3 className='font-semibold'>{projectData.startDate}TO {projectData.endDate}</h3>
                                 </div>
                             </div>
 
@@ -59,6 +62,7 @@ const AddEmployReview = () => {
                     </div>
                 </div>
             </div>
+         
             <div className='mt-5 flex flex-col space-y-4 bg-white rounded-md p-10'>
                 <div className='flex justify-between'>
                     <h1 className='text-2xl font-semibold leading-normal tracking-normal text-left'>Resource Pool</h1>
