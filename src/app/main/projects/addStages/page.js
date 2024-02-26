@@ -1,391 +1,68 @@
 "use client";
-// import React, { useState } from "react";
-// import {
-//   CloseCircleFilled,
-//   SaveOutlined,
-//   DeleteFilled,
-//   PlusCircleFilled,
-// } from "@ant-design/icons";
-// import { Input, Button, Form } from "antd";
-// import { useSelector } from "react-redux";
-// ////////
-
-// import { Divider, notification, Space } from "antd";
-
-// ////////
-
-// const onFinish = (values) => {
-//   console.log("Received values of form:", values);
-// };
-
-// const page = () => {
-//   const [workFlowName, setworkFlowName] = useState("");
-//   const [checklistVal, setchecklistVal] = useState("");
-//   const [substageVal, setsubstageVal] = useState("");
-//   const [reqObj, setReqObj] = useState({
-//     name: "",
-//     created_by_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//     project_id: "",
-//     stages: [],
-//   });
-//   console.log(reqObj);
-//   const projectIds = useSelector((state) => state.addResources);
-//   console.log(projectIds.id[0].prjectId);
-//   ///////////
-
-//   const [api, contextHolder] = notification.useNotification();
-
-//   // const handleAddStage = (newStage) => {
-//   //   console.log(newStage)
-//   //   setReqObj(prevState => ({
-//   //     ...prevState,
-//   //     stages: [...prevState.stages, newStage]
-//   //   }));
-//   // };
-//   ///////////////
-
-//   // const addingStage =(name)=>{
-//   //   return stage = {
-//   //     [name] : {
-//   //     "tasks": [
-//   //     ],
-//   //     "checklist": [
-//   //     ]
-//   //   }}
-//   // }
-//   const postworflow = (workFlowName, checklistVal, substageVal) => {
-//     const axios = require("axios");
-//     let data = {
-//       name: `${workFlowName}`,
-//       created_by_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//       project_id: `${projectIds.id[0].prjectId}`,
-//       stages: [],
-//     };
-
-//     let config = {
-//       method: "post",
-//       maxBodyLength: Infinity,
-//       url: "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/workflow",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Accept: "application/json",
-//       },
-//       data: data,
-//     };
-
-//     axios
-//       .request(config)
-//       .then((response) => {
-//         openNotification("top");
-
-//         console.log(JSON.stringify(response.data));
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-
-//   const openNotification = (placement) => {
-//     api.info({
-//       message: `Success `,
-//       description: "Stage Added",
-//       placement,
-//     });
-//   };
-//   const [addStage, SetAddStage] = useState(false);
-//   const [addchecklist, SetCheckList] = useState(false);
-//   const [addsubstage, SetAddSubStage] = useState(false);
-//   const [stages, setStages] = useState([]);
-
-//   const handleAddStage = () => {
-//     setStages([
-//       ...stages,
-//       { stageName: "", checklistVal: "", substageVal: "" },
-//     ]);
-//   };
-
-//   const handleStageNameChange = (index, value) => {
-//     const updatedStages = [...stages];
-//     updatedStages[index].stageName = value;
-//     setStages(updatedStages);
-//   };
-
-//   /////////////Notification pop up for api success
-
-//   return (
-//     <div>
-//       <div className="flex justify-between items-center">
-//         <h1 className="text-3xl font-semibold leading-snug tracking-normal text-left">
-//           Workflow Management
-//         </h1>
-//         <CloseCircleFilled style={{ fontSize: "20px", color: "blue" }} />
-//       </div>
-//       <h3 className="text-2xl font-medium leading-loose tracking-normal text-left pl-3">
-//         Creating Workflow
-//       </h3>
-//       <div className="flex justify-between p-4 items-center bg-white">
-//         <Input
-//           placeholder="example"
-//           className="w-1/2"
-//           onChange={(e) => setWorkFlowName(e.target.value)}
-//         />
-//         <Button
-//           icon={<SaveOutlined />}
-//           type="primary"
-//           className="bg-blue-500"
-//           onClick={handleAddStage}
-//         >
-//           Add Stage
-//         </Button>
-//       </div>
-
-//       {stages.map((stage, index) => (
-//         <div key={index} className="py-2 mt-2 flex flex-col space-y-2">
-//           <h3 className="text-base font-medium leading-normal tracking-normal text-left">
-//             Add Stage
-//           </h3>
-//           <div className="bg-white p-4 flex items-center justify-between">
-//             <h4 className="text-sm font-normal leading-snug tracking-normal">
-//               Stage Name :
-//             </h4>
-//             <Input
-//               placeholder="Requirement"
-//               className="w-1/2"
-//               value={stage.stageName}
-//               onChange={(e) => handleStageNameChange(index, e.target.value)}
-//             />
-//             <DeleteFilled
-//               style={{ color: "red" }}
-//               onClick={() => {
-//                 // Remove the stage at the given index
-//                 const updatedStages = stages.filter((_, i) => i !== index);
-//                 setStages(updatedStages);
-//               }}
-//             />
-
-//             <Button
-//               type="primary"
-//               className="bg-blue-500"
-//               onClick={() => {
-//                 SetCheckList(true);
-//                 postworflow(workFlowName, checklistVal, substageVal);
-//               }}
-//             >
-//               Add Checklist
-//             </Button>
-//             <Button
-//               type="primary"
-//               className="bg-blue-500"
-//               onClick={() => SetAddSubStage(true)}
-//             >
-//               Add Sub Stages
-//             </Button>
-//             {contextHolder}
-//           </div>
-//         </div>
-//       ))}
-
-//       {addsubstage && (
-//         <Form onFinish={onFinish} autoComplete="off">
-//           <Form.List name="users">
-//             {(fields, { add, remove }) => (
-//               <div className="py-2 mt-2 space-y-2">
-//                 <h3 className="text-base font-medium leading-normal tracking-normal text-left">
-//                   Add Sub Stage
-//                 </h3>
-//                 {fields.map(({ key, name, ...restField }) => (
-//                   <div
-//                     key={key}
-//                     className="bg-white px-4 flex items-center justify-between"
-//                   >
-//                     <h4 className="text-sm font-normal leading-snug tracking-normal w-1/4">
-//                       Sub Stage Name :
-//                     </h4>
-//                     <Form.Item
-//                       {...restField}
-//                       name={[name, "first"]}
-//                       rules={[
-//                         {
-//                           required: true,
-//                           message: "Missing Requirement",
-//                         },
-//                       ]}
-//                       style={{ margin: "10px" }}
-//                       className="w-full"
-//                     >
-//                       <Input placeholder="Requirement" className="" />
-//                     </Form.Item>
-//                     <DeleteFilled
-//                       style={{ color: "red" }}
-//                       className="w-1/4"
-//                       onClick={() => remove(name)}
-//                     />
-//                     <Button
-//                       type="primary"
-//                       className="bg-blue-500"
-//                       onClick={() => add()}
-//                     >
-//                       Add Sub Stage
-//                     </Button>
-//                   </div>
-//                 ))}
-//                 <div className="bg-white px-4 flex items-center justify-between">
-//                   <h4 className="text-sm font-normal leading-snug tracking-normal w-1/4">
-//                     Sub Stage Name :
-//                   </h4>
-//                   <Form.Item style={{ margin: "10px" }} className="w-full">
-//                     <Input
-//                       placeholder="Requirement"
-//                       className=""
-//                       onChange={(e) => {
-//                         handleAddStage(addingStage(e.target.value));
-//                       }}
-//                     />
-//                   </Form.Item>
-//                   <DeleteFilled
-//                     style={{ color: "red" }}
-//                     className="w-1/4"
-//                     onClick={() => SetAddSubStage(false)}
-//                   />
-//                   <Button
-//                     type="primary"
-//                     className="bg-blue-500"
-//                     onClick={() => add()}
-//                   >
-//                     Add Sub Stage
-//                   </Button>
-//                 </div>
-//               </div>
-//             )}
-//           </Form.List>
-//           {/* <Form.Item>
-//             <Button type="primary" htmlType="submit">
-//               Submit
-//             </Button>
-//           </Form.Item> */}
-//         </Form>
-//       )}
-
-//       {addchecklist && (
-//         <Form onFinish={onFinish} autoComplete="off">
-//           <Form.List name="users">
-//             {(fields, { add, remove }) => (
-//               <div className="py-2 mt-2 space-y-2">
-//                 <h3 className="text-base font-medium leading-normal tracking-normal text-left">
-//                   Create check list
-//                 </h3>
-//                 {fields.map(({ key, name, ...restField }) => (
-//                   <div
-//                     key={key}
-//                     className="bg-white px-4 flex items-center justify-between"
-//                   >
-//                     <h4 className="text-sm font-normal leading-snug tracking-normal w-1/4">
-//                       Check List :
-//                     </h4>
-//                     <Form.Item
-//                       {...restField}
-//                       name={[name, "first"]}
-//                       rules={[
-//                         {
-//                           required: true,
-//                           message: "Missing Requirement",
-//                         },
-//                       ]}
-//                       style={{ margin: "10px" }}
-//                       className="w-full"
-//                     >
-//                       <Input placeholder="Requirement" className="" />
-//                     </Form.Item>
-//                     <DeleteFilled
-//                       style={{ color: "red" }}
-//                       className="w-1/4"
-//                       onClick={() => remove(name)}
-//                     />
-//                     <Button
-//                       type="primary"
-//                       className="bg-blue-500"
-//                       onClick={() => add()}
-//                     >
-//                       Add Check List
-//                     </Button>
-//                   </div>
-//                 ))}
-//                 <div className="bg-white px-4 flex items-center justify-between">
-//                   <h4 className="text-sm font-normal leading-snug tracking-normal w-1/4">
-//                     Check List :
-//                   </h4>
-//                   <Form.Item style={{ margin: "10px" }} className="w-full">
-//                     <Input placeholder="Requirement" className="" />
-//                   </Form.Item>
-//                   <DeleteFilled
-//                     style={{ color: "red" }}
-//                     className="w-1/4"
-//                     onClick={() => SetCheckList(false)}
-//                   />
-//                   <Button
-//                     type="primary"
-//                     className="bg-blue-500"
-//                     onClick={() => add()}
-//                   >
-//                     Add Check List
-//                   </Button>
-//                 </div>
-//               </div>
-//             )}
-//           </Form.List>
-//           {/* <Form.Item>
-//             <Button type="primary" htmlType="submit">
-//               Submit
-//             </Button>
-//           </Form.Item> */}
-//         </Form>
-//       )}
-//     </div>
-//   );
-// };
 
 // export default page;
-
-
-import React, { useState } from 'react';
-import { Input, Button, Form } from 'antd';
-import { DeleteFilled, SaveOutlined, CloseCircleFilled } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
-import { notification } from 'antd';
+import React, { useState } from "react";
+import { Input, Button, notification } from "antd";
+import { DeleteFilled, SaveOutlined, CloseCircleFilled } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Page = () => {
-  const [workFlowName, setWorkFlowName] = useState('');
+  const [workFlowName, setWorkFlowName] = useState("");
   const [stages, setStages] = useState([]);
-  const projectIds = useSelector((state) => state.addResources);
-
+  const setprojectIds = useSelector((state) => state.addResources);
+  const ProjectId = setprojectIds.id[0].prjectId;
   const [api, contextHolder] = notification.useNotification();
+console.log(ProjectId)
+  const postWorkflow = async () => {
+    try {
+      const data = {
+        name: workFlowName,
+        created_by_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        project_id: ProjectId,
+        stages: stages.map((stage) => ({
+          name: stage.stageName,
+          tasks: stage.subStages,
+          checklist: stage.checklist,
+        })),
+      };
+console.log(data)
 
-  const postWorkflow = (workFlowName) => {
-    // Your API call logic here
-  };
+      const response = await axios.post(
+        "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/workflow",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
 
-  const onFinish = (values) => {
-    console.log("Received values of form:", values);
-  };
-
-  const openNotification = (placement) => {
-    api.info({
-      message: 'Success',
-      description: 'Stage Added',
-      placement,
-    });
+      console.log(JSON.stringify(response.data));
+      openNotification("topRight", "success", "Workflow saved successfully!");
+    } catch (error) {
+      console.error(error);
+      openNotification("topRight", "error", "Failed to save workflow. Please try again later.");
+    }
   };
 
   const handleAddStage = () => {
     setStages([
       ...stages,
       {
-        stageName: '',
-        checklist: [],
+        stageName: "",
         subStages: [],
+        checklist: [],
       },
     ]);
   };
+
+  // const handleWorkFlowNameChange = (index, value) => {
+  //   const updatedStages = [...stages];
+  //   updatedStages[index].workFlowName = value;
+  //   setStages(updatedStages);
+  // };
 
   const handleStageNameChange = (index, value) => {
     const updatedStages = [...stages];
@@ -395,33 +72,44 @@ const Page = () => {
 
   const handleAddSubstage = (index) => {
     const updatedStages = [...stages];
-    updatedStages[index].subStages.push('');
+    updatedStages[index].subStages.push("");
     setStages(updatedStages);
   };
 
   const handleAddChecklist = (index) => {
     const updatedStages = [...stages];
-    updatedStages[index].checklist.push('');
+    updatedStages[index].checklist.push("");
     setStages(updatedStages);
+  };
+
+  const openNotification = (placement, type, message) => {
+    api[type]({
+      message: message,
+      placement: placement,
+    });
   };
 
   return (
     <div>
-      <div className='flex justify-between items-center'>
-        <h1 className='text-3xl font-semibold leading-snug tracking-normal text-left'>Workflow Management</h1>
-        <CloseCircleFilled style={{ fontSize: '20px', color: 'blue' }} />
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-semibold leading-snug tracking-normal text-left">
+          Workflow Management
+        </h1>
+        <CloseCircleFilled style={{ fontSize: "20px", color: "blue" }} />
       </div>
-      <h3 className='text-2xl font-medium leading-loose tracking-normal text-left pl-3'>Creating Workflow</h3>
-      <div className='flex justify-between p-4 items-center bg-white'>
+      <h3 className="text-2xl font-medium leading-loose tracking-normal text-left pl-3">
+        Creating Workflow
+      </h3>
+      <div className="flex justify-between p-4 items-center bg-white">
         <Input
-          placeholder='example'
-          className='w-1/2'
+          placeholder="example"
+          className="w-1/2"
           onChange={(e) => setWorkFlowName(e.target.value)}
         />
         <Button
           icon={<SaveOutlined />}
-          type='primary'
-          className='bg-blue-500'
+          type="primary"
+          className="bg-blue-500"
           onClick={handleAddStage}
         >
           Add Stage
@@ -429,18 +117,22 @@ const Page = () => {
       </div>
 
       {stages.map((stage, index) => (
-        <div key={index} className='py-2 mt-2 flex flex-col space-y-2'>
-          <h3 className='text-base font-medium leading-normal tracking-normal text-left'>Add Stage</h3>
-          <div className='bg-white p-4 flex items-center justify-between'>
-            <h4 className='text-sm font-normal leading-snug tracking-normal'>Stage Name :</h4>
+        <div key={index} className="py-2 mt-2 flex flex-col space-y-2">
+          <h3 className="text-base font-medium leading-normal tracking-normal text-left">
+            Add Stage
+          </h3>
+          <div className="bg-white p-4 flex items-center justify-between">
+            <h4 className="text-sm font-normal leading-snug tracking-normal">
+              Stage Name :
+            </h4>
             <Input
-              placeholder='Requirement'
-              className='w-1/2'
+              placeholder="Requirement"
+              className="w-1/2"
               value={stage.stageName}
               onChange={(e) => handleStageNameChange(index, e.target.value)}
             />
             <DeleteFilled
-              style={{ color: 'red' }}
+              style={{ color: "red" }}
               onClick={() => {
                 const updatedStages = stages.filter((_, i) => i !== index);
                 setStages(updatedStages);
@@ -448,18 +140,18 @@ const Page = () => {
             />
 
             <Button
-              type='primary'
-              className='bg-blue-500'
+              type="primary"
+              className="bg-blue-500"
               onClick={() => {
                 handleAddChecklist(index);
-                postWorkflow(workFlowName);
+                ;
               }}
             >
               Add Checklist
             </Button>
             <Button
-              type='primary'
-              className='bg-blue-500'
+              type="primary"
+              className="bg-blue-500"
               onClick={() => handleAddSubstage(index)}
             >
               Add Sub Stages
@@ -470,11 +162,16 @@ const Page = () => {
           <div>
             {/* Render Substages */}
             {stage.subStages.map((subStage, subIndex) => (
-              <div key={subIndex} className='bg-white p-4 flex items-center justify-between'>
-                <h4 className='text-sm font-normal leading-snug tracking-normal'>Sub Stage Name :</h4>
+              <div
+                key={subIndex}
+                className="bg-white p-4 flex items-center justify-between my-1"
+              >
+                <h4 className="text-sm font-normal leading-snug tracking-normal">
+                  Sub Stage Name :
+                </h4>
                 <Input
-                  placeholder='Substage'
-                  className='w-1/2'
+                  placeholder="Substage"
+                  className="w-1/2"
                   value={subStage}
                   onChange={(e) => {
                     const updatedStages = [...stages];
@@ -482,6 +179,17 @@ const Page = () => {
                     setStages(updatedStages);
                   }}
                 />
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => {
+                    const updatedStages = [...stages];
+                    updatedStages[index].subStages.splice(subIndex, 1); // Remove the sub-stage at subIndex
+                    setStages(updatedStages);
+                  }}
+                >
+                  Remove
+                </Button>
               </div>
             ))}
           </div>
@@ -489,23 +197,45 @@ const Page = () => {
           <div>
             {/* Render Checklists */}
             {stage.checklist.map((checklist, checklistIndex) => (
-              <div key={checklistIndex} className='bg-white p-4 flex items-center justify-between'>
-                <h4 className='text-sm font-normal leading-snug tracking-normal'>Checklist :</h4>
+              <div
+                key={checklistIndex}
+                className="bg-white p-4 flex items-center justify-between my-1"
+              >
+                <h4 className="text-sm font-normal leading-snug tracking-normal">
+                  Checklist :
+                </h4>
                 <Input
-                  placeholder='Checklist Item'
-                  className='w-1/2'
+                  placeholder="Checklist Item"
+                  className="w-1/2"
                   value={checklist}
                   onChange={(e) => {
                     const updatedStages = [...stages];
-                    updatedStages[index].checklist[checklistIndex] = e.target.value;
+                    updatedStages[index].checklist[checklistIndex] =
+                      e.target.value;
                     setStages(updatedStages);
                   }}
                 />
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => {
+                    const updatedStages = [...stages];
+                    updatedStages[index].checklist.splice(checklistIndex, 1); // Remove the checklist item at checklistIndex
+                    setStages(updatedStages);
+                  }}
+                >
+                  Remove
+                </Button>
               </div>
             ))}
           </div>
         </div>
       ))}
+      <div className="flex justify-center mt-6 w-[100%]">
+        <Button className="bg-blue-500 text-white" onClick={postWorkflow}>
+          Save
+        </Button>
+      </div>
     </div>
   );
 };

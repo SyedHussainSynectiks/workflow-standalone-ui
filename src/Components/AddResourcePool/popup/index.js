@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import user from "../../../../public/assets/profile1.svg";
 // import { useDispatch } from "react-redux";
 import {
-  addResources,addResourcesPM ,addResourcesUxDesigner,addResourcesUiDeveloper,addResourcesApiDeveloper,addResourcesTester,addResourcesUxResearch,addResourcesCiCd
+  addResources,addResourcesData ,addResourcesPM ,addResourcesUxDesigner,addResourcesUiDeveloper,addResourcesApiDeveloper,addResourcesTester,addResourcesUxResearch,addResourcesCiCd
 } from "@/Context/AddresourcesSlice/addresourcesSlice";
 
 export const Projectmanager = (props) => {
@@ -61,7 +61,7 @@ export const Projectmanager = (props) => {
     console.log(emp_id);
   };
   var handleResourcesInfo = (pm) =>{
-    dispatch(addResourcesPM(pm))
+    dispatch(addResourcesData(pm))
   }
 
   return (
@@ -158,7 +158,7 @@ export const ApiDeveloper = (props) => {
     console.log(emp_id);
   };
   var handleResourcesInfo = (apiDeveloper) =>{
-    dispatch(addResourcesApiDeveloper(apiDeveloper))
+    dispatch(addResourcesData(apiDeveloper))
   }
 
   return (
@@ -253,7 +253,7 @@ export const CiCdResourcePool = (props) => {
     console.log(emp_id);
   };
   var handleResourcesInfo = (CiCd) =>{
-    dispatch(addResourcesCiCd(CiCd))
+    dispatch(addResourcesData(CiCd))
   }
 
   // console.log(project);
@@ -344,7 +344,7 @@ export const TesterResourcePool = (props) => {
     console.log(emp_id);
   };
   var handleResourcesInfo = (Tester) =>{
-    dispatch(addResourcesTester(Tester))
+    dispatch(addResourcesData(Tester))
   }
   // const handleResourcesAdd = (emp_id) => {
 
@@ -472,7 +472,7 @@ export const UxDesignResourcePool = (props) => {
     console.log(emp_id);
   };
   var handleResourcesInfo = (uxDesigner) =>{
-    dispatch(addResourcesUxDesigner(uxDesigner))
+    dispatch(addResourcesData(uxDesigner))
   }
 
   console.log(selectUser);
@@ -575,7 +575,7 @@ export const UiDeveloperResourcePool = (props) => {
     console.log(emp_id);
   };
   var handleResourcesInfo = (uiDeveloper) =>{
-    dispatch(addResourcesUiDeveloper(uiDeveloper))
+    dispatch(addResourcesData(uiDeveloper))
   }
 
   console.log(selectUser);
@@ -706,7 +706,7 @@ export const UxResearcher = (props) => {
     console.log(emp_id);
   };
   var handleResourcesInfo = (uxResearcher) =>{
-    dispatch(addResourcesUxResearch(uxResearcher))
+    dispatch(addResourcesData(uxResearcher))
   }
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">

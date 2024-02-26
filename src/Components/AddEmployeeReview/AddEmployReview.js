@@ -20,17 +20,9 @@ const AddEmployReview = () => {
   const MapingDataUxRes = ResourcesInfo.UXResearcher[0].resoucesInfo;
   const MapingDataCiCd = ResourcesInfo.CICDSpecialist[0].resoucesInfo;
 
-  const Mainmap = {
-    MapingDataPm,
-    MapingDataUxDesigner,
-    MapingDataUiDeve,
-    MapingDataApiDevel,
-    MapingDataTester,
-    MapingDataUxRes,
-    MapingDataCiCd,
-  };
-  console.log(MapingDataPm);
-  console.log(MapingDataTester);
+
+  const ResourceAdded = ResourcesInfo.resoucesInfo;
+  console.log(ResourceAdded)
 
   const [data, setData] = useState(Array);
   const projectData = useSelector((state) => state.addProject);
@@ -143,7 +135,7 @@ const AddEmployReview = () => {
                 </th>
               </tr>
             </thead>
-            {/* {MapingDataPm.map((resource, index) => (
+            {ResourceAdded.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
                 
@@ -174,7 +166,7 @@ const AddEmployReview = () => {
                   </td>
                 </tr>
               </tbody>
-            ))} */}
+            ))}
             {/* {MapingDataUxDesigner.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
@@ -334,7 +326,7 @@ const AddEmployReview = () => {
                   </td>
                 </tr>
               </tbody>
-            ))} */}
+            ))} 
             {Object.entries(Mainmap).map(([key, value]) => (
               <tbody key={key} className="bg-white divide-y divide-gray-200">
                 {value.map((resource, index) => (
@@ -366,7 +358,7 @@ const AddEmployReview = () => {
                   </tr>
                 ))}
               </tbody>
-            ))}
+            ))} */}
 
             {/* {MapingDataCiCd.map((resource, index) => (
               console.log(resource.first_name),
