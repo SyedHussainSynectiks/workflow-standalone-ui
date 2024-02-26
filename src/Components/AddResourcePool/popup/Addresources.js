@@ -272,7 +272,6 @@ export const CiCdResourcePool = () => {
     }
     console.log("Selected IDs:", userId);
   };
-
   return (
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
       <div className="flex items-center justify-between">

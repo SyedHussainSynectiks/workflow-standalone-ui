@@ -147,8 +147,8 @@ export const Projectmanager = (props) => {
 // Api Developer
 export const ApiDeveloper = (props) => {
   // All Hooks
-  const handleResourcesAdd = (emplyyId) => {
-    dispatch(addResources({ id: emplyyId }));
+  // const handleResourcesAdd = (emplyyId) => {
+  //   dispatch(addResources({ id: emplyyId }));
     // console.log("dispatch",emplyyId)
     // if (emplyyId) {
     //   console.log("If-Else -dispatch", emplyyId);
@@ -157,7 +157,6 @@ export const ApiDeveloper = (props) => {
     //   console.error("empId is undefined");
     // }
     // dispatch(addResources({id:emplyyId}));
-  };
 
   // API Developer
   const [apiDeveloper, setApiDeveloper] = useState([]);
@@ -185,6 +184,14 @@ export const ApiDeveloper = (props) => {
 
   // HandleCheckBoxChanges
   const dispatch = useDispatch();
+  var handleResourcesAdd = (emp_id ) => {
+    dispatch(addResources({ id: emp_id }));
+   
+    console.log(emp_id);
+  };
+  var handleResourcesInfo = (apiDeveloper) =>{
+    dispatch(addResourcesData(apiDeveloper))
+  }
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
@@ -220,7 +227,8 @@ export const ApiDeveloper = (props) => {
                         //   console.log("on changed",emplyyId),handleResourcesAdd(emplyyId)}}
                         className="cursor-pointer"
                         onChange={() => {
-                          handleResourcesAdd(Manager.emp_id);
+                          handleResourcesAdd(Manager.emp_id)
+                          handleResourcesInfo(apiDeveloper)
                         }}
                       />
                     </div>
