@@ -347,7 +347,6 @@
 // export default page;
 
 
-
 import React, { useState } from 'react';
 import { Input, Button, Form } from 'antd';
 import { DeleteFilled, SaveOutlined, CloseCircleFilled } from '@ant-design/icons';
@@ -357,8 +356,6 @@ import { notification } from 'antd';
 const Page = () => {
   const [workFlowName, setWorkFlowName] = useState('');
   const [stages, setStages] = useState([]);
-  const [addchecklist, SetCheckList] = useState(false);
-  const [addsubstage, SetAddSubStage] = useState(false);
   const projectIds = useSelector((state) => state.addResources);
 
   const [api, contextHolder] = notification.useNotification();
@@ -366,9 +363,11 @@ const Page = () => {
   const postWorkflow = (workFlowName) => {
     // Your API call logic here
   };
+
   const onFinish = (values) => {
     console.log("Received values of form:", values);
   };
+
   const openNotification = (placement) => {
     api.info({
       message: 'Success',
@@ -382,10 +381,8 @@ const Page = () => {
       ...stages,
       {
         stageName: '',
-        checklistVal: '',
-        substageVal: '',
-        addingSubstage: false,
-        addingChecklist: false,
+        checklist: [],
+        subStages: [],
       },
     ]);
   };
@@ -398,13 +395,13 @@ const Page = () => {
 
   const handleAddSubstage = (index) => {
     const updatedStages = [...stages];
-    updatedStages[index].addingSubstage = true;
+    updatedStages[index].subStages.push('');
     setStages(updatedStages);
   };
 
   const handleAddChecklist = (index) => {
     const updatedStages = [...stages];
-    updatedStages[index].addingChecklist = true;
+    updatedStages[index].checklist.push('');
     setStages(updatedStages);
   };
 
@@ -470,164 +467,43 @@ const Page = () => {
             {contextHolder}
           </div>
 
-          {/* Render Substage form if addingSubstage flag is true */}
-          {stage.addingSubstage && (
-            <Form onFinish={onFinish} autoComplete="off">
-                   <Form.List name="users">
-            {(fields, { add, remove }) => (
-                          <div className="py-2 mt-2 space-y-2">
-                            <h3 className="text-base font-medium leading-normal tracking-normal text-left">
-                              Add Sub Stage
-                            </h3>
-                            {fields.map(({ key, name, ...restField }) => (
-                              <div
-                                key={key}
-                                className="bg-white px-4 flex items-center justify-between"
-                              >
-                                <h4 className="text-sm font-normal leading-snug tracking-normal w-1/4">
-                                  Sub Stage Name :
-                                </h4>
-                                <Form.Item
-                                  {...restField}
-                                  name={[name, "first"]}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Missing Requirement",
-                                    },
-                                  ]}
-                                  style={{ margin: "10px" }}
-                                  className="w-full"
-                                >
-                                  <Input placeholder="Requirement" className="" />
-                                </Form.Item>
-                                <DeleteFilled
-                                  style={{ color: "red" }}
-                                  className="w-1/4"
-                                  onClick={() => remove(name)}
-                                />
-                                <Button
-                                  type="primary"
-                                  className="bg-blue-500"
-                                  onClick={() => add()}
-                                >
-                                  Add Sub Stage
-                                </Button>
-                              </div>
-                            ))}
-                            <div className="bg-white px-4 flex items-center justify-between">
-                              <h4 className="text-sm font-normal leading-snug tracking-normal w-1/4">
-                                Sub Stage Name :
-                              </h4>
-                              <Form.Item style={{ margin: "10px" }} className="w-full">
-                                <Input
-                                  placeholder="Requirement"
-                                  className=""
-                                  onChange={(e) => {
-                                    handleAddStage(addingStage(e.target.value));
-                                  }}
-                                />
-                              </Form.Item>
-                              <DeleteFilled
-                                style={{ color: "red" }}
-                                className="w-1/4"
-                                onClick={() => remove()}
-                              />
-                              <Button
-                                type="primary"
-                                className="bg-blue-500"
-                                onClick={() => add()}
-                              >
-                                Add Sub Stage
-                              </Button>
-                            </div>
-                          </div>
-                        )}
-                      </Form.List>
-                      {/* <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                          Submit
-                        </Button>
-                      </Form.Item> */}
-                    </Form>
-          )}
-
-          {/* Render Checklist form if addingChecklist flag is true */}
-          {stage.addingChecklist && (
-            
-        <Form onFinish={onFinish} autoComplete="off">
-          <Form.List name="users">
-            {(fields, { add, remove }) => (
-              <div className="py-2 mt-2 space-y-2">
-                <h3 className="text-base font-medium leading-normal tracking-normal text-left">
-                  Create check list
-                </h3>
-                {fields.map(({ key, name, ...restField }) => (
-                  <div
-                    key={key}
-                    className="bg-white px-4 flex items-center justify-between"
-                  >
-                    <h4 className="text-sm font-normal leading-snug tracking-normal w-1/4">
-                      Check List :
-                    </h4>
-                    <Form.Item
-                      {...restField}
-                      name={[name, "first"]}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Missing Requirement",
-                        },
-                      ]}
-                      style={{ margin: "10px" }}
-                      className="w-full"
-                    >
-                      <Input placeholder="Requirement" className="" />
-                    </Form.Item>
-                    <DeleteFilled
-                      style={{ color: "red" }}
-                      className="w-1/4"
-                      onClick={() => remove(name)}
-                    />
-                    <Button
-                      type="primary"
-                      className="bg-blue-500"
-                      onClick={() => add()}
-                    >
-                      Add Check List
-                    </Button>
-                  </div>
-                ))}
-                <div className="bg-white px-4 flex items-center justify-between">
-                  <h4 className="text-sm font-normal leading-snug tracking-normal w-1/4">
-                    Check List :
-                  </h4>
-                  <Form.Item style={{ margin: "10px" }} className="w-full">
-                    <Input placeholder="Requirement" className="" />
-                  </Form.Item>
-                  <DeleteFilled
-                    style={{ color: "red" }}
-                    className="w-1/4"
-                    onClick={() => remove()}
-                  />
-                  <Button
-                    type="primary"
-                    className="bg-blue-500"
-                    onClick={() => add()}
-                  >
-                    Add Check List
-                  </Button>
-                </div>
+          <div>
+            {/* Render Substages */}
+            {stage.subStages.map((subStage, subIndex) => (
+              <div key={subIndex} className='bg-white p-4 flex items-center justify-between'>
+                <h4 className='text-sm font-normal leading-snug tracking-normal'>Sub Stage Name :</h4>
+                <Input
+                  placeholder='Substage'
+                  className='w-1/2'
+                  value={subStage}
+                  onChange={(e) => {
+                    const updatedStages = [...stages];
+                    updatedStages[index].subStages[subIndex] = e.target.value;
+                    setStages(updatedStages);
+                  }}
+                />
               </div>
-            )}
-          </Form.List>
-          {/* <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item> */}
-        </Form>
-          )}
+            ))}
+          </div>
+
+          <div>
+            {/* Render Checklists */}
+            {stage.checklist.map((checklist, checklistIndex) => (
+              <div key={checklistIndex} className='bg-white p-4 flex items-center justify-between'>
+                <h4 className='text-sm font-normal leading-snug tracking-normal'>Checklist :</h4>
+                <Input
+                  placeholder='Checklist Item'
+                  className='w-1/2'
+                  value={checklist}
+                  onChange={(e) => {
+                    const updatedStages = [...stages];
+                    updatedStages[index].checklist[checklistIndex] = e.target.value;
+                    setStages(updatedStages);
+                  }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </div>

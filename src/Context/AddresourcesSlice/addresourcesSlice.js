@@ -53,19 +53,19 @@ const addresourcesSlice = createSlice({
     name: "addResource",
     initialState: {
         id: [{prjectId:{} , resoucesInfo:{}}],
-        UIUXDeveloper: [],
-        FrontEndDeveloper: [],
-        BackendDeveloper: [],
-        SRE: [],
-        DevOpsEngineer: [],
-        AutomationTester: [],
-        ProjectManager: [],
-        UXDesigner: [],
-        UIDeveloper: [],
-        APIDeveloper: [],
-        Tester: [],
-        UXResearcher: [],
-        CICDSpecialist: [],
+        UIUXDeveloper: [{resoucesInfo:{}}],
+        FrontEndDeveloper: [{resoucesInfo:{}}],
+        BackendDeveloper: [{resoucesInfo:{}}],
+        SRE: [{resoucesInfo:{}}],
+        DevOpsEngineer: [{resoucesInfo:{}}],
+        AutomationTester: [{resoucesInfo:{}}],
+        ProjectManager: [{resoucesInfo:{}}],
+        UXDesigner: [{resoucesInfo:{}}],
+        UIDeveloper: [{resoucesInfo:{}}],
+        APIDeveloper: [{resoucesInfo:{}}],
+        Tester: [{resoucesInfo:{}}],
+        UXResearcher: [{resoucesInfo:{}}],
+        CICDSpecialist: [{resoucesInfo:{}}],
 
     },
 
@@ -87,7 +87,41 @@ const addresourcesSlice = createSlice({
           state.id[1].resoucesInfo = action.payload;
           console.log("resources Data: ", action.payload)
 
-      },
+      },addResourcesPM: (state, action) => {
+        state.ProjectManager[0].resoucesInfo = action.payload;
+        console.log("resources Data: ", action.payload)
+
+    },
+    addResourcesUxDesigner: (state, action) => {
+        state.UXDesigner[0].resoucesInfo = action.payload;
+        console.log("resources Data: ", action.payload)
+
+    },
+    addResourcesUiDeveloper: (state, action) => {
+        state.UIDeveloper[0].resoucesInfo = action.payload;
+        console.log("resources Data: ", action.payload)
+
+    },
+    addResourcesApiDeveloper: (state, action) => {
+        state.APIDeveloper[0].resoucesInfo = action.payload;
+        console.log("resources Data: ", action.payload)
+
+    },
+    addResourcesTester: (state, action) => {
+        state.Tester[0].resoucesInfo = action.payload;
+        console.log("resources Data: ", action.payload)
+
+    },
+    addResourcesUxResearch: (state, action) => {
+        state.UXResearcher[0].resoucesInfo = action.payload;
+        console.log("resources Data: ", action.payload)
+
+    },
+    addResourcesCiCd: (state, action) => {
+        state.CICDSpecialist[0].resoucesInfo = action.payload;
+        console.log("resources Data: ", action.payload)
+
+    },
         // console.log(action.title)
         removeResources(state, action) {
             return state.filter((item) => item.id !== action.payload);
@@ -95,5 +129,5 @@ const addresourcesSlice = createSlice({
     }
 })
 
-export const { addResources, removeResources, addProjectId , addResourcesData} = addresourcesSlice.actions;
+export const { addResources, removeResources, addProjectId , addResourcesData,addResourcesPM,addResourcesUxDesigner,addResourcesUiDeveloper,addResourcesApiDeveloper,addResourcesTester,addResourcesUxResearch,addResourcesCiCd,} = addresourcesSlice.actions;
 export default addresourcesSlice.reducer;
