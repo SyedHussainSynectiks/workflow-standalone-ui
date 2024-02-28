@@ -93,50 +93,20 @@ console.log("resourceIn Project",resourcesId )
   // Api project push
 
   const handleSubmit = async () => {
-    // Api Functions
-    // try {
-    //   const response = await api.post("/project", projectData, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-
-    //   if (response.status === 200) {
-    //     const data = response.data;
-    //     console.log("API Response:", data);
-    //     console.log("API Response:", data.id);
-    //     console.log("API working");
-
-    //     // Update projectId in the project state
-    //     setProject((prevProject) => ({
-    //       ...prevProject,
-    //       projectId: data.id, // Replace 'data.projectId' with the actual field from your response data
-    //     }));
-
-    //     // ... rest of the code
-    //   } else {
-    //     console.error(
-    //       "Error sending data:",
-    //       response.status,
-    //       response.statusText
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.error("Error sending data:", error);
-    // }
 
     if (
       !projectData.projectName ||
       !projectData.projectDescription ||
       !projectData.projectDepartment ||
       !projectData.startDate ||
-      !projectData.endDate
+      !projectData.endDate 
     ) {
       message.error(
         "Please fill in all fields before proceeding to the next step"
       );
       return;
     }
+    if(current === 0){
     try {
       // console.log(projectData)
       await Apisubmit(projectData);
@@ -144,9 +114,9 @@ console.log("resourceIn Project",resourcesId )
     } catch (error) {
       console.error("Error submitting data:", error);
     }
+  }
     // Apisubmit(projectData);
     // console.log(projectData);
-    setCurrent(current + 1);
     if (current === 1) {
       const postData = {
         project_id: projectId,
@@ -170,7 +140,7 @@ console.log("resourceIn Project",resourcesId )
         },
         data : postData
       };
-      
+      setCurrent(current + 1);
       axios.request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));

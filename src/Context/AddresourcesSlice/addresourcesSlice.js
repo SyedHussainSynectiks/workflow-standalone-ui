@@ -52,7 +52,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const addresourcesSlice = createSlice({
   name: "addResource",
   initialState: {
-    id: [{ prjectId: {} }],
+    id: [{ prjectId: {}, workFlowId:{}, }],
     resoucesInfo: [],
     UIUXDeveloper: [{ resoucesInfo: {} }],
     FrontEndDeveloper: [{ resoucesInfo: {} }],
@@ -64,7 +64,7 @@ const addresourcesSlice = createSlice({
     UXDesigner: [{ resoucesInfo: {} }],
     UIDeveloper: [{ resoucesInfo: {} }],
     APIDeveloper: [{ resoucesInfo: {} }],
-    Tester: [{ resoucesInfo: {} }],
+    Tester: [],
     UXResearcher: [{ resoucesInfo: {} }],
     CICDSpecialist: [{ resoucesInfo: {} }],
   },
@@ -78,6 +78,10 @@ const addresourcesSlice = createSlice({
     addProjectId: (state, action) => {
       state.id[0].prjectId = action.payload;
       console.log(action.payload);
+    },
+    addWorkFlowId: (state, action) => {
+      state.id[0].workFlowId = action.payload;
+      console.log("workFlowData: ",action.payload);
     },
     addResourcesData: (state, action) => {
       state.resoucesInfo.push(action.payload);
@@ -122,6 +126,7 @@ export const {
   addResources,
   removeResources,
   addProjectId,
+  addWorkFlowId,
   addResourcesData,
   addResourcesPM,
   addResourcesUxDesigner,

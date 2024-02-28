@@ -3,7 +3,12 @@
 // export default page;
 import React, { useState } from "react";
 import { Input, Button, notification } from "antd";
-import { DeleteFilled, SaveOutlined, CloseCircleFilled } from "@ant-design/icons";
+import Link from "next/link";
+import {
+  DeleteFilled,
+  SaveOutlined,
+  CloseCircleFilled,
+} from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -13,38 +18,40 @@ const Page = () => {
   const setprojectIds = useSelector((state) => state.addResources);
   const ProjectId = setprojectIds.id[0].prjectId;
   const [api, contextHolder] = notification.useNotification();
-console.log(ProjectId)
+  console.log(ProjectId);
+
   const postWorkflow = async () => {
-    try {
-      const data = {
-        name: workFlowName,
-        created_by_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        project_id: ProjectId,
-        stages: stages.map((stage) => ({
-          name: stage.stageName,
-          tasks: stage.subStages,
-          checklist: stage.checklist,
-        })),
-      };
-console.log(data)
+    const axios = require("axios");
+    let data = JSON.stringify({
+      "name": `${workFlowName}`,
+      "created_by_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "project_id": `${ProjectId}`,
+      "stages": stages.map((stage) => ({
+        "name": stage.stageName,
+        "tasks": stage.subStages,
+        "checklist": stage.checklist,
+      })),
+    });
+    console.log(data);
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/workflow",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: data,
+    };
 
-      const response = await axios.post(
-        "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/workflow",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
-      );
-
-      console.log(JSON.stringify(response.data));
-      openNotification("topRight", "success", "Workflow saved successfully!");
-    } catch (error) {
-      console.error(error);
-      openNotification("topRight", "error", "Failed to save workflow. Please try again later.");
-    }
+    axios
+      .request(config)
+      .then((response) => {
+        console.log("success:",response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleAddStage = () => {
@@ -144,7 +151,6 @@ console.log(data)
               className="bg-blue-500"
               onClick={() => {
                 handleAddChecklist(index);
-                ;
               }}
             >
               Add Checklist
@@ -164,7 +170,7 @@ console.log(data)
             {stage.subStages.map((subStage, subIndex) => (
               <div
                 key={subIndex}
-                className="bg-white p-4 flex items-center justify-between my-1"
+                className="bg-white p-4 flex items-center justify-between my-1 ml-10"
               >
                 <h4 className="text-sm font-normal leading-snug tracking-normal">
                   Sub Stage Name :
@@ -199,7 +205,7 @@ console.log(data)
             {stage.checklist.map((checklist, checklistIndex) => (
               <div
                 key={checklistIndex}
-                className="bg-white p-4 flex items-center justify-between my-1"
+                className="bg-white p-4 flex items-center justify-between my-1 ml-10"
               >
                 <h4 className="text-sm font-normal leading-snug tracking-normal">
                   Checklist :
@@ -231,10 +237,13 @@ console.log(data)
           </div>
         </div>
       ))}
+     
       <div className="flex justify-center mt-6 w-[100%]">
+        <Link href="/main/projects/workflowlist">
         <Button className="bg-blue-500 text-white" onClick={postWorkflow}>
           Save
         </Button>
+        </Link>
       </div>
     </div>
   );
