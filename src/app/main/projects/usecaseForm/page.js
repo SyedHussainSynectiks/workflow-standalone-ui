@@ -3,6 +3,7 @@ import { Form, Input, Upload, Button, message, DatePicker } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import moment from "moment";
 
 const layout = {
@@ -29,9 +30,7 @@ const newform = () => {
   const setWorkFlowIds = useSelector((state) => state.addResources);
   const workFlowId = setWorkFlowIds.id[0].workFlowId;
 
-  const [imageBase64, setImageBase64] = useState();
-
-  const formData = useSelector((state) => state.addProject);
+  const router = useRouter();
 
   const [project, setProject] = useState({
     usecase_name: "",
@@ -40,10 +39,10 @@ const newform = () => {
     start_date: null,
     end_date: null,
     workflow_id: `${workFlowId}`,
-    project_id: `${projectId}`
-    ,created_by_id: "5b5e750a-3244-402d-b7cb-50f035badf51"
+    project_id: `${projectId}`,
+    created_by_id: "5b5e750a-3244-402d-b7cb-50f035badf51",
   });
-console.log(project)
+  console.log(project);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProject({ ...project, [name]: value });
@@ -52,7 +51,7 @@ console.log(project)
   const handleStartDateChange = (date, dateString) => {
     setProject({
       ...project,
-      start_date: moment(dateString).format("YYYY-MM-DD" ),
+      start_date: moment(dateString).format("YYYY-MM-DD"),
     });
   };
 
@@ -76,7 +75,7 @@ console.log(project)
       start_date: `${project.start_date}`,
       end_date: `${project.end_date}`,
     });
-    console.log("data:", data)
+    console.log("data:", data);
     console.log("data:", data);
     let config = {
       method: "post",
@@ -93,6 +92,8 @@ console.log(project)
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+
+        router.push("/main/projects/developmentUsecases");
       })
       .catch((error) => {
         console.log(error);
@@ -213,14 +214,14 @@ console.log(project)
           >
             Submit
           </Button> */}
-          <Link
-            href="/main/projects/developmentUsecases"
+
+          <Button
             onClick={() => {
               handleSubmit();
             }}
           >
-            <Button>Next</Button>
-          </Link>
+            Next
+          </Button>
         </Form>
       </section>
 

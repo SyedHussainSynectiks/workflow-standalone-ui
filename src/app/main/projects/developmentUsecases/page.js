@@ -13,7 +13,8 @@ export default function Page() {
   const projectId = setprojectIds.id[0].prjectId;
   const setWorkFlowIds = useSelector((state) => state.addResources);
   const workFlowId = setWorkFlowIds.id[0].workFlowId;
-
+console.log(projectId)
+console.log(workFlowId)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,7 +82,7 @@ export default function Page() {
                     <Link href="/main/projects/usecaseFormStepper">
                       <div
                         key={index}
-                        className="bg-white w-[100%] rounded-lg p-3 leading-4 gap-3"
+                        className=" w-[100%] rounded-lg p-3 leading-4 gap-3"
 
                       >
                         <p className="UseCaseTxt">{usecase.usecase_name}</p>
