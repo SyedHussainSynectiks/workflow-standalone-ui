@@ -1,47 +1,86 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import { BarsOutlined, ShoppingOutlined, RiseOutlined, MessageOutlined } from '@ant-design/icons';
-
+import { useSelector } from "react-redux";
+// import { axios } from 'axios';
 
 
 const RequirementForm = () => {
 
   const [size, setSize] = useState('small');
+
   const onChange = (e) => {
     setSize(e.target.value)
   }
+
+  const [requireData, setRequireData] = useState();
+  const setUsecaseId = useSelector((state) => state.addUsecase);
+  const UsecaseId = setUsecaseId.useCaseId
+
+  console.log(UsecaseId);
+  useEffect(() => {
+    const axios = require('axios'); 
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
+          {
+            headers: {
+              'Accept': 'application/json'
+            }
+          }
+        );
+        console.log(response.data);
+        setRequireData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData()
+  }, [UsecaseId]);
+
   return (
     <div>
-      <div className='flex space-x-5 items-center mb-3'>
-        <div><img src='https://cdn.pixabay.com/photo/2015/07/20/12/53/gehlert-852762_1280.jpg' className='w-[7rem] h-[7rem] rounded-md' /></div>
-        <div>
-          <h1 className="my-3 text-xl font-medium leading-7 tracking-normal text-left">Darlene Robertson</h1>
-          <div className="my-3 flex space-x-2" ><ShoppingOutlined style={{ fontSize: "1rem" }} /> <h3 className="text-base font-normal leading-normal tracking-normal text-left space-y-4">Project Manager</h3></div>
-          <div className="my-3 flex space-x-2" ><BarsOutlined style={{ fontSize: "1rem" }} />     <h3 className="text-base font-normal leading-normal tracking-normal text-left space-y-4">10 Task</h3></div>
-        </div>
-
-        <div>
-          <div className="flex space-x-3 my-10">
-            <p className="text-sm font-medium leading-snug tracking-normal text-left">Assigned date</p>
-            <h3 className='text-base font-normal leading-tight tracking-normal text-left'>February 24, 2023</h3>
+      {requireData && (
+      
+          <div className='flex space-x-5 items-center mb-3'>
+            <div>
+              <img src={requireData.image} className='w-[7rem] h-[7rem] rounded-md' />
+            </div>
+            <div>
+              <h1 className="my-3 text-xl font-medium leading-7 tracking-normal text-left">{requireData.assignee_name}</h1>
+              <div className="my-3 flex space-x-2" >
+                <ShoppingOutlined style={{ fontSize: "1rem" }} />
+                <h3 className="text-base font-normal leading-normal tracking-normal text-left space-y-4">{requireData.role}</h3>
+              </div>
+              <div className="my-3 flex space-x-2" >
+                <BarsOutlined style={{ fontSize: "1rem" }} />
+                <h3 className="text-base font-normal leading-normal tracking-normal text-left space-y-4">{requireData.total_task}</h3>
+              </div>
+            </div>
+            <div>
+              <div className="flex space-x-3 my-10">
+                <p className="text-sm font-medium leading-snug tracking-normal text-left">Assigned date</p>
+                <h3 className='text-base font-normal leading-tight tracking-normal text-left'>{requireData.usecase.creation_date}</h3>
+              </div>
+              <div className="flex space-x-3 my-10">
+                <p className="text-sm font-medium leading-snug tracking-normal text-left">Planned date</p>
+                <h3 className='text-base font-normal leading-tight tracking-normal text-left'>{requireData.usecase.end_date}</h3>
+              </div>
+            </div>
+            <div>
+              <div className="flex space-x-3 my-10">
+                <p className="text-sm font-medium leading-snug tracking-normal text-left">Start date</p>
+                <h3 className='text-base font-normal leading-tight tracking-normal text-left'>{requireData.usecase.start_date}</h3>
+              </div>
+              <div className="flex space-x-3 my-10">
+                <p className="text-sm font-medium leading-snug tracking-normal text-left">Deviation</p>
+                <h3 className='text-base font-normal leading-tight tracking-normal text-left'>03days</h3>
+              </div>
+            </div>
           </div>
-          <div className="flex space-x-3 my-10">
-            <p className="text-sm font-medium leading-snug tracking-normal text-left">Palnned date</p>
-            <h3 className='text-base font-normal leading-tight tracking-normal text-left'>january 24, 2023</h3>
-          </div>
-        </div>
-        <div>
-          <div className="flex space-x-3 my-10">
-            <p className="text-sm font-medium leading-snug tracking-normal text-left">Start date</p>
-            <h3 className='text-base font-normal leading-tight tracking-normal text-left'>February 28 ,2024</h3>
-          </div>
-          <div className="flex space-x-3 my-10">
-            <p className="text-sm font-medium leading-snug tracking-normal text-left">Deviation</p>
-            <h3 className='text-base font-normal leading-tight tracking-normal text-left'>03days</h3>
-          </div>
-        </div>
-      </div>
+      )}
 
 
       <div className='bg-white border rounded-md mt-3'>

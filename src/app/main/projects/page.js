@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 import { addResources } from "@/Context/AddresourcesSlice/addresourcesSlice";
+import { Skeleton } from "antd";
 
 import {
   Avatar,
@@ -35,15 +36,7 @@ import { MdOutlineWatchLater } from "react-icons/md";
 
 const { Title, Paragraph, Text } = Typography;
 
-const getData = async () => {
-  try {
-    const response = await api.get("/project");
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data: ", error);
-  }
-};
+
 
 const ProjectLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -51,6 +44,20 @@ const ProjectLayout = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getData = async () => {
+    try {
+      setIsLoading(true); // Set loading state to true when fetching starts
+      const response = await api.get("/project");
+      console.log(response.data);
+      setIsLoading(false); // Set loading state to false when fetching finishes
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      setIsLoading(false); // Ensure loading state is set to false in case of error
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       const result = await getData();
@@ -106,17 +113,14 @@ const ProjectLayout = () => {
     setCurrentPage(page);
   };
 
- 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-
-//   const projectIds = useSelector((state)=>state.addResources)
-//   console.log(projectIds.id[0].prjectId)
-  const ProjectId= (ProjectId)=>{
-
-    dispatch(addProjectId(ProjectId))
+  //   const projectIds = useSelector((state)=>state.addResources)
+  //   console.log(projectIds.id[0].prjectId)
+  const ProjectId = (ProjectId) => {
+    dispatch(addProjectId(ProjectId));
     // console.log(ProjectId)
-  }
+  };
 
   return (
     <>
@@ -151,54 +155,69 @@ const ProjectLayout = () => {
 
         {/* Complete Projects, In Progress Projects, & UnAssign Projects */}
         <div className="my-5">
+          
           <Row gutter={16}>
+          {isLoading ? (
+          <Skeleton active />
+        ) : (
+          <>
             {filteredData.map((item, index) => (
               <Col span={6} className="mb-4">
-                 <Link href="/main/projects/workflowlist" onClick={()=>{ProjectId(item.id)}}>
-                <Card headerFontSize={22} bordered={false}>
-                  <Meta
-                    avatar={
-                      <Avatar
-                        className="bg-blue-200 rounded-full p-2"
-                        src={item.image_url}
-                        size={34}
-                        shape="square"
+                <Link
+                  href="/main/projects/workflowlist"
+                  onClick={() => {
+                    ProjectId(item.id);
+                  }}
+                >
+                  <Card headerFontSize={22} bordered={false}>
+                    {/* <Skeleton loading={!data.length} active> */}
+                      <Meta
+                        avatar={
+                          <Avatar
+                            className="bg-blue-200 rounded-full p-2"
+                            src={item.image_url}
+                            size={34}
+                            shape="square"
+                          />
+                        }
+                        title={item.name}
+                        className="text-lg flex align-middle"
                       />
-                    }
-                    title={item.name}
-                    className="text-lg flex align-middle"
-                  />
-                  <div className="w-full h-[2px] bg-gray-100 mt-2 mb-4"></div>
+                      <div className="w-full h-[2px] bg-gray-100 mt-2 mb-4"></div>
 
-                  <div className="flex flex-row justify-start items-center p-0">
-                    <Text className="text-xl">
-                      Total Use cases : {item.total_usecases}{" "}
-                    </Text>
-                  </div>
-                  <div className="flex flex-row justify-start items-center my-4">
-                    <h4>{item.total_resources} Use cases in Progress</h4>
-                  </div>
+                      <div className="flex flex-row justify-start items-center p-0">
+                        <Text className="text-xl">
+                          Total Use cases : {item.total_usecases}
+                        </Text>
+                      </div>
+                      <div className="flex flex-row justify-start items-center my-4">
+                        <h4>{item.total_resources} Use cases in Progress</h4>
+                      </div>
 
-                  <div className="flex ">
-                    {" "}
-                    <MdOutlineWatchLater className="size-6" />{" "}
-                    <div className="pl-6 pb-2"> 7 Days</div>{" "}
-                  </div>
+                      <div className="flex ">
+                        {" "}
+                        <MdOutlineWatchLater className="size-6" />{" "}
+                        <div className="pl-6 pb-2"> 7 Days</div>{" "}
+                      </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-row justify-start items-center pt-1">
-                      {checkStatus(item.status)}
-                    </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-row justify-start items-center pt-1">
+                          {checkStatus(item.status)}
+                        </div>
 
-                    <div className="pl-5 flex">
-                      <Avatar src="{}" />
-                      <Avatar src="{}" />
-                      <Avatar src="{}" />
-                    </div>
-                  </div>
-                </Card></Link>
+                        <div className="pl-5 flex">
+                          <Avatar src="{}" />
+                          <Avatar src="{}" />
+                          <Avatar src="{}" />
+                        </div>
+                      </div>
+                    {/* </Skeleton> */}
+                  </Card>
+                </Link>
               </Col>
             ))}
+            </>
+        )}
           </Row>
           <Row>
             {/* Pagination */}

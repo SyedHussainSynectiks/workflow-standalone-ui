@@ -31,10 +31,17 @@ const steps = [
 
 export default function page({ formNext }) {
   const projectData = useSelector((state) => state.addProject);
-  const resourcesId = useSelector((state) => state.addResources.Tester);
+  const setresourcesId = useSelector((state) => state.addResources);
+  const resourcesId = setresourcesId.id[0].resourcesId
+
+  const ValueresourcesId = resourcesId.map(obj => Object.values(obj));
+console.log(ValueresourcesId);
+
+  console.log("resoursesId",resourcesId)
   // const str = useSelector((state) => state);
 
   const projectId = useSelector((state) => state.addProject.id);
+
   console.log("projectId : ", projectId);
 console.log("resourceIn Project",resourcesId )
   console.log(projectData);
@@ -122,7 +129,7 @@ console.log("resourceIn Project",resourcesId )
         project_id: projectId,
         team_name: projectData.projectName,
         created_by_id: "550e8400-e29b-41d4-a716-446655440001",
-        roles: resourcesId,
+        roles: [],
       };
 
       console.log("Before PUT request");

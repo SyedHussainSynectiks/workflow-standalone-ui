@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import user from "../../../../public/assets/profile1.svg";
 // import { useDispatch } from "react-redux";
 import {
-  addResources,addResourcesData ,addResourcesPM ,addResourcesUxDesigner,addResourcesUiDeveloper,addResourcesApiDeveloper,addResourcesTester,addResourcesUxResearch,addResourcesCiCd
+  addResources, addResourcesData, addResourcesPM, addResourcesUxDesigner, addResourcesUiDeveloper, addResourcesApiDeveloper, addResourcesTester, addResourcesUxResearch, addResourcesCiCd
 } from "@/Context/AddresourcesSlice/addresourcesSlice";
 
 export const Projectmanager = (props) => {
@@ -27,13 +27,7 @@ export const Projectmanager = (props) => {
 
   // select User
   const [selectUser, setSelectUser] = useState([]);
-
-  // useProjec
-
   console.log(selectUser);
-
-  // console.log(project);
-
   // useEffect to fetch all users
   useEffect(() => {
     // Fetch data when the component mounts
@@ -53,14 +47,16 @@ export const Projectmanager = (props) => {
     };
     fetchData();
   }, []);
+
+  var handleResourcesAdd = (emp_id, data) => {
+    dispatch(addResources({ id: emp_id}));
+    dispatch(addResourcesData(data));
+    console.log(emp_id, data);
+  };
   const dispatch = useDispatch();
   console.log(selectUser);
-  var handleResourcesAdd = (emp_id ) => {
-    dispatch(addResources({ id: emp_id }));
-   
-    console.log(emp_id);
-  };
-  var handleResourcesInfo = (pm) =>{
+ 
+  var handleResourcesInfo = (pm) => {
     dispatch(addResourcesData(pm))
   }
 
@@ -92,11 +88,9 @@ export const Projectmanager = (props) => {
                     <input
                       type="checkbox"
                       onChange={() => {
-                        // handleResourcesAdd(Manager.emp_id);
-                        // dispatch(addResources( Manager.emp_id ));
-                        handleResourcesAdd(Manager.emp_id)
-                        handleResourcesInfo(projectManager)
-                     
+                        const selectedId = Manager.emp_id;
+                        const selectedData = { name: Manager.first_name, last_name: Manager.last_name, email: Manager.email }; 
+                        handleResourcesAdd(selectedId, selectedData); 
                       }}
                       className="cursor-pointer"
                     />
@@ -117,14 +111,14 @@ export const ApiDeveloper = (props) => {
   // All Hooks
   // const handleResourcesAdd = (emplyyId) => {
   //   dispatch(addResources({ id: emplyyId }));
-    // console.log("dispatch",emplyyId)
-    // if (emplyyId) {
-    //   console.log("If-Else -dispatch", emplyyId);
-    //   ;
-    // } else {
-    //   console.error("empId is undefined");
-    // }
-    // dispatch(addResources({id:emplyyId}));
+  // console.log("dispatch",emplyyId)
+  // if (emplyyId) {
+  //   console.log("If-Else -dispatch", emplyyId);
+  //   ;
+  // } else {
+  //   console.error("empId is undefined");
+  // }
+  // dispatch(addResources({id:emplyyId}));
 
   // API Developer
   const [apiDeveloper, setApiDeveloper] = useState([]);
@@ -152,12 +146,12 @@ export const ApiDeveloper = (props) => {
 
   // HandleCheckBoxChanges
   const dispatch = useDispatch();
-  var handleResourcesAdd = (emp_id ) => {
+  var handleResourcesAdd = (emp_id) => {
     dispatch(addResources({ id: emp_id }));
-   
+
     console.log(emp_id);
   };
-  var handleResourcesInfo = (apiDeveloper) =>{
+  var handleResourcesInfo = (apiDeveloper) => {
     dispatch(addResourcesData(apiDeveloper))
   }
 
@@ -247,12 +241,12 @@ export const CiCdResourcePool = (props) => {
   };
 
   // HandleCheckBoxChange
-  var handleResourcesAdd = (emp_id ) => {
+  var handleResourcesAdd = (emp_id) => {
     dispatch(addResources({ id: emp_id }));
-   
+
     console.log(emp_id);
   };
-  var handleResourcesInfo = (CiCd) =>{
+  var handleResourcesInfo = (CiCd) => {
     dispatch(addResourcesData(CiCd))
   }
 
@@ -337,15 +331,37 @@ export const TesterResourcePool = (props) => {
 
   // HandleCheckBoxChange
 
-  console.log(selectUser);
-  var handleResourcesAdd = (emp_id ) => {
-    dispatch(addResources({ id: emp_id }));
-   
-    console.log(emp_id);
+  // console.log(selectUser);
+  // var handleResourcesAdd = (emp_id ) => {
+  //   setSelectUser (emp_id)
+  //   dispatch(addResources({ id: (selectUser) }));
+
+  //   console.log(emp_id);
+  // };
+  // var handleResourcesInfo = (Tester) =>{
+  //   console.log(Tester.emp_id)
+  //   console.log(selectUser)
+  //   if (selectUser ===  Tester.emp_id){
+  //   dispatch(addResourcesData(Tester))
+  //   }
+  //   else{
+  //     console.log(" notDispached")
+  //   }
+  // }
+  var handleResourcesAdd = (emp_id, data) => {
+    dispatch(addResources({ id: emp_id}));
+    dispatch(addResourcesData(data));
+    console.log(emp_id, data);
   };
-  var handleResourcesInfo = (Tester) =>{
-    dispatch(addResourcesData(Tester))
-  }
+
+  // var handleResourcesInfo = (emp_id) => {
+  //   const selectedId = emp_id;
+  //   console.log(selectedId)
+  //   // Agar selected ID hai toh resources ko dispatch karein
+  //   dispatch(addResourcesData({ id: selectedId }));
+  // };
+
+
   // const handleResourcesAdd = (emp_id) => {
 
   //   setprojectResource((prevState) => ({
@@ -409,7 +425,7 @@ export const TesterResourcePool = (props) => {
           <div className="flex flex-col gap-6">
             {/* Display a static UI without mapping */}
             {Tester.map((Manager, index) => (
-                
+
               <div
                 key={index}
                 className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
@@ -430,11 +446,9 @@ export const TesterResourcePool = (props) => {
                     <input
                       type="checkbox"
                       onChange={() => {
-                        // handleResourcesAdd(Manager.emp_id);
-                        // dispatch(addResources( Manager.emp_id ));
-                        handleResourcesAdd(Manager.emp_id)
-                        handleResourcesInfo(Tester)
-                     
+                        const selectedId = Manager.emp_id;
+                        const selectedData = { name: Manager.first_name, last_name: Manager.last_name, email: Manager.email }; 
+                        handleResourcesAdd(selectedId, selectedData); 
                       }}
                       className="cursor-pointer"
                     />
@@ -466,12 +480,12 @@ export const UxDesignResourcePool = (props) => {
   });
 
   // HandleCheckBoxChange
-  var handleResourcesAdd = (emp_id ) => {
+  var handleResourcesAdd = (emp_id) => {
     dispatch(addResources({ id: emp_id }));
-   
+
     console.log(emp_id);
   };
-  var handleResourcesInfo = (uxDesigner) =>{
+  var handleResourcesInfo = (uxDesigner) => {
     dispatch(addResourcesData(uxDesigner))
   }
 
@@ -535,7 +549,7 @@ export const UxDesignResourcePool = (props) => {
                             type="checkbox"
                             onChange={() => {
                               handleResourcesAdd(Manager.emp_id)
-                        handleResourcesInfo(uxDesigner)
+                              handleResourcesInfo(uxDesigner)
                             }}
                             className="cursor-pointer"
                           />
@@ -569,12 +583,12 @@ export const UiDeveloperResourcePool = (props) => {
   });
 
   // HandleCheckBoxChange
-  var handleResourcesAdd = (emp_id ) => {
+  var handleResourcesAdd = (emp_id) => {
     dispatch(addResources({ id: emp_id }));
-   
+
     console.log(emp_id);
   };
-  var handleResourcesInfo = (uiDeveloper) =>{
+  var handleResourcesInfo = (uiDeveloper) => {
     dispatch(addResourcesData(uiDeveloper))
   }
 
@@ -634,7 +648,8 @@ export const UiDeveloperResourcePool = (props) => {
                       type="checkbox"
                       onChange={() => {
                         handleResourcesAdd(Manager.emp_id)
-                        handleResourcesInfo(uiDeveloper)                      }}
+                        handleResourcesInfo(uiDeveloper)
+                      }}
                       className="cursor-pointer"
                     />
                   </div>
@@ -674,7 +689,7 @@ export const UxResearcher = (props) => {
   //   }
   // };
 
- 
+
 
   // console.log(project);
 
@@ -700,12 +715,12 @@ export const UxResearcher = (props) => {
   const dispatch = useDispatch();
 
   console.log(selectUser);
-  var handleResourcesAdd = (emp_id ) => {
+  var handleResourcesAdd = (emp_id) => {
     dispatch(addResources({ id: emp_id }));
-   
+
     console.log(emp_id);
   };
-  var handleResourcesInfo = (uxResearcher) =>{
+  var handleResourcesInfo = (uxResearcher) => {
     dispatch(addResourcesData(uxResearcher))
   }
   return (
@@ -737,7 +752,7 @@ export const UxResearcher = (props) => {
                       type="checkbox"
                       onChange={() => {
                         handleResourcesAdd(Manager.emp_id),
-                        handleResourcesInfo(uxResearcher)
+                          handleResourcesInfo(uxResearcher)
                       }}
                       className="cursor-pointer"
                     />

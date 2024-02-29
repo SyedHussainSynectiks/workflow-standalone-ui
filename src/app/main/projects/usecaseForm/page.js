@@ -1,9 +1,10 @@
 "use client";
-import { Form, Input, Upload, Button, message, DatePicker } from "antd";
+import { Form, Input, Upload, Button, message, DatePicker,notification } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/router';
 import moment from "moment";
 
 const layout = {
@@ -29,6 +30,14 @@ const newform = () => {
   const projectId = setprojectIds.id[0].prjectId;
   const setWorkFlowIds = useSelector((state) => state.addResources);
   const workFlowId = setWorkFlowIds.id[0].workFlowId;
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (placement, type, message) => {
+    api[type]({
+      message: message,
+      placement: placement,
+    });
+  };
 
   const router = useRouter();
 
@@ -92,11 +101,11 @@ const newform = () => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-
-        router.push("/main/projects/developmentUsecases");
-      })
+        openNotification("topRight", "success", "UseCase saved successfully!");
+        router.push("/main/projects/developmentUsecases") })
       .catch((error) => {
         console.log(error);
+        openNotification("topRight", "error", "Fill the Form Correctly.");
       });
   };
 
@@ -222,6 +231,7 @@ const newform = () => {
           >
             Next
           </Button>
+          {contextHolder}
         </Form>
       </section>
 

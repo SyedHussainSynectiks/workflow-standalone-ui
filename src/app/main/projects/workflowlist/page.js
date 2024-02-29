@@ -3,9 +3,13 @@ import React, { useState } from 'react';
 import { Tabs } from 'antd';
 import Resourcepool from './Resourcepool'
 import WorkFlowOverView from "@/Components/WorkFlowOverView/WorkFlowOverView"
+import { useRouter } from 'next/navigation'
+
+
 
 const page = () => {
     const [size, setSize] = useState('small');
+    const  router = useRouter();
     const onChange = (e) => {
         setSize(e.target.value)
     }

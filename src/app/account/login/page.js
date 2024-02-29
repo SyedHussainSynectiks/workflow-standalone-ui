@@ -6,8 +6,10 @@ import Link from "next/link";
 import reset from "../password/reset/page";
 import mainLogo from "../../../../public/assets/SYNECTIKS-logo.svg";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const route = useRouter()
   const {
     register,
     handleSubmit,
@@ -16,8 +18,10 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
 
   const onSubmit = (data) => {
-    if (data.username === "admin" && data.password === "Synectiks design") {
+    if (data.username === "" && data.password === "") {
       alert("Logged in successfully!");
+
+      route.push("/main")
     } else {
       setErrorMsg("Invalid username or password.");
     }
@@ -91,7 +95,7 @@ const Login = () => {
                   </svg>
 
                   <input
-                    type="Password"
+                    type="text"
                     className="input w-[100%] h-9 outline-none text-center  font-roboto text-base font-normal leading-6 tracking-normal"
                     placeholder="Password:Synectiks design"
                     {...register("password", {
@@ -116,11 +120,14 @@ const Login = () => {
               </div>
 
               <div className="mt-8 flex flex-col gap-2 items-center">
-                <input
-                  type="submit"
+                <Link href="/main" className="cursor-pointer w-[100%] bg-blue-500 text-white px-3 py-2 rounded w-28 text-center">
+                {/* <input
+                
                   value="Sign In"
                   className="cursor-pointer w-[100%] bg-blue-500 text-white px-3 py-2 rounded w-28"
-                />
+                /> */}
+                submit
+                </Link>
                 <p>
                   Need an account?{" "}
                   <span className="text-blue-500">

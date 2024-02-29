@@ -81,7 +81,8 @@ console.log(projectId)
           </p>
         </div>
       </div>
-      <div className="p-5 space-y-3 border border-gray-300 bg-white rounded-lg">
+      <div>
+      <div className="p-5 space-y-3 border border-x-2 border-b-0 border-gray-300 bg-white  rounded-t-lg">
         <div className="flex justify-between">
           <h1 className="font-semibold text-2xl leading-normal tracking-normal text-left">
             Procurement Workflows
@@ -93,15 +94,19 @@ console.log(projectId)
             Workflow
           </Button>
         </div>
+        </div>
+      <div className="p-5 space-y-3 border border-x-2 border-t-0 border-gray-300 bg-white rounded-b-lg flex gap-2 items-center overflow-x-auto">
+        
         {workflowData.map((data, index) => {
           console.log("mapingData: ", data);
           console.log(data.workflow_name);
           return (
-            <div key={index} className="flex space-x-4" >
+
+            <div  className="flex space-x-2 " >
                 <Link
-                 href="/main/projects/developmentUsecases" className="w-[100%]" onClick={()=>{WorkflowId(data.workflow_id)}}>
-              <div className="w-1/4 border border-black-300 rounded-lg px-4 py-5 space-y-2" >
-                < >
+                 href="/main/projects/developmentUsecases" className="w-[17rem]" onClick={()=>{WorkflowId(data.workflow_id)}}>
+              <div className=" border border-grey-300 rounded-lg px-4 py-5 space-y-2 " >
+                <div key={index} >
                   <div className="flex items-center w-[100%] justify-between">
                     <h3 className="font-semibold text-blue-600">
                       {data.workflow_name}
@@ -131,13 +136,16 @@ console.log(projectId)
                     showInfo={false}
                     strokeColor={"orange"}
                   />
-                </>
+                </div>
               </div>
               </Link>
             </div>
           );
         })}
       </div>
+      </div>
+
+
       <div className="bg-white border border-gray-300 rounded-lg flex flex-col space-y-3 py-5 px-8 ">
         <div className="flex justify-between">
           <h1 className="text-2xl font-semibold leading-normal tracking-normal text-left">

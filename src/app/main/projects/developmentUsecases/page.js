@@ -3,18 +3,25 @@ import api from "@/api";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { addUsecaseId } from "@/Context/useCaseSlice/useCaseSlice";
+
 import Link from "next/link";
 
 export default function Page() {
+  const router = useRouter();
   const [usecases, setUsecases] = useState([]);
   const [stages, setStages] = useState([]);
   const setprojectIds = useSelector((state) => state.addResources);
   const projectId = setprojectIds.id[0].prjectId;
   const setWorkFlowIds = useSelector((state) => state.addResources);
   const workFlowId = setWorkFlowIds.id[0].workFlowId;
-console.log(projectId)
-console.log(workFlowId)
+
+  
+  console.log(projectId)
+  console.log(workFlowId)
+  const dispatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,6 +44,10 @@ console.log(workFlowId)
     };
     fetchData();
   }, []);
+
+  const dispatchData = (data) => {
+    dispatch(addUsecaseId(data))
+  }
 
   return (
     <>
@@ -79,42 +90,42 @@ console.log(workFlowId)
                 {stageUsecases.length > 0 ? (
                   <div className="w-[100%]">
                     {stageUsecases.map((usecase, index) => ( //assignee_id
-                    <Link href="/main/projects/usecaseFormStepper">
-                      <div
-                        key={index}
-                        className=" w-[100%] rounded-lg p-3 leading-4 gap-3"
+                      <Link href="/main/projects/usecaseFormStepper" onClick={()=>{dispatchData(usecase.usecase_id)}}>
+                        <div
+                          key={index}
+                          className=" w-[100%] rounded-lg p-3 leading-4 gap-3"
 
-                      >
-                        <p className="UseCaseTxt">{usecase.usecase_name}</p>
-                        <div className="flex flex-row justify-start items-center w-[100%] gap-2">
-                          <div className="w-[100%]">
-                            <div className="flex flex-row justify-between">
-                              <p className="AssignedColTxtUsecaseComp">
-                                Assigned to
-                              </p>
-                              <p className="NameProfileColUsecaseComp ">
-                                {usecase.assignee_name}
-                              </p>
-                            </div>
-                            <div className="flex justify-between">
-                              <p className="AssignedColTxtUsecaseComp">
-                                No. of Resources:
-                              </p>
-                              <p className="NameProfileColUsecaseComp">
-                                {usecase.total_resources}
-                              </p>
-                            </div>
-                            <div className="flex">
-                              <p className="AssignedColTxtUsecaseComp">
-                                Dates:
-                              </p>
-                              <p className="NameProfileColUsecaseCompDate">
-                                {usecase.end_date}
-                              </p>
+                        >
+                          <p className="UseCaseTxt">{usecase.usecase_name}</p>
+                          <div className="flex flex-row justify-start items-center w-[100%] gap-2">
+                            <div className="w-[100%]">
+                              <div className="flex flex-row justify-between">
+                                <p className="AssignedColTxtUsecaseComp">
+                                  Assigned to
+                                </p>
+                                <p className="NameProfileColUsecaseComp ">
+                                  {usecase.assignee_name}
+                                </p>
+                              </div>
+                              <div className="flex justify-between">
+                                <p className="AssignedColTxtUsecaseComp">
+                                  No. of Resources:
+                                </p>
+                                <p className="NameProfileColUsecaseComp">
+                                  {usecase.total_resources}
+                                </p>
+                              </div>
+                              <div className="flex">
+                                <p className="AssignedColTxtUsecaseComp">
+                                  Dates:
+                                </p>
+                                <p className="NameProfileColUsecaseCompDate">
+                                  {usecase.end_date}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
                       </Link>
                     ))}
                   </div>
