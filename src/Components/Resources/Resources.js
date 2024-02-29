@@ -56,7 +56,7 @@ const Resources = () => {
 
     return (
         <>
-            <div style={{ background: '#FFF', padding: '25px' }}>
+            <div style={{ background: '#FFF', padding: '20px' }}>
                 <Row gutter={16}>
                     <div className="flex flex-row justify-between items-center w-full">
                         <Title level={2}>Project Resources Lists</Title>

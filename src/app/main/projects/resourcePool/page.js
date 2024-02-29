@@ -27,7 +27,6 @@ export default function Home() {
   // State variables to control the visibility of each modal
   const [isProjectManagerModalOpen, setIsProjectManagerModalOpen] =
     useState(false);
-
   const [isUiDesignerModalOpen, setIsUiDesignerModalOpen] = useState(false);
   const [isUiDeveloperModalOpen, setIsUiDeveloperModalOpen] = useState(false);
   const [isApiDeveloperModalOpen, setIsApiDeveloperModalOpen] = useState(false);

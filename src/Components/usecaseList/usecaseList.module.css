@@ -37,7 +37,6 @@ line-height: normal;
     /* border: 1px solid; */
     outline: 0;
   }
-
   .tableRow {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -45,7 +44,6 @@ line-height: normal;
     outline: 0;
     column-gap: 0.5rem;
   }
-
   .tableCell {
     border-right: 2px solid #91D5FF;
     padding: 5px;

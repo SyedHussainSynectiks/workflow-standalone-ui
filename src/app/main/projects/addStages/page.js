@@ -1,282 +1,264 @@
-'use client';
-import React, { useState } from 'react';
-import Link from 'next/link';
+"use client";
+
+// export default page;
+import React, { useState } from "react";
+import { Input, Button, notification } from "antd";
+import Link from "next/link";
 import {
-    AccountBookFilled,
-    BellFilled,
-    ProjectFilled,
-    IdcardFilled,
-    SignalFilled,
-    SearchOutlined,
-    VideoCameraOutlined,
-    RightOutlined,
-    LeftOutlined,
-} from '@ant-design/icons';
-import { Space, Layout, Menu, Button, theme, Card, Avatar, Badge, Input, Divider, Typography, Col, Row, Dropdown, message, Checkbox, Anchor, Modal } from 'antd';
-import Navbar from '@/Components/Navbar/Navbar';
-import ProjectResource from '@/Components/ProjectResource/ProjectResource'
-const { Sider, Content } = Layout;
-const { Title, Paragraph, Text } = Typography;
-export default function ProjectForm() {
-    const [collapsed, setCollapsed] = useState(false);
-    const onChange = (e) => {
-        console.log(`checked = ${e.target.checked}`);
-    };
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
+  DeleteFilled,
+  SaveOutlined,
+  CloseCircleFilled,
+} from "@ant-design/icons";
+import { useRouter } from 'next/navigation'
+import { useSelector } from "react-redux";
+import axios from "axios";
+
+const Page = () => {
+  const [workFlowName, setWorkFlowName] = useState("");
+  const [stages, setStages] = useState([]);
+  const setprojectIds = useSelector((state) => state.addResources);
+  const ProjectId = setprojectIds.id[0].prjectId;
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (placement, type, message) => {
+    notification[type]({
+      message: message,
+      placement: placement,
+    });
+  };
+
+  const  router = useRouter();
+  console.log(ProjectId);
+
+  const postWorkflow = async () => {
+    const axios = require("axios");
+    let data = JSON.stringify({
+      "name": `${workFlowName}`,
+      "created_by_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "project_id": `${ProjectId}`,
+      "stages": stages.map((stage) => ({
+        "name": stage.stageName,
+        "tasks": stage.subStages,
+        "checklist": stage.checklist,
+      })),
+    });
+    console.log(data);
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/workflow",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: data,
     };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
+    axios
+      .request(config)
+      .then((response) => {
+        console.log("success:",response);
+        openNotification("topRight", "success", "UseCase saved successfully!");
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-    const toggleSider = () => {
-        setCollapsed(!collapsed);
-    };
-    const items = [
-        {
-            label: 'All Projects',
-            key: '1',
-        },
-        {
-            label: 'In Progress',
-            key: '1',
-        },
-        {
-            label: 'Completed',
-            key: '3',
-        },
+        router.push("/main/projects/workflowlist");
+      })
+      .catch((error) => {
+        const seterror = {error}
+        console.log(seterror)
+        const errorStatus = error.response.data.error
+        console.log(errorStatus)
+        openNotification("topRight", "error",  ` ${errorStatus}`);
+        console.log(error);
+      });
+  };
 
-    ];
-    const handleMenuClick = (e) => {
-        message.info('Click on menu item.');
-        console.log('click', e);
-    };
-    const menuProps = {
-        items,
-        onClick: handleMenuClick,
-    };
-    return (
-        <>
-            <Layout theme="dark" style={{ minHeight: '100vh' }}>
-                <Sider
-                    trigger={null}
-                    collapsible
-                    collapsed={collapsed}
-                    theme="light"
-                    className="fixed "
-                    style={{ position: 'fixed', height: '100vh' }}
+  const handleAddStage = () => {
+    setStages([
+      ...stages,
+      {
+        stageName: "",
+        subStages: [],
+        checklist: [],
+      },
+    ]);
+  };
+
+  // const handleWorkFlowNameChange = (index, value) => {
+  //   const updatedStages = [...stages];
+  //   updatedStages[index].workFlowName = value;
+  //   setStages(updatedStages);
+  // };
+
+  const handleStageNameChange = (index, value) => {
+    const updatedStages = [...stages];
+    updatedStages[index].stageName = value;
+    setStages(updatedStages);
+  };
+
+  const handleAddSubstage = (index) => {
+    const updatedStages = [...stages];
+    updatedStages[index].subStages.push("");
+    setStages(updatedStages);
+  };
+
+  const handleAddChecklist = (index) => {
+    const updatedStages = [...stages];
+    updatedStages[index].checklist.push("");
+    setStages(updatedStages);
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-semibold leading-snug tracking-normal text-left">
+          Workflow Management
+        </h1>
+        <CloseCircleFilled style={{ fontSize: "20px", color: "blue" }} />
+      </div>
+      <h3 className="text-2xl font-medium leading-loose tracking-normal text-left pl-3">
+        Creating Workflow
+      </h3>
+      <div className="flex justify-between p-4 items-center bg-white">
+        <Input
+          placeholder="example"
+          className="w-1/2"
+          onChange={(e) => setWorkFlowName(e.target.value)}
+        />
+        <Button
+          icon={<SaveOutlined />}
+          type="primary"
+          className="bg-blue-500"
+          onClick={handleAddStage}
+        >
+          Add Stage
+        </Button>
+      </div>
+
+      {stages.map((stage, index) => (
+        <div key={index} className="py-2 mt-2 flex flex-col space-y-2">
+          <h3 className="text-base font-medium leading-normal tracking-normal text-left">
+            Add Stage
+          </h3>
+          <div className="bg-white p-4 flex items-center justify-between">
+            <h4 className="text-sm font-normal leading-snug tracking-normal">
+              Stage Name :
+            </h4>
+            <Input
+              placeholder="Requirement"
+              className="w-1/2"
+              value={stage.stageName}
+              onChange={(e) => handleStageNameChange(index, e.target.value)}
+            />
+            <DeleteFilled
+              style={{ color: "red" }}
+              onClick={() => {
+                const updatedStages = stages.filter((_, i) => i !== index);
+                setStages(updatedStages);
+              }}
+            />
+
+            <Button
+              type="primary"
+              className="bg-blue-500"
+              onClick={() => {
+                handleAddChecklist(index);
+              }}
+            >
+              Add Checklist
+            </Button>
+            <Button
+              type="primary"
+              className="bg-blue-500"
+              onClick={() => handleAddSubstage(index)}
+            >
+              Add Sub Stages
+            </Button>
+            
+          </div>
+
+          <div>
+            {/* Render Substages */}
+            {stage.subStages.map((subStage, subIndex) => (
+              <div
+                key={subIndex}
+                className="bg-white p-4 flex items-center justify-between my-1 ml-10"
+              >
+                <h4 className="text-sm font-normal leading-snug tracking-normal">
+                  Sub Stage Name :
+                </h4>
+                <Input
+                  placeholder="Substage"
+                  className="w-1/2"
+                  value={subStage}
+                  onChange={(e) => {
+                    const updatedStages = [...stages];
+                    updatedStages[index].subStages[subIndex] = e.target.value;
+                    setStages(updatedStages);
+                  }}
+                />
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => {
+                    const updatedStages = [...stages];
+                    updatedStages[index].subStages.splice(subIndex, 1); // Remove the sub-stage at subIndex
+                    setStages(updatedStages);
+                  }}
                 >
-                    <h5 className='uppercase bg-[#001529] text-white text-2xl p-4'>Synect<span className='text-red-700'>i</span>ks</h5>
-                    {/* ... your existing Sider content */}
-                    <Menu className='relative'
-                        theme="light"
-                        mode="inline"
-                        defaultSelectedKeys={['1']}
-                        items={[
-                            {
-                                key: '1',
-                                icon: <ProjectFilled />,
-                                label: 'Dashboard',
-                                path: '/'
-                            },
-                            {
-                                key: '2',
-                                icon: <VideoCameraOutlined />,
-                                label: 'Projects',
-                                path: '/projects'
-                            },
-                            {
-                                key: '3',
-                                icon: <SignalFilled />,
-                                label: 'Team',
-                            },
-                            {
-                                key: '4',
-                                icon: <IdcardFilled />,
-                                label: 'Reports',
-                            },
-                            {
-                                key: '5',
-                                icon: <AccountBookFilled />,
-                                label: 'Preference',
-                            },
-                            {
-                                key: '6',
-                                icon: <BellFilled />,
-                                label: 'Notifications',
-                                path: (
-                                    <Link href='/main'>Dashboard</Link>
-                                )
-                            },
-                        ]}
-                    />
-                    {/* <Menu className='relative'
-                        theme="light"
-                        mode="inline"
-                        defaultSelectedKeys={['1']}                    >
-                        <div className=''><ProjectFilled />
-                            <Link href='/main'>Dashboard</Link>
-                        </div>
-                        <div><VideoCameraOutlined />
-                            <Link href='/projects'>Projects</Link>
-                        </div>
-                    </Menu> */}
-                    <Button theme="dark"
-                        className='bg-white absolute top-2/4 -right-3'
-                        type="text"
-                        icon={collapsed ? < RightOutlined className='' /> : <LeftOutlined />}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: '16px',
-                            width: 16,
-                            height: 64,
-                            clipPath: `polygon(0 0, 100% 21%, 99% 80%, 0% 100%)`
-                        }}
-                    />
-                </Sider>
-                <Layout className="site-layout" style={{ marginLeft: collapsed ? 80 : 200 }}>
-                    <Navbar />
-                    <Content style={{ margin: '18px 16px', padding: '0px 10px', minHeight: 280 }} className='relative'>
-                        <h1 className='ml-2 uppercase text-3xl'>workflow Management</h1>
-                        <div className='bg-white flex flex-row justify-between items-center py-2 px-5 mb-5'>
-                            <Title level={3}>Stages</Title>
-                        </div>
+                  Remove
+                </Button>
+              </div>
+            ))}
+          </div>
 
-                        {/* Shows a Details of Project */}
-                        <section>
-                            {/* left Conatiner Box  Stages */}
-                            <div className="AddSatge1Txt">Add Stages</div>
-                            <div className="flex flex-row">
-                                <div>
-                                    <div className="LeftStagesSection">
-                                        {/* Stages start */}
-                                        <div className="LeftSectionStagesStage1">
-                                            <div className="Satge1Txt">Stage 1</div>
-                                            <div>
-                                                <div className="RequirementStages">Requirement</div>
-                                                <div > <Button onClick={showModal}>
-                                                    +Add Sub Stages
-                                                </Button>
-                                                    <Modal title="Add Checklist" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                                       <div className='my-4 flex flex-row  items-center justify-between'>
-                                                        <Checkbox/>
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <hr />
-                                                       </div>
-                                                        <div className='my-4 flex flex-row  items-center justify-between'>
-                                                        <Checkbox/>
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <hr />
-                                                       </div>
-                                                        <div className='my-4 flex flex-row  items-center justify-between'>
-                                                        <Checkbox/>
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <hr />
-                                                       </div>
-                                                    </Modal></div>
-                                                <div className="AddCheckListStages">+Add Check List</div>
-                                            </div>
-                                        </div>
-                                        <div className="LeftSectionStagesStage1">
-                                            <div className="Satge1Txt">Stage 2</div>
-                                            <div>
-                                                <div className="RequirementStages">Mock Development</div>
-                                                <div className="AddStages">+Add Sub Stages</div>
-                                                <div className="AddCheckListStages">+Add Check List</div>
-                                            </div>
-                                        </div>
-                                        <div className="LeftSectionStagesStage1">
-                                            <div className="Satge1Txt">Stage 3</div>
-                                            <div>
-                                                <div className="RequirementStages">Actual Development</div>
-                                                <div className="AddStages">+Add Sub Stages</div>
-                                                <div className="AddCheckListStages">+Add Check List</div>
-                                            </div>
-                                        </div>
-                                        <div className="LeftSectionStagesStage1">
-                                            <div className="Satge1Txt">+Add Stages</div>
-                                            <div>
-                                                <div className="RequirementStages"></div>
-                                                <div className="AddStages"></div>
-                                                <div className="AddCheckListStages"></div>
-                                            </div>
-                                        </div>
-                                        {/* Stages end */}
-                                    </div> </div>
-                                <div className="RightStagesSection w-full p-5">
-                                    <Title level={3}>Add Resources</Title>
+          <div>
+            {/* Render Checklists */}
+            {stage.checklist.map((checklist, checklistIndex) => (
+              <div
+                key={checklistIndex}
+                className="bg-white p-4 flex items-center justify-between my-1 ml-10"
+              >
+                <h4 className="text-sm font-normal leading-snug tracking-normal">
+                  Checklist :
+                </h4>
+                <Input
+                  placeholder="Checklist Item"
+                  className="w-1/2"
+                  value={checklist}
+                  onChange={(e) => {
+                    const updatedStages = [...stages];
+                    updatedStages[index].checklist[checklistIndex] =
+                      e.target.value;
+                    setStages(updatedStages);
+                  }}
+                />
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => {
+                    const updatedStages = [...stages];
+                    updatedStages[index].checklist.splice(checklistIndex, 1); // Remove the checklist item at checklistIndex
+                    setStages(updatedStages);
+                  }}
+                >
+                  Remove
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+     
+      <div className="flex justify-center mt-6 w-[100%]">
+        {/* <Link href="/main/projects/workflowlist"> */}
+        <Button className="bg-blue-500 text-white" onClick={postWorkflow} >
+          Save
+        </Button>
+        {contextHolder}
+        {/* </Link> */}
+      </div>
+    </div>
+  );
+};
 
-                                    <div
-                                        style={{
-                                            padding: '20px',
-                                        }}
-                                    >
-                                        <Anchor
-                                            direction="horizontal"
-                                            items={[
-                                                {
-                                                    key: 'part-1',
-                                                    href: '#part-1',
-                                                    title: 'All',
-                                                },
-                                                {
-                                                    key: 'part-2',
-                                                    href: '#part-2',
-                                                    title: 'Selected',
-                                                },
-                                                {
-                                                    key: 'part-3',
-                                                    href: '#part-3',
-                                                    title: 'Available',
-                                                },
-                                            ]}
-                                        />
-                                    </div>
-                                    <div>
-                                        <div
-                                            id="part-1"
-                                            style={{
-                                                textAlign: 'center',
-                                                background: 'rgba(0,255,0,0.02)',
-                                            }}
-
-                                        />
-                                        <div
-                                            id="part-2"
-                                            style={{
-                                                textAlign: 'center',
-                                                background: 'rgba(0,0,255,0.02)',
-                                            }}
-                                        >
-                                            <ProjectResource />
-                                        </div>
-                                        <div
-                                            id="part-3"
-                                            style={{
-                                                textAlign: 'center',
-                                                background: '#FFFBE9',
-                                            }}
-                                        />
-                                    </div>
-
-
-                                </div>
-                                {/* <div className="AddStagsCol">+Add Stages</div> */}
-                            </div>
-                            <div>                     <Button className="absolute right-5 bottom-0 bg-blue-500 text-white my-4"><Link href='/projects/addStage'>Save</Link></Button>
-                            </div>
-                        </section>
-
-
-                    </Content>
-                </Layout>
-            </Layout>
-
-        </>
-    );
-}
+export default Page;

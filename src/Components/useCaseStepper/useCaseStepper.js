@@ -69,7 +69,7 @@ const Stepper = ({ popoverVisible, setWorkFlowView}) => {
  
     return (
         <>
-            <div className="flex justify-between h-[5rem] w-[100%]">
+            <div className="flex justify-between h-[5rem] w-[100%] ">
                 {newRRAY ?.map((step, i) => (
                     <div
                         key={i}

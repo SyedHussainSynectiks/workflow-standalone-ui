@@ -1,9 +1,16 @@
+"use client";
 const { configureStore } = require("@reduxjs/toolkit");
-import usersReducers from './slice'
+import addProjectReducer from "./AddNewProjectSlice/addProjectSlice";
+import addresourcesSlice from "./AddresourcesSlice/addresourcesSlice";
+import addUsecaseId from "./useCaseSlice/useCaseSlice";
+// import addResourceReduser from "./AddresourcesSlice/addresourcesSlice";
+
+
 // import todoReducer from './todoSlice'
-export const store =configureStore({
-    reducer:{
-        usersData:usersReducers,
-        
-    }
-})
+export const store = configureStore({
+  reducer: {
+    addProject: addProjectReducer,
+    addResources: addresourcesSlice,
+    addUsecase: addUsecaseId
+  },
+});

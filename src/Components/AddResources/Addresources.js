@@ -4,7 +4,7 @@ import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addUser } from "@/Context/slice";
+import { addUser } from "../../Context/Slice";
 
 export default function Addresources() {
   const [name, setName] = useState("");

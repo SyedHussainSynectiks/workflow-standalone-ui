@@ -4,9 +4,9 @@ import Image from "next/image";
 
 // importing ant d components
 import {
-    Divider,
-} from "antd";
+    Divider,} from "antd";
 import StackedBarChart from "@/Components/Charts/StackedBarChart";
+import { useRouter } from "next/navigation";
 import ProjectsList from "@/Components/Projectslists/Projectslist";
 import Resources from "@/Components/Resources/Resources";
 import Barchart from "@/Components/Charts/Barchart";
@@ -40,10 +40,10 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="my-5">
-                <ProjectsList />
+                {/* <ProjectsList /> */}
             </div>
             <div>
-                <Resources />
+                {/* <Resources /> */}
             </div>
         </>
     );

@@ -5,14 +5,12 @@ import Image from "next/image";
 import { Button } from "antd";
 // import plus from "./../../../../../../public/assests/plusSign.png";
 import Hamburger from "../../../../Components/WorkFlowListPages/hamburgerFun";
-import ProjectAddedResources from "../addResource/page";
-
 import SelectTamplate from "@/Components/WorkFlowListPages/SelectTamplate";
 import WorkFlowDropDown from "../../../../Components/WorkFlowListPages/AddWorkFLowDrpDown";
 
 import useProject, { project, setProject } from "@/HOC/Project/Project";
 
-const WorkFlowList3 = () => {
+const WorkFlowOverView = () => {
   const [project, setProject] = useProject([]);
 
   const projectVariable =
@@ -39,51 +37,7 @@ const WorkFlowList3 = () => {
 
   return (
     <main className=" bg-gray-200 p-2">
-      <div className="text-black font-sans text-3xl not-italic font-semibold  mb-2 px-1  ">
-        {projectVariable}
-      </div>
-      <div className="flex  items-center justify-start w-full h-[56px]  bg-white px-4 py-6 flex-shrink-0 gap-3 rounded mb-3">
-        <div className="flex flex-row  rounded p-2 items-center bg-gray-100 gap-3">
-          <div
-            className={`flex px-[7px] py-1 gap-[6px] rounded-sm cursor-pointer ${
-              activeSection === "Procurement"
-                ? "bg-white shadow-sm"
-                : "bg-gray-100"
-            }`}
-            onClick={() => toggleSection("Procurement")}
-          >
-            {projectVariable} Overview
-          </div>
-          <div
-            className={`flex px-[7px] py-1 items-center gap-[6px] rounded-sm cursor-pointer ${
-              activeSection === "ResourcePool"
-                ? "bg-white shadow-sm"
-                : "bg-gray-100"
-            }`}
-            onClick={() => toggleSection("ResourcePool")}
-          >
-            Resource Pool
-          </div>
-        </div>
-      </div>
-      <section className="w-auto border rounded-sm  bg-white p-5 leading-10 mb-3">
-        <div className="flex  flex-row justify-between items-center">
-          <div className="text-black font-sans  text-lg not-italic font-semibold ">
-            {projectVariable} Solution{" "}
-          </div>
-          {/* <Image src={hamburger} width={20} height={18} /> */}
-          {/* <ListOfRole /> */}
-        </div>
-        <div className="text-gray-400 font-sans not-italic text-sm font-normal py-3">
-          Created By Siddhesh.D
-        </div>
-        <p className="text-black text-start font-sans text-sm not-italic font-normal py-3">
-          Procurement is the systematic process of identifying, acquiring, and
-          managing the goods, services, or works needed by an organization to
-          meet its operational requirements.
-        </p>
-      </section>
-
+      
       {/*  Workflow */}
       <section className="flex flex-col w-auto h-auto border rounded">
         {unSavedTamplate === false && (
@@ -197,19 +151,10 @@ const WorkFlowList3 = () => {
           </>
         )}
 
-        {activeSection === "ResourcePool" && (
-          <section className=" w-auto overflow-x-hidden border rounded-sm  bg-white  leading-10 mt-3">
-            <div className="text-black p-4 font-sans text-xl font-bold not-italic">
-            {projectVariable}   Resource Pool
-            </div>
-            <div>
-              <ProjectAddedResources />
-            </div>
-          </section>
-        )}
+        
       </section>
     </main>
   );
 };
 
-export default WorkFlowList3;
+export default WorkFlowOverView;
