@@ -27,7 +27,7 @@ const Page = () => {
     });
   };
 
-  const  router = useRouter();
+  const router = useRouter();
   console.log(ProjectId);
 
   const postWorkflow = async () => {
@@ -57,17 +57,17 @@ const Page = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log("success:",response);
+        console.log("success:", response);
         openNotification("topRight", "success", "UseCase saved successfully!");
 
         router.push("/main/projects/workflowlist");
       })
       .catch((error) => {
-        const seterror = {error}
+        const seterror = { error }
         console.log(seterror)
         const errorStatus = error.response.data.error
         console.log(errorStatus)
-        openNotification("topRight", "error",  ` ${errorStatus}`);
+        openNotification("topRight", "error", ` ${errorStatus}`);
         console.log(error);
       });
   };
@@ -82,12 +82,6 @@ const Page = () => {
       },
     ]);
   };
-
-  // const handleWorkFlowNameChange = (index, value) => {
-  //   const updatedStages = [...stages];
-  //   updatedStages[index].workFlowName = value;
-  //   setStages(updatedStages);
-  // };
 
   const handleStageNameChange = (index, value) => {
     const updatedStages = [...stages];
@@ -173,7 +167,7 @@ const Page = () => {
             >
               Add Sub Stages
             </Button>
-            
+
           </div>
 
           <div>
@@ -191,9 +185,22 @@ const Page = () => {
                   className="w-1/2"
                   value={subStage}
                   onChange={(e) => {
+                    // if(subStage.length === 0){
+                    // }
+                    const newSubStageValue = e.target.value;
                     const updatedStages = [...stages];
-                    updatedStages[index].subStages[subIndex] = e.target.value;
-                    setStages(updatedStages);
+
+                    // Check if the new value is unique within the same stage
+                    const isUnique = !updatedStages[index].subStages.includes(newSubStageValue);
+
+                    if (isUnique) {
+                      updatedStages[index].subStages[subIndex] = newSubStageValue;
+                      setStages(updatedStages);
+                    } else {
+                      setStages(updatedStages);
+                      updatedStages[index].subStages[subIndex] = newSubStageValue;
+                      console.error("Substage value must be unique within the same stage.");
+                    }
                   }}
                 />
                 <Button
@@ -248,7 +255,7 @@ const Page = () => {
           </div>
         </div>
       ))}
-     
+
       <div className="flex justify-center mt-6 w-[100%]">
         {/* <Link href="/main/projects/workflowlist"> */}
         <Button className="bg-blue-500 text-white" onClick={postWorkflow} >
