@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const isBrowser = typeof window !== 'undefined';
 const initialState = {
-  useCaseId: JSON.parse(localStorage.getItem("useCaseId")) || [],
+  useCaseId: isBrowser ? JSON.parse(localStorage.getItem("useCaseId")) || [] : [],
 };
-
 const useCaseSlice = createSlice({
   name: "useCaseSlice",
   initialState,
