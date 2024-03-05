@@ -15,7 +15,7 @@ import StageReleaseForm from "@/Components/AddUsecaseStepperForms/Stage-ReleaseF
 import PublishandOperateForm from "@/Components/AddUsecaseStepperForms/PublishandOperateForm";
 import RequirementForm from "@/Components/AddUsecaseStepperForms/RequirementForm";
 
-Mock
+// Mock
 
 
 const Stepper = ({ popoverVisible, setWorkFlowView }) => {
@@ -87,7 +87,7 @@ const Stepper = ({ popoverVisible, setWorkFlowView }) => {
       </div>
       <div className="flex w-100% ">
 
-        <div className="w-20% h-screen ml-4 mt-4">
+        <div className="w-20% h-full ml-4 mt-4">
           <Steps
             current={currentStep}
             onChange={handleStepClick}

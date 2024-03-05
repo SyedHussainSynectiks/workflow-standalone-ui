@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import { useRouter } from 'next/navigation'
 import { useSelector } from "react-redux";
-import axios from "axios";
+import  api  from "@/api/index"
 
 const Page = () => {
   const [workFlowName, setWorkFlowName] = useState("");
@@ -200,6 +200,7 @@ const Page = () => {
                       setStages(updatedStages);
                       updatedStages[index].subStages[subIndex] = newSubStageValue;
                       console.error("Substage value must be unique within the same stage.");
+                      openNotification("topRight", "error", "Sub Stages value should be different")
                     }
                   }}
                 />
