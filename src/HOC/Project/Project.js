@@ -7,7 +7,7 @@ const useProject = () => {
   const isBrowser = typeof window !== 'undefined';
  
   // Check if there is any data in localStorage for 'project' key
-  const storedProject =isBrowser ? JSON.parse(localStorage.getItem('project')) || [] : [];
+  const storedProject = isBrowser ? JSON.parse(localStorage.getItem('project')) || [] : [];
  
   const [project, setProject] = useState(storedProject);
  

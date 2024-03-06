@@ -1,11 +1,10 @@
 "use client";
+"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, message, Steps, theme } from "antd";
 import AddResourcePool2 from "@/Components/AddResourcePool/AddresoucrePool2";
 import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm";
-// import AddEmplyee from "@/app/main/projects/addEmployee/AddEmplyee";
-import pages from "@/app/main/projects/resourcePool/page";
 import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 import { useDispatch, useSelector } from "react-redux";
 import { updateId } from "@/Context/AddNewProjectSlice/addProjectSlice";
@@ -31,19 +30,27 @@ const steps = [
 
 export default function page({ formNext }) {
   const projectData = useSelector((state) => state.addProject);
-  const setresourcesId = useSelector((state) => state.addResources);
-  const resourcesId = setresourcesId.id[0].resourcesId
+  const ProductManager = useSelector((state) => state.addResources.ProjectManager);
+  const Uxdesigner = useSelector((state) => state.addResources.UXDesigner);
+  const UiDesigner = useSelector((state) => state.addResources.UIDeveloper);
+  const ApiDeveloper = useSelector((state) => state.addResources.APIDeveloper);
+  const Tester = useSelector((state) => state.addResources.Tester);
+  const UxResearcher = useSelector((state) => state.addResources.UXResearcher);
+  const CiCd = useSelector((state) => state.addResources.CICDSpecialist);
+  // const resourcesId = setresourcesId.id[0].resourcesId
 
-  const ValueresourcesId = resourcesId.map(obj => Object.values(obj));
-console.log(ValueresourcesId);
 
-  console.log("resoursesId",resourcesId)
+  // console.log("TesterId", TesterId)
+// 
+  // const ValueresourcesId = resourcesId.map((obj) => Object.values(obj));
+  // console.log(ValueresourcesId);
+  // console.log("resoursesId", resourcesId);
   // const str = useSelector((state) => state);
-
+  
   const projectId = useSelector((state) => state.addProject.id);
-
+  
   console.log("projectId : ", projectId);
-console.log("resourceIn Project",resourcesId )
+  // console.log("resourceIn Project", resourcesId);
   console.log(projectData);
 
   const [toggleValue, setToggleValue] = useState(false);
@@ -54,12 +61,10 @@ console.log("resourceIn Project",resourcesId )
     console.log("Received data from child:", data);
     setFormData(data); // Update the state in the parent component
   };
-  const ProjectId= (ProjectId)=>{
-
-    dispatch(addProjectId(ProjectId))
+  const ProjectId = (ProjectId) => {
+    dispatch(addProjectId(ProjectId));
     // console.log(ProjectId)
-  }
-
+  };
   const nonViewsteps = [
     {
       title: "Set up Project",
@@ -100,61 +105,80 @@ console.log("resourceIn Project",resourcesId )
   // Api project push
 
   const handleSubmit = async () => {
-
     if (
       !projectData.projectName ||
       !projectData.projectDescription ||
       !projectData.projectDepartment ||
       !projectData.startDate ||
-      !projectData.endDate 
+      !projectData.endDate
     ) {
       message.error(
         "Please fill in all fields before proceeding to the next step"
       );
       return;
     }
-    if(current === 0){
-    try {
-      // console.log(projectData)
-      await Apisubmit(projectData);
-      setCurrent(current + 1);
-    } catch (error) {
-      console.error("Error submitting data:", error);
+    if (current === 0) {
+     
+      try {
+        // console.log(projectData)
+        await Apisubmit(projectData);
+        
+      } catch (error) {
+        console.error("Error submitting data:", error);
+      }
     }
-  }
     // Apisubmit(projectData);
     // console.log(projectData);
+
+    const roles = [
+      { ProductManagerId: ProductManager },
+      { UxdesignerId: Uxdesigner },
+      { UiDesignerId: UiDesigner },
+      { ApiDeveloperId: ApiDeveloper },
+      { TesterId: Tester },
+      { UxResearcherId: UxResearcher },
+      { CiCdId: CiCd},
+    ];
+    
+    const filteredRoles = roles.filter(role => Object.values(role)[0].length > 0);
+
+    console.log("filteredRoles", filteredRoles)
     if (current === 1) {
+      // console.log("TesterId", TesterId)
+      // console.log(object)
       const postData = {
         project_id: projectId,
         team_name: projectData.projectName,
         created_by_id: "550e8400-e29b-41d4-a716-446655440001",
-        roles: [],
+        roles: filteredRoles,
       };
 
       console.log("Before PUT request");
       // console.log(project.projectId);
       console.log(JSON.stringify(postData));
-      console.log(postData);
+      console.log("projectData", postData);
 
       let config = {
-        method: 'put',
+        method: "put",
         maxBodyLength: Infinity,
         url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`,
-        headers: { 
-          'Content-Type': 'application/json', 
-          'Accept': 'application/json'
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        data : postData
+        data: postData,
       };
-      setCurrent(current + 1);
-      axios.request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+      axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+
+          setCurrent(current + 1);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       // fetch(
       //   `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`,
@@ -162,7 +186,7 @@ console.log("resourceIn Project",resourcesId )
       //     method: "PUT",
       //     headers: {
       //       "Content-Type": "application/json",
-            
+
       //     },
       //     body: postData,
       //   }
@@ -195,16 +219,53 @@ console.log("resourceIn Project",resourcesId )
     }
   };
 
+  const axios = require("axios");
+
   const Apisubmit = async (project) => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Accept", "application/json");
-    console.log(project);
+    // const myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    // myHeaders.append("Accept", "application/json");
+    // console.log(project);
+
+    // const projectname = project.projectName;
+    // console.log(projectname);
+
+    // const raw = JSON.stringify({
+    //   name: project.projectName,
+    //   description: project.projectDescription,
+    //   department: project.projectDepartment,
+    //   start_date: project.startDate,
+    //   end_date: project.endDate,
+    //   image_url: "https://i.imgur.com/PujQY5Y.png",
+    // });
+
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: raw,
+    //   redirect: "follow",
+    // };
+    // console.log("Api.Starting");
+
+    // try {
+    //   const response = await fetch(
+    //     "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project",
+    //     requestOptions
+    //   );
+    //   const result = await response.json();
+    //   console.log("success:", result, result.id);
+    //   dispatch(updateId(result.id));
+    //   return result;
+    // } catch (error) {
+    //   console.error("error:", error);
+    //   throw error;
+    // } finally {
+    //   console.log("Api.ENDING");
+    // }
 
     const projectname = project.projectName;
     console.log(projectname);
-
-    const raw = JSON.stringify({
+    let data = JSON.stringify({
       name: project.projectName,
       description: project.projectDescription,
       department: project.projectDepartment,
@@ -213,29 +274,30 @@ console.log("resourceIn Project",resourcesId )
       image_url: "https://i.imgur.com/PujQY5Y.png",
     });
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: data,
     };
-    console.log("Api.Starting");
 
-    try {
-      const response = await fetch(
-        "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project",
-        requestOptions
-      );
-      const result = await response.json();
-      console.log("success:", result, result.id);
-      dispatch(updateId(result.id));
-      return result;
-    } catch (error) {
-      console.error("error:", error);
-      throw error;
-    } finally {
-      console.log("Api.ENDING");
-    }
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        const result = response.data;
+        console.log("success:", result, result.id);
+        dispatch(updateId(result.id));
+
+        setCurrent(current + 1);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const dispatch = useDispatch();
 
@@ -323,13 +385,16 @@ console.log("resourceIn Project",resourcesId )
 
           {current === steps.length - 1 && (
             <Link href="/main/projects/workflowlist">
-            <Button
-              type="primary"
-              onClick={()=>{ProjectId(projectId)}}
-              className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
-            >
-              Done
-            </Button></Link>
+              <Button
+                type="primary"
+                onClick={() => {
+                  ProjectId(projectId);
+                }}
+                className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
+              >
+                Done
+              </Button>
+            </Link>
           )}
           {/* {current > 0 && (
           <Button style={{ margin: "0 8px" }} onClick={() => prev()}>

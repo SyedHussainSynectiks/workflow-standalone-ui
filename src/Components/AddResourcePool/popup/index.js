@@ -3,10 +3,11 @@ import api from "@/api";
 import React from "react";
 import { useState, useEffect } from "react";
 import useProject from "@/HOC/Project/Project";
+import user from "../../../../public/assets/user.png"
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 
-import user from "../../../../public/assets/profile1.svg";
+// import user from "../../../../public/assets/profile1.svg";
 // import { useDispatch } from "react-redux";
 import {
   addResources, addResourcesData, addResourcesPM, addResourcesUxDesigner, addResourcesUiDeveloper, addResourcesApiDeveloper, addResourcesTester, addResourcesUxResearch, addResourcesCiCd
@@ -47,18 +48,24 @@ export const Projectmanager = (props) => {
     };
     fetchData();
   }, []);
+  const dispatch = useDispatch();
 
   var handleResourcesAdd = (emp_id, data) => {
-    dispatch(addResources({ id: emp_id}));
+    dispatch(addResources({ id: emp_id, }));
+
     dispatch(addResourcesData(data));
     console.log(emp_id, data);
   };
-  const dispatch = useDispatch();
-  console.log(selectUser);
- 
   var handleResourcesInfo = (pm) => {
     dispatch(addResourcesData(pm))
   }
+  const [selectedDataPM, setSelectedDataPM] = useState([]);
+  const handleAddResourcesPM = (data) => {
+    const newData = [...selectedDataPM, data];
+    setSelectedDataPM(newData);
+    dispatch(addResourcesPM(newData));
+  };
+
 
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
@@ -74,11 +81,11 @@ export const Projectmanager = (props) => {
               >
                 <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
                   <div className="flex items-center gap-3">
-                    <Image src={Manager.image_url} />
+                    <Image src={Manager.image || {user}} height={4} width={4} />
                     <div>
                       <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.first_name} {Manager.last_name}
-                        <span className="text-blue-300">{Manager.email}</span>
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
                       </h1>
                       <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
                     </div>
@@ -87,10 +94,21 @@ export const Projectmanager = (props) => {
                     {/* CheckBox Button */}
                     <input
                       type="checkbox"
-                      onChange={() => {
+                      onChange={(e) => {
                         const selectedId = Manager.emp_id;
-                        const selectedData = { name: Manager.first_name, last_name: Manager.last_name, email: Manager.email }; 
-                        handleResourcesAdd(selectedId, selectedData); 
+                        const selectedData = { name: Manager.resource_name, email: Manager.work_email, image: Manager.image };
+                        handleResourcesAdd(selectedId, selectedData);
+
+                        const isChecked = e.target.checked;
+                        const empId = Manager.emp_id;
+                        if (isChecked) {
+                          handleAddResourcesPM(empId);
+                        } else {
+                          // Handle deselecting the checkbox
+                          const updatedSelectedData = selectedDataPM.filter(id => id !== empId);
+                          setSelectedDataPM(updatedSelectedData);
+                          dispatch(addResourcesPM(updatedSelectedData));
+                        }
                       }}
                       className="cursor-pointer"
                     />
@@ -146,15 +164,19 @@ export const ApiDeveloper = (props) => {
 
   // HandleCheckBoxChanges
   const dispatch = useDispatch();
-  var handleResourcesAdd = (emp_id) => {
-    dispatch(addResources({ id: emp_id }));
+  var handleResourcesAdd = (emp_id, data) => {
+    dispatch(addResources({ id: emp_id, }));
 
-    console.log(emp_id);
+    dispatch(addResourcesData(data));
+    console.log(emp_id, data);
   };
-  var handleResourcesInfo = (apiDeveloper) => {
-    dispatch(addResourcesData(apiDeveloper))
-  }
+  const [selectedDataApiD, setSelectedDataApiD] = useState([]);
 
+  const handleAddResourcesApiDeveloper = (data) => {
+    const newData = [...selectedDataApiD, data];
+    setSelectedDataApiD(newData);
+    dispatch(addResourcesApiDeveloper(newData ));
+  };
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
       <div className="w-[100%] px-2 flex justify-center rounded">
@@ -173,11 +195,11 @@ export const ApiDeveloper = (props) => {
                 >
                   <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
                     <div className="flex items-center gap-3">
-                      <Image src={Manager.image_url} />
+                      <Image src={Manager.image || {user}} height={4} width={4}/>
                       <div>
                         <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                          {Manager.first_name} {Manager.last_name}
-                          <span className="text-blue-300">{Manager.email}</span>
+                          {Manager.resource_name}
+                          <span className="text-blue-300">{Manager.work_email}</span>
                         </h1>
                         <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
                       </div>
@@ -189,9 +211,20 @@ export const ApiDeveloper = (props) => {
                         // onChange={()=>{
                         //   console.log("on changed",emplyyId),handleResourcesAdd(emplyyId)}}
                         className="cursor-pointer"
-                        onChange={() => {
-                          handleResourcesAdd(Manager.emp_id)
-                          handleResourcesInfo(apiDeveloper)
+                        onChange={(e) => {
+                          const selectedId = Manager.emp_id;
+                          const selectedData = { name: Manager.resource_name, email: Manager.email, image: Manager.image };
+                          handleResourcesAdd(selectedId, selectedData);
+                          const isChecked = e.target.checked;
+                          const empId = Manager.emp_id;
+                          if (isChecked) {
+                            handleAddResourcesApiDeveloper(empId);
+                          } else {
+                            // Handle deselecting the checkbox
+                            const updatedSelectedData = selectedDataApiD.filter(id => id !== empId);
+                            setSelectedDataApiD(updatedSelectedData);
+                            dispatch(addResourcesApiDeveloper(updatedSelectedData));
+                          }
                         }}
                       />
                     </div>
@@ -241,14 +274,29 @@ export const CiCdResourcePool = (props) => {
   };
 
   // HandleCheckBoxChange
-  var handleResourcesAdd = (emp_id) => {
-    dispatch(addResources({ id: emp_id }));
+  // var handleResourcesAdd = (emp_id) => {
+  //   dispatch(addResources({ id: emp_id }));
 
-    console.log(emp_id);
+  //   console.log(emp_id);
+  // };
+  // var handleResourcesInfo = (CiCd) => {
+  //   dispatch(addResourcesData(CiCd))
+  // }
+  var handleResourcesAdd = (emp_id, data) => {
+    dispatch(addResources({ id: emp_id, }));
+
+    dispatch(addResourcesData(data));
+    console.log(emp_id, data);
   };
-  var handleResourcesInfo = (CiCd) => {
-    dispatch(addResourcesData(CiCd))
-  }
+  const [selectedDataCiCd, setSelectedDataCiCd] = useState([]);
+
+
+  const handleAddResourcesCiCd = (data) => {
+    const newData = [...selectedDataCiCd, data];
+    setSelectedDataCiCd(newData);
+    dispatch(addResourcesCiCd(newData ));
+  };
+
 
   // console.log(project);
 
@@ -288,11 +336,11 @@ export const CiCdResourcePool = (props) => {
               >
                 <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
                   <div className="flex items-center gap-3">
-                    <Image src={Manager.image_url} />
+                    <Image src={Manager.image || {user}} height={4} width={4}/>
                     <div>
                       <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.first_name} {Manager.last_name}
-                        <span className="text-blue-300">{Manager.email}</span>
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
                       </h1>
                       <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
                     </div>
@@ -301,9 +349,20 @@ export const CiCdResourcePool = (props) => {
                     {/* CheckBox Button */}
                     <input
                       type="checkbox"
-                      onChange={() => {
-                        handleResourcesAdd(Manager.emp_id)
-                        handleResourcesInfo(CiCd)
+                      onChange={(e) => {
+                        const selectedId = Manager.emp_id;
+                        const selectedData = { name: Manager.resource_name, email: Manager.work_email, image: Manager.image };
+                        handleResourcesAdd(selectedId, selectedData);
+                        const isChecked = e.target.checked;
+                        const empId = Manager.emp_id;
+                        if (isChecked) {
+                          handleAddResourcesCiCd(empId);
+                        } else {
+                          // Handle deselecting the checkbox
+                          const updatedSelectedData = selectedDataCiCd.filter(id => id !== empId);
+                          setSelectedDataCiCd(updatedSelectedData);
+                          dispatch(addResourcesCiCd(updatedSelectedData ));
+                        }
                       }}
                       className="cursor-pointer"
                     />
@@ -349,12 +408,18 @@ export const TesterResourcePool = (props) => {
   //   }
   // }
   var handleResourcesAdd = (emp_id, data) => {
-    dispatch(addResources({ id: emp_id}));
+    dispatch(addResources({ id: emp_id, }));
+
     dispatch(addResourcesData(data));
     console.log(emp_id, data);
   };
+  const [selectedDataTester, setSelectedDataTester] = useState([]);
 
-  // var handleResourcesInfo = (emp_id) => {
+  const handleAddResourcesTester = (data) => {
+    const newData = [...selectedDataTester, data];
+    setSelectedDataTester(newData);
+    dispatch(addResourcesTester(newData));
+  };
   //   const selectedId = emp_id;
   //   console.log(selectedId)
   //   // Agar selected ID hai toh resources ko dispatch karein
@@ -432,11 +497,11 @@ export const TesterResourcePool = (props) => {
               >
                 <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
                   <div className="flex items-center gap-3">
-                    <Image src={Manager.image_url} />
+                    <Image src={Manager.image || {user}} height={4} width={4}/>
                     <div>
                       <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.first_name} {Manager.last_name}
-                        <span className="text-blue-300">{Manager.email}</span>
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
                       </h1>
                       <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
                     </div>
@@ -445,10 +510,21 @@ export const TesterResourcePool = (props) => {
                     {/* CheckBox Button */}
                     <input
                       type="checkbox"
-                      onChange={() => {
+                      onChange={(e) => {
                         const selectedId = Manager.emp_id;
-                        const selectedData = { name: Manager.first_name, last_name: Manager.last_name, email: Manager.email }; 
-                        handleResourcesAdd(selectedId, selectedData); 
+                        const selectedData = { name: Manager.resource_name, email: Manager.work_email, image: Manager.image };
+                        handleResourcesAdd(selectedId, selectedData);
+
+                        const isChecked = e.target.checked;
+                        const empId = Manager.emp_id;
+                        if (isChecked) {
+                          handleAddResourcesTester(empId);
+                        } else {
+                          // Handle deselecting the checkbox
+                          const updatedSelectedData = selectedDataTester.filter(id => id !== empId);
+                          setSelectedDataTester(updatedSelectedData);
+                          dispatch(addResourcesTester([updatedSelectedData]));
+                        }
                       }}
                       className="cursor-pointer"
                     />
@@ -480,14 +556,18 @@ export const UxDesignResourcePool = (props) => {
   });
 
   // HandleCheckBoxChange
-  var handleResourcesAdd = (emp_id) => {
-    dispatch(addResources({ id: emp_id }));
+  var handleResourcesAdd = (emp_id, data) => {
+    dispatch(addResources({ id: emp_id, }));
 
-    console.log(emp_id);
+    dispatch(addResourcesData(data));
+    console.log(emp_id, data);
   };
-  var handleResourcesInfo = (uxDesigner) => {
-    dispatch(addResourcesData(uxDesigner))
-  }
+  const [selectedDataUxDesign, setSelectedDataUxDesign] = useState([]);
+  const handleAddResourcesUxDesigner = (data) => {
+    const newData = [...selectedDataUxDesign, data];
+    setSelectedDataUxDesign(newData);
+    dispatch(addResourcesUxDesigner(newData ));
+  };
 
   console.log(selectUser);
 
@@ -532,12 +612,12 @@ export const UxDesignResourcePool = (props) => {
                     >
                       <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
                         <div className="flex items-center gap-3">
-                          <Image src={Manager.image_url} />
+                          <Image src={Manager.image || {user}} height={4} width={4}/>
                           <div>
                             <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                              {Manager.first_name} {Manager.last_name}
+                              {Manager.resource_name}
                               <span className="text-blue-300">
-                                {Manager.email}
+                                {Manager.work_email}
                               </span>
                             </h1>
                             <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
@@ -547,9 +627,20 @@ export const UxDesignResourcePool = (props) => {
                           {/* CheckBox Button */}
                           <input
                             type="checkbox"
-                            onChange={() => {
-                              handleResourcesAdd(Manager.emp_id)
-                              handleResourcesInfo(uxDesigner)
+                            onChange={(e) => {
+                              const selectedId = Manager.emp_id;
+                              const selectedData = { name: Manager.resource_name, email: Manager.work_email, image: Manager.image };
+                              handleResourcesAdd(selectedId, selectedData);
+                              const isChecked = e.target.checked;
+                              const empId = Manager.emp_id;
+                              if (isChecked) {
+                                handleAddResourcesUxDesigner(empId);
+                              } else {
+                                // Handle deselecting the checkbox
+                                const updatedSelectedData = selectedDataUxDesign.filter(id => id !== empId);
+                                setSelectedDataUxDesign(updatedSelectedData);
+                                dispatch(addResourcesUxDesigner( updatedSelectedData ));
+                              }
                             }}
                             className="cursor-pointer"
                           />
@@ -583,15 +674,19 @@ export const UiDeveloperResourcePool = (props) => {
   });
 
   // HandleCheckBoxChange
-  var handleResourcesAdd = (emp_id) => {
-    dispatch(addResources({ id: emp_id }));
+  var handleResourcesAdd = (emp_id, data) => {
+    dispatch(addResources({ id: emp_id, }));
 
-    console.log(emp_id);
+    dispatch(addResourcesData(data));
+    console.log(emp_id, data);
   };
-  var handleResourcesInfo = (uiDeveloper) => {
-    dispatch(addResourcesData(uiDeveloper))
-  }
+  const [selectedDataUiDeveloper, setSelectedDataUiDeveloper] = useState([]);
 
+  const handleAddResourcesUiDeveloper = (data) => {
+    const newData = [...selectedDataUiDeveloper, data];
+    setSelectedDataUiDeveloper(newData);
+    dispatch(addResourcesUiDeveloper(newData ));
+  };
   console.log(selectUser);
 
 
@@ -633,11 +728,11 @@ export const UiDeveloperResourcePool = (props) => {
               >
                 <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
                   <div className="flex items-center gap-3">
-                    <Image src={Manager.image_url} />
+                    <Image src={Manager.image || {user}} height={4} width={4}/>
                     <div>
                       <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.first_name} {Manager.last_name}
-                        <span className="text-blue-300">{Manager.email}</span>
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
                       </h1>
                       <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
                     </div>
@@ -646,9 +741,20 @@ export const UiDeveloperResourcePool = (props) => {
                     {/* CheckBox Button */}
                     <input
                       type="checkbox"
-                      onChange={() => {
-                        handleResourcesAdd(Manager.emp_id)
-                        handleResourcesInfo(uiDeveloper)
+                      onChange={(e) => {
+                        const selectedId = Manager.emp_id;
+                        const selectedData = { name: Manager.resource_name, email: Manager.work_email, image: Manager.image };
+                        handleResourcesAdd(selectedId, selectedData);
+                        const isChecked = e.target.checked;
+                        const empId = Manager.emp_id;
+                        if (isChecked) {
+                          handleAddResourcesUiDeveloper(empId);
+                        } else {
+                          // Handle deselecting the checkbox
+                          const updatedSelectedData = selectedDataUiDeveloper.filter(id => id !== empId);
+                          setSelectedDataUiDeveloper(updatedSelectedData);
+                          dispatch(addResourcesUiDeveloper( updatedSelectedData ));
+                        }
                       }}
                       className="cursor-pointer"
                     />
@@ -715,14 +821,20 @@ export const UxResearcher = (props) => {
   const dispatch = useDispatch();
 
   console.log(selectUser);
-  var handleResourcesAdd = (emp_id) => {
-    dispatch(addResources({ id: emp_id }));
+  var handleResourcesAdd = (emp_id, data) => {
+    dispatch(addResources({ id: emp_id, }));
 
-    console.log(emp_id);
+    dispatch(addResourcesData(data));
+    console.log(emp_id, data);
   };
-  var handleResourcesInfo = (uxResearcher) => {
-    dispatch(addResourcesData(uxResearcher))
-  }
+
+  const [selectedDataUxResearch, setSelectedDataUxResearch] = useState([]);
+
+  const handleAddResourcesUxResearch = (data) => {
+    const newData = [...selectedDataUxResearch, data];
+    setSelectedDataUxResearch(newData);
+    dispatch(addResourcesUxResearch(newData));
+  };
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
       <div className="w-[100%] px-2 flex justify-center rounded">
@@ -737,11 +849,11 @@ export const UxResearcher = (props) => {
               >
                 <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
                   <div className="flex items-center gap-3">
-                    <Image src={Manager.image_url} />
+                    <Image src={Manager.image || {user}} height={4} width={4}/>
                     <div>
                       <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.first_name} {Manager.last_name}
-                        <span className="text-blue-300">{Manager.email}</span>
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
                       </h1>
                       <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
                     </div>
@@ -750,9 +862,21 @@ export const UxResearcher = (props) => {
                     {/* CheckBox Button */}
                     <input
                       type="checkbox"
-                      onChange={() => {
-                        handleResourcesAdd(Manager.emp_id),
-                          handleResourcesInfo(uxResearcher)
+                      onChange={(e) => {
+                        const selectedId = Manager.emp_id;
+                        const selectedData = { name: Manager.resource_name, email: Manager.work_email, image: Manager.image };
+                        handleResourcesAdd(selectedId, selectedData);
+
+                        const isChecked = e.target.checked;
+                        const empId = Manager.emp_id;
+                        if (isChecked) {
+                          handleAddResourcesUxResearch(empId);
+                        } else {
+                          // Handle deselecting the checkbox
+                          const updatedSelectedData = selectedDataUxResearch.filter(id => id !== empId);
+                          setSelectedDataUxResearch(updatedSelectedData);
+                          dispatch(addResourcesUxResearch(updatedSelectedData ));
+                        }
                       }}
                       className="cursor-pointer"
                     />

@@ -1,12 +1,12 @@
 "use client";
-import { Form, Input, Upload, Button, message, DatePicker,notification } from "antd";
+import { Form, Input, Upload, Button, message, DatePicker,notification,Select } from "antd";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from 'next/navigation'
 // import { useRouter } from 'next/router';
 import moment from "moment";
-
+const { Option } = Select;
 const layout = {
   labelCol: {
     span: 8,
@@ -26,6 +26,8 @@ const layout = {
 };
 
 const newform = () => {
+  const [assignees, setAssignees] = useState([]);
+  const [loading, setLoading] = useState(true);
   const setprojectIds = useSelector((state) => state.addResources);
   const projectId = setprojectIds.id[0].prjectId;
   const setWorkFlowIds = useSelector((state) => state.addResources);
@@ -43,7 +45,7 @@ const newform = () => {
 
   const [project, setProject] = useState({
     usecase_name: "",
-    assigned_to_id: "e252ea71-6452-49b1-b32b-449112303af2",
+    assigned_to_id: "",
     description: "",
     start_date: null,
     end_date: null,
@@ -55,6 +57,12 @@ const newform = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProject({ ...project, [name]: value });
+  };
+
+  const handleAssigneChange = (value,name,) => {
+    // const { name, value } = e.target;
+    setProject({ ...project, [value]: name });
+    // dispatch(setSelectedAssignee(value));
   };
 
   const handleStartDateChange = (date, dateString) => {
@@ -108,6 +116,20 @@ const newform = () => {
         openNotification("topRight", "error", "Fill the Form Correctly.");
       });
   };
+  useEffect(() => {
+    const fetchAssignees = async () => {
+      try {
+        const response = await axios.get('https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?designation=Project Manager');
+        setAssignees(response.data);
+        console.log("setassignees.....", response.data)
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching assignees:', error);
+      }
+    };
+
+    fetchAssignees();
+  }, []);
 
   return (
     <div className="">
@@ -162,12 +184,16 @@ const newform = () => {
               },
             ]}
           >
-            <Input
-              name="assigned_to_id"
-              id="assigned_to_id"
-              value={project.assigned_to_id}
-              // onChange={handleChange}
-            />
+            <Select
+              placeholder="Select assignee"
+              loading={loading}
+              onChange={(value,name,emp_id) => {handleAssigneChange("assigned_to_id", value,name);
+            console.log(emp_id)}}
+            >
+              {assignees.map((assignee, index) => (
+                <Option key={index} value={assignee.emp_id}>{assignee.resource_name}</Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item

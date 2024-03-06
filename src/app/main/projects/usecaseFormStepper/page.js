@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { Steps, Tooltip } from "antd";
 import { TiTick } from "react-icons/ti";
@@ -7,38 +7,37 @@ import { useSelector } from "react-redux";
 // import { UseCase2Comments } from "../useCaseWorkViewDetailsComments/UseCaseComments";
 // import { UseCase3Comments } from "../useCaseWorkViewDetailsComments/UseCaseComments";
 // import CustomPopover from "./customPopover";
-
+import SubStagesStepper from "./SubStagesStepper";
 import Mock from "@/Components/AddUsecaseStepperForms/Mock";
 import ActualDevelopmentForm from "@/Components/AddUsecaseStepperForms/ActualDevelopmentForm";
 import CICDTestForm from "@/Components/AddUsecaseStepperForms/CI-CD-TestForm";
 import StageReleaseForm from "@/Components/AddUsecaseStepperForms/Stage-ReleaseForm";
 import PublishandOperateForm from "@/Components/AddUsecaseStepperForms/PublishandOperateForm";
 import RequirementForm from "@/Components/AddUsecaseStepperForms/RequirementForm";
+import UseCasesOverView from "@/Components/AddUsecaseStepperForms/UseCasesOverView";
 
-Mock
+import { Tabs } from "antd";
 
+Mock;
 
-const Stepper = ({ popoverVisible, setWorkFlowView }) => {
+const Stepper = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
-  const handleStepClick = (stepIndex) => {
-    setCurrentStep(stepIndex);
-  };
-
+const [stepperState , setstepperState] = useState( );
   const [requireData, setRequireData] = useState();
   const setUsecaseId = useSelector((state) => state.addUsecase);
-  const UsecaseId = setUsecaseId.useCaseId
+  const UsecaseId = setUsecaseId.useCaseId;
 
   useEffect(() => {
-    const axios = require('axios');
+    const axios = require("axios");
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
           {
             headers: {
-              'Accept': 'application/json'
-            }
+              Accept: "application/json",
+            },
           }
         );
         console.log(response.data);
@@ -47,15 +46,28 @@ const Stepper = ({ popoverVisible, setWorkFlowView }) => {
         console.error("Error fetching data:", error);
       }
     };
-    fetchData()
+    fetchData();
   }, [UsecaseId]);
 
+  const handleStepClick = ( title,stepIndex ) => {
+    setCurrentStep(stepIndex);
+    console.log(title)
+    setstepperState(title)
+    console.log("stapper state", title)
+    // for(let i = 0 ; i===title;i++){
+    //   console.log(mappedSteps[i].title)
+    //   setstepperState(mappedSteps[i].title)
+    // }
+    // const currentStepTitle = mappedSteps[stepIndex]?.title;
+    // console.log(currentStepTitle)
+    // setstepperState(currentStepTitle);
+  };
   const handleContentChange = () => {
     switch (currentStep) {
       case 0:
         return <RequirementForm />;
       case 1:
-        return <Mock />;
+        return <RequirementForm />;
       case 2:
         return <ActualDevelopmentForm />;
       case 3:
@@ -69,49 +81,95 @@ const Stepper = ({ popoverVisible, setWorkFlowView }) => {
     }
   };
 
+  const mappedSteps =
+    requireData && requireData.usecase
+      ? requireData.usecase.stages.map((stage) => ({
+          title: Object.keys(stage)[0] // Extracting the stage name from the dynamic key
+        }
+        ))
+       
+      : [];
+ 
 
-  const mappedSteps = requireData && requireData.usecase
-    ? requireData.usecase.stages.map(stage => ({
-      title: Object.keys(stage)[0] // Extracting the stage name from the dynamic key
-    }))
-    : [];
-
-
-  return (
-    <>
-      <div className=" bg-white px-4 py-4 ">
-        <h1 className="flex w-[100%] h-7 flex-col justify-center text-black  text-2xl non-italic font-semibold leading-snug">
-          Procurement (Development workflow)
-        </h1>
-        <p>Form pages are used to collect or verify information to users, and basic forms are common in scenarios where there are fewer data items.</p>
-      </div>
+  const Contentdata = () => {
+    return (
       <div className="flex w-100% ">
-
-        <div className="w-20% h-screen ml-4 mt-4">
+        <div className="w-10% h-screen">
           <Steps
             current={currentStep}
             onChange={handleStepClick}
             direction="vertical"
-            className="bg-white w-[250px] h-[100%] gap-4 p-5 justify-center"
+            className="w-[200px] h-[100%] gap-4 p-2 justify-center border bg-white"
           >
             {mappedSteps.map((step, index) => (
               <Steps.Step
                 key={index}
                 title={step.title}
-                icon={index < currentStep ? <TiTick size={24} fontWeight={1} /> : null}
+                onClick={() => handleStepClick(step.title, index)}
+                icon={
+                  index < currentStep ? (
+                    <TiTick size={24} fontWeight={1} />
+                  ) : null
+                }
               />
             ))}
           </Steps>
         </div>
-
-
-
-
-        <div className="my-[5rem] w-100% ml-6 p-8 mt-4 bg-white">{handleContentChange()}</div>
+        <div className="my-[5rem] w-screen  p-8 mt-2">
+          {handleContentChange()}
+        </div>
       </div>
+    );
+  };
 
 
+  const onChange = (key) => {
+    if (key === "2") {
+      handleStepClick(mappedSteps[0].title); // Reset to the first step when Workflow View tab is clicked
+    }
+  };
 
+  const items = [
+    {
+      key: "1",
+      label: "Overview",
+      children: <UseCasesOverView />,
+    },
+    {
+      key: "2",
+      label: "Workflow View",
+      children: <SubStagesStepper />,
+    },
+    {
+      key: "3",
+      label: "Asset view",
+      children: "" ,
+    },
+    {
+      key: "4",
+      label: "Planning",
+      children: "Content of Tab Pane 3",
+    },
+  ];
+
+  return (
+    <>
+      <div className=" px-2 ">
+        <div className=" bg-white p-4">
+          <h1 className="flex w-[100%] bg-white  h-7 flex-col justify-center text-black  text-2xl non-italic font-semibold leading-snug">
+            Procurement (Development workflow)
+          </h1>
+          <p>
+            Form pages are used to collect or verify information to users, and
+            basic forms are common in scenarios where there are fewer data
+            items.
+          </p>
+
+          <div className="mt-3   ">
+            <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+          </div>
+        </div>
+      </div>
     </>
   );
 };

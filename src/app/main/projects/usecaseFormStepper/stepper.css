@@ -1,0 +1,22 @@
+.step-item {
+  @apply relative flex  justify-center items-center w-40;
+}
+.step-item:not(:first-child):before {
+  @apply content-[''] bg-slate-200 absolute rotate-90 w-full h-[2px] right-10  -top-16 translate-x-0;
+}
+.step {
+  @apply w-10  h-10 flex  items-center justify-center z-[1] relative bg-blue-300  rounded-full font-semibold text-white cursor-pointer;
+}
+.active .step {
+  @apply bg-red-600;
+}
+.complete .step {
+  @apply bg-green-600;
+}
+.complete p {
+  @apply text-white;
+}
+.complete:not(:first-child)::before,
+ .active:not(:first-child)::before{
+  @apply bg-green-600;
+}
