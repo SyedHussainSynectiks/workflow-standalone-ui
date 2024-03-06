@@ -195,7 +195,7 @@ const Page = () => {
 
                     if (isUnique) {
                       updatedStages[index].subStages[subIndex] = newSubStageValue;
-                      setStages(updatedStages);
+                      setStages(updatedStages);b
                     } else {
                       setStages(updatedStages);
                       updatedStages[index].subStages[subIndex] = newSubStageValue;
