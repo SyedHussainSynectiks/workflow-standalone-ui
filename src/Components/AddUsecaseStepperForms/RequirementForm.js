@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Tabs } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space, Button, Menu, Typography } from "antd";
+import React, { useEffect, useState, useRef } from "react";
+import { Modal, Tabs, Upload } from "antd";
+import {
+  CaretDownOutlined,
+  DownOutlined,
+  SearchOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
+import { Dropdown, Space, Button, Menu, Typography, Skeleton } from "antd";
 import {
   BarsOutlined,
   ShoppingOutlined,
@@ -9,6 +14,7 @@ import {
   MessageOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import { data } from "autoprefixer";
 // import { axios } from 'axios';
 
 const RequirementForm = (stepperState) => {
@@ -25,14 +31,22 @@ const RequirementForm = (stepperState) => {
   ];
 
   const [requireData, setRequireData] = useState();
+  const [formatedDate, setformatedDate] = useState();
   const [requiretasks, setrequireTasks] = useState();
+  const [requireChecklist, setrequireChecklist] = useState();
   const setUsecaseId = useSelector((state) => state.addUsecase);
   const UsecaseId = setUsecaseId.useCaseId;
   const [loading, setLoading] = useState(true);
+
+  const [RolesDetails,setRolesDetails]= useState();
+  const [Roles, setRoles]= useState();
+  const [teamData, setTeamData] = useState([]);
+  const setprojectIds = useSelector((state) => state.addResources);
+  const projectId = setprojectIds.id[0].prjectId;
   console.log(UsecaseId);
   useEffect(() => {
     const axios = require("axios");
-  
+
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -42,7 +56,7 @@ const RequirementForm = (stepperState) => {
       },
     };
     setLoading(true); // Set loading state to true when fetching data
-  
+
     axios
       .request(config)
       .then((response) => {
@@ -51,21 +65,68 @@ const RequirementForm = (stepperState) => {
         setRequireData(response.data);
         const stages = response.data.usecase.stages;
         const propsValue = Object.values(stepperState)[0];
+        const creationDate = new Date(requireData.usecase.creation_date);
+        const formattedDate = creationDate.toISOString().slice(0, 10); // YYYY-MM-DD format
+        setformatedDate(formattedDate);
+        console.log("date", formattedDate);
         console.log(propsValue);
-        const stage = stages.filter((obj) => Object.values(stepperState)[0] in obj);
+        const stage = stages.filter(
+          (obj) => Object.values(stepperState)[0] in obj
+        );
         const tasks = stage[0][propsValue].tasks;
+        const checkList = stage[0][propsValue].checklist;
         console.log("tassks", tasks);
+        console.log("checklist", checkList);
         setrequireTasks(tasks);
+        setrequireChecklist(checkList);
         console.log(tasks);
-  
+
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [UsecaseId, stepperState]);
-  
+
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`);
+          const responseData = response.data;
+          console.log("responsedata ", responseData)
+          console.log(JSON.stringify(responseData));
+          const data = response.data
+          setRolesDetails(data.map(obj => Object.values(obj)))
+          setRoles(data.map(obj => Object.keys(obj)))
+          setTeamData(responseData);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+  }, [UsecaseId, stepperState,projectId]);
+console.log(Roles)
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`);
+  //       const responseData = response.data;
+  //       console.log("responsedata ", responseData)
+  //       console.log(JSON.stringify(responseData));
+  //       setTeamData(responseData);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [projectId]);
+  console.log("teamData", teamData)
+console.log("teamDetails", RolesDetails)
   console.log(requiretasks);
+
+//   let mappedArray = RolesDetails.map(innerArray => 
+//     innerArray.map(obj => Object.values(obj))
+// );
+
+// console.log(mappedArray);
 
   const InsideDropDown = ({ name }) => {
     const [visible, setVisible] = useState(false);
@@ -112,30 +173,75 @@ const RequirementForm = (stepperState) => {
       </Dropdown>
     );
   };
-  const items = [
-    {
-      label: <InsideDropDown name={"UI Designer"} />,
-      key: "0",
+  let items = [];
+  if (Roles) {
+    items = Roles.map((data, index) => ({
+      label: data,
+      items: ["Resource 1", "Resource 2", "Resource 3"],
+    }));
+  }
+  
+
+  const props = {
+    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+    onChange({ file, fileList }) {
+      if (file.status !== "uploading") {
+        console.log(file, fileList);
+      }
     },
-    {
-      label: <InsideDropDown name={"API Developer"} />,
-      key: "1",
-    },
-    {
-      label: <InsideDropDown name={"Tester"} />,
-      key: "2",
-    },
-    {
-      label: <InsideDropDown name={"UX Designer"} />,
-      key: "3",
-    },
-  ];
+    defaultFileList: [
+      {
+        uid: "1",
+        name: "yyy.png",
+        status: "done",
+        url: "http://www.baidu.com/yyy.png",
+      },
+      {
+        uid: "2",
+        name: "yyy.png",
+        status: "done",
+        url: "http://www.baidu.com/yyy.png",
+      },
+    ],
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [openItemIndex, setOpenItemIndex] = useState(null);
+  const dropdownRef = useRef(null);
+  const [showOptions, setShowOptions] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [selectedSubItem, setSelectedSubItem] = useState(null);
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+  const handleOptionClick = (inde) => {
+    setShowUploadModal(true);
+  };
+  const handleCancel = () => {
+    setShowUploadModal(false);
+  };
+
+  const toggleDropDown = (index) => {
+    setIsOpen(!isOpen);
+  };
+
+  const toggleSubItems = (index) => {
+    setOpenItemIndex(openItemIndex === index ? null : index);
+  };
+  const handleSubItemClick = (subItem) => {
+    setSelectedSubItem(subItem);
+  };
+  const handleAssignButtonClick = () => {
+    console.log("Selected SubItem:", selectedSubItem);
+  };
+
   // console.log("requiredData:", requireData.usecase.stages  )
   return (
     <div>
       {requireData && (
-        <div>
-          <div className="flex space-x-5 items-center mb-3">
+        <div className=" w-[100%] px-4">
+          <div className="flex space-x-5 items-center mb-3 ">
             <div>
               <img
                 src={requireData.image}
@@ -165,7 +271,7 @@ const RequirementForm = (stepperState) => {
                   Assigned date
                 </p>
                 <h3 className="text-base font-normal leading-tight tracking-normal text-left">
-                  {requireData.usecase.creation_date}
+                  {formatedDate}
                 </h3>
               </div>
               <div className="flex space-x-3 my-10">
@@ -196,44 +302,161 @@ const RequirementForm = (stepperState) => {
               </div>
             </div>
           </div>
-          {loading ? ( // If loading state is true, display a loading message or spinner
-            <p>Loading...</p>
+          {loading ? (
+            <p>
+              {" "}
+              <Skeleton
+                active
+                paragraph={{
+                  rows: 6,
+                }}
+              />
+            </p>
           ) : (
-            requiretasks.map((data, index) => (
-              <div className="mb-8" key={index}>
-                <div
-                  className="flex items-center justify-between py-3 px-2"
-                  style={{ background: "rgba(230, 247, 255, 1)" }}
-                >
-                  <h1 className="text-base font-bold leading-tight tracking-normal text-left">
-                    {data.name}
-                  </h1>
-                  <DownOutlined />
-                </div>
-                <div className="flex items-center justify-between mt-2">
-                  <Dropdown menu={{ items }} trigger={["click"]}>
-                    <button
-                      onClick={(e) => e.preventDefault()}
-                      className="border py-1 px-2"
-                    >
-                      <Space>
+            <>
+              {requiretasks.map((data, index) => (
+                <div className="mb-8" key={index}>
+                  <div
+                    className="flex items-center justify-between py-3 px-2"
+                    style={{ background: "rgba(230, 247, 255, 1)" }}
+                  >
+                    <h1 className="text-base font-bold leading-tight tracking-normal text-left">
+                      {data.name}
+                    </h1>
+                    <DownOutlined />
+                  </div>
+                  <div
+                    className="flex items-center justify-between mt-2"
+                    key={index}
+                  >
+                    <div ref={dropdownRef} className="relative">
+                      <button
+                        onClick={() => toggleSubItems(index)}
+                        className="bg-white border text-black p-2 rounded-md flex items-center gap-1 "
+                      >
                         Assign
-                        <DownOutlined />
-                      </Space>
-                    </button>
-                  </Dropdown>
-                  <div className="flex items-center space-x-2">
-                    <MessageOutlined style={{ fontSize: "20px" }} />
-                    <Button
-                      type="primary"
-                      style={{ background: "rgba(24, 144, 255, 1)" }}
-                    >
-                      Action
-                    </Button>
+                        <img
+                          width="15"
+                          src="https://img.icons8.com/ios/50/expand-arrow--v2.png"
+                          alt="expand-arrow--v2"
+                        />
+                      </button>
+                      {openItemIndex === index && (
+                        <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-10">
+                          <div className="flex items-center justify-center">
+                            <SearchOutlined className="pl-2" />
+                            <input
+                              type="text"
+                              placeholder="Search Role"
+                              className="outline-none ml-2"
+                            />
+                          </div>
+                          {teamData.map((itemsData, itemIndex) => (
+                            console.log(itemsData),
+                            <li key={itemIndex} className="p-2">
+                              <div className="flex items-center justify-between">
+                                {Object.keys(itemsData).map((key, inx) => (
+                                  console.log(key),
+                                  <button
+                                    key={inx}
+                                    onClick={() => handleSubItemClick(itemIndex)}
+                                    className="font-semibold"
+                                  >
+                                    {key}
+                                  </button>
+                                ))}
+                                <CaretDownOutlined />
+                              </div>
+                              {selectedSubItem === itemIndex && itemsData && (
+                                <ul>
+                                  <li className="pl-4">
+                                    {Object.values(itemsData).map((subItem, i) => (
+                                      <React.Fragment key={i}>
+                                        {Array.isArray(subItem) && subItem.map((item, j) => (
+                                          <button
+                                            key={j}
+                                            style={{
+                                              backgroundColor:
+                                                selectedSubItem === item.name // Assuming selectedSubItem is the selected name
+                                                  ? "#E6F7FF"
+                                                  : "transparent",
+                                            }}
+                                            onClick={() =>
+                                              handleAssignButtonClick(item)
+                                            }
+                                          >
+                                            {item.name} {/* Assuming name is the property to be displayed */}
+                                          </button>
+                                        ))}
+                                      </React.Fragment>
+                                    ))}
+                                  </li>
+                                  <button
+                                    onClick={() =>
+                                      handleAssignButtonClick(null)
+                                    }
+                                    className="bg-sky-500 p-1"
+                                  >
+                                    Assign
+                                  </button>
+                                </ul>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <MessageOutlined style={{ fontSize: "20px" }} />
+                      <div>
+                        <button
+                          onClick={toggleOptions}
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-semibold p-2 rounded"
+                        >
+                          Action
+                        </button>
+                        {showOptions && (
+                          <div className="absolute z-10 bg-gray-500 rounded-lg shadow-lg overflow-hidden">
+                            <ul>
+                              <li onClick={handleOptionClick}>
+                                Upload Document
+                              </li>
+                              <li onClick={handleOptionClick}>Upload Link</li>
+                              <li onClick={handleOptionClick}>Raise Issue</li>
+                            </ul>
+                          </div>
+                        )}
+                        <Modal
+                          title="Upload Document"
+                          visible={showUploadModal}
+                          onCancel={handleCancel}
+                          footer={null}
+                        >
+                          <Upload {...props}>
+                            <Button icon={<UploadOutlined />}>Upload</Button>
+                          </Upload>
+                        </Modal>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              ))}
+
+              <div className="mt-6 border ">
+                <h2 className="text-l font-medium p-2">
+                  Checklist for requirement
+                </h2>
+                {requireChecklist.map((checklistdata, index) => (
+                  <div
+                    className="px-4 py-2 flex items-center gap-2 "
+                    key={index}
+                  >
+                    <input type="checkbox"></input>
+                    <p>{checklistdata.description}</p>
+                  </div>
+                ))}
               </div>
-            ))
+            </>
           )}
         </div>
       )}
@@ -242,6 +465,8 @@ const RequirementForm = (stepperState) => {
 };
 
 export default RequirementForm;
+
+//-------------------------------------------------////-------------------------------------------------///
 
 // import React from "react";
 // import { Input, Select, Form, DatePicker, Button } from "antd";

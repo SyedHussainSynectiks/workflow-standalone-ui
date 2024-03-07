@@ -124,7 +124,7 @@ const WorkFlowOverView = () => {
                   <span>
                     <Image
                       src="/assets/dimlightblue.png"
-                      width={8}
+                      width={2}
                       height={8}
                     />
                   </span>

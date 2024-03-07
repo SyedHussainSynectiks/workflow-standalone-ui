@@ -1,22 +1,25 @@
 .step-item {
-  @apply relative flex  justify-center items-center w-40;
+  @apply relative flex gap-2 justify-start items-center w-52  ;
 }
 .step-item:not(:first-child):before {
-  @apply content-[''] bg-slate-200 absolute rotate-90 w-full h-[2px] right-10  -top-16 translate-x-0;
+  @apply content-[''] bg-slate-200 absolute rotate-90 w-full h-[2px] right-[5.3rem]  -top-14 translate-x-0;
 }
 .step {
-  @apply w-10  h-10 flex  items-center justify-center z-[1] relative bg-blue-300  rounded-full font-semibold text-white cursor-pointer;
+  @apply w-10  h-10 flex  items-center justify-center z-[1] relative bg-gray-200 text-slate-700  rounded-full font-semibold  cursor-pointer;
 }
 .active .step {
-  @apply bg-red-600;
+  @apply bg-blue-600 text-white;
+}
+.active p{
+  @apply text-blue-600
 }
 .complete .step {
-  @apply bg-green-600;
+  @apply bg-gray-200 text-black;
 }
 .complete p {
-  @apply text-white;
+  @apply text-black;
 }
-.complete:not(:first-child)::before,
+/* .complete:not(:first-child)::before,
  .active:not(:first-child)::before{
-  @apply bg-green-600;
-}
+  @apply;
+} */

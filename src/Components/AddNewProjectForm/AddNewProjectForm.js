@@ -82,32 +82,93 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   };
 
   
-  const handleImageUpload = async (e) => {
-    const file = e.file.originFileObj;
-    if (file) {
+//   const handleImageUpload = async (info) => {
+//     const file = info.file.originFileObj;
+  
+//     try {
+//       // Convert the image file to base64
+//       const base64 = await convertImageToBase64(file);
+//       // Set the base64 value using setImageBase64
+//       setImageBase64(base64);
+//       console.log("setImage:", base64);
+  
+//       // Convert the base64 URL to a readable URL
+//       const readableUrl = convertBase64ToReadableUrl(base64);
+//       console.log("readableUrl:", readableUrl);
+//     } catch (error) {
+//       console.error("Error uploading image:", error);
+//     }
+//   };
+// const convertBase64ToReadableUrl = (base64) => {
+//   // Add the correct prefix to the base64 string
+//   const base64WithPrefix = `data:image/jpeg;base64,${base64}`;
+
+//   // Convert the base64 string to a blob
+//   const blob = dataURItoBlob(base64WithPrefix);
+
+//   // Create a URL from the blob
+//   const url = URL.createObjectURL(blob);
+
+//   return url;
+// };
+
+// const dataURItoBlob = (dataURI) => {
+//   const byteString = atob(dataURI);
+//   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+//   const ab = new ArrayBuffer(byteString.length);
+//   const ia = new Uint8Array(ab);
+//   for (let i = 0; i < byteString.length; i++) {
+//     ia[i] = byteString.charCodeAt(i);
+//   }
+//   const blob = new Blob([ab], { type: mimeString });
+//   return blob;
+// };
+// const convertImageToBase64 = (file) => {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+
+//         reader.onloadend = () => {
+//             resolve(reader.result.split(',')[1]);
+//         };
+
+//         reader.onerror = (error) => {
+//             reject(error);
+//         };
+
+//         reader.readAsDataURL(file);
+//     });
+// };
+
+const handleImageUpload = async (info) => {
+  const file = info.file.originFileObj;
+
+  try {
     // Convert the image file to base64
     const base64 = await convertImageToBase64(file);
+    // Set the base64 value using setImageBase64
     setImageBase64(base64);
-    }
-    // dispatch(updateImage({ ...project, [e.target.name]: e.target.value }));
-    // console.log("setImage: ",setImageBase64)
+    console.log("setImage:", base64);
+  } catch (error) {
+    console.error("Error uploading image:", error);
+  }
 };
 
 const convertImageToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
-        reader.onloadend = () => {
-            resolve(reader.result.split(',')[1]);
-        };
+    reader.onloadend = () => {
+      resolve(reader.result.split(',')[1]);
+    };
 
-        reader.onerror = (error) => {
-            reject(error);
-        };
+    reader.onerror = (error) => {
+      reject(error);
+    };
 
-        reader.readAsDataURL(file);
-    });
+    reader.readAsDataURL(file);
+  });
 };
+
 
 
   const router = useRouter();

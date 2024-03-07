@@ -180,7 +180,7 @@ const SubStagesStepper = () => {
   return (
     <>
       <div className="flex gap-2">
-        <div className="flex flex-col py-6  w-[200px] gap-y-[7rem] border">
+        <div className="flex flex-col py-6  w-[auto] px-4 gap-y-[7rem] ">
           {mappedSteps?.map((step, i) => (
             console.log(step.title),
             <div
@@ -190,14 +190,16 @@ const SubStagesStepper = () => {
               } `}
               onClick={() => handleStepClick(i, step.title)}
             >
-              <div className="step">
-                {i + 1 < currentStep || complete ? <TiTick size={24} /> : i + 1}
+              <div className="step cursor-pointer">
+                {i + 1 < currentStep || complete ? i+1 : i + 1}
               </div>
-              <p className="text-gray-500 ml-2">{step.title}</p>
+              <p className="text-gray-500 ml-2 whitespace-pre-wrap cursor-pointer ">{step.title}</p>
             </div>
           ))}
         </div>
-        <RequirementForm stepperState={stepperState} />
+        <div className="bg-white w-[100%]">
+        <RequirementForm  stepperState={stepperState} />
+        </div>
       </div>
     </>
   );

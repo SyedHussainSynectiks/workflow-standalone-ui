@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const isBrowser = typeof window !== 'undefined';
 const initialState = {
   useCaseId:isBrowser ? JSON.parse(localStorage.getItem("useCaseId")) || [] : [],
-  StagesNames:""
+  StagesNames:"",
+  StagesToggleValue:""
 };
 
 const useCaseSlice = createSlice({
@@ -19,9 +20,12 @@ const useCaseSlice = createSlice({
     },
     addStagesName(state, action) {
       state.StagesNames = action.payload;
-    console.log(action.payload)}
+    console.log(action.payload)},
+    addToggleValue(state, action) {
+      state.StagesToggleValue = action.payload;
+    console.log("toggleValue",action.payload)}
   },
 });
 
 export default useCaseSlice.reducer;
-export const { addUsecaseId,addStagesName } = useCaseSlice.actions;
+export const { addUsecaseId,addStagesName, addToggleValue } = useCaseSlice.actions;
