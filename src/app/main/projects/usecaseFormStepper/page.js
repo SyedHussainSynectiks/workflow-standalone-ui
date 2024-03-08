@@ -5,12 +5,12 @@ import { TiTick } from "react-icons/ti";
 import { useSelector } from "react-redux";
 
 import SubStagesStepper from "./SubStagesStepper";
-import Mock from "@/Components/AddUsecaseStepperForms/Mock";
 import UseCasesOverView from "@/Components/AddUsecaseStepperForms/UseCasesOverView";
+import Planning from "@/Components/AddUsecaseStepperForms/Planning";
 
 import { Tabs } from "antd";
 
-Mock;
+
 
 const Stepper = () => {
 //   const [currentStep, setCurrentStep] = useState(0);
@@ -133,7 +133,7 @@ const Stepper = () => {
     {
       key: "4",
       label: "Planning",
-      children: "Content of Tab Pane 3",
+      children: <Planning/>,
     },
   ];
 

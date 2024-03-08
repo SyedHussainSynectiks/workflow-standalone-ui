@@ -470,7 +470,7 @@ const RequirementForm = (stepperState) => {
                                                   selectedAssign
                                                 )
                                               }
-                                              className="bg-sky-500 p-1 "
+                                              className="bg-sky-500 px-2 py-1 text-white rounded-sm  "
                                             >
                                               Assign
                                             </button>
