@@ -20,7 +20,7 @@ import { UploadPopul2 } from "@/app/main/projects/addNewProject/uploadPopul";
 
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { updateFormData } from "@/Context/AddNewProjectSlice/addProjectSlice";
+import { updateFormData ,UpdateStartDate} from "@/Context/AddNewProjectSlice/addProjectSlice";
 
 const layout = {
   labelCol: {
@@ -57,48 +57,118 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     console.log(project)
   };
   const handleStartDateChange = (date, dateString) => {
+    const formattedStartDate = moment(dateString).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    
     setProject({
       ...project,
-      startDate: moment(dateString).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),
+      startDate: formattedStartDate,
     });
-    // dispatch(updateFormData({ ...project, [date.target.name]: date.target.value }))
+  
+    // Dispatch the updated form data with the startDate included
+    dispatch(updateFormData({ ...project, startDate: formattedStartDate }));
   };
 
+
   const handleEndDateChange = (date, dateString) => {
+    const formattedStartDate = moment(dateString).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    
     setProject({
       ...project,
-      endDate: moment(dateString).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"),
+      endDate: formattedStartDate,
     });
-    // dispatch(updateFormData({ ...project, [date.target.name]: date.target.value }))
+  
+    // Dispatch the updated form data with the startDate included
+    dispatch(updateFormData({ ...project, endDate: formattedStartDate }));
   };
 
   
-  const handleImageUpload = async (e) => {
-    const file = e.file.originFileObj;
-    if (file) {
+//   const handleImageUpload = async (info) => {
+//     const file = info.file.originFileObj;
+  
+//     try {
+//       // Convert the image file to base64
+//       const base64 = await convertImageToBase64(file);
+//       // Set the base64 value using setImageBase64
+//       setImageBase64(base64);
+//       console.log("setImage:", base64);
+  
+//       // Convert the base64 URL to a readable URL
+//       const readableUrl = convertBase64ToReadableUrl(base64);
+//       console.log("readableUrl:", readableUrl);
+//     } catch (error) {
+//       console.error("Error uploading image:", error);
+//     }
+//   };
+// const convertBase64ToReadableUrl = (base64) => {
+//   // Add the correct prefix to the base64 string
+//   const base64WithPrefix = `data:image/jpeg;base64,${base64}`;
+
+//   // Convert the base64 string to a blob
+//   const blob = dataURItoBlob(base64WithPrefix);
+
+//   // Create a URL from the blob
+//   const url = URL.createObjectURL(blob);
+
+//   return url;
+// };
+
+// const dataURItoBlob = (dataURI) => {
+//   const byteString = atob(dataURI);
+//   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+//   const ab = new ArrayBuffer(byteString.length);
+//   const ia = new Uint8Array(ab);
+//   for (let i = 0; i < byteString.length; i++) {
+//     ia[i] = byteString.charCodeAt(i);
+//   }
+//   const blob = new Blob([ab], { type: mimeString });
+//   return blob;
+// };
+// const convertImageToBase64 = (file) => {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+
+//         reader.onloadend = () => {
+//             resolve(reader.result.split(',')[1]);
+//         };
+
+//         reader.onerror = (error) => {
+//             reject(error);
+//         };
+
+//         reader.readAsDataURL(file);
+//     });
+// };
+
+const handleImageUpload = async (info) => {
+  const file = info.file.originFileObj;
+
+  try {
     // Convert the image file to base64
     const base64 = await convertImageToBase64(file);
+    // Set the base64 value using setImageBase64
     setImageBase64(base64);
-    }
-    // dispatch(updateImage({ ...project, [e.target.name]: e.target.value }));
-    // console.log("setImage: ",setImageBase64)
+    console.log("setImage:", base64);
+  } catch (error) {
+    console.error("Error uploading image:", error);
+  }
 };
 
 const convertImageToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
-        reader.onloadend = () => {
-            resolve(reader.result.split(',')[1]);
-        };
+    reader.onloadend = () => {
+      resolve(reader.result.split(',')[1]);
+    };
 
-        reader.onerror = (error) => {
-            reject(error);
-        };
+    reader.onerror = (error) => {
+      reject(error);
+    };
 
-        reader.readAsDataURL(file);
-    });
+    reader.readAsDataURL(file);
+  });
 };
+
 
 
   const router = useRouter();
@@ -116,81 +186,6 @@ const convertImageToBase64 = (file) => {
 
   const projectData = useSelector(state => state.addProject);
   console.log(projectData)
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const postData = {
-  //     name: project.projectName,
-  //     description: project.projectDescription,
-  //     department: project.projectDepartment,
-  //     start_date: project.startDate,
-  //     end_date: project.endDate,
-  //     image_url: "https://i.imgur.com/PujQY5Y.png",
-  //   };
-
-  //   // Api Functions
-  //   try {
-  //     const response = await api.post("/project", postData, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-
-  //     if (response.status === 200) {
-  //       const data = response.data;
-  //       console.log("API Response:", data);
-  //       console.log("API Response:", data.id);
-  //       console.log("API working");
-
-  //       // Update projectId in the project state
-  //       setProject((prevProject) => ({
-  //         ...prevProject,
-  //         projectId: data.id, // Replace 'data.projectId' with the actual field from your response data
-  //       }));
-
-  //       // ... rest of the code
-  //     } else {
-  //       console.error(
-  //         "Error sending data:",
-  //         response.status,
-  //         response.statusText
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sending data:", error);
-  //   }
-
-  //   setCurrent(current + 1);
-
-  // };
-
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-
-  //     try {
-  //         // Create a new Product instance with the base64-encoded image
-  //         const postData = {
-  //           name: project.projectName,
-  //           description: project.projectDescription,
-  //           department: project.projectDepartment,
-  //           start_date: project.startDate,
-  //           end_date: project.endDate,
-  //           image_url: "https://i.imgur.com/PujQY5Y.png",
-  //         };
-
-  //         console.log(postData)
-
-  //         // Save the new Product to the DataStore
-
-  //         console.log('Product created successfully!');
-  //         dispatch(updateFormData(postData))
-  //         console.log("dispached data", postData)
-  //     } catch (error) {
-  //         console.error('Error:', error);
-  //     }
-  // };
-
   return (
     <div>
       <section className="flex flex-col items-center flex-shrink-0  w-auto py-1 bg-white ">
@@ -259,6 +254,7 @@ const convertImageToBase64 = (file) => {
                 id="projectStartDate"
                 placeholder="Start Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200  px-1 py-1 h-8 w-[184px] m-1"
+                // value={project.startDate}
                 onChange={handleStartDateChange}
 
                 // value={project.startDate}
