@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Modal, Tabs, Upload } from "antd";
+import { Modal, Tabs, Upload, notification } from "antd";
 import {
   BugOutlined,
   CaretDownOutlined,
@@ -219,6 +219,13 @@ const RequirementForm = (stepperState) => {
   const [selectedAssign, setSelectedAssign] = useState();
   const [TaskId, setTaskId] = useState();
 
+  const openNotification = (placement, type, message) => {
+    notification[type]({
+      message: message,
+      placement: placement,
+    });
+  };
+
   const toggleOptions = (index) => {
     const newShowOptions = [...showOptions];
     newShowOptions[index] = !newShowOptions[index];
@@ -268,6 +275,7 @@ const RequirementForm = (stepperState) => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+        openNotification("topRight", "success", `${response.data.message}`);
       })
       .catch((error) => {
         console.log(error);

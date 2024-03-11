@@ -65,7 +65,7 @@ const CreatingTemplate = () => {
       .catch((error) => {
         const seterror = { error }
         console.log(seterror)
-        const errorStatus = error.response.data.error
+        const errorStatus = error.response.data.message
         console.log(errorStatus)
         openNotification("topRight", "error", ` ${errorStatus}`);
         console.log(error);
