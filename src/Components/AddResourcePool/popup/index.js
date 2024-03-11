@@ -10,7 +10,13 @@ import { useSelector, useDispatch } from "react-redux";
 // import user from "../../../../public/assets/profile1.svg";
 // import { useDispatch } from "react-redux";
 import {
-  addResources, addResourcesData, addResourcesPM, addResourcesUxDesigner, addResourcesUiDeveloper, addResourcesApiDeveloper, addResourcesTester, addResourcesUxResearch, addResourcesCiCd
+  addResources, addResourcesData,addResourcesPMLength,
+  addResourcesUxDesignerLength,
+  addResourcesUiDeveloperLength,
+  addResourcesApiDeveLength,
+  addResourcesTesterLength,
+  addResourcesUxResearcherLength,
+  CICDSpecialistLength, addResourcesPM, addResourcesUxDesigner, addResourcesUiDeveloper, addResourcesApiDeveloper, addResourcesTester, addResourcesUxResearch, addResourcesCiCd
 } from "@/Context/AddresourcesSlice/addresourcesSlice";
 
 export const Projectmanager = (props) => {
@@ -41,6 +47,9 @@ export const Projectmanager = (props) => {
         });
         console.log(response.data);
         const data = response.data;
+        dispatch(addResourcesPMLength(data.length));
+
+        console.log(data.length)
         setprojectManager(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -154,6 +163,7 @@ export const ApiDeveloper = (props) => {
         });
         console.log(response.data);
         const data = response.data;
+        dispatch(addResourcesApiDeveLength(data.length));
         setApiDeveloper(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -313,6 +323,7 @@ export const CiCdResourcePool = (props) => {
 
         console.log(response.data);
         const data = response.data;
+        dispatch(CICDSpecialistLength(data.length));
         setCiCd(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -472,6 +483,8 @@ export const TesterResourcePool = (props) => {
         });
         console.log(response.data);
         const data = response.data;
+        dispatch(addResourcesTesterLength(data.length));
+
         setTester(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -585,6 +598,8 @@ export const UxDesignResourcePool = (props) => {
         });
         console.log(response.data);
         const data = response.data;
+        dispatch(addResourcesUxDesignerLength(data.length));
+
         setUxDesigners(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -705,6 +720,8 @@ export const UiDeveloperResourcePool = (props) => {
         });
         console.log(response.data);
         const data = response.data;
+        dispatch(addResourcesUiDeveloperLength(data.length));
+
         setuiDeveloper(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -811,6 +828,8 @@ export const UxResearcher = (props) => {
         });
         console.log(response.data);
         const data = response.data;
+        dispatch(addResourcesUxResearcherLength(data.length));
+
         setuxResearcher(data);
       } catch (error) {
         console.error("Error fetching data:", error);
