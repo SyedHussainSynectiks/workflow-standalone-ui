@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { PlusSquareFilled, DownOutlined } from "@ant-design/icons";
+import { PlusSquareFilled, DownOutlined, SettingOutlined } from "@ant-design/icons";
 
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 
@@ -22,6 +22,7 @@ import {
   Dropdown,
   message,
   Menu,
+  Breadcrumb
 } from "antd";
 import axios from "axios";
 import { Pagination } from "antd";
@@ -44,6 +45,7 @@ const ProjectLayout = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(8);
+
 
   const getData = async () => {
     try {
@@ -161,8 +163,28 @@ const ProjectLayout = () => {
   return (
     <>
       <div style={{ margin: "18px 16px", padding: "0px 10px", minHeight: 280 }}>
-        <h1 className="ml-2 uppercase text-3xl">workflow Management</h1>
-
+        <div className="bg-white px-10 py-5 space-y-3 mb-6">
+          <Breadcrumb
+            items={[
+              {
+                title: <a href="/">Home</a>,
+              },
+              {
+                title: 'Projects Overview',
+              },
+            ]}
+          />
+          <h1 className="capitalize text-2xl">Projects Overview</h1>
+          <span className="flex items-center justify-center">
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="border p-1 w-[38vw]"
+            /><span className="py-1 px-4 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white"><SettingOutlined className='mr-3' />Search</span>
+          </span>
+        </div>
         <div className="bg-white flex flex-row justify-between items-center py-2 px-5">
           <Dropdown
             overlay={
@@ -186,15 +208,9 @@ const ProjectLayout = () => {
               <Link href="/main/projects/addNewProject"> Create Project</Link>
             </button>
           </div> */}
-          <div className="flex items-center space-x-4">
-            <input
-              type="text"
-              placeholder="Search projects..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              className="border rounded p-1"
-            />
-            <button className="py-1 px-4 bg-blue-500 text-white bg-primary-6">
+          <div className="flex items-center space-x-60">
+
+            <button className="py-1 px-4 bg-blue-500 text-white bg-primary-6 hover:text-white">
               <Link href="/main/projects/addNewProject"> Create Project</Link>
             </button>
           </div>
