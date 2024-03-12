@@ -181,7 +181,7 @@ const ProjectLayout = () => {
               placeholder="Search projects..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="border rounded-none border-gray-200 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-300 focus:outline-none rounded-l transition duration-300"
+              className="border rounded-none border-gray-200 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-400 focus:outline-none rounded-l transition duration-300"
             /><span className="py-1 px-4 bg-[#1890FF] hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white"><SettingOutlined className='mr-3' />Search</span>
           </label>
         </div>
@@ -297,9 +297,10 @@ const ProjectLayout = () => {
             )}
           </Row>
           <Row>
-            <div className="mt-5 flex justify-end">
+            <div className="flex ml-auto">
               <Pagination
                 total={totalItems}
+                showTotal={(totalItems, range) => `${range[0]}-${range[1]} of ${totalItems} items`}
                 pageSize={itemsPerPage}
                 current={currentPage}
                 onChange={handlePageChange}
