@@ -214,6 +214,7 @@ const RequirementForm = (stepperState) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openItemIndex, setOpenItemIndex] = useState(null);
   const [openActionIndex, setopenActionIndex] = useState(null);
+  const [openImageIndex, setopenImageIndex] = useState([]);
   const dropdownRef = useRef(null);
   const [showOptions, setShowOptions] = useState(
     requiretasks ? Array(requiretasks.length).fill(false) : []
@@ -223,11 +224,24 @@ const RequirementForm = (stepperState) => {
   const [selectedAssign, setSelectedAssign] = useState();
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
-  const [AssigneeSelectedImg, setAssigneeSelectedImg] = useState(null);
+  const [AssigneeSelectedImg, setAssigneeSelectedImg] = useState();
   const openNotification = (placement, type, message) => {
     notification[type]({
       message: message,
       placement: placement,
+    });
+  };
+
+  const [ImageView, setImageView] = useState(false);
+
+  const toggleSaved = (index) => {
+    setopenImageIndex((prevIndexes) => {
+      const currentIndex = prevIndexes.indexOf(index);
+      if (currentIndex === -1) {
+        return [...prevIndexes, index];
+      } else {
+        return prevIndexes.filter((i) => i !== index);
+      }
     });
   };
 
@@ -245,6 +259,7 @@ const RequirementForm = (stepperState) => {
   };
   const handleAssignImg = (ImageUrl) => {
     setAssigneeSelectedImg(ImageUrl);
+    console.log("Image", ImageUrl);
     // console.log("AssignImg", AssigneeSelectedImg);
     // return value;
   };
@@ -402,14 +417,10 @@ const RequirementForm = (stepperState) => {
                               alt="expand-arrow--v2"
                             />
                           </button>
-                          {AssigneeSelectedImg && (
+                          {openImageIndex.includes(index) && (
                             <div className=" w-[2]" id="AssigneeImg">
                               <Image
-                                src={
-                                  AssigneeSelectedImg
-                                    ? AssigneeSelectedImg
-                                    : userImg
-                                }
+                                src={AssigneeSelectedImg || userImg}
                                 height={34}
                               ></Image>
                             </div>
@@ -511,6 +522,7 @@ const RequirementForm = (stepperState) => {
                                                     : itemIndex
                                                 );
                                                 handleAssignImg(AssigneeImg);
+                                                toggleSaved(index);
                                               }}
                                               className="bg-sky-500 px-2 py-1 text-white rounded-sm  "
                                             >

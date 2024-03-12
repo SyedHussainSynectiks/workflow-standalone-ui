@@ -102,7 +102,7 @@ const MainLayout = ({ children }) => {
                 >
                     <Navbar />
                     <Content
-                        style={{ margin: "18px 16px", padding: "0px 10px", minHeight: 280 }}
+                        style={{ margin: "18px 16px", padding: "0px 0px", minHeight: 280 }}
                     >
                         {children}
                     </Content>

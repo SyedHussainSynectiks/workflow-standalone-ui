@@ -49,7 +49,7 @@ const items = () => {
     key: "1",
     label: (
       <span>
-
+        
         <div className=" flex flex-row items-center">
           <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
             <div className="flex justify-between items-center">
@@ -240,7 +240,8 @@ const onChange = (key) => {
   console.log(key);
 };
 
-export default function AddResourcePool2({ result }) {
+export function AddResourcePool2({result}) {
+ 
   const [project, setProject] = useProject({});
   console.log(result)
 
@@ -257,10 +258,8 @@ export default function AddResourcePool2({ result }) {
         onChange={onChange}
         className="custom-tabs"
       >
-
-        {items.map((item) => (
-          <TabPane tab={item.label} key={item.key} className="h-[52vh] overflow-auto sticky top-1">
-
+        {items().map((item) => (
+          <TabPane tab={item.label} key={item.key}>
             {item.children}
           </TabPane>
         ))}
