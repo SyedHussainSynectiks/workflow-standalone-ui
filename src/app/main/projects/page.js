@@ -186,7 +186,7 @@ const ProjectLayout = () => {
           </label>
         </div>
         <div className="bg-white flex flex-row justify-between items-center py-4 px-5">
-          <Dropdown
+          <Dropdown className="border border-gray-300 rounded-none p-2"
             overlay={
               <Menu onClick={handleMenuClick}>
                 <Menu.Item key="all">All Projects</Menu.Item>

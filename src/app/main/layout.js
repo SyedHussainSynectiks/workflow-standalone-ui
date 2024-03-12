@@ -52,7 +52,7 @@ const MainLayout = ({ children }) => {
                             {
                                 key: "1",
                                 icon: <ProjectFilled />,
-                                label: <NavLink href= "/main" >Dashboard</NavLink>,
+                                label: <NavLink href="/main" >Dashboard</NavLink>,
 
                             },
                             {
@@ -103,7 +103,7 @@ const MainLayout = ({ children }) => {
                 >
                     <Navbar />
                     <Content
-                        style={{ minHeight: 280 }}
+                        style={{ margin: "0px 0px", padding: "0px 0px", minHeight: 280 }}
                     >
                         {children}
                     </Content>
