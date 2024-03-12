@@ -271,11 +271,6 @@ export default function page({ formNext }) {
               </Button>
             </Link>
           )}
-          {/* {current > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-            Previous
-          </Button>
-        )} */}
         </div>
       </div>
     </>

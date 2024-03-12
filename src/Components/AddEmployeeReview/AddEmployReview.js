@@ -5,7 +5,11 @@ import { Input } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
+
 import Image from "next/image";
+
+import user from "../../../public/assets/user.png"
+
 const { Search } = Input;
 
 const onSearch = (value, _e, info) => console.log(info?.source, value);
@@ -118,30 +122,26 @@ const AddEmployReview = () => {
           <table className="min-w-full divide-y">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider" style={{ width: '25%' }}>
                   Name
                 </th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider">
+                <th className="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider" style={{ width: '25%' }}>
                   Designation
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider pl-10" style={{ width: '25%' }}>
                   Mail ID
                 </th>
-                <th
-                  className="px-6 ml-9 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                  colSpan={2}
-                >
+                <th className="px-6 ml-9 py-3 text-left text-xs font-medium text-black uppercase tracking-wider" colSpan={2} style={{ width: '25%' }}>
                   Actions
                 </th>
               </tr>
             </thead>
             {ResourceAdded.map((resource, index) => (
-              console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
+                      <Image src={resource.image ? resource.image : user} height={35} width={35} />
                       <div className="text-sm font-medium text-gray-900">
                         {resource.name}
                       </div>
@@ -167,231 +167,6 @@ const AddEmployReview = () => {
                 </tr>
               </tbody>
             ))}
-            {/* {MapingDataUxDesigner.map((resource, index) => (
-              console.log(resource.first_name),
-              <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
-                <tr className="bg-white">
-                  <td className="py-2 whitespace-nowrap">
-                    <div className="flex items-center space-x-5">
-                      <div className="text-sm font-medium text-gray-900">
-                        {resource.first_name} {resource.last_name}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-2 text-sm text-center font-medium text-gray-900">
-                    {resource.Designation}
-                  </td>
-                  <td className="py-2 text-sm font-medium text-gray-900">
-                    {resource.email}
-                  </td>
-                  <td className="py-2 whitespace-nowrap text-sm space-x-5">
-                    <Button icon={<EditOutlined />}>Edit</Button>
-                    <Button
-                      type="primary"
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleDelete(resource.id)}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            ))} */}
-            {/* {MapingDataUiDeve.map((resource, index) => (
-              console.log(resource.first_name),
-              <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
-                <tr className="bg-white">
-                  <td className="py-2 whitespace-nowrap">
-                    <div className="flex items-center space-x-5">
-                      <div className="text-sm font-medium text-gray-900">
-                        {resource.first_name} {resource.last_name}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-2 text-sm text-center font-medium text-gray-900">
-                    {resource.Designation}
-                  </td>
-                  <td className="py-2 text-sm font-medium text-gray-900">
-                    {resource.email}
-                  </td>
-                  <td className="py-2 whitespace-nowrap text-sm space-x-5">
-                    <Button icon={<EditOutlined />}>Edit</Button>
-                    <Button
-                      type="primary"
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleDelete(resource.id)}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            ))} */}
-            {/* {MapingDataApiDevel.map((resource, index) => (
-              console.log(resource.first_name),
-              <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
-                <tr className="bg-white">
-                  <td className="py-2 whitespace-nowrap">
-                    <div className="flex items-center space-x-5">
-                      <div className="text-sm font-medium text-gray-900">
-                        {resource.first_name} {resource.last_name}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-2 text-sm text-center font-medium text-gray-900">
-                    {resource.Designation}
-                  </td>
-                  <td className="py-2 text-sm font-medium text-gray-900">
-                    {resource.email}
-                  </td>
-                  <td className="py-2 whitespace-nowrap text-sm space-x-5">
-                    <Button icon={<EditOutlined />}>Edit</Button>
-                    <Button
-                      type="primary"
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleDelete(resource.id)}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            ))} */}
-            {/* {MapingDataTester.map((resource, index) => (
-              console.log(resource.first_name),
-              <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
-                <tr className="bg-white">
-                  <td className="py-2 whitespace-nowrap">
-                    <div className="flex items-center space-x-5">
-                      <div className="text-sm font-medium text-gray-900">
-                        {resource.first_name} {resource.last_name}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-2 text-sm text-center font-medium text-gray-900">
-                    {resource.Designation}
-                  </td>
-                  <td className="py-2 text-sm font-medium text-gray-900">
-                    {resource.email}
-                  </td>
-                  <td className="py-2 whitespace-nowrap text-sm space-x-5">
-                    <Button icon={<EditOutlined />}>Edit</Button>
-                    <Button
-                      type="primary"
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleDelete(resource.id)}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            ))}
-            {MapingDataUxRes.map((resource, index) => (
-              console.log(resource.first_name),
-              <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
-                <tr className="bg-white">
-                  <td className="py-2 whitespace-nowrap">
-                    <div className="flex items-center space-x-5">
-                      <div className="text-sm font-medium text-gray-900">
-                        {resource.first_name} {resource.last_name}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-2 text-sm text-center font-medium text-gray-900">
-                    {resource.Designation}
-                  </td>
-                  <td className="py-2 text-sm font-medium text-gray-900">
-                    {resource.email}
-                  </td>
-                  <td className="py-2 whitespace-nowrap text-sm space-x-5">
-                    <Button icon={<EditOutlined />}>Edit</Button>
-                    <Button
-                      type="primary"
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleDelete(resource.id)}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            ))} 
-            {Object.entries(Mainmap).map(([key, value]) => (
-              <tbody key={key} className="bg-white divide-y divide-gray-200">
-                {value.map((resource, index) => (
-                  <tr key={index} className="bg-white">
-                    <td className="py-2 whitespace-nowrap">
-                      <div className="flex items-center space-x-5">
-                        <div className="text-sm font-medium text-gray-900">
-                          {resource.first_name} {resource.last_name}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-2 text-sm text-center font-medium text-gray-900">
-                      {resource.Designation}
-                    </td>
-                    <td className="py-2 text-sm font-medium text-gray-900">
-                      {resource.email}
-                    </td>
-                    <td className="py-2 whitespace-nowrap text-sm space-x-5">
-                      <Button icon={<EditOutlined />}>Edit</Button>
-                      <Button
-                        type="primary"
-                        danger
-                        icon={<DeleteOutlined />}
-                        onClick={() => handleDelete(resource.id)}
-                      >
-                        Remove
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            ))} */}
-
-            {/* {MapingDataCiCd.map((resource, index) => (
-              console.log(resource.first_name),
-              <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
-                <tr className="bg-white">
-                  <td className="py-2 whitespace-nowrap">
-                    <div className="flex items-center space-x-5">
-                      <div className="text-sm font-medium text-gray-900">
-                        {resource.first_name} {resource.last_name}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-2 text-sm text-center font-medium text-gray-900">
-                    {resource.Designation}
-                  </td>
-                  <td className="py-2 text-sm font-medium text-gray-900">
-                    {resource.email}
-                  </td>
-                  <td className="py-2 whitespace-nowrap text-sm space-x-5">
-                    <Button icon={<EditOutlined />}>Edit</Button>
-                    <Button
-                      type="primary"
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleDelete(resource.id)}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            ))} */}
           </table>
         </div>
       </div>

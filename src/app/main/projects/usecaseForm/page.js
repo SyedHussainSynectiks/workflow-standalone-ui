@@ -117,20 +117,31 @@ const newform = () => {
       });
   };
   useEffect(() => {
-    const fetchAssignees = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/get_resource_by_role?designation=Project Manager');
-        setAssignees(response.data);
-        console.log("setassignees.....", response.data)
-        setLoading(false);
+        const response = await axios.get(
+          `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
+        );
+        const responseData = response.data;
+        console.log("responsedata ", responseData);
+        console.log(JSON.stringify(responseData));
+        const data = response.data;
+        console.log("REsourcesData", data)
+        console.log(data.map((obj) => obj.ProductManagerId));
+        const mapResourses = (data.map((obj) => obj.ProductManagerId));
+
+        const values = mapResourses.flatMap((ProductManagerId) => ProductManagerId);
+        console.log("Values:", values);
+        setAssignees(values.filter((obj) => obj !== undefined));
+        // setRoles(data.map((obj) => Object.keys(obj)));
+        // setTeamData(responseData);
       } catch (error) {
-        console.error('Error fetching assignees:', error);
+        console.log(error);
       }
     };
-
-    fetchAssignees();
+    fetchData();
   }, []);
-
+  
   return (
     <div className="">
       <div className="flex w-[100%] flex-col items-start gap-5">
@@ -187,11 +198,12 @@ const newform = () => {
             <Select
               placeholder="Select assignee"
               loading={loading}
-              onChange={(value,name,emp_id) => {handleAssigneChange("assigned_to_id", value,name);
-            console.log(emp_id)}}
+              onChange={(value,name,resource_id) => {handleAssigneChange("assigned_to_id", value,name);
+            console.log(resource_id)}}
             >
               {assignees.map((assignee, index) => (
-                <Option key={index} value={assignee.emp_id}>{assignee.resource_name}</Option>
+                // console.log("Assigne Data", assignee),
+                <Option key={index} value={assignee.resource_id}>{assignee.name}</Option>
               ))}
             </Select>
           </Form.Item>
