@@ -46,9 +46,9 @@ export default function page({ formNext }) {
   };
 
 
-  
+
   const projectId = useSelector((state) => state.addProject.id);
-  
+
   console.log("projectId : ", projectId);
   // console.log("resourceIn Project", resourcesId);
   console.log(projectData);
@@ -118,11 +118,11 @@ export default function page({ formNext }) {
       return;
     }
     if (current === 0) {
-     
+
       try {
         // console.log(projectData)
         await Apisubmit(projectData);
-        
+
       } catch (error) {
         console.error("Error submitting data:", error);
       }
@@ -139,7 +139,7 @@ export default function page({ formNext }) {
       { UxResearcherId: UxResearcher },
       { CiCdId: CiCd},
     ];
-    
+
     const filteredRoles = roles.filter(role => Object.values(role)[0].length > 0);
 
     console.log("filteredRoles", filteredRoles)
@@ -180,7 +180,7 @@ export default function page({ formNext }) {
           console.log(error);
         });
 
-      
+
     }
   };
 
@@ -232,7 +232,7 @@ export default function page({ formNext }) {
 
   return (
     <>
-      <div className="w-auto py-2 px-1 mb-2 bg-white">
+      <div className="w-auto py-2 px-1 mb-2 bg-white m-5">
         <h1 className="text-2xl font-semibold ">Create Project</h1>
         <p>
           Form pages are used to collect or verify information to users, and
@@ -240,7 +240,7 @@ export default function page({ formNext }) {
         </p>
         {toggleValue.toString()}
       </div>
-      <div className="w-auto py-1 bg-white">
+      <div className="w-auto py-1 bg-white m-5">
         <Steps current={current} items={items} className="px-[10rem] py-3" />
         <div style={contentStyle}>
           {/* Render content based on current step */}

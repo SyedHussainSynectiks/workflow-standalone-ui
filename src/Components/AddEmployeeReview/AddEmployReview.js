@@ -40,6 +40,12 @@ const AddEmployReview = () => {
     // console.log(ProjectId)
   };
 
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  }
+
   return (
     <div>
       <div>
@@ -86,7 +92,8 @@ const AddEmployReview = () => {
                 <div>
                   <p>Project Duration</p>
                   <h3 className="font-semibold">
-                    {projectData.startDate}TO {projectData.endDate}
+                    {/* {projectData.startDate}TO {projectData.endDate} */}
+                    {formatDate(projectData.startDate)} To {formatDate(projectData.endDate)}
                   </h3>
                 </div>
               </div>
@@ -95,7 +102,7 @@ const AddEmployReview = () => {
         </div>
       </div>
 
-      {/* //REsourcess------------------------------ */}
+      {/* //Resourcess------------------------------ */}
 
       <div className="mt-5 flex flex-col space-y-4 bg-white rounded-md p-10">
         <div className="flex justify-between">
@@ -104,7 +111,7 @@ const AddEmployReview = () => {
           </h1>
           <div>
             <Search
-              placeholder="Search employe"
+              placeholder="Search employee"
               onSearch={onSearch}
               style={{
                 width: "16.5rem",
@@ -138,7 +145,7 @@ const AddEmployReview = () => {
             {ResourceAdded.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
+
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
@@ -170,7 +177,7 @@ const AddEmployReview = () => {
             {/* {MapingDataUxDesigner.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
+
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
@@ -202,7 +209,7 @@ const AddEmployReview = () => {
             {/* {MapingDataUiDeve.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
+
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
@@ -234,7 +241,7 @@ const AddEmployReview = () => {
             {/* {MapingDataApiDevel.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
+
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
@@ -266,7 +273,7 @@ const AddEmployReview = () => {
             {/* {MapingDataTester.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
+
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
@@ -298,7 +305,7 @@ const AddEmployReview = () => {
             {MapingDataUxRes.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
+
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
@@ -326,7 +333,7 @@ const AddEmployReview = () => {
                   </td>
                 </tr>
               </tbody>
-            ))} 
+            ))}
             {Object.entries(Mainmap).map(([key, value]) => (
               <tbody key={key} className="bg-white divide-y divide-gray-200">
                 {value.map((resource, index) => (
@@ -363,7 +370,7 @@ const AddEmployReview = () => {
             {/* {MapingDataCiCd.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-                
+
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
