@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { PlusSquareFilled, DownOutlined, SettingOutlined } from "@ant-design/icons";
+import { PlusSquareFilled, DownOutlined, SettingOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 
@@ -181,7 +181,7 @@ const ProjectLayout = () => {
               placeholder="Search projects..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="border rounded-none border-gray-200 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-400 focus:outline-none rounded-l transition duration-300"
+              className="border-2 rounded-none border-gray-200 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-400 focus:outline-none rounded-l transition duration-300"
             /><span className="py-1 px-4 bg-[#1890FF] hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white"><SettingOutlined className='mr-3' />Search</span>
           </label>
         </div>
@@ -203,15 +203,11 @@ const ProjectLayout = () => {
               </Space>
             </a>
           </Dropdown>
-          {/* <div className="">
-            <button className="   py-1  px-4 bg-blue-500 text-white bg-primary-6">
-              <Link href="/main/projects/addNewProject"> Create Project</Link>
-            </button>
-          </div> */}
+
           <div className="flex items-center space-x-60">
-            <button className="py-1 px-4 bg-blue-500 text-white bg-primary-6 hover:text-white">
-              <Link href="/main/projects/addNewProject"> Create Project</Link>
-            </button>
+
+              <Link className="py-2 px-4 bg-blue-500 text-white  hover:bg-blue-700 hover:text-white"  href="/main/projects/addNewProject"> <PlusOutlined className='mr-4' />Create Project</Link>
+            
           </div>
         </div>
 

@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import user from "../../../../public/assets/profile1.svg";
 // import { useDispatch } from "react-redux";
 import {
-  addResources, addResourcesData,addResourcesPMLength,
+  addResources, addResourcesData, addResourcesPMLength,
   addResourcesUxDesignerLength,
   addResourcesUiDeveloperLength,
   addResourcesApiDeveLength,
@@ -88,17 +88,7 @@ export const Projectmanager = (props) => {
                 key={index}
                 className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
               >
-                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-                  <div className="flex items-center gap-3">
-                    <Image src={Manager.image || {user}} height={4} width={4} />
-                    <div>
-                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.resource_name}
-                        <span className="text-blue-300">{Manager.work_email}</span>
-                      </h1>
-                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
-                    </div>
-                  </div>
+                <div className="flex space-x-4 items-center gap-6 pl-3 w-[100%]">
                   <div>
                     {/* CheckBox Button */}
                     <input
@@ -121,6 +111,16 @@ export const Projectmanager = (props) => {
                       }}
                       className="cursor-pointer"
                     />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image || { user }} height={4} width={4} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export const ApiDeveloper = (props) => {
   const handleAddResourcesApiDeveloper = (data) => {
     const newData = [...selectedDataApiD, data];
     setSelectedDataApiD(newData);
-    dispatch(addResourcesApiDeveloper(newData ));
+    dispatch(addResourcesApiDeveloper(newData));
   };
   return (
     <div className="flex flex-col gap-4 bg-white w-[100%]">
@@ -203,17 +203,7 @@ export const ApiDeveloper = (props) => {
                   key={index}
                   className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
                 >
-                  <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-                    <div className="flex items-center gap-3">
-                      <Image src={Manager.image || {user}} height={4} width={4}/>
-                      <div>
-                        <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                          {Manager.resource_name}
-                          <span className="text-blue-300">{Manager.work_email}</span>
-                        </h1>
-                        <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
-                      </div>
-                    </div>
+                  <div className="flex space-x-4 items-center gap-6 pl-3 w-[100%]">
                     <div>
                       {/* CheckBox Button */}
                       <input
@@ -237,6 +227,16 @@ export const ApiDeveloper = (props) => {
                           }
                         }}
                       />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Image src={Manager.image || { user }} height={4} width={4} />
+                      <div>
+                        <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                          {Manager.resource_name}
+                          <span className="text-blue-300">{Manager.work_email}</span>
+                        </h1>
+                        <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -304,7 +304,7 @@ export const CiCdResourcePool = (props) => {
   const handleAddResourcesCiCd = (data) => {
     const newData = [...selectedDataCiCd, data];
     setSelectedDataCiCd(newData);
-    dispatch(addResourcesCiCd(newData ));
+    dispatch(addResourcesCiCd(newData));
   };
 
 
@@ -345,17 +345,7 @@ export const CiCdResourcePool = (props) => {
                 key={index}
                 className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
               >
-                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-                  <div className="flex items-center gap-3">
-                    <Image src={Manager.image || {user}} height={4} width={4}/>
-                    <div>
-                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.resource_name}
-                        <span className="text-blue-300">{Manager.work_email}</span>
-                      </h1>
-                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
-                    </div>
-                  </div>
+                <div className="flex space-x-4 items-center gap-6 pl-3 w-[100%]">
                   <div>
                     {/* CheckBox Button */}
                     <input
@@ -372,11 +362,21 @@ export const CiCdResourcePool = (props) => {
                           // Handle deselecting the checkbox
                           const updatedSelectedData = selectedDataCiCd.filter(id => id !== empId);
                           setSelectedDataCiCd(updatedSelectedData);
-                          dispatch(addResourcesCiCd(updatedSelectedData ));
+                          dispatch(addResourcesCiCd(updatedSelectedData));
                         }
                       }}
                       className="cursor-pointer"
                     />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image || { user }} height={4} width={4} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -508,17 +508,7 @@ export const TesterResourcePool = (props) => {
                 key={index}
                 className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
               >
-                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-                  <div className="flex items-center gap-3">
-                    <Image src={Manager.image || {user}} height={4} width={4}/>
-                    <div>
-                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.resource_name}
-                        <span className="text-blue-300">{Manager.work_email}</span>
-                      </h1>
-                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
-                    </div>
-                  </div>
+                <div className="flex space-x-4 items-center gap-6 pl-3 w-[100%]">
                   <div>
                     {/* CheckBox Button */}
                     <input
@@ -541,6 +531,16 @@ export const TesterResourcePool = (props) => {
                       }}
                       className="cursor-pointer"
                     />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image || { user }} height={4} width={4} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -579,7 +579,7 @@ export const UxDesignResourcePool = (props) => {
   const handleAddResourcesUxDesigner = (data) => {
     const newData = [...selectedDataUxDesign, data];
     setSelectedDataUxDesign(newData);
-    dispatch(addResourcesUxDesigner(newData ));
+    dispatch(addResourcesUxDesigner(newData));
   };
 
   console.log(selectUser);
@@ -623,21 +623,9 @@ export const UxDesignResourcePool = (props) => {
                   {uxDesigner.map((Manager, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
+                      className="flex flex-row-reverse items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
                     >
-                      <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-                        <div className="flex items-center gap-3">
-                          <Image src={Manager.image || {user}} height={4} width={4}/>
-                          <div>
-                            <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                              {Manager.resource_name}
-                              <span className="text-blue-300">
-                                {Manager.work_email}
-                              </span>
-                            </h1>
-                            <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
-                          </div>
-                        </div>
+                      <div className="flex space-x-4 items-center gap-6 pl-3 w-[100%]">
                         <div>
                           {/* CheckBox Button */}
                           <input
@@ -654,12 +642,25 @@ export const UxDesignResourcePool = (props) => {
                                 // Handle deselecting the checkbox
                                 const updatedSelectedData = selectedDataUxDesign.filter(id => id !== empId);
                                 setSelectedDataUxDesign(updatedSelectedData);
-                                dispatch(addResourcesUxDesigner( updatedSelectedData ));
+                                dispatch(addResourcesUxDesigner(updatedSelectedData));
                               }
                             }}
                             className="cursor-pointer"
                           />
                         </div>
+                        <div className="flex items-center gap-3">
+                          <Image src={Manager.image || { user }} height={4} width={4} />
+                          <div>
+                            <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                              {Manager.resource_name}
+                              <span className="text-blue-300">
+                                {Manager.work_email}
+                              </span>
+                            </h1>
+                            <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                   ))}
@@ -700,7 +701,7 @@ export const UiDeveloperResourcePool = (props) => {
   const handleAddResourcesUiDeveloper = (data) => {
     const newData = [...selectedDataUiDeveloper, data];
     setSelectedDataUiDeveloper(newData);
-    dispatch(addResourcesUiDeveloper(newData ));
+    dispatch(addResourcesUiDeveloper(newData));
   };
   console.log(selectUser);
 
@@ -743,17 +744,7 @@ export const UiDeveloperResourcePool = (props) => {
                 key={index}
                 className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
               >
-                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-                  <div className="flex items-center gap-3">
-                    <Image src={Manager.image || {user}} height={4} width={4}/>
-                    <div>
-                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.resource_name}
-                        <span className="text-blue-300">{Manager.work_email}</span>
-                      </h1>
-                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
-                    </div>
-                  </div>
+                <div className="flex space-x-4 items-center gap-6 pl-3 w-[100%]">
                   <div>
                     {/* CheckBox Button */}
                     <input
@@ -770,11 +761,21 @@ export const UiDeveloperResourcePool = (props) => {
                           // Handle deselecting the checkbox
                           const updatedSelectedData = selectedDataUiDeveloper.filter(id => id !== empId);
                           setSelectedDataUiDeveloper(updatedSelectedData);
-                          dispatch(addResourcesUiDeveloper( updatedSelectedData ));
+                          dispatch(addResourcesUiDeveloper(updatedSelectedData));
                         }
                       }}
                       className="cursor-pointer"
                     />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image || { user }} height={4} width={4} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -866,17 +867,7 @@ export const UxResearcher = (props) => {
                 key={index}
                 className="flex items-center justify-start py-3 pr-4 pl-4 gap-40 bg-white shadow-md border border-gray-200 border-t-0 rounded-lg"
               >
-                <div className="flex justify-between items-center gap-6 pl-3 w-[100%]">
-                  <div className="flex items-center gap-3">
-                    <Image src={Manager.image || {user}} height={4} width={4}/>
-                    <div>
-                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
-                        {Manager.resource_name}
-                        <span className="text-blue-300">{Manager.work_email}</span>
-                      </h1>
-                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
-                    </div>
-                  </div>
+                <div className="flex space-x-4 items-center gap-6 pl-3 w-[100%]">
                   <div>
                     {/* CheckBox Button */}
                     <input
@@ -894,11 +885,21 @@ export const UxResearcher = (props) => {
                           // Handle deselecting the checkbox
                           const updatedSelectedData = selectedDataUxResearch.filter(id => id !== empId);
                           setSelectedDataUxResearch(updatedSelectedData);
-                          dispatch(addResourcesUxResearch(updatedSelectedData ));
+                          dispatch(addResourcesUxResearch(updatedSelectedData));
                         }
                       }}
                       className="cursor-pointer"
                     />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Image src={Manager.image || { user }} height={4} width={4} />
+                    <div>
+                      <h1 className="text-gray-800 font-segoe-ui text-base font-bold leading-normal">
+                        {Manager.resource_name}
+                        <span className="text-blue-300">{Manager.work_email}</span>
+                      </h1>
+                      <h3 className="text-neutral-300 font-segoe-ui text-base font-normal leading-normal"></h3>
+                    </div>
                   </div>
                 </div>
               </div>
