@@ -13,6 +13,7 @@ import { Tabs } from "antd";
 
 
 const Stepper = () => {
+
   const items = [
     {
       key: "1",
@@ -49,7 +50,7 @@ const Stepper = () => {
             items.
           </p>
 
-          <div className="mt-3">
+          <div className="mt-3   ">
             <Tabs defaultActiveKey="1" items={items}  />
           </div>
         </div>

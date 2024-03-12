@@ -7,7 +7,8 @@ import user from "../../../../public/assets/user.png"
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 
-
+// import user from "../../../../public/assets/profile1.svg";
+// import { useDispatch } from "react-redux";
 import {
   addResources, addResourcesData,addResourcesPMLength,
   addResourcesUxDesignerLength,
@@ -134,6 +135,17 @@ export const Projectmanager = (props) => {
 
 // Api Developer
 export const ApiDeveloper = (props) => {
+  // All Hooks
+  // const handleResourcesAdd = (emplyyId) => {
+  //   dispatch(addResources({ id: emplyyId }));
+  // console.log("dispatch",emplyyId)
+  // if (emplyyId) {
+  //   console.log("If-Else -dispatch", emplyyId);
+  //   ;
+  // } else {
+  //   console.error("empId is undefined");
+  // }
+  // dispatch(addResources({id:emplyyId}));
 
   // API Developer
   const [apiDeveloper, setApiDeveloper] = useState([]);
@@ -271,7 +283,15 @@ export const CiCdResourcePool = (props) => {
     props.onSubmit();
   };
 
+  // HandleCheckBoxChange
+  // var handleResourcesAdd = (emp_id) => {
+  //   dispatch(addResources({ id: emp_id }));
 
+  //   console.log(emp_id);
+  // };
+  // var handleResourcesInfo = (CiCd) => {
+  //   dispatch(addResourcesData(CiCd))
+  // }
   var handleResourcesAdd = (emp_id, data) => {
     dispatch(addResources({ id: emp_id, }));
 
@@ -379,6 +399,25 @@ export const TesterResourcePool = (props) => {
     Tester: [],
   });
 
+  // HandleCheckBoxChange
+
+  // console.log(selectUser);
+  // var handleResourcesAdd = (emp_id ) => {
+  //   setSelectUser (emp_id)
+  //   dispatch(addResources({ id: (selectUser) }));
+
+  //   console.log(emp_id);
+  // };
+  // var handleResourcesInfo = (Tester) =>{
+  //   console.log(Tester.emp_id)
+  //   console.log(selectUser)
+  //   if (selectUser ===  Tester.emp_id){
+  //   dispatch(addResourcesData(Tester))
+  //   }
+  //   else{
+  //     console.log(" notDispached")
+  //   }
+  // }
   var handleResourcesAdd = (emp_id, data) => {
     dispatch(addResources({ id: emp_id, }));
 
@@ -392,6 +431,45 @@ export const TesterResourcePool = (props) => {
     setSelectedDataTester(newData);
     dispatch(addResourcesTester(newData));
   };
+  //   const selectedId = emp_id;
+  //   console.log(selectedId)
+  //   // Agar selected ID hai toh resources ko dispatch karein
+  //   dispatch(addResourcesData({ id: selectedId }));
+  // };
+
+
+  // const handleResourcesAdd = (emp_id) => {
+
+  //   setprojectResource((prevState) => ({
+  //     ...prevState,
+  //     Tester: [...prevState.Tester, emp_id],
+  //   }));
+  //   dispatch(addResources({ id: projectResource }));
+  // };
+  // const handleResourcesAdd = (emp_id) => {
+  //   console.log(emp_id);
+  //   // Check if the employee ID is already in the Tester array
+  //   const isChecked = projectResource.Tester.includes(emp_id);
+
+  //   if (isChecked) {
+  //     // If already checked, remove it
+  //     setprojectResource((prevState) => ({
+  //       ...prevState,
+  //       Tester: prevState.Tester.filter((id) => id !== emp_id),
+  //     }));
+  //   } else {
+  //     // If not checked, add it
+  //     setprojectResource((prevState) => ({
+  //       ...prevState,
+  //       Tester: [...prevState.Tester, emp_id],
+  //     }));
+  //   }
+  //   // Dispatch the updated Tester array
+  // };
+
+  // console.log(projectResource);
+
+  // console.log(project);
 
   // useEffect to fetch all users
   useEffect(() => {
@@ -722,7 +800,21 @@ export const UxResearcher = (props) => {
     ],
   });
 
-  
+  // HandleCheckBoxChange
+  // const handleCheckboxChange = (userId) => {
+  //   // Check if userId is already in selectUser
+  //   if (selectUser.includes(userId)) {
+  //     // If yes, remove it
+  //     setSelectUser((prevState) => prevState.filter((id) => id !== userId));
+  //   } else {
+  //     // If no, add it
+  //     setSelectUser((prevState) => [...prevState, userId]);
+  //   }
+  // };
+
+
+
+  // console.log(project);
 
   // useEffect to fetch all users
   useEffect(() => {

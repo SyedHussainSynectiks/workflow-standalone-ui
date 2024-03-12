@@ -8,7 +8,7 @@ export const Projectmanager = (props) => {
   const [projectManager, setprojectManager] = useState([]);
   const [selectedUserName, setSelectedUserIds] = useState([]);
 
-
+ 
 
   const handleCheckboxChange = (userId) => {
     // Update the selectedUserIds array when a checkbox is checked or unchecked
@@ -17,17 +17,23 @@ export const Projectmanager = (props) => {
     } else {
       setSelectedUserIds([...selectedUserName, userId]);
     }
-
-  };
-
-    const handleSelectionAndClose = () => {
   
+  };
+   
+    const handleSelectionAndClose = () => {
+      // const selectedProjectManagers = projectManager.filter((Manager) =>
+      // selectedUserName.includes(Manager.resource_name)
+      // );
+      // selectedProjectManagers(selectedProjectManagers);
       props.onSubmit();
     };
-
+    // const selectedData = (selectedUserName)=>{
+    //   selectedUserName = (selectedUserName)
+    // }
+    // getDataFromModal(selectedData)
 
   useEffect(() => {
-
+    
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
@@ -40,10 +46,10 @@ export const Projectmanager = (props) => {
         console.error("Error fetching data:", error);
       }
     };
-    fetchData();
+    fetchData(); 
   }, []);
-
-
+  
+ 
 
   return (
     <div className="flex flex-col gap-4 bg-white p-5 w-[100%] h-[584px]">
@@ -113,7 +119,7 @@ export const Projectmanager = (props) => {
                   </div>
                 </div>
               </div>
-
+              
             ))}
           </div>
         </div>
