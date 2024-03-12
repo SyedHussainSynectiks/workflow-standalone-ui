@@ -175,17 +175,17 @@ const ProjectLayout = () => {
             ]}
           />
           <h1 className="capitalize text-2xl">Projects Overview</h1>
-          <span className="flex items-center justify-center">
+          <label className="flex items-center justify-center">
             <input
               type="text"
               placeholder="Search projects..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="border p-1 w-[38vw]"
-            /><span className="py-1 px-4 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white"><SettingOutlined className='mr-3' />Search</span>
-          </span>
+              className="border rounded-none border-gray-200 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-300 focus:outline-none rounded-l transition duration-300"
+            /><span className="py-1 px-4 bg-[#1890FF] hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white"><SettingOutlined className='mr-3' />Search</span>
+          </label>
         </div>
-        <div className="bg-white flex flex-row justify-between items-center py-2 px-5">
+        <div className="bg-white flex flex-row justify-between items-center py-4 px-5">
           <Dropdown
             overlay={
               <Menu onClick={handleMenuClick}>
@@ -209,7 +209,6 @@ const ProjectLayout = () => {
             </button>
           </div> */}
           <div className="flex items-center space-x-60">
-
             <button className="py-1 px-4 bg-blue-500 text-white bg-primary-6 hover:text-white">
               <Link href="/main/projects/addNewProject"> Create Project</Link>
             </button>
@@ -298,12 +297,13 @@ const ProjectLayout = () => {
             )}
           </Row>
           <Row>
-            <div className="mt-5 flex justify-center">
+            <div className="mt-5 flex justify-end">
               <Pagination
                 total={totalItems}
                 pageSize={itemsPerPage}
                 current={currentPage}
                 onChange={handlePageChange}
+                className="flex justify-end"
               />
             </div>
           </Row>
