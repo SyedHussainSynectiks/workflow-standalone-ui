@@ -267,7 +267,7 @@ export default function page({ formNext }) {
                 }}
                 className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
               >
-                Done
+                Create
               </Button>
             </Link>
           )}

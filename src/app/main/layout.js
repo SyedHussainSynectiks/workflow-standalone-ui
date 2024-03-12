@@ -11,6 +11,7 @@ import {
     RightOutlined,
     LeftOutlined,
 } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
 import {
     Layout,
     Menu,
@@ -27,7 +28,7 @@ const MainLayout = ({ children }) => {
     const toggleSider = () => {
         setCollapsed(!collapsed);
     };
-
+    const router = useRouter()
     return (
         <>
             <Layout theme="dark" style={{ minHeight: "100vh" }}>
@@ -48,6 +49,7 @@ const MainLayout = ({ children }) => {
                         theme="light"
                         mode="inline"
                         defaultSelectedKeys={["1"]}
+                        selectedKeys={[router.pathname]}
                         items={[
                             {
                                 key: "1",

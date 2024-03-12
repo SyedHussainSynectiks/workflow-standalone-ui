@@ -49,16 +49,16 @@ const AddEmployReview = () => {
   return (
     <div>
       <div>
-        <div className="rounded-md mt-5 space-y-5 p-5 bg-white">
+        <div className="rounded-md mt-5 space-y-5 p-5 bg-white overflow-hidden">
           <div className="flex justify-between">
             <h1 className="text-xl font-bold leading-snug tracking-normal text-left">
               Setup project
             </h1>
             <div className="space-x-8">
               <Button icon={<EditOutlined />}>Edit</Button>
-              <Button type="primary" className="bg-blue-500">
+              {/* <Button type="primary" className="bg-blue-500">
                 create
-              </Button>
+              </Button> */}
             </div>
           </div>
           <div className="flex space-x-10 w-screen items-center">
@@ -68,13 +68,13 @@ const AddEmployReview = () => {
                 className="w-[7rem] h-[7rem] rounded-md"
               />
             </div>
-            <div className="flex  ">
+            <div className="flex">
               <div className="p-5 space-y-10 mx-5">
-                <div>
+                <div className="text-left">
                   <p>Project Name</p>
                   <h3 className="font-semibold">{projectData.projectName}</h3>
                 </div>
-                <div>
+                <div className="text-left">
                   <p>Project department</p>
                   <h3 className="font-semibold">
                     {projectData.projectDepartment}
@@ -83,13 +83,13 @@ const AddEmployReview = () => {
               </div>
 
               <div className="p-5 space-y-10 mx-5">
-                <div>
+                <div className="text-left">
                   <p>Project Description</p>
                   <h3 className="font-semibold">
                     {projectData.projectDescription}
                   </h3>
                 </div>
-                <div>
+                <div className="text-left">
                   <p>Project Duration</p>
                   <h3 className="font-semibold">
                     {/* {projectData.startDate}TO {projectData.endDate} */}
