@@ -42,6 +42,8 @@ const ProjectLayout = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
   const getData = async () => {
     try {
@@ -83,9 +85,31 @@ const ProjectLayout = () => {
     onClick: handleMenuClick,
   };
 
-  const filteredData = selectedStatus
-    ? data.filter((item) => item.status.toLowerCase() === selectedStatus)
-    : data;
+  // const filteredData = selectedStatus
+  //   ? data.filter((item) => item.status.toLowerCase() === selectedStatus)
+  //   : data;
+
+  // const filteredData = data.filter((item) => {
+  //   const matchesStatus =
+  //     !selectedStatus || item.status.toLowerCase() === selectedStatus;
+  //   const matchesSearch =
+  //     item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     item.description.toLowerCase().includes(searchTerm.toLowerCase());
+  //   return matchesStatus && matchesSearch;
+  // });
+  const filteredData = data.filter((item) => {
+    const statusLowerCase = item.status ? item.status.toLowerCase() : null;
+
+    const matchesStatus =
+      !selectedStatus || (statusLowerCase && statusLowerCase === selectedStatus);
+
+    const matchesSearch =
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    return matchesStatus && matchesSearch;
+  });
+
 
   const checkStatus = (status) => {
     switch (status.toLowerCase()) {
@@ -100,17 +124,34 @@ const ProjectLayout = () => {
     }
   };
 
+  // const totalItems = filteredData.length;
+  // const itemsPerPage = 8;
+  // const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // const paginatedData = filteredData.slice(
+  //   (currentPage - 1) * itemsPerPage,
+  //   currentPage * itemsPerPage
+  // );
   const totalItems = filteredData.length;
-  const itemsPerPage = 8;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  // const totalItems = filteredData.length;
+  // const paginatedData = filteredData.slice(
+  //   (currentPage - 1) * itemsPerPage,
+  //   currentPage * itemsPerPage
+  // );
+
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset page when search term changes
   };
   const dispatch = useDispatch();
   const ProjectId = (id) => {
@@ -122,7 +163,7 @@ const ProjectLayout = () => {
       <div style={{ margin: "18px 16px", padding: "0px 10px", minHeight: 280 }}>
         <h1 className="ml-2 uppercase text-3xl">workflow Management</h1>
 
-        <div className="bg-white flex flex-row justify-between items-center py-2 px-5  ">
+        <div className="bg-white flex flex-row justify-between items-center py-2 px-5">
           <Dropdown
             overlay={
               <Menu onClick={handleMenuClick}>
@@ -140,8 +181,20 @@ const ProjectLayout = () => {
               </Space>
             </a>
           </Dropdown>
-          <div className="">
+          {/* <div className="">
             <button className="   py-1  px-4 bg-blue-500 text-white bg-primary-6">
+              <Link href="/main/projects/addNewProject"> Create Project</Link>
+            </button>
+          </div> */}
+          <div className="flex items-center space-x-4">
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="border rounded p-1"
+            />
+            <button className="py-1 px-4 bg-blue-500 text-white bg-primary-6">
               <Link href="/main/projects/addNewProject"> Create Project</Link>
             </button>
           </div>
