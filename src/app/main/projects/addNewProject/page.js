@@ -1,5 +1,4 @@
-"use client";
-"use client";
+"use client"; 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, message, Steps, theme,notification } from "antd";
@@ -45,10 +44,8 @@ export default function page({ formNext }) {
     });
   };
 
-
-  
   const projectId = useSelector((state) => state.addProject.id);
-  
+
   console.log("projectId : ", projectId);
   // console.log("resourceIn Project", resourcesId);
   console.log(projectData);
@@ -118,11 +115,11 @@ export default function page({ formNext }) {
       return;
     }
     if (current === 0) {
-     
+
       try {
         // console.log(projectData)
         await Apisubmit(projectData);
-        
+
       } catch (error) {
         console.error("Error submitting data:", error);
       }
@@ -139,7 +136,7 @@ export default function page({ formNext }) {
       { UxResearcherId: UxResearcher },
       { CiCdId: CiCd},
     ];
-    
+
     const filteredRoles = roles.filter(role => Object.values(role)[0].length > 0);
 
     console.log("filteredRoles", filteredRoles)

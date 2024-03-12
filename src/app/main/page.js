@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-
+import { redirect } from "next/navigation";
 // importing ant d components
 import {
     Divider,} from "antd";
@@ -13,6 +13,7 @@ import Barchart from "@/Components/Charts/Barchart";
 import DashCards from "@/Components/Cards/Cards";
 
 const Dashboard = () => {
+
     return (
         <>
             <h1 className="ml-2 uppercase text-3xl">workflow Management</h1>
