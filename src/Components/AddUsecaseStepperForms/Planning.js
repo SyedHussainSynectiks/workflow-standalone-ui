@@ -30,6 +30,7 @@ const Planning = () => {
       .then((response) => {
         // console.log(JSON.stringify(response.data));
         setRecivedData(response.data)
+        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);

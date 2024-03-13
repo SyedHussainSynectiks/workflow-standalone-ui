@@ -11,7 +11,7 @@ function Overview() {
   const  dispatch = useDispatch();
   return (
     <>
-        <div className='w-[100%] flex border h-screen items-center bg-white'>
+        <div className='w-[100%] flex border h-screen items-center bg-white  rounded border-t-[2rem] border-[#F5F5F5]'>
            <div className='w-[50%] '>
                 <Image src={Overviewimage} className=' ml-24 ' />
            </div>

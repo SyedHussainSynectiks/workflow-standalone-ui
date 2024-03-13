@@ -34,7 +34,7 @@ const page = () => {
   };
 
   return (
-    <div >
+    <div className="p-6">
         <Breadcrumb
         className="bg-white p-2"
           items={[
@@ -54,9 +54,7 @@ const page = () => {
           Form pages are used to collect or verify information to users, and
           basic forms are common in scenarios where there are fewer data items.
         </p>
-       
-      <Tabs className="custom-tabs" defaultActiveKey={DefaultToggleValue} items={items} onChange={onChange} />
-      
+      <Tabs className="bg-white" defaultActiveKey={DefaultToggleValue} items={items} onChange={onChange} />
     </div>
   );
 };

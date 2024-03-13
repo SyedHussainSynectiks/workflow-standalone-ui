@@ -33,8 +33,8 @@ const page = () => {
             },
           ]}
         />
-                <h1 className='text-3xl font-semibold leading-snug tracking-normal text-left bg-white'>{projectName}</h1></div>
-            <div>
+                <h1 className='text-3xl font-semibold leading-snug tracking-normal text-left bg-white pl-3'>{projectName}</h1></div>
+            <div className='bg-white border-b-[2em] border-[#F5F5F5]'>
                 <Tabs
                     defaultActiveKey="1"
                     size={size}
