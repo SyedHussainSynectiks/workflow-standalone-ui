@@ -12,7 +12,7 @@ const page = () => {
     const [size, setSize] = useState('small');
     const  router = useRouter();
     const projectData = useSelector((state) => state.addProject);
-    const projectName = useSelector((state) => state.addProject.updateProjectName);
+    const projectName = useSelector((state) => state.addProject.ProjectName);
     console.log(projectName)
     console.log(projectData);
 
@@ -29,7 +29,7 @@ const page = () => {
               title: <a href="/main/projects">Projects Overview</a>,
             },
             {
-              title:`${projectData.projectName}`,
+              title:`${projectName}`,
             },
           ]}
         />

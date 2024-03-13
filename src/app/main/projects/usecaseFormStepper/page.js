@@ -8,9 +8,13 @@ import SubStagesStepper from "./SubStagesStepper";
 import UseCasesOverView from "@/Components/AddUsecaseStepperForms/UseCasesOverView";
 import Planning from "@/Components/AddUsecaseStepperForms/Planning";
 
+
 import { Tabs } from "antd";
 
 const Stepper = () => {
+  const projectName = useSelector((state) => state.addProject.ProjectName);
+  const UseCaseNames = useSelector((state) => state.addUsecase.UseCaseNames);
+  console.log(UseCaseNames)
   const items = [
     {
       key: "1",
@@ -44,16 +48,19 @@ const Stepper = () => {
               title:<a href="/main"> Home</a>
             },
             {
-              title: <a href="/main/projects">projects</a>,
+              title: <a href="/main/projects">{projectName}</a>,
             },
             {
-              title: <a href="/main/projects/usecaseFormStepper">usecaseFormStepper</a>,
+              title: <a href="/main/projects/developmentUsecases">Development WorkFlow</a>,
+            },
+            {
+              title: `${UseCaseNames}`,
             },
           ]}
         />
         <div className=" bg-white p-4">
           <h1 className="flex w-[100%] bg-white  h-7 flex-col justify-center text-black  text-2xl non-italic font-semibold leading-snug">
-            Procurement (Development workflow)
+           { UseCaseNames}
           </h1>
           <p>
             Form pages are used to collect or verify information to users, and
