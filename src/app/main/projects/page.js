@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { PlusSquareFilled, DownOutlined } from "@ant-design/icons";
+import { PlusSquareFilled, DownOutlined, SettingOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 
@@ -22,6 +22,7 @@ import {
   Dropdown,
   message,
   Menu,
+  Breadcrumb
 } from "antd";
 import axios from "axios";
 import { Pagination } from "antd";
@@ -43,6 +44,9 @@ const ProjectLayout = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [itemsPerPage, setItemsPerPage] = useState(12);
+
 
   const getData = async () => {
     try {
@@ -84,9 +88,31 @@ const ProjectLayout = () => {
     onClick: handleMenuClick,
   };
 
-  const filteredData = selectedStatus
-    ? data.filter((item) => item.status.toLowerCase() === selectedStatus)
-    : data;
+  // const filteredData = selectedStatus
+  //   ? data.filter((item) => item.status.toLowerCase() === selectedStatus)
+  //   : data;
+
+  // const filteredData = data.filter((item) => {
+  //   const matchesStatus =
+  //     !selectedStatus || item.status.toLowerCase() === selectedStatus;
+  //   const matchesSearch =
+  //     item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     item.description.toLowerCase().includes(searchTerm.toLowerCase());
+  //   return matchesStatus && matchesSearch;
+  // });
+  const filteredData = data.filter((item) => {
+    const statusLowerCase = item.status ? item.status.toLowerCase() : null;
+
+    const matchesStatus =
+      !selectedStatus || (statusLowerCase && statusLowerCase === selectedStatus);
+
+    const matchesSearch =
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    return matchesStatus && matchesSearch;
+  });
+
 
   const checkStatus = (status) => {
     switch (status.toLowerCase()) {
@@ -101,17 +127,34 @@ const ProjectLayout = () => {
     }
   };
 
+  // const totalItems = filteredData.length;
+  // const itemsPerPage = 8;
+  // const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // const paginatedData = filteredData.slice(
+  //   (currentPage - 1) * itemsPerPage,
+  //   currentPage * itemsPerPage
+  // );
   const totalItems = filteredData.length;
-  const itemsPerPage = 8;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  // const totalItems = filteredData.length;
+  // const paginatedData = filteredData.slice(
+  //   (currentPage - 1) * itemsPerPage,
+  //   currentPage * itemsPerPage
+  // );
+
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset page when search term changes
   };
   const dispatch = useDispatch();
   const ProjectId = (id) => {
@@ -123,23 +166,32 @@ const ProjectLayout = () => {
 
   return (
     <>
-      <div style={{ margin: "18px 16px", padding: "0px 0px", minHeight: 280 }}>
-      <Breadcrumb
-        className="bg-white p-2"
-          items={[
-            {
-              title:<a href="/main"> Home</a>
-            },
-            {
-              title:"Projects Overview",
-            },
-           
-          ]}
-        />
-        <h1 className=" uppercase text-2xl bg-white p-2">Project Overview</h1>
 
-        <div className="bg-white flex flex-row justify-between items-center py-2 px-5  ">
-          <Dropdown
+      <div style={{ margin: "18px 16px", padding: "0px 10px", minHeight: 280 }}>
+        <div className="bg-white px-10 py-5 space-y-3 mb-6">
+          <Breadcrumb
+            items={[
+              {
+                title: <a href="/main">Home</a>,
+              },
+              {
+                title: 'Projects Overview',
+              },
+            ]}
+          />
+          <h1 className="capitalize text-2xl">Projects Overview</h1>
+          <label className="flex items-center justify-center">
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="border-2 rounded-none border-gray-200 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-400 focus:outline-none rounded-l transition duration-300"
+            /><span className="py-1 px-4 bg-[#1890FF] hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white"><SettingOutlined className='mr-3' />Search</span>
+          </label>
+        </div>
+        <div className="bg-white flex flex-row justify-between items-center py-4 px-5">
+          <Dropdown className="border border-gray-300 rounded-none p-2"
             overlay={
               <Menu onClick={handleMenuClick}>
                 <Menu.Item key="all">All Projects</Menu.Item>
@@ -156,10 +208,11 @@ const ProjectLayout = () => {
               </Space>
             </a>
           </Dropdown>
-          <div className="">
-            <button className="   py-1  px-4 bg-blue-500 text-white bg-primary-6">
-              <Link href="/main/projects/addNewProject"> Create Project</Link>
-            </button>
+
+          <div className="flex items-center space-x-60">
+
+              <Link className="py-2 px-4 bg-blue-500 text-white  hover:bg-blue-700 hover:text-white"  href="/main/projects/addNewProject"> <PlusOutlined className='mr-4' />Create Project</Link>
+            
           </div>
         </div>
 
@@ -246,12 +299,14 @@ const ProjectLayout = () => {
             )}
           </Row>
           <Row>
-            <div className="mt-5 flex justify-center">
+            <div className="flex ml-auto">
               <Pagination
                 total={totalItems}
+                showTotal={(totalItems, range) => `${range[0]}-${range[1]} of ${totalItems} items`}
                 pageSize={itemsPerPage}
                 current={currentPage}
                 onChange={handlePageChange}
+                className="flex justify-end"
               />
             </div>
           </Row>
