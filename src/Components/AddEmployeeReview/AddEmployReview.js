@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import { Button } from "antd";
 import { Input } from "antd";
@@ -8,7 +8,7 @@ import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 
 import Image from "next/image";
 
-import user from "../../../public/assets/user.png";
+import user from "../../../public/assets/user.png"
 
 const { Search } = Input;
 
@@ -24,8 +24,9 @@ const AddEmployReview = () => {
   // const MapingDataUxRes = ResourcesInfo.UXResearcher[0].resoucesInfo;
   // const MapingDataCiCd = ResourcesInfo.CICDSpecialist[0].resoucesInfo;
 
+
   const ResourceAdded = ResourcesInfo.resoucesInfo;
-  console.log(ResourceAdded);
+  console.log(ResourceAdded)
 
   const [data, setData] = useState([]);
   const projectData = useSelector((state) => state.addProject);
@@ -44,15 +45,15 @@ const AddEmployReview = () => {
   };
 
   function formatDate(dateString) {
-    const options = { year: "numeric", month: "long", day: "numeric" };
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
     return date.toLocaleDateString(undefined, options);
   }
 
   return (
-    <div>
-      <div>
-        <div className="rounded-md mt-5 space-y-5 p-5 bg-white  overflow-hidden">
+    <div >
+      <div >
+        <div className="rounded-md mt-5 space-y-5 p-5 bg-white  overflow-hidden" >
           <div className="flex justify-between">
             <h1 className="text-xl font-bold leading-snug tracking-normal text-left">
               Setup project
@@ -74,140 +75,110 @@ const AddEmployReview = () => {
             <div className="flex">
               <div className="p-5 space-y-10 mx-5">
                 <div className="text-left">
-                  <div className="text-left">
-                    <p>Project Name</p>
-                    <h3 className="font-semibold">{projectData.projectName}</h3>
-                  </div>
-                  <div className="text-left">
-                    <div className="text-left">
-                      <p>Project department</p>
-                      <h3 className="font-semibold">
-                        {projectData.projectDepartment}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div className="p-5 space-y-10 mx-5">
-                    <div className="text-left">
-                      <p>Project Description</p>
-                      <h3 className="font-semibold">
-                        {projectData.projectDescription}
-                      </h3>
-                    </div>
-                    <div className="text-left">
-                      <div className="text-left">
-                        <p>Project Duration</p>
-                        <h3 className="font-semibold">
-                          {new Date(projectData.startDate)
-                            .toISOString()
-                            .slice(0, 10)}{" "}
-                          TO{" "}
-                          {new Date(projectData.endDate)
-                            .toISOString()
-                            .slice(0, 10)}
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
+                  <p>Project Name</p>
+                  <h3 className="font-semibold">{projectData.projectName}</h3>
                 </div>
-              </div>
-            </div>
-
-            {/* //Resourcess------------------------------ */}
-
-            <div className="mt-5 flex flex-col space-y-4 bg-white rounded-md p-10">
-              <div className="flex justify-between">
-                <h1 className="text-2xl font-semibold leading-normal tracking-normal text-left">
-                  Resource Pool
-                </h1>
-                <div>
-                  <Search
-                    placeholder="Search employee"
-                    onSearch={onSearch}
-                    style={{
-                      width: "16.5rem",
-                      height: "2rem",
-                    }}
-                  />
+                <div className="text-left">
+                  <p>Project department</p>
+                  <h3 className="font-semibold">
+                    {projectData.projectDepartment}
+                  </h3>
                 </div>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                        style={{ width: "25%" }}
-                      >
-                        Name
-                      </th>
-                      <th
-                        className="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider"
-                        style={{ width: "25%" }}
-                      >
-                        Designation
-                      </th>
-                      <th
-                        className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider pl-10"
-                        style={{ width: "25%" }}
-                      >
-                        Mail ID
-                      </th>
-                      <th
-                        className="px-6 ml-9 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
-                        colSpan={2}
-                        style={{ width: "25%" }}
-                      >
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  {ResourceAdded.map((resource, index) => (
-                    <tbody
-                      key={index}
-                      className="bg-white divide-y divide-gray-200"
-                    >
-                      <tr className="bg-white">
-                        <td className="py-2 whitespace-nowrap">
-                          <div className="flex items-center space-x-5">
-                            <Image
-                              src={resource.image ? resource.image : user}
-                              height={35}
-                              width={35}
-                            />
-                            <div className="text-sm font-medium text-gray-900">
-                              {resource.name}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-2 text-sm text-center font-medium text-gray-900">
-                          {resource.Designation}
-                        </td>
-                        <td className="py-2 text-sm font-medium text-gray-900">
-                          {resource.email}
-                        </td>
-                        <td className="py-2 whitespace-nowrap text-sm space-x-5">
-                          <Button icon={<EditOutlined />}>Edit</Button>
-                          <Button
-                            type="primary"
-                            danger
-                            icon={<DeleteOutlined />}
-                            onClick={() => handleDelete(resource.id)}
-                          >
-                            Remove
-                          </Button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  ))}
-                </table>
+              <div className="p-5 space-y-10 mx-5">
+                <div className="text-left">
+                  <p>Project Description</p>
+                  <h3 className="font-semibold">
+                    {projectData.projectDescription}
+                  </h3>
+                </div>
+                <div className="text-left">
+                  <p>Project Duration</p>
+                  <h3 className="font-semibold">
+                    {new Date(projectData.startDate).toISOString().slice(0, 10)}  TO  {new Date(projectData.endDate).toISOString().slice(0, 10)}
+                  </h3>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* //Resourcess------------------------------ */}
+
+      <div className="mt-5 flex flex-col space-y-4 bg-white rounded-md p-10">
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-semibold leading-normal tracking-normal text-left">
+            Resource Pool
+          </h1>
+          <div>
+            <Search
+              placeholder="Search employee"
+              onSearch={onSearch}
+              style={{
+                width: "16.5rem",
+                height: "2rem",
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider" style={{ width: '25%' }}>
+                  Name
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider" style={{ width: '25%' }}>
+                  Designation
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider pl-10" style={{ width: '25%' }}>
+                  Mail ID
+                </th>
+                <th className="px-6 ml-9 py-3 text-left text-xs font-medium text-black uppercase tracking-wider" colSpan={2} style={{ width: '25%' }}>
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            {ResourceAdded.map((resource, index) => (
+              <tbody key={index} className="bg-white divide-y divide-gray-200">
+                <tr className="bg-white">
+                  <td className="py-2 whitespace-nowrap">
+                    <div className="flex items-center space-x-5">
+                      <Image src={resource.image ? resource.image : user} height={35} width={35} />
+                      <div className="text-sm font-medium text-gray-900">
+                        {resource.name}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="py-2 text-sm text-center font-medium text-gray-900">
+                    {resource.Designation}
+                  </td>
+                  <td className="py-2 text-sm font-medium text-gray-900">
+                    {resource.email}
+                  </td>
+                  <td className="py-2 whitespace-nowrap text-sm space-x-5">
+                    <Button icon={<EditOutlined />}>Edit</Button>
+                    <Button
+                      type="primary"
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => handleDelete(resource.id)}
+                    >
+                      Remove
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
+          </table>
         </div>
       </div>
     </div>
   );
 };
 export default AddEmployReview;
+
+

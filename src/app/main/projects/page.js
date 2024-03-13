@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 import { addResources } from "@/Context/AddresourcesSlice/addresourcesSlice";
-import { Breadcrumb, Skeleton } from "antd";
 
 import {
   Avatar,
@@ -22,7 +21,8 @@ import {
   Dropdown,
   message,
   Menu,
-  Breadcrumb
+  Breadcrumb,
+  Skeleton
 } from "antd";
 import axios from "axios";
 import { Pagination } from "antd";
@@ -53,6 +53,7 @@ const ProjectLayout = () => {
       setIsLoading(true);
       const response = await api.get("/project");
       setIsLoading(false);
+      console.log(response.data)
       return response.data;
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -167,7 +168,7 @@ const ProjectLayout = () => {
   return (
     <>
 
-      <div style={{ margin: "18px 16px", padding: "0px 10px", minHeight: 280 }}>
+      <div style={{ margin: "18px 16px", padding: "0px 0px", minHeight: 280 }}>
         <div className="bg-white px-10 py-5 space-y-3 mb-6">
           <Breadcrumb
             items={[

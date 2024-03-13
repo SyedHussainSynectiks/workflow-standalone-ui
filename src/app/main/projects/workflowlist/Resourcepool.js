@@ -79,7 +79,7 @@ const Resourcepool = () => {
   console.log("teamData", teamData)
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 border-t-[2rem] border-[#F5F5F5]">
       <div className="bg-white flex px-5 justify-between items-center border border-gray-300 rounded-lg pt-2">
         <div>
           <h1 className="text-2xl font-semibold leading-snug tracking-normal text-left">

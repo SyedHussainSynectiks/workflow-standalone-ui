@@ -1,7 +1,7 @@
 "use client";
 
 // export default page;
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Input, Button, notification } from "antd";
 import Link from "next/link";
 import {
@@ -71,7 +71,7 @@ const CreatingTemplate = () => {
         console.log(error);
       });
   };
-
+  // const inputRef = useRef([null]);
   const handleAddStage = () => {
     setStages([
       ...stages,
@@ -81,6 +81,7 @@ const CreatingTemplate = () => {
         checklist: [],
       },
     ]);
+    // inputRef.current.focus();
   };
 
   const handleStageNameChange = (index, value) => {
@@ -102,7 +103,7 @@ const CreatingTemplate = () => {
   };
 
   return (
-    <div>
+    <div className="border rounded border-t-[2rem] border-[#F5F5F5]">
       <div className="flex justify-between p-4 items-center bg-white">
         <Input
           placeholder="example"
@@ -129,6 +130,7 @@ const CreatingTemplate = () => {
               Stage Name :
             </h4>
             <Input
+            ref={inputRef}
               placeholder="Requirement"
               className="w-1/2"
               value={stage.stageName}
