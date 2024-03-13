@@ -33,6 +33,7 @@ const newform = () => {
   const setWorkFlowIds = useSelector((state) => state.addResources);
   const workFlowId = setWorkFlowIds.id[0].workFlowId;
   const [api, contextHolder] = notification.useNotification();
+  const projectName = useSelector((state) => state.addProject.ProjectName);
 
   const openNotification = (placement, type, message) => {
     api[type]({
@@ -141,6 +142,10 @@ const newform = () => {
     };
     fetchData();
   }, []);
+  function disabledDate(current) {
+    // Disable all dates before today
+    return current && current < moment().startOf('day');
+  }
   
   return (
     <div className="">
@@ -161,7 +166,7 @@ const newform = () => {
           ]}
         />
           <h1 className="flex w-[100%] h-7 flex-col justify-center text-black  text-2xl non-italic font-semibold leading-snug">
-            Procurement (Development workflow)
+            {projectName}(Development workflow)
           </h1>
           <p>
             Form pages are used to collect or verify information to users, and
@@ -246,7 +251,7 @@ const newform = () => {
                 placeholder="Start Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200  px-1 py-1 h-8 w-[184px] m-1"
                 onChange={handleStartDateChange}
-
+                disabledDate={disabledDate}
                 // value={project.startDate}
               />
               <span>-</span>
@@ -263,6 +268,7 @@ const newform = () => {
                 //   })
                 // }
                 // value={project.endDate}
+                disabledDate={disabledDate}
                 onChange={handleEndDateChange}
               />
             </div>

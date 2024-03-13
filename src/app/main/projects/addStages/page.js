@@ -26,6 +26,8 @@ const page = () => {
   const DefaultToggleValue = useSelector((state) => state.addUsecase.StagesToggleValue)
   console.log("pageToggle", DefaultToggleValue)
   const [activeSection, setActiveSection] = useState("Procurement");
+  const projectName = useSelector((state) => state.addProject.ProjectName);
+
 
   const toggleSection = (section) => {
     setActiveSection(section);
@@ -43,16 +45,18 @@ const page = () => {
               title: <a href="/main/projects">Projects Overview</a>,
             },
             {
-              title:"Create Template",
+              title:`${projectName}`,
             },
           ]}
         />
-       <h1 className="text-2xl font-semibold p-2 bg-white">Project</h1>
+       <h1 className="text-2xl font-semibold p-2 bg-white">{projectName}</h1>
         <p className="p-2 bg-white">
           Form pages are used to collect or verify information to users, and
           basic forms are common in scenarios where there are fewer data items.
         </p>
-      <Tabs defaultActiveKey={DefaultToggleValue} items={items} onChange={onChange} />
+       
+      <Tabs className="custom-tabs" defaultActiveKey={DefaultToggleValue} items={items} onChange={onChange} />
+      
     </div>
   );
 };
