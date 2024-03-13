@@ -2,12 +2,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, message, Steps, theme,notification } from "antd";
+import { Button, message, Steps, theme,notification, Breadcrumb } from "antd";
 import {AddResourcePool2} from "@/Components/AddResourcePool/AddresoucrePool2";
 import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm";
 import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 import { useDispatch, useSelector } from "react-redux";
-import { updateId } from "@/Context/AddNewProjectSlice/addProjectSlice";
+import { updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 import Link from "next/link";
 
@@ -191,6 +191,8 @@ export default function page({ formNext }) {
 
     const projectname = project.projectName;
     console.log(projectname);
+    dispatch(updateProjectName(projectname))
+    
     let data = JSON.stringify({
       name: project.projectName,
       description: project.projectDescription,
@@ -232,7 +234,23 @@ export default function page({ formNext }) {
 
   return (
     <>
-      <div className="w-auto py-2 px-1 mb-2 bg-white m-5">
+
+      <div className="w-auto py-2 px-1 mb-2 bg-white">
+      <Breadcrumb
+        className="bg-white p-2"
+          items={[
+            {
+              title:<a href="/main"> Home</a>
+            },
+            {
+              title: <a href="/main/projects">Projects Overview</a>,
+            },
+            {
+              title:"Create Project",
+            },
+          ]}
+        />
+
         <h1 className="text-2xl font-semibold ">Create Project</h1>
         <p>
           Form pages are used to collect or verify information to users, and

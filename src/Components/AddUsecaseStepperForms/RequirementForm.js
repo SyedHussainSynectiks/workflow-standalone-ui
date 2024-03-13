@@ -18,6 +18,8 @@ import {
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { data } from "autoprefixer";
+import Image from "next/image";
+import userImg from "../../../public/assets/user.png";
 // import { axios } from 'axios';
 
 const RequirementForm = (stepperState) => {
@@ -212,17 +214,34 @@ const RequirementForm = (stepperState) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openItemIndex, setOpenItemIndex] = useState(null);
   const [openActionIndex, setopenActionIndex] = useState(null);
+  const [openImageIndex, setopenImageIndex] = useState([]);
   const dropdownRef = useRef(null);
-  const [showOptions, setShowOptions] = useState(requiretasks ? Array(requiretasks.length).fill(false) : []);
+  const [showOptions, setShowOptions] = useState(
+    requiretasks ? Array(requiretasks.length).fill(false) : []
+  );
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedSubItem, setSelectedSubItem] = useState(null);
   const [selectedAssign, setSelectedAssign] = useState();
   const [TaskId, setTaskId] = useState();
-
+  const [AssigneeImg, setAssigneeImg] = useState(null);
+  const [AssigneeSelectedImg, setAssigneeSelectedImg] = useState();
   const openNotification = (placement, type, message) => {
     notification[type]({
       message: message,
       placement: placement,
+    });
+  };
+
+  const [ImageView, setImageView] = useState(false);
+
+  const toggleSaved = (index) => {
+    setopenImageIndex((prevIndexes) => {
+      const currentIndex = prevIndexes.indexOf(index);
+      if (currentIndex === -1) {
+        return [...prevIndexes, index];
+      } else {
+        return prevIndexes.filter((i) => i !== index);
+      }
     });
   };
 
@@ -232,13 +251,18 @@ const RequirementForm = (stepperState) => {
     setShowOptions(newShowOptions);
     setopenActionIndex(openActionIndex === index ? null : index);
   };
-  const handleOptionClick = (inde) => {
+  const handleOptionClick = () => {
     setShowUploadModal(true);
   };
   const handleCancel = () => {
     setShowUploadModal(false);
   };
-
+  const handleAssignImg = (ImageUrl) => {
+    setAssigneeSelectedImg(ImageUrl);
+    console.log("Image", ImageUrl);
+    // console.log("AssignImg", AssigneeSelectedImg);
+    // return value;
+  };
   const toggleDropDown = (index) => {
     setIsOpen(!isOpen);
   };
@@ -372,13 +396,16 @@ const RequirementForm = (stepperState) => {
                         <h1 className="text-base font-bold leading-tight tracking-normal text-left">
                           {data.name}
                         </h1>
-                        <DownOutlined/>
+                        <DownOutlined />
                       </div>
                       <div
                         className="flex items-center justify-between mt-2 px-4"
                         key={index}
                       >
-                        <div ref={dropdownRef} className="relative">
+                        <div
+                          ref={dropdownRef}
+                          className="relative flex items-center gap-4"
+                        >
                           <button
                             onClick={() => toggleSubItems(index)}
                             className="bg-white border text-black p-2 rounded-md flex items-center gap-1 "
@@ -390,7 +417,16 @@ const RequirementForm = (stepperState) => {
                               alt="expand-arrow--v2"
                             />
                           </button>
-                          {openItemIndex === index && showOptions &&(
+                          {openImageIndex.includes(index) && (
+                            <div className=" w-[2]" id="AssigneeImg">
+                              <Image
+                                src={AssigneeSelectedImg || userImg}
+                                height={34}
+                              ></Image>
+                            </div>
+                          )}
+
+                          {openItemIndex === index && showOptions && (
                             <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[2]">
                               <div className="flex items-center justify-center">
                                 <SearchOutlined className="pl-2" />
@@ -432,7 +468,7 @@ const RequirementForm = (stepperState) => {
                                       {selectedSubItem === itemIndex &&
                                         itemsData && (
                                           <ul>
-                                            <li className="pl-4">
+                                            <li className=" ">
                                               {Object.values(itemsData).map(
                                                 (subItem, i) => (
                                                   <React.Fragment key={i}>
@@ -445,11 +481,11 @@ const RequirementForm = (stepperState) => {
                                                           (
                                                             <button
                                                               key={j}
-                                                              className="p-2"
+                                                              className="py-1 w-[100%]"
                                                               style={{
                                                                 backgroundColor:
                                                                   selectedAssign ===
-                                                                  item.name // Assuming selectedSubItem is the selected name
+                                                                  item.resource_id // Assuming selectedSubItem is the selected name
                                                                     ? "#E6F7FF"
                                                                     : "transparent",
                                                               }}
@@ -459,6 +495,9 @@ const RequirementForm = (stepperState) => {
                                                                 );
                                                                 handleTaskId(
                                                                   data.id
+                                                                );
+                                                                setAssigneeImg(
+                                                                  items.image_url
                                                                 );
                                                               }}
                                                             >
@@ -473,11 +512,18 @@ const RequirementForm = (stepperState) => {
                                               )}
                                             </li>
                                             <button
-                                              onClick={() =>
+                                              onClick={() => {
                                                 handleAssignButtonClick(
                                                   selectedAssign
-                                                )
-                                              }
+                                                );
+                                                handleSubItemClick(
+                                                  itemIndex === selectedSubItem
+                                                    ? null
+                                                    : itemIndex
+                                                );
+                                                handleAssignImg(AssigneeImg);
+                                                toggleSaved(index);
+                                              }}
                                               className="bg-sky-500 px-2 py-1 text-white rounded-sm  "
                                             >
                                               Assign
@@ -502,21 +548,21 @@ const RequirementForm = (stepperState) => {
                               Action
                             </button>
 
-                              {openActionIndex === index && (
-                            <div className="absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
+                            {openActionIndex === index && (
+                              <div className="absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
                                 <ul>
                                   <li onClick={handleOptionClick}>
-                                  <FileProtectOutlined /> Upload Document
+                                    <FileProtectOutlined /> Upload Document
                                   </li>
                                   <li onClick={handleOptionClick}>
-                                  <LinkOutlined />  Upload Link
+                                    <LinkOutlined /> Upload Link
                                   </li>
                                   <li onClick={handleOptionClick}>
-                                  <BugOutlined /> Raise Issue
+                                    <BugOutlined /> Raise Issue
                                   </li>
                                 </ul>
-                            </div>
-                              )}
+                              </div>
+                            )}
 
                             <Modal
                               title="Upload Document"

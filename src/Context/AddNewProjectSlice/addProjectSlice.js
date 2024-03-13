@@ -12,7 +12,10 @@ const initialState = {
   image_url: "",
   id: isBrowser
   ? JSON.parse(localStorage.getItem("ProjectId")) || []
-  : []
+  : [],
+  ProjectName:isBrowser
+  ? JSON.parse(localStorage.getItem("ProjectName")) || []
+  : [],
 };
 
 const addProjectSlice = createSlice({
@@ -22,7 +25,9 @@ const addProjectSlice = createSlice({
     updateFormData: (state, action) => {
       // Update the form data in the state
       console.log(action.payload);
+      
       return { ...state, ...action.payload };
+      
     },
     updateId: (state, action) => {
       console.log("project d", action.payload);
@@ -31,9 +36,16 @@ const addProjectSlice = createSlice({
       let setProjectId = JSON.stringify(state.id);
       localStorage.setItem("ProjectId", setProjectId);
     },
+    updateProjectName: (state, action) => {
+      console.log("project d", action.payload);
+      state.ProjectName = action.payload;
+
+      let setProjectName = JSON.stringify(state.ProjectName);
+      localStorage.setItem("ProjectName", setProjectName);
+    },
   },
 });
 
-export const { updateFormData, updateId } = addProjectSlice.actions;
+export const { updateFormData, updateId,updateProjectName } = addProjectSlice.actions;
 
 export default addProjectSlice.reducer;

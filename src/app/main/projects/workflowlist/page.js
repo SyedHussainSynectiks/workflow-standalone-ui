@@ -1,21 +1,39 @@
 "use client"
 import React, { useState } from 'react';
-import { Tabs } from 'antd';
+import { Breadcrumb, Tabs } from 'antd';
 import Resourcepool from './Resourcepool'
 import WorkFlowOverView from "@/Components/WorkFlowOverView/WorkFlowOverView"
 import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux';
 
 
 
 const page = () => {
     const [size, setSize] = useState('small');
     const  router = useRouter();
-    const onChange = (e) => {
-        setSize(e.target.value)
-    }
+    const projectData = useSelector((state) => state.addProject);
+    const projectName = useSelector((state) => state.addProject.updateProjectName);
+    console.log(projectName)
+    console.log(projectData);
+    
     return (
         <div className='ml-3'>
-            <div><h1 className='text-3xl font-semibold leading-snug tracking-normal text-left'>Workflow Management</h1></div>
+            <div>
+            <Breadcrumb
+        className="bg-white p-2"
+          items={[
+            {
+              title:<a href="/main"> Home</a>
+            },
+            {
+              title: <a href="/main/projects">Projects Overview</a>,
+            },
+            {
+              title:`${projectData.projectName}`,
+            },
+          ]}
+        />
+                <h1 className='text-3xl font-semibold leading-snug tracking-normal text-left bg-white'>{projectName}</h1></div>
             <div>
                 <Tabs
                     defaultActiveKey="1"

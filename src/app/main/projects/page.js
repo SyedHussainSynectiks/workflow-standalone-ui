@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 import { addResources } from "@/Context/AddresourcesSlice/addresourcesSlice";
-import { Skeleton } from "antd";
+import { Breadcrumb, Skeleton } from "antd";
 
 import {
   Avatar,
@@ -33,6 +33,7 @@ import Meta from "antd/es/card/Meta";
 import Image from "next/image";
 import slice from "@/Context/Slice";
 import { MdOutlineWatchLater } from "react-icons/md";
+import { updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
 // import { useDispatch } from "react-redux";
 
 const { Title, Paragraph, Text } = Typography;
@@ -159,15 +160,19 @@ const ProjectLayout = () => {
   const ProjectId = (id) => {
     dispatch(addProjectId(id));
   };
+  const updateProjectNames = (name) => {
+    dispatch(updateProjectName(name));
+  };
 
   return (
     <>
+
       <div style={{ margin: "18px 16px", padding: "0px 10px", minHeight: 280 }}>
         <div className="bg-white px-10 py-5 space-y-3 mb-6">
           <Breadcrumb
             items={[
               {
-                title: <a href="/">Home</a>,
+                title: <a href="/main">Home</a>,
               },
               {
                 title: 'Projects Overview',
@@ -242,6 +247,7 @@ const ProjectLayout = () => {
                       href="/main/projects/workflowlist"
                       onClick={() => {
                         ProjectId(item.id);
+                        updateProjectNames(item.name)
                       }}
                     >
                       <Card headerFontSize={22} bordered={false}>
