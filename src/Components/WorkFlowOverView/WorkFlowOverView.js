@@ -23,7 +23,7 @@ const WorkFlowList3 = () => {
     <main className="">
       {/*  Workflow */}
       {isAddWorkFlow === false && (
-        <section className="flex flex-col w-auto h-auto border rounded">
+        <section className="flex flex-col w-auto h-auto border rounded mt-5">
           <div>
             <div className=" flex flex-row justify-between py-2 items-center w-auto bg-white  px-5">
               <p className="text-black font-sans text-lg not-italic font-semibold ">
@@ -87,7 +87,7 @@ const WorkFlowList3 = () => {
               </p>
 
               <div className="flex flex-col justify-start items-end">
-                <p className="flex flex-row justify-start  items-center text-black font-sans text-xs not-italic font-normal leading-normal   w-28 gap-1">
+                <p className="flex flex-row justify-start  items-center text-black font-sans text-xs not-italic font-normal leading-normal w-28 gap-1">
                   <span>
                     <Image
                       src="/assets/dimlightblue.png"
@@ -112,7 +112,7 @@ const WorkFlowList3 = () => {
               </div>
             </section>
 
-            <div className=" bg-white">
+            <div className="">
               <StackedBarChart />
             </div>
           </>
