@@ -13,6 +13,8 @@ import { addWorkFlowId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 const { Search } = Input;
 import { useSelector } from "react-redux";
 const onSearch = (value, _e, info) => console.log(info?.source, value);
+import user from "../../../../../public/assets/user.png"
+import Image from "next/image"
 
 const Resourcepool = () => {
   const axios = require("axios");
@@ -192,150 +194,41 @@ const Resourcepool = () => {
             </Button>
           </div>
         </div>
-        <div className="flex space-x-2">
-          <div className="flex flex-col space-y-5 w-1/4 border border-gray-200 rounded-lg p-4">
-            <div className="pl-1 pb-2 border border-x-0 border-t-0 border-b-gray-300">
-              <h1 className="font-semibold text-xl">Ux Researcher</h1>
-              {teamData.length > 0 && (
-                <p className="text-gray-400"> {teamData.reduce((total, team) => total + (team.UxResearcherId ? team.UxResearcherId.length : 0), 0)} Members</p>
-              )}
-            </div>
-            {teamData.length >= 0 ? (
-              teamData.map((team, index) => (
-                <div key={index}>
-                  {Object.entries(team).map(([designation, members], i) => (
-                    (designation === "UxResearcherId") &&
-                    <div key={i}>
-                      {Array.isArray(members) && members.map((member, j) => (
-                        <div key={j} className="flex space-x-4 items-center w-[15.625rem] h-[2.625rem]">
-                          <img src={member.image_url} className="w-[2.5rem] h-[2.5rem] rounded-full" />
-                          <div>
-                            <p> {member.name}</p>
-                            <p className="text-gray-400">{member.designation}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-            <div className="text-blue-500 text-right ">
-              <button className="hover:text-blue-700 hover:underline">
-                View All
-              </button>
-            </div>
-          </div>
+        <div className="flex space-x-2 overflow-x-scroll">
 
-          <div className="flex flex-col space-y-5 w-1/4 border border-gray-200 rounded-lg p-4">
-            <div className="pl-1 pb-2 border border-x-0 border-t-0 border-b-gray-300">
-              <h1 className="font-semibold text-xl">UI Developers</h1>
-              {teamData.length > 0 && (
-                <p className="text-gray-400"> {teamData.reduce((total, team) => total + (team.UxResearcherId ? team.UxResearcherId.length : 0), 0)} Members</p>
-              )}
-            </div>
-            {teamData.length >= 0 ? (
-              teamData.map((team, index) => (
-                <div key={index}>
-                  {Object.entries(team).map(([designation, members], i) => (
-                    (designation === "UiDesignerId") &&
-                    <div key={i}>
-                      {Array.isArray(members) && members.map((member, j) => (
-                        <div key={j} className="flex space-x-4 items-center w-[15.625rem] h-[2.625rem]">
-                          <img src={member.image_url} className="w-[2.5rem] h-[2.5rem] rounded-full" />
-                          <div>
-                            <p> {member.name}</p>
-                            <p className="text-gray-400">{member.designation}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-            <div className="text-blue-500 text-right ">
-              <button className="hover:text-blue-700 hover:underline">
-                View All
-              </button>
-            </div>
-          </div>
 
-          <div className="flex flex-col space-y-5 w-1/4 border border-gray-200 rounded-lg p-4">
-            <div className="pl-1 pb-2 border border-x-0 border-t-0 border-b-gray-300">
-              <h1 className="font-semibold text-xl">API Developers</h1>
-              {teamData.length > 0 && (
-                <p className="text-gray-400">{teamData.reduce((total, team) => total + (team.UxResearcherId ? team.UxResearcherId.length : 0), 0)} Members</p>
-              )}
-            </div>
-            {teamData.length >= 0 ? (
-              teamData.map((team, index) => (
-                <div key={index} >
-                  {Object.entries(team).map(([designation, members], i) => (
-                    (designation === "ApiDeveloperId") &&
-                    <div key={i}>
-                      {Array.isArray(members) && members.map((member, j) => (
-                        <div key={j} className="flex space-x-4 items-center w-[15.625rem] h-[2.625rem]">
-                          <img src={member.image_url} className="w-[2.5rem] h-[2.5rem] rounded-full"  />
-                          <div>
-                            <p> {member.name}</p>
-                            <p className="text-gray-400">{member.designation}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-            <div className="text-blue-500 text-right ">
-              <button className="hover:text-blue-700 hover:underline">
-                View All
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-col space-y-5 w-1/4 border border-gray-200 rounded-lg p-4">
-            <div className="pl-1 pb-2 border border-x-0 border-t-0 border-b-gray-300">
-              <h1 className="font-semibold text-xl">Testers</h1>
-              {teamData.length > 0 && (
-                <p className="text-gray-400"> {teamData.reduce((total, team) => total + (team.UxResearcherId ? team.UxResearcherId.length : 0), 0)} Members</p>
-              )}
-            </div>
-            {teamData.length >= 0 ? (
-              teamData.map((team, index) => (
+          {teamData.map((data) => (
+            <div className="flex flex-col space-y-5 w-1/4 border border-gray-200 rounded-lg p-4">
+              {Object.entries(data).map(([key, innerData], index) => (
                 <div key={index}>
-                  {Object.entries(team).map(([designation, members], i) => (
-                    (designation === "TesterId") &&
-                    <div key={i}>
-                      {Array.isArray(members) && members.map((member, j) => (
-                        <div key={j} className="flex space-x-4 items-center w-[15.625rem] h-[2.625rem]">
-                          <img src={member.image_url} className="w-[2.5rem] h-[2.5rem] rounded-full"/>
-                          <div>
-                            <p> {member.name}</p>
-                            <p className="text-gray-400">{member.designation}</p>
-                          </div>
-                        </div>
-                      ))}
+                  <div className="pl-1 pb-2 border border-x-0 border-t-0 border-b-gray-300">
+                    <h1 className="font-semibold text-xl">{innerData[0].designation}</h1>
+                    <p className="text-gray-400">{innerData.length} Members</p> {/* Displaying number of members */}
+                  </div>
+                  {innerData.map((team, index) => (
+
+                    <div key={index} className="flex space-x-4 items-center w-[15.625rem] h-[2.625rem] my-3">
+                      <Image src={team.image_url ? team.image_url : user} height={35} width={35} />
+                      <div>
+                        <p>{team.name}</p>
+                        <p className="text-gray-400">{team.designation}</p>
+                      </div>
                     </div>
+
                   ))}
+                  <div className="text-blue-500 text-right">
+                    <button className="hover:text-blue-700 hover:underline">
+                      View All
+                    </button>
+                  </div>
                 </div>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-            <div className="text-blue-500 text-right ">
-              <button className="hover:text-blue-700 hover:underline">
-                View All
-              </button>
+              ))}
             </div>
-          </div>
+          ))}
+
+
+
+
         </div>
       </div>
     </div>

@@ -49,7 +49,7 @@ const items = () => {
     key: "1",
     label: (
       <span>
-
+        
         <div className=" flex flex-row items-center">
           <div className="input px-6 py-5 mr-4 bg-neutral-1 shadow-md w-[402px] ">
             <div className="flex justify-between items-center">
@@ -259,7 +259,9 @@ export function AddResourcePool2({result}) {
         className="custom-tabs overflow h-[51vh]"
       >
         {items().map((item) => (
+
           <TabPane tab={item.label} key={item.key} className="overflow-y-scroll h-[49vh]">
+
             {item.children}
           </TabPane>
         ))}

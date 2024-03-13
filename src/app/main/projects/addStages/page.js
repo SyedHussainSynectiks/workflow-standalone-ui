@@ -3,7 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Tabs } from "antd";
+import { Breadcrumb, Tabs } from "antd";
 import Templates from '@/Components/AddingTemplateAndCreating/SelectingTemplate'
 import CreatingTemplate from "@/Components/AddingTemplateAndCreating/CreatingTemplate";
 const onChange = (key) => {
@@ -32,7 +32,26 @@ const page = () => {
   };
 
   return (
-    <div>
+    <div >
+        <Breadcrumb
+        className="bg-white p-2"
+          items={[
+            {
+              title:<a href="/main"> Home</a>
+            },
+            {
+              title: <a href="/main/projects">Projects Overview</a>,
+            },
+            {
+              title:"Create Template",
+            },
+          ]}
+        />
+       <h1 className="text-2xl font-semibold p-2 bg-white">Project</h1>
+        <p className="p-2 bg-white">
+          Form pages are used to collect or verify information to users, and
+          basic forms are common in scenarios where there are fewer data items.
+        </p>
       <Tabs defaultActiveKey={DefaultToggleValue} items={items} onChange={onChange} />
     </div>
   );

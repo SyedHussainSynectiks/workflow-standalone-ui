@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { addUsecaseId } from "@/Context/useCaseSlice/useCaseSlice";
 
 import Link from "next/link";
+import { Breadcrumb } from "antd";
 
 export default function Page() {
   const router = useRouter();
@@ -52,7 +53,21 @@ export default function Page() {
   return (
     <>
       <main className="h-full  w-full">
-        <div className="ProcurWrongFlex">
+        <Breadcrumb
+        className="bg-white p-2"
+          items={[
+            {
+              title:<a href="/main"> Project</a>
+            },
+            {
+              title: <a href="/main/projects">Projects Overview</a>,
+            },
+            {
+              title:"Use Cases",
+            },
+          ]}
+        />
+        <div className="ProcurWrongFlex bg-white">
           <div className="ProcurWrkFlwTxt">Procurement workflow</div>
         </div>
         <section className="TopBarMainSectionFlex">
