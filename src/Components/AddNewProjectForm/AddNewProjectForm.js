@@ -81,64 +81,6 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     dispatch(updateFormData({ ...project, endDate: formattedStartDate }));
   };
 
-  
-//   const handleImageUpload = async (info) => {
-//     const file = info.file.originFileObj;
-  
-//     try {
-//       // Convert the image file to base64
-//       const base64 = await convertImageToBase64(file);
-//       // Set the base64 value using setImageBase64
-//       setImageBase64(base64);
-//       console.log("setImage:", base64);
-  
-//       // Convert the base64 URL to a readable URL
-//       const readableUrl = convertBase64ToReadableUrl(base64);
-//       console.log("readableUrl:", readableUrl);
-//     } catch (error) {
-//       console.error("Error uploading image:", error);
-//     }
-//   };
-// const convertBase64ToReadableUrl = (base64) => {
-//   // Add the correct prefix to the base64 string
-//   const base64WithPrefix = `data:image/jpeg;base64,${base64}`;
-
-//   // Convert the base64 string to a blob
-//   const blob = dataURItoBlob(base64WithPrefix);
-
-//   // Create a URL from the blob
-//   const url = URL.createObjectURL(blob);
-
-//   return url;
-// };
-
-// const dataURItoBlob = (dataURI) => {
-//   const byteString = atob(dataURI);
-//   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-//   const ab = new ArrayBuffer(byteString.length);
-//   const ia = new Uint8Array(ab);
-//   for (let i = 0; i < byteString.length; i++) {
-//     ia[i] = byteString.charCodeAt(i);
-//   }
-//   const blob = new Blob([ab], { type: mimeString });
-//   return blob;
-// };
-// const convertImageToBase64 = (file) => {
-//     return new Promise((resolve, reject) => {
-//         const reader = new FileReader();
-
-//         reader.onloadend = () => {
-//             resolve(reader.result.split(',')[1]);
-//         };
-
-//         reader.onerror = (error) => {
-//             reject(error);
-//         };
-
-//         reader.readAsDataURL(file);
-//     });
-// };
-
 const handleImageUpload = async (info) => {
   const file = info.file.originFileObj;
 
@@ -186,6 +128,10 @@ const convertImageToBase64 = (file) => {
 
   const projectData = useSelector(state => state.addProject);
   console.log(projectData)
+  function disabledDate(current) {
+    // Disable all dates before today
+    return current && current < moment().startOf('day');
+  }
   return (
     <div>
       <section className="flex flex-col items-center flex-shrink-0  w-auto py-1 bg-white ">
@@ -256,7 +202,7 @@ const convertImageToBase64 = (file) => {
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200  px-1 py-1 h-8 w-[184px] m-1"
                 // value={project.startDate}
                 onChange={handleStartDateChange}
-
+                disabledDate={disabledDate}
                 // value={project.startDate}
               />
               <span>-</span>
@@ -264,15 +210,7 @@ const convertImageToBase64 = (file) => {
                 id="projectEndDate"
                 placeholder="End Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200shadow px-1 py-1 h-8 w-[184px] m-1"
-                // onChange={(date, dateString) =>
-                //   setProject({
-                //     ...project,
-                //     endDate: moment(dateString).format(
-                //       "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-                //     ),
-                //   })
-                // }
-                // value={project.endDate}
+                disabledDate={disabledDate}
                 onChange={handleEndDateChange}
               />
             </div>

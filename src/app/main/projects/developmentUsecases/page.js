@@ -5,7 +5,7 @@ import Image from "next/image";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { addUsecaseId } from "@/Context/useCaseSlice/useCaseSlice";
+import { addUseCAseName, addUseCaseName, addUsecaseId } from "@/Context/useCaseSlice/useCaseSlice";
 
 import Link from "next/link";
 import { Breadcrumb } from "antd";
@@ -18,6 +18,7 @@ export default function Page() {
   const projectId = setprojectIds.id[0].prjectId;
   const setWorkFlowIds = useSelector((state) => state.addResources);
   const workFlowId = setWorkFlowIds.id[0].workFlowId;
+  const projectName = useSelector((state) => state.addProject.ProjectName);
 
   
   console.log(projectId)
@@ -50,6 +51,7 @@ export default function Page() {
     dispatch(addUsecaseId(data))
   }
 
+
   return (
     <>
       <main className="h-full  w-full">
@@ -60,16 +62,13 @@ export default function Page() {
               title:<a href="/main"> Project</a>
             },
             {
-              title: <a href="/main/projects">Projects Overview</a>,
+              title: <a href="/main/projects/workflowlist">{projectName}</a>,
             },
             {
-              title:"Use Cases",
+              title:"WorkFlow",
             },
           ]}
         />
-        <div className="ProcurWrongFlex bg-white">
-          <div className="ProcurWrkFlwTxt">Procurement workflow</div>
-        </div>
         <section className="TopBarMainSectionFlex">
           <p className="UseCasesTxt">UseCases</p>
           <div className="BtnSearchFlexLeft">
@@ -105,7 +104,7 @@ export default function Page() {
                 {stageUsecases.length > 0 ? (
                   <div className="w-[100%]">
                     {stageUsecases.map((usecase, index) => ( //assignee_id
-                      <Link href="/main/projects/usecaseFormStepper" onClick={()=>{dispatchData(usecase.usecase_id)}}>
+                      <Link href="/main/projects/usecaseFormStepper" onClick={()=>{dispatchData(usecase.usecase_id); dispatch(addUseCaseName(usecase.usecase_name))}}>
                         <div
                           key={index}
                           className=" w-[100%] rounded-lg p-3 leading-4 gap-3"

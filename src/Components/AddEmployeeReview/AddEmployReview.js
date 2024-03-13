@@ -45,9 +45,9 @@ const AddEmployReview = () => {
   };
 
   return (
-    <div>
-      <div>
-        <div className="rounded-md mt-5 space-y-5 p-5 bg-white">
+    <div >
+      <div >
+        <div className="rounded-md mt-5 space-y-5 p-5 bg-white  overflow-hidden" >
           <div className="flex justify-between">
             <h1 className="text-xl font-bold leading-snug tracking-normal text-left">
               Setup project
@@ -59,7 +59,7 @@ const AddEmployReview = () => {
               </Button>
             </div>
           </div>
-          <div className="flex space-x-10 w-screen items-center">
+          <div className="flex pl-4 space-x-10 w-screen items-center">
             <div>
               <img
                 src={projectData.image_url}
@@ -68,11 +68,11 @@ const AddEmployReview = () => {
             </div>
             <div className="flex  ">
               <div className="p-5 space-y-10 mx-5">
-                <div>
+                <div className="text-left">
                   <p>Project Name</p>
                   <h3 className="font-semibold">{projectData.projectName}</h3>
                 </div>
-                <div>
+                <div className="text-left">
                   <p>Project department</p>
                   <h3 className="font-semibold">
                     {projectData.projectDepartment}
@@ -87,10 +87,10 @@ const AddEmployReview = () => {
                     {projectData.projectDescription}
                   </h3>
                 </div>
-                <div>
+                <div className="text-left">
                   <p>Project Duration</p>
                   <h3 className="font-semibold">
-                    {projectData.startDate}TO {projectData.endDate}
+                    {new Date(projectData.startDate).toISOString().slice(0, 10)}  TO  {new Date(projectData.endDate).toISOString().slice(0, 10)}
                   </h3>
                 </div>
               </div>
