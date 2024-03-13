@@ -1,4 +1,5 @@
-"use client"; 
+"use client";
+"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, message, Steps, theme,notification, Breadcrumb } from "antd";
@@ -43,6 +44,8 @@ export default function page({ formNext }) {
       placement: placement,
     });
   };
+
+
 
   const projectId = useSelector((state) => state.addProject.id);
 
@@ -177,7 +180,7 @@ export default function page({ formNext }) {
           console.log(error);
         });
 
-      
+
     }
   };
 
@@ -231,6 +234,7 @@ export default function page({ formNext }) {
 
   return (
     <>
+
       <div className="w-auto py-2 px-1 mb-2 bg-white">
       <Breadcrumb
         className="bg-white p-2"
@@ -246,6 +250,7 @@ export default function page({ formNext }) {
             },
           ]}
         />
+
         <h1 className="text-2xl font-semibold ">Create Project</h1>
         <p>
           Form pages are used to collect or verify information to users, and
@@ -253,7 +258,7 @@ export default function page({ formNext }) {
         </p>
         {toggleValue.toString()}
       </div>
-      <div className="w-auto py-1 bg-white">
+      <div className="w-auto py-1 bg-white m-5">
         <Steps current={current} items={items} className="px-[10rem] py-3" />
         <div style={contentStyle}>
           {/* Render content based on current step */}
@@ -280,7 +285,7 @@ export default function page({ formNext }) {
                 }}
                 className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
               >
-                Done
+                Create
               </Button>
             </Link>
           )}

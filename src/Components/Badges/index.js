@@ -1,7 +1,7 @@
 export const InProgress = () => {
 
     return (
-        <div className="w-fit bg-yellow-50 rounded-md border border-amber-300 text-center text-amber-300 text-xs font-normal font-['Roboto'] leading-tight px-3 py-2">
+        <div className="w-fit bg-white rounded-md border border-[#91D5FF] text-center text-[#1890FF] text-xs font-normal font-['Roboto'] leading-tight px-3 py-2">
             In-Progress
         </div>
     )
@@ -10,7 +10,7 @@ export const InProgress = () => {
 export const Completed = () => {
 
     return (
-        <div className="w-fit  bg-lime-50 rounded-md border border-lime-200 text-center text-lime-500 text-xs font-normal font-['Roboto'] leading-tight px-3 py-2">
+        <div className="w-fit  bg-[#F6FFED] rounded-md border border-[#B7EB8F] text-center text-[#52C41A] text-xs font-normal font-['Roboto'] leading-tight px-3 py-2">
             Completed
         </div>
     )
@@ -20,7 +20,7 @@ export const Completed = () => {
 export const Unassigned = () => {
 
     return (
-        <div className="w-fit bg-red-50 rounded-md border border-red-300 text-center text-red-500 text-xs font-normal font-['Roboto'] leading-tight px-3 py-2">
+        <div className="w-fit bg-[#FFF2E8] rounded-md border border-[#FFBB96] text-center text-[#FA541C] text-xs font-normal font-['Roboto'] leading-tight px-3 py-2">
             Unassigned
         </div>
     )

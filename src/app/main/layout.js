@@ -5,11 +5,13 @@ import {
     BellFilled,
     ProjectFilled,
     IdcardFilled,
-    SignalFilled, 
+    SignalFilled,
+    SearchOutlined,
     VideoCameraOutlined,
     RightOutlined,
     LeftOutlined,
 } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
 import {
     Layout,
     Menu,
@@ -26,7 +28,7 @@ const MainLayout = ({ children }) => {
     const toggleSider = () => {
         setCollapsed(!collapsed);
     };
-
+    const router = useRouter()
     return (
         <>
             <Layout theme="dark" style={{ minHeight: "100vh" }}>
@@ -47,11 +49,12 @@ const MainLayout = ({ children }) => {
                         theme="light"
                         mode="inline"
                         defaultSelectedKeys={["1"]}
+                        selectedKeys={[router.pathname]}
                         items={[
                             {
                                 key: "1",
                                 icon: <ProjectFilled />,
-                                label: <NavLink href= "/main" >Dashboard</NavLink>,
+                                label: <NavLink href="/main" >Dashboard</NavLink>,
 
                             },
                             {
@@ -102,7 +105,7 @@ const MainLayout = ({ children }) => {
                 >
                     <Navbar />
                     <Content
-                        style={{ margin: "18px 16px", padding: "0px 0px", minHeight: 280 }}
+                        style={{ margin: "0px 0px", padding: "0px 0px", minHeight: 280 }}
                     >
                         {children}
                     </Content>
