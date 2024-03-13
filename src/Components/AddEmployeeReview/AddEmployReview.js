@@ -145,7 +145,6 @@ const AddEmployReview = () => {
             {ResourceAdded.map((resource, index) => (
               console.log(resource.first_name),
               <tbody key={index} className="bg-white divide-y divide-gray-200">
-
                 <tr className="bg-white">
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center space-x-5">
