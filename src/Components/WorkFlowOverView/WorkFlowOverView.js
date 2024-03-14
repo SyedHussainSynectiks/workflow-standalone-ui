@@ -23,11 +23,7 @@ const WorkFlowList3 = () => {
     <main className="">
       {/*  Workflow */}
       {isAddWorkFlow === false && (
-<<<<<<< HEAD
-        <section className="flex flex-col w-auto h-auto border rounded mt-5">
-=======
         <section className="flex flex-col w-auto h-auto border rounded border-t-[2rem] border-[#F5F5F5]">
->>>>>>> 267d67c2bb6576ff4514a88c2b25c64c76c65d2f
           <div>
             <div className=" flex flex-row justify-between py-2 items-center w-auto bg-white  px-5">
               <p className="text-black font-sans text-lg not-italic font-semibold ">

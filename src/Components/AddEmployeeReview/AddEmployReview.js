@@ -78,33 +78,11 @@ const AddEmployReview = () => {
                   <p>Project Name</p>
                   <h3 className="font-semibold">{projectData.projectName}</h3>
                 </div>
-<<<<<<< HEAD
-              </div>
-            </div>
-
-            {/* //Resourcess------------------------------ */}
-
-            <div className="mt-5 flex space-y-4 bg-white rounded-md p-10">
-              <div className="flex justify-between">
-                <h1 className="text-2xl font-semibold leading-normal tracking-normal text-left">
-                  Resource Pool
-                </h1>
-                <div>
-                  <Search
-                    placeholder="Search employee"
-                    onSearch={onSearch}
-                    style={{
-                      width: "16.5rem",
-                      height: "2rem",
-                    }}
-                  />
-=======
                 <div className="text-left">
                   <p>Project department</p>
                   <h3 className="font-semibold">
                     {projectData.projectDepartment}
                   </h3>
->>>>>>> 267d67c2bb6576ff4514a88c2b25c64c76c65d2f
                 </div>
               </div>
 
