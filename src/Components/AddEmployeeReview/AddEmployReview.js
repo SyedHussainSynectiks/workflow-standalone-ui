@@ -115,7 +115,7 @@ const AddEmployReview = () => {
 
             {/* //Resourcess------------------------------ */}
 
-            <div className="mt-5 flex flex-col space-y-4 bg-white rounded-md p-10">
+            <div className="mt-5 flex space-y-4 bg-white rounded-md p-10">
               <div className="flex justify-between">
                 <h1 className="text-2xl font-semibold leading-normal tracking-normal text-left">
                   Resource Pool
