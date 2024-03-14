@@ -16,7 +16,7 @@ import useProject from "@/HOC/Project/Project";
 
 const { RangePicker } = DatePicker;
 
-import { UploadPopul2 } from "@/app/main/projects/addNewProject/uploadPopul";
+
 
 import moment from "moment";
 import { useDispatch } from "react-redux";

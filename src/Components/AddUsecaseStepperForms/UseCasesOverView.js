@@ -56,11 +56,13 @@ const UseCasesOverView = () => {
           <Steps
             direction="vertical"
             className=" w-[200px] h-[100%] gap-4 p-2 justify-center border bg-white"
+            
           >
             {mappedSteps.map((step, index) => (
               <Steps.Step
                 key={index}
                 title={step.title}
+                status="wait"
               />
             ))}
           </Steps>
