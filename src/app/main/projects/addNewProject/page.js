@@ -259,7 +259,7 @@ export default function page({ formNext }) {
         {toggleValue.toString()}
       </div>
       <div className="w-auto py-1 bg-white m-5">
-        <Steps current={current} items={items} className="px-[10rem] py-3" />
+        <Steps current={()=>{current }} items={items} className="px-[10rem] py-3" />
         <div style={contentStyle}>
           {/* Render content based on current step */}
           {steps[current].content}

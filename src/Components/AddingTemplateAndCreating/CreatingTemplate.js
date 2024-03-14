@@ -1,7 +1,7 @@
 "use client";
 
 // export default page;
-import React, { useRef, useState } from "react";
+import React, {  useState } from "react";
 import { Input, Button, notification } from "antd";
 import Link from "next/link";
 import {
@@ -71,7 +71,7 @@ const CreatingTemplate = () => {
         console.log(error);
       });
   };
-  // const inputRef = useRef([null]);
+
   const handleAddStage = () => {
     setStages([
       ...stages,
@@ -81,7 +81,7 @@ const CreatingTemplate = () => {
         checklist: [],
       },
     ]);
-    // inputRef.current.focus();
+
   };
 
   const handleStageNameChange = (index, value) => {
@@ -130,7 +130,6 @@ const CreatingTemplate = () => {
               Stage Name :
             </h4>
             <Input
-            ref={inputRef}
               placeholder="Requirement"
               className="w-1/2"
               value={stage.stageName}
