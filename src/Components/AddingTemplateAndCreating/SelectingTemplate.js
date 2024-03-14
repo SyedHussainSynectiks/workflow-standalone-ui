@@ -7,7 +7,7 @@ import dianel from "../../../public/assets/diannerussell.jpg";
 const Templates = () => {
   return (
     <>
-      <div className="bg-white p-3 mt-4">
+      <div className="bg-white p-3 mt-4 border rounded border-t-[2rem] border-[#F5F5F5]">
       <div className="flex justify-between px-5 ">
         <h1 className="text-black	font-semibold	size-5	leading-7 ">
           Templates

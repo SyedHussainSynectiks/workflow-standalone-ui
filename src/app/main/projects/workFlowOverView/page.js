@@ -36,7 +36,7 @@ const WorkFlowOverView = () => {
   };
 
   return (
-    <main className=" bg-gray-200 p-2">
+    <>
       
       {/*  Workflow */}
       <section className="flex flex-col w-auto h-auto border rounded">
@@ -153,7 +153,7 @@ const WorkFlowOverView = () => {
 
         
       </section>
-    </main>
+    </>
   );
 };
 

@@ -93,6 +93,7 @@ const addresourcesSlice = createSlice({
       state.id[0].resourcesId.push(action.payload);
       console.log(action.payload);
     },
+    //-- re
 
     addProjectId: (state, action) => {
       state.id[0].prjectId = action.payload;

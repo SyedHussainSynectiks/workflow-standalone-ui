@@ -222,6 +222,8 @@ const RequirementForm = (stepperState) => {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedSubItem, setSelectedSubItem] = useState(null);
   const [selectedAssign, setSelectedAssign] = useState();
+  const [selectedAssignName, setSelectedAssignName] = useState();
+  const [AssignName, setAssignName] = useState();
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
   const [AssigneeSelectedImg, setAssigneeSelectedImg] = useState();
@@ -276,10 +278,17 @@ const RequirementForm = (stepperState) => {
   const handleSelectedResourse = (id) => {
     setSelectedAssign(id);
   };
+
   const handleTaskId = (taskId) => {
     setTaskId(taskId);
     console.log("selectedTaskId", taskId);
   };
+  const handleAssigneName = (name) => {
+    setSelectedAssignName(name)
+  };
+  const assigndbutton = () =>{
+    setAssignName(selectedAssignName)
+  }
 
   const handleAssignButtonClick = (id) => {
     console.log("Selected SubItem:", id);
@@ -300,6 +309,7 @@ const RequirementForm = (stepperState) => {
       .then((response) => {
         console.log(JSON.stringify(response.data));
         openNotification("topRight", "success", `${response.data.message}`);
+        console.log("resporns Datar", response.data)
       })
       .catch((error) => {
         console.log(error);
@@ -420,7 +430,8 @@ const RequirementForm = (stepperState) => {
                           {openImageIndex.includes(index) && (
                             <div className=" w-[2]" id="AssigneeImg">
                               <Image
-                                src={AssigneeSelectedImg || userImg}
+                                src={AssigneeSelectedImg}
+                                alt={AssignName}
                                 height={34}
                               ></Image>
                             </div>
@@ -494,7 +505,10 @@ const RequirementForm = (stepperState) => {
                                                                   item.resource_id
                                                                 );
                                                                 handleTaskId(
-                                                                  data.id
+                                                                  data.id 
+                                                                );
+                                                                handleAssigneName(
+                                                                  item.name 
                                                                 );
                                                                 setAssigneeImg(
                                                                   items.image_url
@@ -516,6 +530,7 @@ const RequirementForm = (stepperState) => {
                                                 handleAssignButtonClick(
                                                   selectedAssign
                                                 );
+                                                assigndbutton();
                                                 handleSubItemClick(
                                                   itemIndex === selectedSubItem
                                                     ? null

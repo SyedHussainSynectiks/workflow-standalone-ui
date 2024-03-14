@@ -11,10 +11,17 @@ function Overview() {
   const dispatch = useDispatch();
   return (
     <>
+<<<<<<< HEAD
       <div className='w-[100%] flex justify-evenly border h-screen items-center bg-white '>
         <div className='w-[50%] '>
           <Image src={Overviewimage} className=' ml-24 ' />
         </div>
+=======
+        <div className='w-[100%] flex border h-screen items-center bg-white  rounded border-t-[2rem] border-[#F5F5F5]'>
+           <div className='w-[50%] '>
+                <Image src={Overviewimage} className=' ml-24 ' />
+           </div>
+>>>>>>> 267d67c2bb6576ff4514a88c2b25c64c76c65d2f
 
         <div className='w-[50%] flex justify-evenly items-center  space-x-24'>
 
