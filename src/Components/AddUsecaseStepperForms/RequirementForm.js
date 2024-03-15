@@ -22,6 +22,14 @@ import Image from "next/image";
 import userImg from "../../../public/assets/user.png";
 // import { axios } from 'axios';
 
+//Doc upload//
+import { Progress } from "antd";
+import { InboxOutlined } from "@ant-design/icons";
+import axios from "axios";
+import Link from "next/link";
+const { Dragger } = Upload;
+//Doc upload//
+
 const RequirementForm = (stepperState) => {
   const [size, setSize] = useState("small");
   console.log("propsValue", stepperState);
@@ -169,28 +177,116 @@ const RequirementForm = (stepperState) => {
     }));
   }
 
-  const props = {
-    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
-    onChange({ file, fileList }) {
-      if (file.status !== "uploading") {
-        console.log(file, fileList);
-      }
-    },
-    defaultFileList: [
-      {
-        uid: "1",
-        name: "yyy.png",
-        status: "done",
-        url: "http://www.baidu.com/yyy.png",
-      },
-      {
-        uid: "2",
-        name: "yyy.png",
-        status: "done",
-        url: "http://www.baidu.com/yyy.png",
-      },
-    ],
+  // const props = {
+  //   action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+  //   onChange({ file, fileList }) {
+  //     if (file.status !== "uploading") {
+  //       console.log(file, fileList);
+  //     }
+  //   },
+  //   defaultFileList: [
+  //     {
+  //       uid: "1",
+  //       name: "yyy.png",
+  //       status: "done",
+  //       url: "http://www.baidu.com/yyy.png",
+  //     },
+  //     {
+  //       uid: "2",
+  //       name: "yyy.png",
+  //       status: "done",
+  //       url: "http://www.baidu.com/yyy.png",
+  //     },
+  //   ],
+  // };
+
+
+  // Doc upload starts here
+  const [image, setimage] = useState([])
+  const [fileuploaded, setfileuploaded] = useState(false);
+  const [convertedImages, setConvertedImages] = useState([]);
+  const [Attachments, setAttachments] = useState([]);
+  const [uploadingFiles, setUploadingFiles] = useState([]);
+
+  console.log(Attachments)
+  const handleFileChange = (info) => {
+    const allFiles = info.fileList;
+    const imgarray = allFiles.map((e) => e.originFileObj);
+    setfileuploaded(true);
+    setUploadingFiles(allFiles);
+    convertImagesToBase64(imgarray);
   };
+
+  const convertImagesToBase64 = async (images) => {
+    const newConvertedImages = [];
+    for (let i = 0; i < images.length; i++) {
+      const file = images[i];
+      if (file) {
+        const reader = new FileReader();
+        const base64 = await new Promise((resolve, reject) => {
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        newConvertedImages.push({ fileName: file.name, data: base64 });
+      }
+    }
+    setConvertedImages(newConvertedImages);
+  };
+
+  const uploadingImages = async () => {
+    const newAttachments = [];
+    for (let i = 0; i < convertedImages.length; i++) {
+      try {
+        const response = await axios.post(
+          "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
+          convertedImages[i]
+        );
+        newAttachments.push(response.data.link);
+      } catch (error) {
+        console.error(error);
+        alert("Error uploading image. Please try again.");
+      }
+    }
+    setAttachments([...Attachments, ...newAttachments]);
+    setConvertedImages([]); // Reset convertedImages after upload
+    setUploadingFiles([]); // Clear uploading files after upload
+  };
+
+  useEffect(() => {
+    if (fileuploaded && convertedImages.length > 0) {
+      uploadingImages();
+      setfileuploaded(false);
+    }
+  }, [fileuploaded, convertedImages]);
+
+
+
+  const getFileNameFromUrl = (url) => {
+    return url.substring(url.lastIndexOf('/') + 1);
+  };
+
+  const UploadDocs = () => (
+    <Dragger
+      multiple
+      onChange={(e) => {
+        handleFileChange(e);
+      }}
+    >
+      <p className="ant-upload-drag-icon">
+        <InboxOutlined />
+      </p>
+      <p className="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p className="ant-upload-hint">
+        Support for a single or bulk upload. Strictly prohibited from uploading
+        company data or other banned files.
+      </p>
+    </Dragger>
+  );
+
+  /////////  Doc upload ends
 
   const [isOpen, setIsOpen] = useState(false);
   const [openItemIndex, setOpenItemIndex] = useState(null);
@@ -211,7 +307,7 @@ const RequirementForm = (stepperState) => {
   const [AssignResourseId, setAssignResurseId] = useState();
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
-  console.log(AssignName,AssignIndex)
+  console.log(AssignName, AssignIndex)
   const openNotification = (placement, type, message) => {
     notification[type]({
       message: message,
@@ -260,7 +356,7 @@ const RequirementForm = (stepperState) => {
       assigneName: name,
       assigne_image: image_url
     };
-    setSelectedAssignee( UpdatedTask);
+    setSelectedAssignee(UpdatedTask);
   };
   console.log("selectedResource", selectedAssignee)
 
@@ -271,7 +367,7 @@ const RequirementForm = (stepperState) => {
   const handleAssigneName = (name) => {
     setSelectedAssignName(name)
   };
-  const assigndbutton = () =>{
+  const assigndbutton = () => {
     // const currentTask = requiretasks.at(index)
     // currentTask.assignee_id =
     // requ.
@@ -300,9 +396,9 @@ const RequirementForm = (stepperState) => {
         openNotification("topRight", "success", `${response.data.message}`);
         console.log("resporns Datar", response.data)
         const currentTask = requiretasks.at(AssignIndex)
-        currentTask.assigneId =  AssignResourseId,
-        currentTask.assigneName = AssignName,
-        currentTask.assigne_image = AssignImg
+        currentTask.assigneId = AssignResourseId,
+          currentTask.assigneName = AssignName,
+          currentTask.assigne_image = AssignImg
 
         requiretasks[AssignIndex] = currentTask
         console.log(config)
@@ -424,15 +520,63 @@ const RequirementForm = (stepperState) => {
                             />
                           </button>
                           {loading ? (<p></p>
-                             ) : (
+                          ) : (
                             <div className=" w-[2]" id="AssigneeImg">
                               <Image
-                                src={data.assigne_image }
+                                src={data.assigne_image}
                                 alt={data.assigneName}
                                 height={34}
-                              ></Image>
+                              >
+
+
+
+                              </Image>
+                              {index === AssignIndex && (
+
+                                <div>
+                                  <h2>Attachments</h2>
+
+                                  <div className='flex flex-row gap-4'>
+                                    {uploadingFiles.map((file, index) => (
+                                      <div key={index} style={{ marginBottom: 10 }}>
+                                        {/* {getFileNameFromUrl(file.url)} */}
+                                        {file.name} - <Progress percent={file.percent} />
+                                        {/* {setimage(file.name)} */}
+
+                                      </div>
+                                    ))}
+                                    {Attachments.map((file, index) => (
+                                      <div key={index}>
+                                        {file.endsWith('pdf') ? (
+                                          //  <iframe src={file} title={file.name} width="400" height="300" />
+                                          <Link href={file} target="_blank">
+                                            {/* {uploadingFiles.map((file, index) => (
+          <div key={index} style={{ marginBottom: 10 }}>
+            {file.name}
+            {setimageName(file.name)}
+          </div>
+        ))} */}
+                                            <Image src={'https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0='} height={30} width={30} />
+
+
+
+                                          </Link>
+
+                                        ) : (
+                                          <div>
+                                            <img src={file} alt={file.name} height={50} width={50} />
+
+                                            {/* <a href={file} download={file.name}>{file.name}</a> */}
+                                          </div>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                </div>
+                              )}
                             </div>
-                             )}
+                          )}
 
                           {openItemIndex === index && showOptions && (
                             <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[2]">
@@ -493,15 +637,15 @@ const RequirementForm = (stepperState) => {
                                                               style={{
                                                                 backgroundColor:
                                                                   selectedAssign ===
-                                                                  item.resource_id // Assuming selectedSubItem is the selected name
+                                                                    item.resource_id // Assuming selectedSubItem is the selected name
                                                                     ? "#E6F7FF"
                                                                     : "transparent",
                                                               }}
                                                               onClick={() => {
 
                                                                 setAssignIndex(index)
-                                                                setAssignResurseId( item.resource_id ),
-                                                                  setAssignName(item.name) ,
+                                                                setAssignResurseId(item.resource_id),
+                                                                  setAssignName(item.name),
                                                                   setAssignImg(items.image_url);
 
                                                                 handleTaskId(
@@ -557,13 +701,15 @@ const RequirementForm = (stepperState) => {
                               )}
                             </ul>
                           )}
+
+
                         </div>
 
                         <div className="flex items-center space-x-2">
                           <MessageOutlined style={{ fontSize: "20px" }} />
                           <div className="relative">
                             <button
-                              onClick={() => toggleOptions(index)}
+                              onClick={() => { toggleOptions(index), setAssignIndex(index) }}
                               className="bg-blue-500 hover:bg-blue-700 text-white font-semibold p-2 rounded"
                             >
                               Action
@@ -591,11 +737,13 @@ const RequirementForm = (stepperState) => {
                               onCancel={handleCancel}
                               footer={null}
                             >
-                              <Upload {...props}>
-                                <Button icon={<UploadOutlined />}>
+                              {/* <Upload > */}
+                              {/* <Button icon={<UploadOutlined />}>
                                   Upload
-                                </Button>
-                              </Upload>
+                                </Button> */}
+                              {/* </Upload> */}
+                              <UploadDocs />
+
                             </Modal>
                           </div>
                         </div>
