@@ -438,7 +438,7 @@ const RequirementForm = (stepperState) => {
                           )}
 
                           {openItemIndex === index && showOptions && (
-                            <ul className="absolute top-24 left-52 bg-white text-black shadow-md rounded-md z-[2]">
+                            <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[2]">
                               <div className="flex items-center justify-center">
                                 <SearchOutlined className="pl-2" />
                                 <input
