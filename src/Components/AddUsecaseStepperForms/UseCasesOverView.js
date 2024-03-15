@@ -33,7 +33,7 @@ const UseCasesOverView = () => {
             },
           }
         );
-        console.log(response.data);
+        console.log(JSON.stringify(response.data));
         const data = response.data
         console.log(data.usecase.stages)
         setRequireData(response.data);

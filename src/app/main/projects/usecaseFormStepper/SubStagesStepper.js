@@ -106,7 +106,7 @@
 // }
 
 // export default TestingStepper
-
+"use client"
 import React, { useState, useEffect } from "react";
 import "./stepper.css";
 import { TiTick } from "react-icons/ti";

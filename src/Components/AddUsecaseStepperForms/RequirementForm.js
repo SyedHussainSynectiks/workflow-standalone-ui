@@ -37,7 +37,7 @@ const RequirementForm = (stepperState) => {
 
   const [requireData, setRequireData] = useState();
   const [formatedDate, setformatedDate] = useState();
-  const [requiretasks, setrequireTasks] = useState();
+  const [requiretasks, setrequireTasks] = useState([]);
   const [requireChecklist, setrequireChecklist] = useState();
   const setUsecaseId = useSelector((state) => state.addUsecase);
   const UsecaseId = setUsecaseId.useCaseId;
@@ -111,29 +111,10 @@ const RequirementForm = (stepperState) => {
     fetchData();
   }, [UsecaseId, stepperState, projectId]);
   console.log(Roles);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`);
-  //       const responseData = response.data;
-  //       console.log("responsedata ", responseData)
-  //       console.log(JSON.stringify(responseData));
-  //       setTeamData(responseData);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [projectId]);
+  
   console.log("teamData", teamData);
   console.log("teamDetails", RolesDetails);
   console.log(requiretasks);
-
-  //   let mappedArray = RolesDetails.map(innerArray =>
-  //     innerArray.map(obj => Object.values(obj))
-  // );
-
-  // console.log(mappedArray);
 
   const InsideDropDown = ({ name }) => {
     const [visible, setVisible] = useState(false);
@@ -221,20 +202,22 @@ const RequirementForm = (stepperState) => {
   );
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedSubItem, setSelectedSubItem] = useState(null);
+  const [selectedAssignee, setSelectedAssignee] = useState();
   const [selectedAssign, setSelectedAssign] = useState();
   const [selectedAssignName, setSelectedAssignName] = useState();
   const [AssignName, setAssignName] = useState();
+  const [AssignIndex, setAssignIndex] = useState();
+  const [AssignImg, setAssignImg] = useState();
+  const [AssignResourseId, setAssignResurseId] = useState();
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
-  const [AssigneeSelectedImg, setAssigneeSelectedImg] = useState();
+  console.log(AssignName,AssignIndex)
   const openNotification = (placement, type, message) => {
     notification[type]({
       message: message,
       placement: placement,
     });
   };
-
-  const [ImageView, setImageView] = useState(false);
 
   const toggleSaved = (index) => {
     setopenImageIndex((prevIndexes) => {
@@ -259,12 +242,6 @@ const RequirementForm = (stepperState) => {
   const handleCancel = () => {
     setShowUploadModal(false);
   };
-  const handleAssignImg = (ImageUrl) => {
-    setAssigneeSelectedImg(ImageUrl);
-    console.log("Image", ImageUrl);
-    // console.log("AssignImg", AssigneeSelectedImg);
-    // return value;
-  };
   const toggleDropDown = (index) => {
     setIsOpen(!isOpen);
   };
@@ -275,9 +252,17 @@ const RequirementForm = (stepperState) => {
   const handleSubItemClick = (subItem) => {
     setSelectedSubItem(subItem);
   };
-  const handleSelectedResourse = (id) => {
-    setSelectedAssign(id);
+  const handleSelectedResourse = (index, resource_id, name, image_url) => {
+    console.log("passing values", index, resource_id);
+    const UpdatedTask = {
+      assigne_index: index,
+      assigneId: resource_id,
+      assigneName: name,
+      assigne_image: image_url
+    };
+    setSelectedAssignee( UpdatedTask);
   };
+  console.log("selectedResource", selectedAssignee)
 
   const handleTaskId = (taskId) => {
     setTaskId(taskId);
@@ -287,7 +272,11 @@ const RequirementForm = (stepperState) => {
     setSelectedAssignName(name)
   };
   const assigndbutton = () =>{
-    setAssignName(selectedAssignName)
+    // const currentTask = requiretasks.at(index)
+    // currentTask.assignee_id = 
+    // requ.
+    // requiretasks.push(selectedAssignee)
+    handleAssignButtonClick(AssignResourseId)
   }
 
   const handleAssignButtonClick = (id) => {
@@ -310,6 +299,13 @@ const RequirementForm = (stepperState) => {
         console.log(JSON.stringify(response.data));
         openNotification("topRight", "success", `${response.data.message}`);
         console.log("resporns Datar", response.data)
+        const currentTask = requiretasks.at(AssignIndex)
+        currentTask.assigneId =  AssignResourseId,
+        currentTask.assigneName = AssignName,
+        currentTask.assigne_image = AssignImg
+
+        requiretasks[AssignIndex] = currentTask
+        console.log(config)
       })
       .catch((error) => {
         console.log(error);
@@ -427,15 +423,16 @@ const RequirementForm = (stepperState) => {
                               alt="expand-arrow--v2"
                             />
                           </button>
-                          {openImageIndex.includes(index) && (
+                          {loading ? (<p></p>
+                             ) : (
                             <div className=" w-[2]" id="AssigneeImg">
                               <Image
-                                src={AssigneeSelectedImg}
-                                alt={AssignName}
+                                src={data.assigne_image }
+                                alt={data.assigneName}
                                 height={34}
                               ></Image>
                             </div>
-                          )}
+                             )}
 
                           {openItemIndex === index && showOptions && (
                             <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[2]">
@@ -501,17 +498,19 @@ const RequirementForm = (stepperState) => {
                                                                     : "transparent",
                                                               }}
                                                               onClick={() => {
-                                                                handleSelectedResourse(
-                                                                  item.resource_id
-                                                                );
-                                                                handleTaskId(
+                                                                setAssignIndex(index) 
+                                                                setAssignResurseId( item.resource_id ),
+                                                                  setAssignName(item.name) ,
+                                                                  setAssignImg(items.image_url);
+
+                                                                handleTaskId( 
                                                                   data.id 
                                                                 );
                                                                 handleAssigneName(
                                                                   item.name 
                                                                 );
-                                                                setAssigneeImg(
-                                                                  items.image_url
+                                                                setSelectedAssign(
+                                                                  item.resource_id
                                                                 );
                                                               }}
                                                             >
@@ -527,16 +526,16 @@ const RequirementForm = (stepperState) => {
                                             </li>
                                             <button
                                               onClick={() => {
-                                                handleAssignButtonClick(
-                                                  selectedAssign
-                                                );
+                                                // handleAssignButtonClick(
+                                                //   selectedAssign
+                                                // );
                                                 assigndbutton();
                                                 handleSubItemClick(
                                                   itemIndex === selectedSubItem
                                                     ? null
                                                     : itemIndex
                                                 );
-                                                handleAssignImg(AssigneeImg);
+               
                                                 toggleSaved(index);
                                               }}
                                               className="bg-sky-500 px-2 py-1 text-white rounded-sm  "
