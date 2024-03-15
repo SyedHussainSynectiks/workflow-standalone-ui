@@ -73,8 +73,6 @@ const RequirementForm = (stepperState) => {
         const creationDate = new Date(requireData.usecase.creation_date);
         const formattedDate = creationDate.toISOString().slice(0, 10); // YYYY-MM-DD format
         setformatedDate(formattedDate);
-        console.log("date", formattedDate);
-        console.log(propsValue);
         const stage = stages.filter(
           (obj) => Object.values(stepperState)[0] in obj
         );
@@ -83,6 +81,14 @@ const RequirementForm = (stepperState) => {
         console.log("tassks", tasks);
         console.log("checklist", checkList);
         setrequireTasks(tasks);
+        window.addEventListener("load", () => {
+          const storedCurrentTask = localStorage.getItem("currentTask");
+          if (storedCurrentTask) {
+            const parsedCurrentTask = JSON.parse(storedCurrentTask);
+            setrequireTasks(parsedCurrentTask);
+          }
+        });
+        
         setrequireChecklist(checkList);
         console.log(tasks);
 
@@ -252,16 +258,7 @@ const RequirementForm = (stepperState) => {
   const handleSubItemClick = (subItem) => {
     setSelectedSubItem(subItem);
   };
-  const handleSelectedResourse = (index, resource_id, name, image_url) => {
-    console.log("passing values", index, resource_id);
-    const UpdatedTask = {
-      assigne_index: index,
-      assigneId: resource_id,
-      assigneName: name,
-      assigne_image: image_url
-    };
-    setSelectedAssignee( UpdatedTask);
-  };
+  
   console.log("selectedResource", selectedAssignee)
 
   const handleTaskId = (taskId) => {
@@ -272,12 +269,27 @@ const RequirementForm = (stepperState) => {
     setSelectedAssignName(name)
   };
   const assigndbutton = () =>{
-    // const currentTask = requiretasks.at(index)
-    // currentTask.assignee_id = 
-    // requ.
-    // requiretasks.push(selectedAssignee)
+    const currentTask = requiretasks.at(AssignIndex)
+        currentTask.assigneId =  AssignResourseId,
+        currentTask.assigneName = AssignName,
+        currentTask.assigne_image = AssignImg
+
+        requiretasks[AssignIndex] = currentTask
     handleAssignButtonClick(AssignResourseId)
   }
+
+ // LocalStorage-----
+ window.addEventListener("beforeunload", () => {
+  localStorage.setItem("currentTask", JSON.stringify(currentTask));
+  console.log("currentTask", JSON.stringify(currentTask))
+});
+// window.addEventListener("load", () => {
+//   const storedCurrentTask = localStorage.getItem("currentTask");
+//   if (storedCurrentTask) {
+//     const parsedCurrentTask = JSON.parse(storedCurrentTask);
+//     setrequireTasks(parsedCurrentTask);
+//   }
+// });
 
   const handleAssignButtonClick = (id) => {
     console.log("Selected SubItem:", id);
