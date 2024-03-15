@@ -175,28 +175,117 @@ const RequirementForm = (stepperState) => {
     }));
   }
 
-  const props = {
-    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
-    onChange({ file, fileList }) {
-      if (file.status !== "uploading") {
-        console.log(file, fileList);
-      }
-    },
-    defaultFileList: [
-      {
-        uid: "1",
-        name: "yyy.png",
-        status: "done",
-        url: "http://www.baidu.com/yyy.png",
-      },
-      {
-        uid: "2",
-        name: "yyy.png",
-        status: "done",
-        url: "http://www.baidu.com/yyy.png",
-      },
-    ],
+  // const props = {
+  //   action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+  //   onChange({ file, fileList }) {
+  //     if (file.status !== "uploading") {
+  //       console.log(file, fileList);
+  //     }
+  //   },
+  //   defaultFileList: [
+  //     {
+  //       uid: "1",
+  //       name: "yyy.png",
+  //       status: "done",
+  //       url: "http://www.baidu.com/yyy.png",
+  //     },
+  //     {
+  //       uid: "2",
+  //       name: "yyy.png",
+  //       status: "done",
+  //       url: "http://www.baidu.com/yyy.png",
+  //     },
+  //   ],
+  // };
+
+
+  
+  // Doc upload starts here
+  const [image, setimage] = useState([]);
+  const [fileuploaded, setfileuploaded] = useState(false);
+  const [convertedImages, setConvertedImages] = useState([]);
+  const [Attachments, setAttachments] = useState([]);
+  const [uploadingFiles, setUploadingFiles] = useState([]);
+
+  console.log(Attachments);
+  const handleFileChange = (info) => {
+    const allFiles = info.fileList;
+    const imgarray = allFiles.map((e) => e.originFileObj);
+    setfileuploaded(true);
+    setUploadingFiles(allFiles);
+    convertImagesToBase64(imgarray);
   };
+
+  const convertImagesToBase64 = async (images) => {
+    const newConvertedImages = [];
+    for (let i = 0; i < images.length; i++) {
+      const file = images[i];
+      if (file) {
+        const reader = new FileReader();
+        const base64 = await new Promise((resolve, reject) => {
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        newConvertedImages.push({ fileName: file.name, data: base64 });
+      }
+    }
+    setConvertedImages(newConvertedImages);
+  };
+
+  const uploadingImages = async () => {
+    const newAttachments = [];
+    for (let i = 0; i < convertedImages.length; i++) {
+      try {
+        const response = await axios.post(
+          "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
+          convertedImages[i]
+        );
+        newAttachments.push(response.data.link);
+      } catch (error) {
+        console.error(error);
+        alert("Error uploading image. Please try again.");
+      }
+    }
+    setAttachments([...Attachments, ...newAttachments]);
+    setConvertedImages([]); // Reset convertedImages after upload
+    setUploadingFiles([]); // Clear uploading files after upload
+  };
+
+  useEffect(() => {
+    if (fileuploaded && convertedImages.length > 0) {
+      uploadingImages();
+      setfileuploaded(false);
+    }
+  }, [fileuploaded, convertedImages]);
+
+  const getFileNameFromUrl = (url) => {
+    return url.substring(url.lastIndexOf("/") + 1);
+  };
+
+  const UploadDocs = () => (
+    <Dragger
+      multiple
+      onChange={(e) => {
+        handleFileChange(e);
+      }}
+    >
+      <p className="ant-upload-drag-icon">
+        <InboxOutlined />
+      </p>
+      <p className="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p className="ant-upload-hint">
+        Support for a single or bulk upload. Strictly prohibited from uploading
+        company data or other banned files.
+      </p>
+    </Dragger>
+  );
+
+  /////////  Doc upload ends
+
+
 
   const [isOpen, setIsOpen] = useState(false);
   const [openItemIndex, setOpenItemIndex] = useState(null);
@@ -258,7 +347,7 @@ const RequirementForm = (stepperState) => {
   const handleSubItemClick = (subItem) => {
     setSelectedSubItem(subItem);
   };
-  
+
   console.log("selectedResource", selectedAssignee)
 
   const handleTaskId = (taskId) => {
@@ -518,7 +607,7 @@ const RequirementForm = (stepperState) => {
 
                                                                 handleTaskId( 
                                                                   data.id 
- 
+                                                                );
                                                                 handleSelectedResourse(
                                                                   item.resource_id
                                                                 );
