@@ -111,7 +111,7 @@ const RequirementForm = (stepperState) => {
     fetchData();
   }, [UsecaseId, stepperState, projectId]);
   console.log(Roles);
-  
+
   console.log("teamData", teamData);
   console.log("teamDetails", RolesDetails);
   console.log(requiretasks);
@@ -273,7 +273,7 @@ const RequirementForm = (stepperState) => {
   };
   const assigndbutton = () =>{
     // const currentTask = requiretasks.at(index)
-    // currentTask.assignee_id = 
+    // currentTask.assignee_id =
     // requ.
     // requiretasks.push(selectedAssignee)
     handleAssignButtonClick(AssignResourseId)
@@ -499,14 +499,14 @@ const RequirementForm = (stepperState) => {
                                                               }}
                                                               onClick={() => {
 
-                                                                setAssignIndex(index) 
+                                                                setAssignIndex(index)
                                                                 setAssignResurseId( item.resource_id ),
                                                                   setAssignName(item.name) ,
                                                                   setAssignImg(items.image_url);
 
-                                                                handleTaskId( 
-                                                                  data.id 
- 
+                                                                handleTaskId(
+                                                                  data.id
+                                                                )
                                                                 handleSelectedResourse(
                                                                   item.resource_id
                                                                 );
@@ -521,7 +521,7 @@ const RequirementForm = (stepperState) => {
                                                                 );
                                                               }}
                                                             >
-                                                              {item.name}{" "}
+                                                              {item.name}
                                                               {/* Assuming name is the property to be displayed */}
                                                             </button>
                                                           )
@@ -542,7 +542,7 @@ const RequirementForm = (stepperState) => {
                                                     ? null
                                                     : itemIndex
                                                 );
-               
+
                                                 toggleSaved(index);
                                               }}
                                               className="bg-sky-500 px-2 py-1 text-white rounded-sm  "
