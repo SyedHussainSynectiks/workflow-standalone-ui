@@ -10,7 +10,7 @@ const CustomPopover = ({ content, visible, placement }) => {
             {placement === "bottom" && (
                 <div className="samosa-top">
                     {/* Add your samosa icon or SVG here */}
-                    <Image src={samosa} />
+                    <Image src={samosa} alt="devmode"/>
                 </div>
             )}
             {/* Content */}
@@ -19,7 +19,7 @@ const CustomPopover = ({ content, visible, placement }) => {
             {placement === "top" && (
                 <div className="samosa-bottom">
                     {/* Add your samosa icon or SVG here */}
-                    <Image className="uc-tr" src={samosa} />
+                    <Image className="uc-tr" src={samosa} alt="devmode"/>
                 </div>
             )}
         </div>

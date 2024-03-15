@@ -15,7 +15,7 @@ const page = () => {
     const projectName = useSelector((state) => state.addProject.ProjectName);
     console.log(projectName)
     console.log(projectData);
-    
+
     return (
         <div className='ml-3'>
             <div>

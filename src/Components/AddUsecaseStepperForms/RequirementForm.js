@@ -435,7 +435,7 @@ const RequirementForm = (stepperState) => {
                              )}
 
                           {openItemIndex === index && showOptions && (
-                            <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[2]">
+                            <ul className="absolute top-24 left-52 bg-white text-black shadow-md rounded-md z-[2]">
                               <div className="flex items-center justify-center">
                                 <SearchOutlined className="pl-2" />
                                 <input
@@ -498,6 +498,7 @@ const RequirementForm = (stepperState) => {
                                                                     : "transparent",
                                                               }}
                                                               onClick={() => {
+
                                                                 setAssignIndex(index) 
                                                                 setAssignResurseId( item.resource_id ),
                                                                   setAssignName(item.name) ,
@@ -505,9 +506,15 @@ const RequirementForm = (stepperState) => {
 
                                                                 handleTaskId( 
                                                                   data.id 
+ 
+                                                                handleSelectedResourse(
+                                                                  item.resource_id
+                                                                );
+                                                                handleTaskId(
+                                                                  data.id
                                                                 );
                                                                 handleAssigneName(
-                                                                  item.name 
+                                                                  item.name
                                                                 );
                                                                 setSelectedAssign(
                                                                   item.resource_id
