@@ -259,8 +259,12 @@ export default function page({ formNext }) {
         {toggleValue.toString()}
       </div>
       <div className="w-auto py-1 bg-white m-5">
-        <Steps current={()=>{current }} items={items} className="px-[10rem] py-3" />
-        <div style={contentStyle}>
+        <Steps current={current} className="px-[10rem] py-3 p-5">
+          {steps.map((item) => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <div style={{ marginTop: 24 }}>
           {/* Render content based on current step */}
           {steps[current].content}
         </div>
@@ -269,7 +273,7 @@ export default function page({ formNext }) {
           {current < steps.length - 1 && (
             <Button
               type="primary"
-              onClick={() => handleSubmit()}
+              onClick={handleSubmit}
               className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
             >
               Next
@@ -280,10 +284,8 @@ export default function page({ formNext }) {
             <Link href="/main/projects/workflowlist">
               <Button
                 type="primary"
-                onClick={() => {
-                  ProjectId(projectId);
-                }}
                 className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
+
               >
                 Create
               </Button>

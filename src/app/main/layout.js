@@ -42,7 +42,6 @@ const MainLayout = ({ children }) => {
                     <h5 className="uppercase bg-[#001529] text-white text-2xl p-4">
                         Synect<span className="text-red-700">i</span>ks
                     </h5>
-                    {/* ... your existing Sider content */}
                     <Menu
                         className="relative"
                         theme="light"
