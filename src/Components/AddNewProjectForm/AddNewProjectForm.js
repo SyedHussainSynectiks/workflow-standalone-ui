@@ -83,32 +83,25 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
 
 const handleImageUpload = async (info) => {
   const file = info.file.originFileObj;
+  dispatch(updateFormData({ ...project, image_url: imageBase64 }));
 
   try {
-    // Convert the image file to base64
-    const base64 = await convertImageToBase64(file);
-    // Set the base64 value using setImageBase64
-    setImageBase64(base64);
-    console.log("setImage:", base64);
+    // Convert the image file to base64 format
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const base64String = event.target.result;
+      setImageBase64(base64String);
+
+      // Dispatch the updated form data with the image base64 string
+      setProject({
+        ...project,
+        image_url: base64String,
+      });
+    };
+    reader.readAsDataURL(file);
   } catch (error) {
     console.error("Error uploading image:", error);
   }
-};
-
-const convertImageToBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      resolve(reader.result.split(',')[1]);
-    };
-
-    reader.onerror = (error) => {
-      reject(error);
-    };
-
-    reader.readAsDataURL(file);
-  });
 };
 
 
