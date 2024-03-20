@@ -170,9 +170,21 @@ const addresourcesSlice = createSlice({
       console.log("ProjectManager Data: ", action.payload);
     },
     // console.log(action.title)
-    removeResources(state, action) {
-      return state.filter((item) => item.id !== action.payload);
-    },
+    removeResources: (state, action) => {
+      state.resoucesInfo = state.resoucesInfo.filter(resource => resource.id !== action.payload);
+      const removedEmployeeId = action.payload;
+
+      state.ProjectManager = state.ProjectManager.filter(employeeId => employeeId !== removedEmployeeId.toString());
+      state.UXDesigner = state.UXDesigner.filter(employeeId => employeeId !== removedEmployeeId.toString());
+      state.UIDeveloper = state.UIDeveloper.filter(employeeId => employeeId !== removedEmployeeId.toString());
+      state.APIDeveloper = state.APIDeveloper.filter(employeeId => employeeId !== removedEmployeeId.toString());
+      state.Tester = state.Tester.filter(employeeId => employeeId !== removedEmployeeId.toString());
+      state.UXResearcher = state.UXResearcher.filter(employeeId => employeeId !== removedEmployeeId.toString());
+      state.CICDSpecialist = state.CICDSpecialist.filter(employeeId => employeeId !== removedEmployeeId.toString());
+
+
+      console.log("Removed employee ID:", removedEmployeeId);
+    }
   },
 });
 

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState, useRef } from "react";
 import { Modal, Tabs, Upload, notification } from "antd";
 import {
@@ -63,7 +64,7 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
+      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}/task`,
       headers: {
         Accept: "application/json",
       },
@@ -74,25 +75,35 @@ const RequirementForm = (stepperState) => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        console.log(JSON.stringify(response.data.usecase.stages));
-        setRequireData(response.data);
-        const stages = response.data.usecase.stages;
+        console.log(response.data)
+
+        console.log(JSON.stringify(response.data.stages));
+        // setRequireData(response.data);
+        const stages = response.data.stages;
+        console.log(stages)
         const propsValue = Object.values(stepperState)[0];
-        const creationDate = new Date(requireData.usecase.creation_date);
-        const formattedDate = creationDate.toISOString().slice(0, 10); // YYYY-MM-DD format
-        setformatedDate(formattedDate);
-        console.log("date", formattedDate);
-        console.log(propsValue);
+        // const creationDate = new Date(requireData.usecase.creation_date);
+        // const formattedDate = creationDate.toISOString().slice(0, 10); // YYYY-MM-DD format
+        // setformatedDate(formattedDate);
         const stage = stages.filter(
           (obj) => Object.values(stepperState)[0] in obj
         );
         const tasks = stage[0][propsValue].tasks;
+        console.log(tasks)
         const checkList = stage[0][propsValue].checklist;
-        console.log("tassks", tasks);
-        console.log("checklist", checkList);
+        // console.log("tassks", tasks);
+        // console.log("checklist", checkList);
         setrequireTasks(tasks);
+        // window.addEventListener("load", () => {
+        //   const storedCurrentTask = localStorage.getItem("currentTask");
+        //   if (storedCurrentTask) {
+        //     const parsedCurrentTask = JSON.parse(storedCurrentTask);
+        //     setrequireTasks(parsedCurrentTask);
+        //   }
+        // });
+
         setrequireChecklist(checkList);
-        console.log(tasks);
+        // console.log(tasks);
 
         setLoading(false);
       })
@@ -200,15 +211,14 @@ const RequirementForm = (stepperState) => {
   //   ],
   // };
 
-
   // Doc upload starts here
-  const [image, setimage] = useState([])
+  const [image, setimage] = useState([]);
   const [fileuploaded, setfileuploaded] = useState(false);
   const [convertedImages, setConvertedImages] = useState([]);
   const [Attachments, setAttachments] = useState([]);
   const [uploadingFiles, setUploadingFiles] = useState([]);
 
-  console.log(Attachments)
+  console.log(Attachments);
   const handleFileChange = (info) => {
     const allFiles = info.fileList;
     const imgarray = allFiles.map((e) => e.originFileObj);
@@ -233,14 +243,18 @@ const RequirementForm = (stepperState) => {
     }
     setConvertedImages(newConvertedImages);
   };
-
+let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjNGI4YjRhOC05MDExLTcwMmUtOTY2ZC1lZDQ3NmUzODY5ZDciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiI2NDY4ZjIzNi02NmM4LTRlMjItYWVlYS0xMDA0YjE0YzVjMjkiLCJjdXN0b206b3JnX2lkIjoiYjk0YTU2NGQtODlmNy00NmQxLWJkNDEtYzZmNzQwMzQ5N2JjIiwiY29nbml0bzp1c2VybmFtZSI6ImM0YjhiNGE4LTkwMTEtNzAyZS05NjZkLWVkNDc2ZTM4NjlkNyIsIm9yaWdpbl9qdGkiOiI3ODNlMTY1NC02N2IzLTQ5ZTUtYjA2Yy04ODY5Y2VlZWM5ZjIiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiOTQ4MmU4NWEtZDNmZC00M2EzLWE0MjQtY2Q4YThkZjU1Mjk3IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTA4MjU5MDYsImV4cCI6MTcxMDgyOTUwNiwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMDgyNTkwNiwianRpIjoiMWFjZjI4YTYtNWIzOS00NGViLWE2NTYtMWJhYmEwYzlmMGMyIiwiZW1haWwiOiJpdHphbHRhZmh1c2FpbkBnbWFpbC5jb20ifQ.2OvOuWfshkKKiTqkZaHrLE9hJHQ2YYid1B_cIXRCGAU6hi6RddiDfNpjUFCFC6NNK0kBwafPvMW-SYbzf9qphXrewqgzPT0zbnnOzUpO8RQnGRu7j5avNMF7XFeWZiZiUsyhctX2sUKyM_cGU_fdiS2ePrG0gjgz1DhKf1PIiyBHMBPklOIHZEMTG4xRYJVWdm81J7QJeLjCmVPs0tnxwS--STwd5_zlGARqUipkGzHTgZkyUPWBXsvrM_BQmMwJW-QXS78TyNqwRXJS4eHvNHIIL5PRBajRO0EpauXcuHLtskzgGfXZmFFVXAVYfh0vLgWYb6kzfLMmTAXnM6uHjQ"
   const uploadingImages = async () => {
     const newAttachments = [];
     for (let i = 0; i < convertedImages.length; i++) {
       try {
         const response = await axios.post(
           "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
-          convertedImages[i]
+          convertedImages[i],{
+            headers: {
+              'Authorization': `Bearer ${accesstoken}`
+            }
+          }
         );
         newAttachments.push(response.data.link);
       } catch (error) {
@@ -260,10 +274,8 @@ const RequirementForm = (stepperState) => {
     }
   }, [fileuploaded, convertedImages]);
 
-
-
   const getFileNameFromUrl = (url) => {
-    return url.substring(url.lastIndexOf('/') + 1);
+    return url.substring(url.lastIndexOf("/") + 1);
   };
 
   const UploadDocs = () => (
@@ -307,7 +319,7 @@ const RequirementForm = (stepperState) => {
   const [AssignResourseId, setAssignResurseId] = useState();
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
-  console.log(AssignName, AssignIndex)
+  console.log(AssignName, AssignIndex);
   const openNotification = (placement, type, message) => {
     notification[type]({
       message: message,
@@ -330,7 +342,9 @@ const RequirementForm = (stepperState) => {
     const newShowOptions = [...showOptions];
     newShowOptions[index] = !newShowOptions[index];
     setShowOptions(newShowOptions);
-    setopenActionIndex(openActionIndex === index ? null : index);
+    // setopenActionIndex(openActionIndex === index ? null : index);
+
+      setopenActionIndex(index);
   };
   const handleOptionClick = () => {
     setShowUploadModal(true);
@@ -348,32 +362,48 @@ const RequirementForm = (stepperState) => {
   const handleSubItemClick = (subItem) => {
     setSelectedSubItem(subItem);
   };
+
   const handleSelectedResourse = (index, resource_id, name, image_url) => {
     console.log("passing values", index, resource_id);
     const UpdatedTask = {
       assigne_index: index,
       assigneId: resource_id,
       assigneName: name,
-      assigne_image: image_url
+      assigne_image: image_url,
     };
     setSelectedAssignee(UpdatedTask);
   };
-  console.log("selectedResource", selectedAssignee)
+  console.log("selectedResource", selectedAssignee);
 
   const handleTaskId = (taskId) => {
     setTaskId(taskId);
     console.log("selectedTaskId", taskId);
   };
   const handleAssigneName = (name) => {
-    setSelectedAssignName(name)
+    setSelectedAssignName(name);
   };
   const assigndbutton = () => {
-    // const currentTask = requiretasks.at(index)
-    // currentTask.assignee_id =
-    // requ.
-    // requiretasks.push(selectedAssignee)
-    handleAssignButtonClick(AssignResourseId)
-  }
+    const currentTask = requiretasks.at(AssignIndex);
+    (currentTask.assigneId = AssignResourseId),
+      (currentTask.assigneName = AssignName),
+      (currentTask.assigne_image = AssignImg);
+
+    requiretasks[AssignIndex] = currentTask;
+    handleAssignButtonClick(AssignResourseId);
+  };
+
+  // LocalStorage-----
+  window.addEventListener("beforeunload", () => {
+    localStorage.setItem("currentTask", JSON.stringify(currentTask));
+    console.log("currentTask", JSON.stringify(currentTask));
+  });
+  // window.addEventListener("load", () => {
+  //   const storedCurrentTask = localStorage.getItem("currentTask");
+  //   if (storedCurrentTask) {
+  //     const parsedCurrentTask = JSON.parse(storedCurrentTask);
+  //     setrequireTasks(parsedCurrentTask);
+  //   }
+  // });
 
   const handleAssignButtonClick = (id) => {
     console.log("Selected SubItem:", id);
@@ -394,24 +424,24 @@ const RequirementForm = (stepperState) => {
       .then((response) => {
         console.log(JSON.stringify(response.data));
         openNotification("topRight", "success", `${response.data.message}`);
-        console.log("resporns Datar", response.data)
-        const currentTask = requiretasks.at(AssignIndex)
-        currentTask.assigneId = AssignResourseId,
-          currentTask.assigneName = AssignName,
-          currentTask.assigne_image = AssignImg
+        console.log("resporns Datar", response.data);
+        const currentTask = requiretasks.at(AssignIndex);
+        (currentTask.assigneId = AssignResourseId),
+          (currentTask.assigneName = AssignName),
+          (currentTask.assigne_image = AssignImg);
 
-        requiretasks[AssignIndex] = currentTask
-        console.log(config)
+        requiretasks[AssignIndex] = currentTask;
+        console.log(config);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
+  // const actionButtons = document.querySelectorAll('.action-button');
   // console.log("requiredData:", requireData.usecase.stages  )
   return (
     <div>
-      {requireData && (
+      {/* {requireData && (
         <div className=" w-[100%] px-4">
           <div className="flex space-x-5 items-center mb-3 ">
             <div>
@@ -473,7 +503,7 @@ const RequirementForm = (stepperState) => {
                 </h3>
               </div>
             </div>
-          </div>
+          </div> */}
           {loading ? (
             <p>
               {" "}
@@ -519,35 +549,34 @@ const RequirementForm = (stepperState) => {
                               alt="expand-arrow--v2"
                             />
                           </button>
-                          {loading ? (<p></p>
+                          {loading ? (
+                            <p></p>
                           ) : (
-                            <div className=" w-[2]" id="AssigneeImg">
+                            <div className="flex gap-2 w-[2]" id="AssigneeImg">
                               <Image
-                                src={data.assigne_image}
-                                alt={data.assigneName}
+                                src={data.assigned_to.image}
+                                alt={data.assigned_to.name}
                                 height={34}
-                              >
-
-
-
-                              </Image>
-                              {index === AssignIndex && (
-
+                              ></Image>
+                              {(index === openActionIndex || showOptions[index])  && (
                                 <div>
                                   <h2>Attachments</h2>
 
-                                  <div className='flex flex-row gap-4'>
+                                  <div className="flex flex-row gap-4">
                                     {uploadingFiles.map((file, index) => (
-                                      <div key={index} style={{ marginBottom: 10 }}>
+                                      <div
+                                        key={index}
+                                        style={{ marginBottom: 10 }}
+                                      >
                                         {/* {getFileNameFromUrl(file.url)} */}
-                                        {file.name} - <Progress percent={file.percent} />
+                                        {file.name} -{" "}
+                                        <Progress percent={file.percent} />
                                         {/* {setimage(file.name)} */}
-
                                       </div>
                                     ))}
                                     {Attachments.map((file, index) => (
                                       <div key={index}>
-                                        {file.endsWith('pdf') ? (
+                                        {file.endsWith("pdf") ? (
                                           //  <iframe src={file} title={file.name} width="400" height="300" />
                                           <Link href={file} target="_blank">
                                             {/* {uploadingFiles.map((file, index) => (
@@ -556,15 +585,22 @@ const RequirementForm = (stepperState) => {
             {setimageName(file.name)}
           </div>
         ))} */}
-                                            <Image src={'https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0='} height={30} width={30} />
-
-
-
+                                            <Image
+                                              src={
+                                                "https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0="
+                                              }
+                                              height={30}
+                                              width={30}
+                                            />
                                           </Link>
-
                                         ) : (
                                           <div>
-                                            <img src={file} alt={file.name} height={50} width={50} />
+                                            <img
+                                              src={file}
+                                              alt={file.name}
+                                              height={50}
+                                              width={50}
+                                            />
 
                                             {/* <a href={file} download={file.name}>{file.name}</a> */}
                                           </div>
@@ -572,7 +608,6 @@ const RequirementForm = (stepperState) => {
                                       </div>
                                     ))}
                                   </div>
-
                                 </div>
                               )}
                             </div>
@@ -637,20 +672,27 @@ const RequirementForm = (stepperState) => {
                                                               style={{
                                                                 backgroundColor:
                                                                   selectedAssign ===
-                                                                    item.resource_id // Assuming selectedSubItem is the selected name
+                                                                  item.resource_id // Assuming selectedSubItem is the selected name
                                                                     ? "#E6F7FF"
                                                                     : "transparent",
                                                               }}
                                                               onClick={() => {
-
-                                                                setAssignIndex(index)
-                                                                setAssignResurseId(item.resource_id),
-                                                                  setAssignName(item.name),
-                                                                  setAssignImg(items.image_url);
+                                                                setAssignIndex(
+                                                                  index
+                                                                );
+                                                                setAssignResurseId(
+                                                                  item.resource_id
+                                                                ),
+                                                                  setAssignName(
+                                                                    item.name
+                                                                  ),
+                                                                  setAssignImg(
+                                                                    items.image_url
+                                                                  );
 
                                                                 handleTaskId(
                                                                   data.id
-                                                                )
+                                                                );
                                                                 handleSelectedResourse(
                                                                   item.resource_id
                                                                 );
@@ -689,7 +731,7 @@ const RequirementForm = (stepperState) => {
 
                                                 toggleSaved(index);
                                               }}
-                                              className="bg-sky-500 px-2 py-1 text-white rounded-sm  "
+                                              className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
                                             >
                                               Assign
                                             </button>
@@ -701,15 +743,15 @@ const RequirementForm = (stepperState) => {
                               )}
                             </ul>
                           )}
-
-
                         </div>
 
                         <div className="flex items-center space-x-2">
                           <MessageOutlined style={{ fontSize: "20px" }} />
                           <div className="relative">
                             <button
-                              onClick={() => { toggleOptions(index), setAssignIndex(index) }}
+                              onClick={() => {
+                                toggleOptions(index), setAssignIndex(index);
+                              }}
                               className="bg-blue-500 hover:bg-blue-700 text-white font-semibold p-2 rounded"
                             >
                               Action
@@ -743,7 +785,6 @@ const RequirementForm = (stepperState) => {
                                 </Button> */}
                               {/* </Upload> */}
                               <UploadDocs />
-
                             </Modal>
                           </div>
                         </div>
@@ -770,8 +811,8 @@ const RequirementForm = (stepperState) => {
             </>
           )}
         </div>
-      )}
-    </div>
+      // )}
+    // </div>
   );
 };
 
