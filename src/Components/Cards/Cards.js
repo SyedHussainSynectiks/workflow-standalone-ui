@@ -74,7 +74,7 @@ const DashCards = () => {
         </Col>
 
         <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', height: 'fit-content', padding: '0px' }}>
-          <Card className='w-full min-h-[15rem]'
+          <Card className='w-full h-[15rem]'
             bordered={false}>
             <div className="flex items-center justify-between">
               <Title level={4}>Unassign Projects </Title> <StopOutlined style={{ color: '#FF4D4F' }} />
