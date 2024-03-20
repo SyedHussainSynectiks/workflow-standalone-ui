@@ -12,7 +12,7 @@
 //     const setUsecaseId = useSelector((state) => state.addUsecase);
 //     const UsecaseId = setUsecaseId.useCaseId;
 //     const [requireData, setRequireData] = useState();
-//     const [activeStepTitle, setActiveStepTitle] = useState(""); 
+//     const [activeStepTitle, setActiveStepTitle] = useState("");
 
 //     useEffect(() => {
 //         const axios = require("axios");
@@ -50,9 +50,9 @@
 //             title: Object.keys(stage)[0] // Extracting the stage name from the dynamic key
 //           }
 //           ))
-         
+
 //         : [];
-       
+
 //     const handleStepClick = (stepIndex , title) => {
 //         setCurrentStep(stepIndex + 1);
 //         // setstepperState(title)
@@ -73,8 +73,8 @@
 //                     handleStepClick(index, data.title)
 
 //                 }
-                    
-              
+
+
 //         })
 //     })
 
@@ -175,7 +175,7 @@ const SubStagesStepper = () => {
   };
 
   const dispatch = useDispatch();
-  console.log("maap step", mappedSteps);
+  console.log("map step", mappedSteps);
 
   return (
     <>

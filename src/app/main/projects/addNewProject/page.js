@@ -192,7 +192,7 @@ export default function page({ formNext }) {
     const projectname = project.projectName;
     console.log(projectname);
     dispatch(updateProjectName(projectname))
-    
+
     let data = JSON.stringify({
       name: project.projectName,
       description: project.projectDescription,
@@ -235,7 +235,7 @@ export default function page({ formNext }) {
   return (
     <>
 
-      <div className="w-auto py-2 px-1 mb-2 bg-white">
+      <div className="w-auto py-2 px-4 mb-2 bg-white">
       <Breadcrumb
         className="bg-white p-2"
           items={[

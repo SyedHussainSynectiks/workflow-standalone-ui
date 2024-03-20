@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Modal, Tabs, Upload, notification } from "antd";
+import { Col, Modal, Row, Tabs, Upload, notification } from "antd";
 import {
   BugOutlined,
   CaretDownOutlined,
@@ -143,9 +143,9 @@ const RequirementForm = (stepperState) => {
 
     return (
       <Dropdown
-        visible={visible}
-        onVisibleChange={handleVisibleChange}
-        overlay={
+        open={visible}
+        onOpenChange={handleVisibleChange}
+        menu={
           <Space direction="vertical">
             {items.map((item) => (
               <Button key={item.key} type="text">
@@ -394,7 +394,7 @@ const RequirementForm = (stepperState) => {
       .then((response) => {
         console.log(JSON.stringify(response.data));
         openNotification("topRight", "success", `${response.data.message}`);
-        console.log("resporns Datar", response.data)
+        console.log("response Data", response.data)
         const currentTask = requiretasks.at(AssignIndex)
         currentTask.assigneId = AssignResourseId,
           currentTask.assigneName = AssignName,
@@ -413,66 +413,74 @@ const RequirementForm = (stepperState) => {
     <div>
       {requireData && (
         <div className=" w-[100%] px-4">
-          <div className="flex space-x-5 items-center mb-3 ">
-            <div>
-              <img
-                src={requireData.image}
-                className="w-[7rem] h-[7rem] rounded-md"
-              />
-            </div>
-            <div>
-              <h1 className="my-3 text-xl font-medium leading-7 tracking-normal text-left">
-                {requireData.assignee_name}
-              </h1>
-              <div className="my-3 flex space-x-2">
-                <ShoppingOutlined style={{ fontSize: "1rem" }} />
-                <h3 className="text-base font-normal leading-normal tracking-normal text-left space-y-4">
-                  {requireData.role}
-                </h3>
-              </div>
-              <div className="my-3 flex space-x-2">
-                <BarsOutlined style={{ fontSize: "1rem" }} />
-                <h3 className="text-base font-normal leading-normal tracking-normal text-left space-y-4">
-                  {requireData.total_task}
-                </h3>
-              </div>
-            </div>
-            <div>
-              <div className="flex space-x-3 my-10">
-                <p className="text-sm font-medium leading-snug tracking-normal text-left">
-                  Assigned date
-                </p>
-                <h3 className="text-base font-normal leading-tight tracking-normal text-left">
-                  {formatedDate}
-                </h3>
-              </div>
-              <div className="flex space-x-3 my-10">
-                <p className="text-sm font-medium leading-snug tracking-normal text-left">
-                  Planned date
-                </p>
-                <h3 className="text-base font-normal leading-tight tracking-normal text-left">
-                  {requireData.usecase.end_date}
-                </h3>
-              </div>
-            </div>
-            <div>
-              <div className="flex space-x-3 my-10">
-                <p className="text-sm font-medium leading-snug tracking-normal text-left">
-                  Start date
-                </p>
-                <h3 className="text-base font-normal leading-tight tracking-normal text-left">
-                  {requireData.usecase.start_date}
-                </h3>
-              </div>
-              <div className="flex space-x-3 my-10">
-                <p className="text-sm font-medium leading-snug tracking-normal text-left">
-                  Deviation
-                </p>
-                <h3 className="text-base font-normal leading-tight tracking-normal text-left">
-                  03days
-                </h3>
-              </div>
-            </div>
+          <div className="space-x-5 items-center mb-3 ">
+            <Row align='middle'>
+              <Col span={6}>
+                <Row> <Col flex={2} className="mr-4">
+                  <img
+                    src={requireData.image}
+                    className="w-[7rem] h-[7rem] rounded-md"
+                  />
+                </Col>
+                  <Col flex={2} className="mr-9">
+                    <h1 className="my-3 text-xl font-medium leading-7 tracking-normal text-left">
+                      {requireData.assignee_name}
+                    </h1>
+                    <Col className="my-3 flex space-x-2">
+                      <ShoppingOutlined style={{ fontSize: "1rem" }} />
+                      <h3 className="text-base font-normal leading-normal tracking-normal text-left space-y-4">
+                        {requireData.role}
+                      </h3>
+                    </Col>
+                    <Col className="my-3 flex space-x-2">
+                      <BarsOutlined style={{ fontSize: "1rem" }} />
+                      <h3 className="text-base font-normal leading-normal tracking-normal text-left space-y-4">
+                        {requireData.total_task}
+                      </h3>
+                    </Col>
+                  </Col></Row>
+              </Col>
+              <Col>
+                <Row gutter={[48, 5]}>
+                  <Col flex={6}>
+                    <div className="flex space-x-3 my-10">
+                      <p className="text-sm font-medium leading-snug tracking-normal text-left">
+                        Assigned date
+                      </p>
+                      <h3 className="text-base font-normal leading-tight tracking-normal text-left">
+                        {formatedDate}
+                      </h3>
+                    </div>
+                    <div className="flex space-x-3 my-10">
+                      <p className="text-sm font-medium leading-snug tracking-normal text-left">
+                        Planned date
+                      </p>
+                      <h3 className="text-base font-normal leading-tight tracking-normal text-left">
+                        {requireData.usecase.end_date}
+                      </h3>
+                    </div>
+                  </Col>
+                  <Col flex={6}>
+                    <div className="flex space-x-3 my-10">
+                      <p className="text-sm font-medium leading-snug tracking-normal text-left">
+                        Start date
+                      </p>
+                      <h3 className="text-base font-normal leading-tight tracking-normal text-left">
+                        {requireData.usecase.start_date}
+                      </h3>
+                    </div>
+                    <div className="flex space-x-3 my-10">
+                      <p className="text-sm font-medium leading-snug tracking-normal text-left">
+                        Deviation
+                      </p>
+                      <h3 className="text-base font-normal leading-tight tracking-normal text-left">
+                        03days
+                      </h3>
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </div>
           {loading ? (
             <p>
@@ -510,7 +518,7 @@ const RequirementForm = (stepperState) => {
                         >
                           <button
                             onClick={() => toggleSubItems(index)}
-                            className="bg-white border text-black p-2 rounded-md flex items-center gap-1 "
+                            className="bg-blue-500 border text-white p-2 rounded-md flex items-center gap-1"
                           >
                             Assign
                             <img
@@ -527,9 +535,6 @@ const RequirementForm = (stepperState) => {
                                 alt={data.assigneName}
                                 height={34}
                               >
-
-
-
                               </Image>
                               {index === AssignIndex && (
 
@@ -598,7 +603,7 @@ const RequirementForm = (stepperState) => {
                                           (key, inx) => (
                                             console.log(key),
                                             (
-                                              <button
+                                              <button className="bg-blue-500"
                                                 key={inx}
                                                 onClick={() =>
                                                   handleSubItemClick(
@@ -633,7 +638,7 @@ const RequirementForm = (stepperState) => {
                                                           (
                                                             <button
                                                               key={j}
-                                                              className="py-1 w-[100%]"
+                                                              className="py-1 w-[100%] bg-blue-500"
                                                               style={{
                                                                 backgroundColor:
                                                                   selectedAssign ===
