@@ -28,7 +28,6 @@ const MainLayout = ({ children }) => {
     const toggleSider = () => {
         setCollapsed(!collapsed);
     };
-    const router = useRouter()
     return (
         <>
             <Layout theme="dark" style={{ minHeight: "100vh" }}>
@@ -37,7 +36,7 @@ const MainLayout = ({ children }) => {
                     collapsible
                     collapsed={collapsed}
                     theme="light"
-                    className="fixed "
+                    className="fixed"
                     style={{ position: "fixed", height: "100vh" }}
                 >
                     <h5 className="uppercase bg-[#001529] text-white text-2xl p-4">
@@ -48,8 +47,6 @@ const MainLayout = ({ children }) => {
                         className="relative"
                         theme="light"
                         mode="inline"
-                        defaultSelectedKeys={["1"]}
-                        selectedKeys={[router.pathname]}
                         items={[
                             {
                                 key: "1",
