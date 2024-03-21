@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import { Modal, Tabs, Upload, notification } from "antd";
+import { Form, Input, Modal, Tabs, Upload, notification } from "antd";
 import {
   BugOutlined,
   CaretDownOutlined,
@@ -28,6 +28,7 @@ import { Progress } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Link from "next/link";
+import Item from "antd/es/list/Item";
 const { Dragger } = Upload;
 //Doc upload//
 
@@ -75,12 +76,12 @@ const RequirementForm = (stepperState) => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        console.log(response.data)
+        console.log(response.data);
 
         console.log(JSON.stringify(response.data.stages));
         // setRequireData(response.data);
         const stages = response.data.stages;
-        console.log(stages)
+        console.log(stages);
         const propsValue = Object.values(stepperState)[0];
         // const creationDate = new Date(requireData.usecase.creation_date);
         // const formattedDate = creationDate.toISOString().slice(0, 10); // YYYY-MM-DD format
@@ -89,7 +90,9 @@ const RequirementForm = (stepperState) => {
           (obj) => Object.values(stepperState)[0] in obj
         );
         const tasks = stage[0][propsValue].tasks;
-        console.log(tasks)
+        const Docs = tasks.docs
+        console.log(tasks);
+        console.log(Docs)
         const checkList = stage[0][propsValue].checklist;
         // console.log("tassks", tasks);
         // console.log("checklist", checkList);
@@ -211,10 +214,11 @@ const RequirementForm = (stepperState) => {
   //   ],
   // };
 
-  // Doc upload starts here
+  //////////---------------- Doc upload starts here
   const [image, setimage] = useState([]);
   const [fileuploaded, setfileuploaded] = useState(false);
   const [convertedImages, setConvertedImages] = useState([]);
+  const [convertedImagesString, setconvertedImagesString] = useState("");
   const [Attachments, setAttachments] = useState([]);
   const [uploadingFiles, setUploadingFiles] = useState([]);
 
@@ -243,26 +247,29 @@ const RequirementForm = (stepperState) => {
     }
     setConvertedImages(newConvertedImages);
   };
-let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjNGI4YjRhOC05MDExLTcwMmUtOTY2ZC1lZDQ3NmUzODY5ZDciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiI2NDY4ZjIzNi02NmM4LTRlMjItYWVlYS0xMDA0YjE0YzVjMjkiLCJjdXN0b206b3JnX2lkIjoiYjk0YTU2NGQtODlmNy00NmQxLWJkNDEtYzZmNzQwMzQ5N2JjIiwiY29nbml0bzp1c2VybmFtZSI6ImM0YjhiNGE4LTkwMTEtNzAyZS05NjZkLWVkNDc2ZTM4NjlkNyIsIm9yaWdpbl9qdGkiOiI3ODNlMTY1NC02N2IzLTQ5ZTUtYjA2Yy04ODY5Y2VlZWM5ZjIiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiOTQ4MmU4NWEtZDNmZC00M2EzLWE0MjQtY2Q4YThkZjU1Mjk3IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTA4MjU5MDYsImV4cCI6MTcxMDgyOTUwNiwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMDgyNTkwNiwianRpIjoiMWFjZjI4YTYtNWIzOS00NGViLWE2NTYtMWJhYmEwYzlmMGMyIiwiZW1haWwiOiJpdHphbHRhZmh1c2FpbkBnbWFpbC5jb20ifQ.2OvOuWfshkKKiTqkZaHrLE9hJHQ2YYid1B_cIXRCGAU6hi6RddiDfNpjUFCFC6NNK0kBwafPvMW-SYbzf9qphXrewqgzPT0zbnnOzUpO8RQnGRu7j5avNMF7XFeWZiZiUsyhctX2sUKyM_cGU_fdiS2ePrG0gjgz1DhKf1PIiyBHMBPklOIHZEMTG4xRYJVWdm81J7QJeLjCmVPs0tnxwS--STwd5_zlGARqUipkGzHTgZkyUPWBXsvrM_BQmMwJW-QXS78TyNqwRXJS4eHvNHIIL5PRBajRO0EpauXcuHLtskzgGfXZmFFVXAVYfh0vLgWYb6kzfLMmTAXnM6uHjQ"
+  let accesstoken =
+  "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjNGI4YjRhOC05MDExLTcwMmUtOTY2ZC1lZDQ3NmUzODY5ZDciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiI2NDY4ZjIzNi02NmM4LTRlMjItYWVlYS0xMDA0YjE0YzVjMjkiLCJjdXN0b206b3JnX2lkIjoiYjk0YTU2NGQtODlmNy00NmQxLWJkNDEtYzZmNzQwMzQ5N2JjIiwiY29nbml0bzp1c2VybmFtZSI6ImM0YjhiNGE4LTkwMTEtNzAyZS05NjZkLWVkNDc2ZTM4NjlkNyIsIm9yaWdpbl9qdGkiOiIwYzg0NzM0OS03YzY0LTQwMDQtOTQ3MC0xOGY1NGEwMmI3OWYiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiZDY1NjJmNmYtZmQyMC00NGFmLWFjNmQtZWZkMzg4ZWRmZjQ4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTA5ODg4MDAsImV4cCI6MTcxMTA3NTIwMCwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMDk4ODgwMCwianRpIjoiYWQxMWFiNGQtZDJmZS00MWI0LThmOGQtZjVmZGUwNjViNmMxIiwiZW1haWwiOiJpdHphbHRhZmh1c2FpbkBnbWFpbC5jb20ifQ.pztB9zhnz4rql7dXshoz0_l-q52mn7yJr6wI8KBvjBVGE1Ab2ZMyqLUoTxKS8YE8kb_9-Rsf1qKk6tNTHOMVEFsizPgQA1KgxGspuVFRjzAFz8K4xoL3z8XT7aT3XHpF5CTv3jQjhw1Vpvea63FCAx-5VG_xw-EkEzpKLzhNhYGfZAJzvQd1EE7AhUDIJCp6NCX0oAVDsfv1fPihJyWVjvoFOZumR9fTNfchlzIoquLLMey5wnNovKBT-jSBGjFUh9nZKJmTugZYKana4YO3VxhCgPaawZg-PpU36HWe0nK7OjBJq7TVjW4natfR-q9_YJrLLgLfsz-sE1vDcs9o2w";
   const uploadingImages = async () => {
     const newAttachments = [];
     for (let i = 0; i < convertedImages.length; i++) {
       try {
         const response = await axios.post(
           "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
-          convertedImages[i],{
+          convertedImages[i],
+          {
             headers: {
-              'Authorization': `Bearer ${accesstoken}`
-            }
+              Authorization: `Bearer ${accesstoken}`,
+            },
           }
         );
         newAttachments.push(response.data.link);
+        setconvertedImagesString(response.data.link)
       } catch (error) {
         console.error(error);
         alert("Error uploading image. Please try again.");
       }
     }
-    setAttachments([...Attachments, ...newAttachments]);
+    setAttachments([...newAttachments]);
     setConvertedImages([]); // Reset convertedImages after upload
     setUploadingFiles([]); // Clear uploading files after upload
   };
@@ -297,8 +304,61 @@ let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQ
       </p>
     </Dragger>
   );
+  console.log(convertedImagesString)
 
-  /////////  Doc upload ends
+  /////////--------------  Doc upload ends
+  const [DocumentAssign, setDocumentAssign] = useState({
+    doc_name: "",
+ 
+  });
+
+  const handleChange = (e) => {
+    // Update the project state as the user types
+    setDocumentAssign({ ...DocumentAssign, [e.target.name]: e.target.value });
+    console.log(DocumentAssign)
+  };
+  //------------Docs Post
+  const UploadingDoc = ( ) => {
+    const currentTask = requiretasks.at(AssignIndex);
+    // console.log("Docs", currentTask)
+    (currentTask.docs[0] = ({doc_name : DocumentAssign.doc_name, doc_url: convertedImagesString})),
+    console.log("Docs" , currentTask)
+    // handleAssignButtonClick(AssignResourseId);
+    HandleUploadingDoc(),
+    handleCancel()
+  }
+
+  const HandleUploadingDoc = async () =>{
+
+    let data = JSON.stringify({
+      doc_name: DocumentAssign.doc_name,
+      doc_url: convertedImagesString,
+    });
+    console.log("request :", data)
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/doc`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: data,
+    };
+  
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }
+  // const axios = require('axios');
+
+  ///------------Docs Post
 
   const [isOpen, setIsOpen] = useState(false);
   const [openItemIndex, setOpenItemIndex] = useState(null);
@@ -315,11 +375,12 @@ let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQ
   const [selectedAssignName, setSelectedAssignName] = useState();
   const [AssignName, setAssignName] = useState();
   const [AssignIndex, setAssignIndex] = useState();
+  const [AssignDocs, setAssignDocs] = useState();
   const [AssignImg, setAssignImg] = useState();
   const [AssignResourseId, setAssignResurseId] = useState();
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
-  console.log(AssignName, AssignIndex);
+  // console.log(AssignName, AssignIndex);
   const openNotification = (placement, type, message) => {
     notification[type]({
       message: message,
@@ -344,7 +405,7 @@ let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQ
     setShowOptions(newShowOptions);
     // setopenActionIndex(openActionIndex === index ? null : index);
 
-      setopenActionIndex(index);
+    setopenActionIndex(index);
   };
   const handleOptionClick = () => {
     setShowUploadModal(true);
@@ -363,16 +424,16 @@ let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQ
     setSelectedSubItem(subItem);
   };
 
-  const handleSelectedResourse = (index, resource_id, name, image_url) => {
-    console.log("passing values", index, resource_id);
-    const UpdatedTask = {
-      assigne_index: index,
-      assigneId: resource_id,
-      assigneName: name,
-      assigne_image: image_url,
-    };
-    setSelectedAssignee(UpdatedTask);
-  };
+  // const handleSelectedResourse = (index, resource_id, name, image_url) => {
+  //   console.log("passing values", index, resource_id);
+  //   const UpdatedTask = {
+  //     assigne_index: index,
+  //     assigneId: resource_id,
+  //     assigneName: name,
+  //     assigne_image: image_url,
+  //   };
+  //   setSelectedAssignee(UpdatedTask);
+  // };
   console.log("selectedResource", selectedAssignee);
 
   const handleTaskId = (taskId) => {
@@ -384,26 +445,11 @@ let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQ
   };
   const assigndbutton = () => {
     const currentTask = requiretasks.at(AssignIndex);
-    (currentTask.assigneId = AssignResourseId),
-      (currentTask.assigneName = AssignName),
-      (currentTask.assigne_image = AssignImg);
-
-    requiretasks[AssignIndex] = currentTask;
+    (currentTask.assigned_to.Id = AssignResourseId),
+      (currentTask.assigned_to.name = AssignName),
+      (currentTask.assigned_to.image = AssignImg);
     handleAssignButtonClick(AssignResourseId);
   };
-
-  // LocalStorage-----
-  window.addEventListener("beforeunload", () => {
-    localStorage.setItem("currentTask", JSON.stringify(currentTask));
-    console.log("currentTask", JSON.stringify(currentTask));
-  });
-  // window.addEventListener("load", () => {
-  //   const storedCurrentTask = localStorage.getItem("currentTask");
-  //   if (storedCurrentTask) {
-  //     const parsedCurrentTask = JSON.parse(storedCurrentTask);
-  //     setrequireTasks(parsedCurrentTask);
-  //   }
-  // });
 
   const handleAssignButtonClick = (id) => {
     console.log("Selected SubItem:", id);
@@ -429,7 +475,6 @@ let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQ
         (currentTask.assigneId = AssignResourseId),
           (currentTask.assigneName = AssignName),
           (currentTask.assigne_image = AssignImg);
-
         requiretasks[AssignIndex] = currentTask;
         console.log(config);
       })
@@ -504,314 +549,287 @@ let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQ
               </div>
             </div>
           </div> */}
-          {loading ? (
-            <p>
-              {" "}
-              <Skeleton
-                active
-                paragraph={{
-                  rows: 6,
-                }}
-              />
-            </p>
-          ) : (
-            <>
-              {requiretasks.map(
-                (data, index) => (
-                  console.log("taskData", data),
-                  (
-                    <div className="mb-8" key={index}>
-                      <div
-                        className="flex items-center justify-between py-3 px-2"
-                        style={{ background: "rgba(230, 247, 255, 1)" }}
-                      >
-                        <h1 className="text-base font-bold leading-tight tracking-normal text-left">
-                          {data.name}
-                        </h1>
-                        <DownOutlined />
-                      </div>
-                      <div
-                        className="flex items-center justify-between mt-2 px-4"
-                        key={index}
-                      >
-                        <div
-                          ref={dropdownRef}
-                          className="relative flex items-center gap-4"
-                        >
-                          <button
-                            onClick={() => toggleSubItems(index)}
-                            className="bg-white border text-black p-2 rounded-md flex items-center gap-1 "
-                          >
-                            Assign
-                            <img
-                              width="15"
-                              src="https://img.icons8.com/ios/50/expand-arrow--v2.png"
-                              alt="expand-arrow--v2"
-                            />
-                          </button>
-                          {loading ? (
-                            <p></p>
-                          ) : (
-                            <div className="flex gap-2 w-[2]" id="AssigneeImg">
-                              <Image
-                                src={data.assigned_to.image}
-                                alt={data.assigned_to.name}
-                                height={34}
-                              ></Image>
-                              {(index === openActionIndex || showOptions[index])  && (
-                                <div>
-                                  <h2>Attachments</h2>
-
-                                  <div className="flex flex-row gap-4">
-                                    {uploadingFiles.map((file, index) => (
-                                      <div
-                                        key={index}
-                                        style={{ marginBottom: 10 }}
-                                      >
-                                        {/* {getFileNameFromUrl(file.url)} */}
-                                        {file.name} -{" "}
-                                        <Progress percent={file.percent} />
-                                        {/* {setimage(file.name)} */}
-                                      </div>
-                                    ))}
-                                    {Attachments.map((file, index) => (
-                                      <div key={index}>
-                                        {file.endsWith("pdf") ? (
-                                          //  <iframe src={file} title={file.name} width="400" height="300" />
-                                          <Link href={file} target="_blank">
-                                            {/* {uploadingFiles.map((file, index) => (
-          <div key={index} style={{ marginBottom: 10 }}>
-            {file.name}
-            {setimageName(file.name)}
-          </div>
-        ))} */}
-                                            <Image
-                                              src={
-                                                "https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0="
-                                              }
-                                              height={30}
-                                              width={30}
-                                            />
-                                          </Link>
-                                        ) : (
-                                          <div>
-                                            <img
-                                              src={file}
-                                              alt={file.name}
-                                              height={50}
-                                              width={50}
-                                            />
-
-                                            {/* <a href={file} download={file.name}>{file.name}</a> */}
-                                          </div>
-                                        )}
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )}
-
-                          {openItemIndex === index && showOptions && (
-                            <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[2]">
-                              <div className="flex items-center justify-center">
-                                <SearchOutlined className="pl-2" />
-                                <input
-                                  type="text"
-                                  placeholder="Search Role"
-                                  className="outline-none ml-2"
-                                />
-                              </div>
-                              {teamData.map(
-                                (itemsData, itemIndex) => (
-                                  console.log(itemsData),
-                                  (
-                                    <li key={itemIndex} className="p-2">
-                                      <div className="flex items-center justify-between">
-                                        {Object.keys(itemsData).map(
-                                          (key, inx) => (
-                                            console.log(key),
-                                            (
-                                              <button
-                                                key={inx}
-                                                onClick={() =>
-                                                  handleSubItemClick(
-                                                    itemIndex ===
-                                                      selectedSubItem
-                                                      ? null
-                                                      : itemIndex
-                                                  )
-                                                }
-                                                className="font-semibold"
-                                              >
-                                                {key}
-                                              </button>
-                                            )
-                                          )
-                                        )}
-                                        <CaretDownOutlined />
-                                      </div>
-                                      {selectedSubItem === itemIndex &&
-                                        itemsData && (
-                                          <ul>
-                                            <li className=" ">
-                                              {Object.values(itemsData).map(
-                                                (subItem, i) => (
-                                                  <React.Fragment key={i}>
-                                                    {Array.isArray(subItem) &&
-                                                      subItem.map(
-                                                        (item, j) => (
-                                                          console.log(
-                                                            item.resource_id
-                                                          ),
-                                                          (
-                                                            <button
-                                                              key={j}
-                                                              className="py-1 w-[100%]"
-                                                              style={{
-                                                                backgroundColor:
-                                                                  selectedAssign ===
-                                                                  item.resource_id // Assuming selectedSubItem is the selected name
-                                                                    ? "#E6F7FF"
-                                                                    : "transparent",
-                                                              }}
-                                                              onClick={() => {
-                                                                setAssignIndex(
-                                                                  index
-                                                                );
-                                                                setAssignResurseId(
-                                                                  item.resource_id
-                                                                ),
-                                                                  setAssignName(
-                                                                    item.name
-                                                                  ),
-                                                                  setAssignImg(
-                                                                    items.image_url
-                                                                  );
-
-                                                                handleTaskId(
-                                                                  data.id
-                                                                );
-                                                                handleSelectedResourse(
-                                                                  item.resource_id
-                                                                );
-                                                                handleTaskId(
-                                                                  data.id
-                                                                );
-                                                                handleAssigneName(
-                                                                  item.name
-                                                                );
-                                                                setSelectedAssign(
-                                                                  item.resource_id
-                                                                );
-                                                              }}
-                                                            >
-                                                              {item.name}
-                                                              {/* Assuming name is the property to be displayed */}
-                                                            </button>
-                                                          )
-                                                        )
-                                                      )}
-                                                  </React.Fragment>
-                                                )
-                                              )}
-                                            </li>
-                                            <button
-                                              onClick={() => {
-                                                // handleAssignButtonClick(
-                                                //   selectedAssign
-                                                // );
-                                                assigndbutton();
-                                                handleSubItemClick(
-                                                  itemIndex === selectedSubItem
-                                                    ? null
-                                                    : itemIndex
-                                                );
-
-                                                toggleSaved(index);
-                                              }}
-                                              className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
-                                            >
-                                              Assign
-                                            </button>
-                                          </ul>
-                                        )}
-                                    </li>
-                                  )
-                                )
-                              )}
-                            </ul>
-                          )}
-                        </div>
-
-                        <div className="flex items-center space-x-2">
-                          <MessageOutlined style={{ fontSize: "20px" }} />
-                          <div className="relative">
-                            <button
-                              onClick={() => {
-                                toggleOptions(index), setAssignIndex(index);
-                              }}
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-semibold p-2 rounded"
-                            >
-                              Action
-                            </button>
-
-                            {openActionIndex === index && (
-                              <div className="absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
-                                <ul>
-                                  <li onClick={handleOptionClick}>
-                                    <FileProtectOutlined /> Upload Document
-                                  </li>
-                                  <li onClick={handleOptionClick}>
-                                    <LinkOutlined /> Upload Link
-                                  </li>
-                                  <li onClick={handleOptionClick}>
-                                    <BugOutlined /> Raise Issue
-                                  </li>
-                                </ul>
-                              </div>
-                            )}
-
-                            <Modal
-                              title="Upload Document"
-                              visible={showUploadModal}
-                              onCancel={handleCancel}
-                              footer={null}
-                            >
-                              {/* <Upload > */}
-                              {/* <Button icon={<UploadOutlined />}>
-                                  Upload
-                                </Button> */}
-                              {/* </Upload> */}
-                              <UploadDocs />
-                            </Modal>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                )
-              )}
-
-              <div className="mt-6 border ">
-                <h2 className="text-l font-medium p-2">
-                  Checklist for requirement
-                </h2>
-                {requireChecklist.map((checklistdata, index) => (
+      {loading ? (
+        <p>
+          {" "}
+          <Skeleton
+            active
+            paragraph={{
+              rows: 6,
+            }}
+          />
+        </p>
+      ) : (
+        <>
+          {requiretasks.map(
+            (data, index) => (
+              console.log("taskData", data),
+              (
+                <div className="mb-8" key={index}>
                   <div
-                    className="px-4 py-2 flex items-center gap-2 "
+                    className="flex items-center justify-between py-3 px-2"
+                    style={{ background: "rgba(230, 247, 255, 1)" }}
+                  >
+                    <h1 className="text-base font-bold leading-tight tracking-normal text-left">
+                      {data.name}
+                    </h1>
+                    <DownOutlined />
+                  </div>
+                  <div
+                    className="flex items-center justify-between mt-2 px-4"
                     key={index}
                   >
-                    <input type="checkbox"></input>
-                    <p>{checklistdata.description}</p>
+                    <div
+                      ref={dropdownRef}
+                      className="relative flex items-center gap-4"
+                    >
+                      <button
+                        onClick={() => toggleSubItems(index)}
+                        className="bg-white border text-black p-2 rounded-md flex items-center gap-1 "
+                      >
+                        Assign
+                        <img
+                          width="15"
+                          src="https://img.icons8.com/ios/50/expand-arrow--v2.png"
+                          alt="expand-arrow--v2"
+                        />
+                      </button>
+                      {loading ? (
+                        <p></p>
+                      ) : (
+                        <div className="flex gap-2 w-[2]" id="AssigneeImg">
+                          <Image
+                            src={data.assigned_to.image}
+                            alt={data.assigned_to.name}
+                            height={34}
+                          ></Image>
+                          {data.docs && data.docs.length > 0 && (
+                          <Image src={data.docs[0].doc_url} alt={data.docs[0].doc_name} height={34} width={30}></Image>
+                          )}
+                          {/* {AssignDocs === data.id && ( */}
+                          
+                        </div>
+                      )}
+
+                      {openItemIndex === index && showOptions && (
+                        <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[2]">
+                          <div className="flex items-center justify-center">
+                            <SearchOutlined className="pl-2" />
+                            <input
+                              type="text"
+                              placeholder="Search Role"
+                              className="outline-none ml-2"
+                            />
+                          </div>
+                          {teamData.map(
+                            (itemsData, itemIndex) => (
+                              console.log(itemsData),
+                              (
+                                <li key={itemIndex} className="p-2">
+                                  <div className="flex items-center justify-between">
+                                    {Object.keys(itemsData).map(
+                                      (key, inx) => (
+                                        console.log(key),
+                                        (
+                                          <button
+                                            key={inx}
+                                            onClick={() =>
+                                              handleSubItemClick(
+                                                itemIndex === selectedSubItem
+                                                  ? null
+                                                  : itemIndex
+                                              )
+                                            }
+                                            className="font-semibold"
+                                          >
+                                            {key}
+                                          </button>
+                                        )
+                                      )
+                                    )}
+                                    <CaretDownOutlined />
+                                  </div>
+                                  {selectedSubItem === itemIndex &&
+                                    itemsData && (
+                                      <ul>
+                                        <li className=" ">
+                                          {Object.values(itemsData).map(
+                                            (subItem, i) => (
+                                              <React.Fragment key={i}>
+                                                {Array.isArray(subItem) &&
+                                                  subItem.map(
+                                                    (item, j) => (
+                                                      console.log(
+                                                        item.resource_id
+                                                      ),
+                                                      (
+                                                        <button
+                                                          key={j}
+                                                          className="py-1 w-[100%]"
+                                                          style={{
+                                                            backgroundColor:
+                                                              selectedAssign ===
+                                                              item.resource_id // Assuming selectedSubItem is the selected name
+                                                                ? "#E6F7FF"
+                                                                : "transparent",
+                                                          }}
+                                                          onClick={() => {
+                                                            setAssignIndex(
+                                                              index
+                                                            );
+                                                            setAssignResurseId(
+                                                              item.resource_id
+                                                            ),
+                                                              setAssignName(
+                                                                item.name
+                                                              ),
+                                                              setAssignImg(
+                                                                items.image_url
+                                                              );
+
+                                                            handleTaskId(
+                                                              data.id
+                                                            );
+                                                            // handleSelectedResourse(
+                                                            //   item.resource_id
+                                                            // );
+                                                            
+                                                            handleAssigneName(
+                                                              item.name
+                                                            );
+                                                            setSelectedAssign(
+                                                              item.resource_id
+                                                            );
+                                                          }}
+                                                        >
+                                                          {item.name}
+                                                          {/* Assuming name is the property to be displayed */}
+                                                        </button>
+                                                      )
+                                                    )
+                                                  )}
+                                              </React.Fragment>
+                                            )
+                                          )}
+                                        </li>
+                                        <button
+                                          onClick={() => {
+                                            // handleAssignButtonClick(
+                                            //   selectedAssign
+                                            // );
+                                            assigndbutton();
+                                            handleSubItemClick(
+                                              itemIndex === selectedSubItem
+                                                ? null
+                                                : itemIndex
+                                            );
+
+                                            toggleSaved(index);
+                                          }}
+                                          className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
+                                        >
+                                          Assign
+                                        </button>
+                                      </ul>
+                                    )}
+                                </li>
+                              )
+                            )
+                          )}
+                        </ul>
+                      )}
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <MessageOutlined style={{ fontSize: "20px" }} />
+                      <div className="relative">
+                        <button
+                          onClick={() => {
+                            toggleOptions(index), setAssignIndex(index);
+                            setAssignDocs(data.id);handleTaskId(data.id);
+                            
+                            console.log("selected TaskId", data.id);
+                          }}
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-semibold p-2 rounded"
+                        >
+                          Action
+                        </button>
+
+                        {openActionIndex === index && (
+                          <div className="absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
+                            <ul>
+                              <li onClick={handleOptionClick}>
+                                <FileProtectOutlined /> Upload Document
+                              </li>
+                              <li onClick={handleOptionClick}>
+                                <LinkOutlined /> Upload Link
+                              </li>
+                              <li onClick={handleOptionClick}>
+                                <BugOutlined /> Raise Issue
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+
+                        <Modal
+                          title="Upload Document"
+                          visible={showUploadModal}
+                          onCancel={handleCancel}
+                          footer={null}
+                        >
+                          {/* <Upload > */}
+                          {/* <Button icon={<UploadOutlined />}>
+                                  Upload
+                                </Button> */}
+                          {/* </Upload> */}
+                          <UploadDocs />
+                          <Form.Item
+                          className="flex items-center ml-4 mt-2 "
+                            name={["doc_name"]}
+                            label="Enter Document Name"
+                            rules={[
+                              {
+                                message:
+                                  "Please input the Document Name!",
+                              },
+                            ]}
+                          >
+                            <Input
+                              name="doc_name"
+                              id="DocsName"
+                              value={DocumentAssign.doc_name}
+                              className="h-6"
+                              onChange={handleChange}
+                            />
+                         </Form.Item>
+                            <Button className="mt-1" onClick={()=>{
+                              UploadingDoc();
+                            }}>Upload</Button>
+                         
+                        </Modal>
+                      </div>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </>
+                </div>
+              )
+            )
           )}
-        </div>
-      // )}
+
+          <div className="mt-6 border ">
+            <h2 className="text-l font-medium p-2">
+              Checklist for requirement
+            </h2>
+            {requireChecklist.map((checklistdata, index) => (
+              <div className="px-4 py-2 flex items-center gap-2 " key={index}>
+                <input type="checkbox"></input>
+                <p>{checklistdata.description}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+    // )}
     // </div>
   );
 };
