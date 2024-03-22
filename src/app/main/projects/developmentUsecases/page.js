@@ -73,11 +73,7 @@ export default function Page() {
           <p className="UseCasesTxt">UseCases</p>
           <div className="BtnSearchFlexLeft">
             <div className="SearchTxtSearchBarFlex">
-              <input
-                className="SearchTxt ml-2 border border-neutral-500"
-                type="text"
-                placeholder="Search text"
-              />
+              <input className="SearchTxt ml-2 border border-neutral-500" type="text" placeholder="Search text" />
               <span>
                 <button className="UseCaseBtnClr" style={{ backgroundColor: '#2563EB' }}>
                   <SearchOutlined style={{ color: 'white' }} />
