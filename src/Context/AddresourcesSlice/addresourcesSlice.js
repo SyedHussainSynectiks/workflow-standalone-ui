@@ -184,7 +184,18 @@ const addresourcesSlice = createSlice({
 
 
       console.log("Removed employee ID:", removedEmployeeId);
-    }
+    },
+    removeResourcesInfo: (state, action) => {
+      state.resoucesInfo = action.payload;
+      state.id[0].resourcesId = [];
+      state.ProjectManager = action.payload
+      state.UXDesigner = action.payload
+      state.UIDeveloper = action.payload
+      state.APIDeveloper = action.payload
+      state.Tester = action.payload
+      state.UXResearcher = action.payload
+      state.CICDSpecialist = action.payload
+    },
   },
 });
 
@@ -209,6 +220,7 @@ export const {
   addResourcesTesterLength,
   addResourcesUxResearcherLength,
   CICDSpecialistLength,
+  removeResourcesInfo
 } = addresourcesSlice.actions;
 export default addresourcesSlice.reducer;
 

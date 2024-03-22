@@ -49,7 +49,7 @@ const MainLayout = ({ children }) => {
                         theme="light"
                         mode="inline"
                         defaultSelectedKeys={["1"]}
-                        selectedKeys={[router.pathname]}
+                        // selectedKeys={[router.pathname]}
                         items={[
                             {
                                 key: "1",

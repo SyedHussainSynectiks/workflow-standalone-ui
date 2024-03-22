@@ -61,10 +61,10 @@ export default function page({ formNext }) {
     console.log("Received data from child:", data);
     setFormData(data); // Update the state in the parent component
   };
-  const ProjectId = (ProjectId) => {
-    dispatch(addProjectId(ProjectId));
-    // console.log(ProjectId)
-  };
+  // const ProjectId = (ProjectId) => {
+  //   dispatch(addProjectId(ProjectId));
+  //   // console.log(ProjectId)
+  // };
   const nonViewsteps = [
     {
       title: "Set up Project",
@@ -220,6 +220,7 @@ export default function page({ formNext }) {
         const result = response.data;
         console.log("success:", result, result.id);
         dispatch(updateId(result.id));
+        dispatch(addProjectId(result.id))
 
         setCurrent(current + 1);
       })
