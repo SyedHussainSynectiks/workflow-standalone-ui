@@ -59,6 +59,13 @@ const newform = () => {
     const { name, value } = e.target;
     setProject({ ...project, [name]: value });
   };
+  const [startDate, setStartDate] = useState(null);
+
+  
+  const disabledEndDate = (current) => {
+    // Disable dates that are before the selected start date or are the selected start date
+    return current && (current <= startDate);
+  };
 
   const handleAssigneChange = (value,name,) => {
     // const { name, value } = e.target;
@@ -67,6 +74,7 @@ const newform = () => {
   };
 
   const handleStartDateChange = (date, dateString) => {
+    setStartDate(date);
     setProject({
       ...project,
       start_date: moment(dateString).format("YYYY-MM-DD"),

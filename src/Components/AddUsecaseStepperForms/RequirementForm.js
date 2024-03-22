@@ -29,7 +29,8 @@ import { InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Link from "next/link";
 import Item from "antd/es/list/Item";
-import user from "../../../public/assets/user.png"
+// import user from "../../../public/assets/icons8-user.gif"
+import user from "../../../public/assets/icons8-user-48.png"
 const { Dragger } = Upload;
 //Doc upload//
 
@@ -500,10 +501,7 @@ const RequirementForm = (stepperState) => {
 
     if (openItemIndex !== null) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else if (openActionIndex !== null) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    else {
+    } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
     return () => {
@@ -731,11 +729,13 @@ const RequirementForm = (stepperState) => {
                         <p></p>
                       ) : (
                         <div className="flex gap-2 w-[2]" id="AssigneeImg">
-                          <Image
-                            src={data.assigned_to.image ? data.assigned_to.image : user}
+                          <h5>{data.assigned_to.name}</h5>
+                          {/* <Image
+                            src={data.assigned_to.image}
                             alt={data.assigned_to.name}
                             height={34}
-                          ></Image>
+                            width={34}
+                          ></Image> */}
                           {data.docs &&
                             data.docs.length > 0 &&
                             data.docs.map((doc, index) => (
@@ -898,7 +898,7 @@ const RequirementForm = (stepperState) => {
                         </button>
 
                         {openActionIndex === index && (
-                          <div className="absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
+                          <div className="  absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
                             <ul>
                               <li onClick={handleOptionClick}>
                                 <FileProtectOutlined /> Upload Document
@@ -963,6 +963,7 @@ const RequirementForm = (stepperState) => {
                         >
                           <div className="flex flex-col gap-4">
                             <input
+                            value={DocumentAssign.doc_name}
                               onChange={(e) => {
                                 inputName(e);
                               }}
@@ -976,6 +977,7 @@ const RequirementForm = (stepperState) => {
                               <input
                                 onChange={(e) => {
                                   inputLink(e);
+                                 
                                 }}
                                 className="p-2 border rounded  w-full"
                                 placeholder="Paste link here "
