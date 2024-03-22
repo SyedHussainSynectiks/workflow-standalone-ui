@@ -27,7 +27,10 @@ const Navbar = () => {
     <>
       <Header className='flex flex-row items-center justify-between w-full '
         style={{ padding: 32, position: 'sticky', top: 0, right: 0, zIndex: 10 }}>
-        <Input className='w-[38vw] mx-auto' placeholder="search" suffix={<SearchOutlined />} />
+
+        <div className='w-11'></div>
+        {/* <Button theme="light" className='w-1/3' icon={<SearchOutlined />}>Search</Button> */}
+        <Input className='w-1/3' placeholder="search" suffix={<SearchOutlined />} />
         <div className="right-menu-wrapper">
           <div className="flex flex-row items-center justify-between gap-9">
             <QuestionCircleOutlined size={56} className='w-5' style={{ color: "#fff" }} />

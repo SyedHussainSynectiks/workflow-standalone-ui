@@ -2,8 +2,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, message, Steps, theme, notification, Breadcrumb } from "antd";
-import { AddResourcePool2 } from "@/Components/AddResourcePool/AddresoucrePool2";
+import { Button, message, Steps, theme,notification, Breadcrumb } from "antd";
+import {AddResourcePool2} from "@/Components/AddResourcePool/AddresoucrePool2";
 import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm";
 import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 import { useDispatch, useSelector } from "react-redux";
@@ -137,7 +137,7 @@ export default function page({ formNext }) {
       { ApiDeveloperId: ApiDeveloper },
       { TesterId: Tester },
       { UxResearcherId: UxResearcher },
-      { CiCdId: CiCd },
+      { CiCdId: CiCd},
     ];
 
     const filteredRoles = roles.filter(role => Object.values(role)[0].length > 0);
@@ -179,6 +179,8 @@ export default function page({ formNext }) {
         .catch((error) => {
           console.log(error);
         });
+
+
     }
   };
 
@@ -190,7 +192,7 @@ export default function page({ formNext }) {
     const projectname = project.projectName;
     console.log(projectname);
     dispatch(updateProjectName(projectname))
-
+    
     let data = JSON.stringify({
       name: project.projectName,
       description: project.projectDescription,
@@ -233,18 +235,18 @@ export default function page({ formNext }) {
   return (
     <>
 
-      <div className="w-auto py-2 px-4 mb-2 bg-white">
-        <Breadcrumb
-          className="bg-white p-2"
+      <div className="w-auto py-2 px-1 mb-2 bg-white">
+      <Breadcrumb
+        className="bg-white p-2"
           items={[
             {
-              title: <a href="/main"> Home</a>
+              title:<a href="/main"> Home</a>
             },
             {
               title: <a href="/main/projects">Projects Overview</a>,
             },
             {
-              title: "Create Project",
+              title:"Create Project",
             },
           ]}
         />
@@ -283,6 +285,7 @@ export default function page({ formNext }) {
               <Button
                 type="primary"
                 className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
+
               >
                 Create
               </Button>
