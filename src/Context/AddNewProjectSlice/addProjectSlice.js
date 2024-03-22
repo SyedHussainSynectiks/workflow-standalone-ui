@@ -16,6 +16,7 @@ const initialState = {
   ProjectName:isBrowser
   ? JSON.parse(localStorage.getItem("ProjectName")) || []
   : [],
+  ProjectStepperValue:""
 };
 
 const addProjectSlice = createSlice({
@@ -43,9 +44,12 @@ const addProjectSlice = createSlice({
       let setProjectName = JSON.stringify(state.ProjectName);
       localStorage.setItem("ProjectName", setProjectName);
     },
+    addStepperValue(state, action) {
+      state.ProjectStepperValue = action.payload;
+    console.log("toggleValue",action.payload)}
   },
 });
 
-export const { updateFormData, updateId,updateProjectName } = addProjectSlice.actions;
+export const { updateFormData, updateId,updateProjectName,addStepperValue } = addProjectSlice.actions;
 
 export default addProjectSlice.reducer;

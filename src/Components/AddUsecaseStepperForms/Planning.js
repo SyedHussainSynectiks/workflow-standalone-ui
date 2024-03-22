@@ -1,4 +1,3 @@
-"use client"
 import React, { useEffect, useState } from 'react'
 import { Button, Table } from "antd"
 import { CaretRightOutlined } from "@ant-design/icons"
@@ -31,12 +30,11 @@ const Planning = () => {
       .then((response) => {
         // console.log(JSON.stringify(response.data));
         setRecivedData(response.data)
-        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [setRecivedData]);
   // console.log(reciveddata);
 
   return (
@@ -49,9 +47,9 @@ const Planning = () => {
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr>
-              <th style={{ width: '40%' }} className='p-1 pr-10 text-sm text-left'>Stages</th>
-              <th style={{ width: '12%' }} className='p-1 pr-10 text-sm border border-y-0 border-r-0 border-l-2'>Assign to</th>
-              <th style={{ width: '12%' }} className='p-1 pr-10 text-sm border border-y-0 border-r-0 border-l-2'>Start Date</th>
+              <th style={{ width: '36%' }} className='p-1 pr-10 text-sm text-left'>Stages</th>
+              <th style={{ width: '11%' }} className='p-1 pr-10 text-sm border border-y-0 border-r-0 border-l-2'>Assign to</th>
+              <th style={{ width: '10%' }} className='p-1 pr-10 text-sm border border-y-0 border-r-0 border-l-2'>Start Date</th>
               <th style={{ width: '12%' }} className='p-1 pr-10 text-sm border border-y-0 border-r-0 border-l-2'>Deviation</th>
               <th style={{ width: '12%' }} className='p-1 pr-10 text-sm border border-y-0 border-r-0 border-l-2'>End Date</th>
               <th style={{ width: '12%' }} className='p-1 pr-10 text-sm border border-y-0 border-r-0 border-l-2'>Deviation</th>
@@ -78,16 +76,16 @@ const Planning = () => {
                         <col style={{ width: '40%' }} />
                         <col style={{ width: '12%' }} />
                         <col style={{ width: '12%' }} />
-                        <col style={{ width: '12%' }} />
-                        <col style={{ width: '12%' }} />
-                        <col style={{ width: '12%' }} />
+                        <col style={{ width: '13%' }} />
+                        <col style={{ width: '14%' }} />
+                        <col style={{ width: '11%' }} />
                       </colgroup>
                       {Object.values(Data).map((values) => (
                         Object.values(values).map((valuesdata) => (
                           valuesdata.map((actualData) => (
                             <tr key={actualData.name}>
                               <td className='text-sm font-semibold leading-snug text-left py-3  '>{actualData.name}</td>
-                              <td className='text-sm font-semibold leading-snug text-left py-3 pl-2'>Angela Moss</td>
+                              <td className='text-sm font-semibold leading-snug text-left py-3 pl-2'>{actualData.assigned_to.name}</td>
                               <td className='text-sm font-semibold leading-snug text-left py-3 pl-4'>{actualData.start_date}</td>
                               <td className='text-sm font-semibold leading-snug text-left py-3 pl-10'>{actualData.start_deviation}</td>
                               <td className='text-sm font-semibold leading-snug text-left py-3 pl-5'>{actualData.end_date}</td>
