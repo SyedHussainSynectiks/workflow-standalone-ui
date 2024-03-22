@@ -46,7 +46,13 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   const [imageBase64, setImageBase64] = useState();
 
   const formData = useSelector((state) => state.addProject);
+  const [startDate, setStartDate] = useState(null);
 
+  
+  const disabledEndDate = (current) => {
+    // Disable dates that are before the selected start date or are the selected start date
+    return current && (current <= startDate);
+  };
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -58,7 +64,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   };
   const handleStartDateChange = (date, dateString) => {
     const formattedStartDate = moment(dateString).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-    
+    setStartDate(date);
     setProject({
       ...project,
       startDate: formattedStartDate,
@@ -203,7 +209,7 @@ const handleImageUpload = async (info) => {
                 id="projectEndDate"
                 placeholder="End Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200shadow px-1 py-1 h-8 w-[184px] m-1"
-                disabledDate={disabledDate}
+                disabledDate={disabledEndDate}
                 onChange={handleEndDateChange}
               />
             </div>

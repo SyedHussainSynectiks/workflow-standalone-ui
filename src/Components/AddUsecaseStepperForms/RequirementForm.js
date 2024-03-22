@@ -29,6 +29,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Link from "next/link";
 import Item from "antd/es/list/Item";
+import user from "../../../public/assets/user.png"
 const { Dragger } = Upload;
 //Doc upload//
 
@@ -248,7 +249,7 @@ const RequirementForm = (stepperState) => {
     setConvertedImages(newConvertedImages);
   };
   let accesstoken =
-    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjNGI4YjRhOC05MDExLTcwMmUtOTY2ZC1lZDQ3NmUzODY5ZDciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiI2NDY4ZjIzNi02NmM4LTRlMjItYWVlYS0xMDA0YjE0YzVjMjkiLCJjdXN0b206b3JnX2lkIjoiYjk0YTU2NGQtODlmNy00NmQxLWJkNDEtYzZmNzQwMzQ5N2JjIiwiY29nbml0bzp1c2VybmFtZSI6ImM0YjhiNGE4LTkwMTEtNzAyZS05NjZkLWVkNDc2ZTM4NjlkNyIsIm9yaWdpbl9qdGkiOiIwYzg0NzM0OS03YzY0LTQwMDQtOTQ3MC0xOGY1NGEwMmI3OWYiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiZDY1NjJmNmYtZmQyMC00NGFmLWFjNmQtZWZkMzg4ZWRmZjQ4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTA5ODg4MDAsImV4cCI6MTcxMTA3NTIwMCwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMDk4ODgwMCwianRpIjoiYWQxMWFiNGQtZDJmZS00MWI0LThmOGQtZjVmZGUwNjViNmMxIiwiZW1haWwiOiJpdHphbHRhZmh1c2FpbkBnbWFpbC5jb20ifQ.pztB9zhnz4rql7dXshoz0_l-q52mn7yJr6wI8KBvjBVGE1Ab2ZMyqLUoTxKS8YE8kb_9-Rsf1qKk6tNTHOMVEFsizPgQA1KgxGspuVFRjzAFz8K4xoL3z8XT7aT3XHpF5CTv3jQjhw1Vpvea63FCAx-5VG_xw-EkEzpKLzhNhYGfZAJzvQd1EE7AhUDIJCp6NCX0oAVDsfv1fPihJyWVjvoFOZumR9fTNfchlzIoquLLMey5wnNovKBT-jSBGjFUh9nZKJmTugZYKana4YO3VxhCgPaawZg-PpU36HWe0nK7OjBJq7TVjW4natfR-q9_YJrLLgLfsz-sE1vDcs9o2w";
+    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjNGI4YjRhOC05MDExLTcwMmUtOTY2ZC1lZDQ3NmUzODY5ZDciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiI2NDY4ZjIzNi02NmM4LTRlMjItYWVlYS0xMDA0YjE0YzVjMjkiLCJjdXN0b206b3JnX2lkIjoiYjk0YTU2NGQtODlmNy00NmQxLWJkNDEtYzZmNzQwMzQ5N2JjIiwiY29nbml0bzp1c2VybmFtZSI6ImM0YjhiNGE4LTkwMTEtNzAyZS05NjZkLWVkNDc2ZTM4NjlkNyIsIm9yaWdpbl9qdGkiOiI4MWNhZTliNC00NmQ3LTRlNzQtOGM4NS0zOGNhMWM0MDZhOTMiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiYjliMjkwZTktZDBlNi00MDdlLWFiYmItMTk0MDdjN2MyZDUzIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTEwNzk2MDAsImV4cCI6MTcxMTE2NjAwMCwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMTA3OTYwMCwianRpIjoiOGI4YzU3ZTAtOWFiMi00OTNhLThlOWUtYmUwMDhiY2UyNDc3IiwiZW1haWwiOiJpdHphbHRhZmh1c2FpbkBnbWFpbC5jb20ifQ.hZt3B30zbhANvIyAzVC8VdsTSFHTZALtQBINapFjU1ezJ2YHNDc6WuYxgXP0QfPjK3pONgWf_iR3Wgf0rFHner602HNmcFCbGpMUbkE-et8-Q1irRkF-RbYR9ErNpkKtJdWZbghDvkrPQmaAIgwxvNJSO56Dx67Vlma9d80J4rEV4X_Sj7_MQhm097tZKUNkL0LgEdQ-wATR9ZlMlKWeUVL3AHD4oIXYbTB6hbXHjDFwxtsr8L9Jka-byWVcK0bbejwTMicGEhdCN5WEAZiCOjrxpHD6dSD8nA7Ju6n9EQiuW4mXSG1F4wNu515PTgTJDFRQ47Ou12sMRaZS0ZEnsA";
   const uploadingImages = async () => {
     const newAttachments = [];
     for (let i = 0; i < convertedImages.length; i++) {
@@ -310,11 +311,9 @@ const RequirementForm = (stepperState) => {
 
   //////---------------Doc Link
 
-
-
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
-  const [linkUpload, setlinkUpload] = useState(false)
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+  const [linkUpload, setlinkUpload] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -325,9 +324,6 @@ const RequirementForm = (stepperState) => {
     setIsModalOpen(false);
   };
 
-  
-
-
   const inputName = (e) => {
     setName(e.target.value);
   };
@@ -336,20 +332,18 @@ const RequirementForm = (stepperState) => {
     setLink(e.target.value);
   };
 
- 
   const handleSubmit = async () => {
     if (!link) {
-      console.log('No link provided');
+      console.log("No link provided");
       return;
     }
 
     try {
-      
       // Fetch the image from the provided URL
       const response = await fetch(link);
-      const response1 = response.url
-      console.log(response1)
-      console.log(response)
+      const response1 = response.url;
+      console.log(response1);
+      console.log(response);
       const blob = await response.blob();
 
       // Convert the blob to base64
@@ -360,24 +354,23 @@ const RequirementForm = (stepperState) => {
       const newAttachments = [];
       const request = {
         // name: name,
-        fileName:name,
-        data: base64
+        fileName: name,
+        data: base64,
       };
 
       // Send data to API
-      const apiResponse = await axios.post('https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload',
-      request,
-      {
-        headers: { 
-          'Content-Type': 'application/json', 
-          'Accept': 'application/json',
-          Authorization: "Bearer eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxNGE4MDQ5OC1hMDAxLTcwMmQtOWY5Ni00NzMwZWVmMDNhZWUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiJkOTI5NGQ3OS0zOGEwLTQ2MTgtYTFiNi03ODE2M2Y0Y2U5ZjciLCJjdXN0b206b3JnX2lkIjoiZjFlNzNkMTktMmMzZi00MjVmLWI4ZTQtZmIzMWNiN2JkMDcxIiwiY29nbml0bzp1c2VybmFtZSI6IjE0YTgwNDk4LWEwMDEtNzAyZC05Zjk2LTQ3MzBlZWYwM2FlZSIsImN1c3RvbTpwYXNzd29yZCI6IlFAMTIzNDUiLCJvcmlnaW5fanRpIjoiOTRiMjAwNjgtMDRiZC00NzUwLTkzY2EtMjlkMzM4ODZjYjMxIiwiYXVkIjoiNzlxYTA0dW12NW8xaHNrb2o1ZnF0ZDJzOHAiLCJldmVudF9pZCI6ImZjZmQ5NWE1LTlmN2YtNDIzOS04MTViLTI3NWQwNjYyMGE5ZCIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzEwODMwMTE2LCJleHAiOjE3MTA5MTY1MTYsImN1c3RvbTpyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTA4MzAxMTYsImp0aSI6Ijk2MzFlZDcwLTBmZGUtNGQ4NC05ZTE2LThjZDFiYmQ5NDliOCIsImVtYWlsIjoibW9oYW1tZWQ4MTQyM25hZGVlbUBnbWFpbC5jb20ifQ.4X1q2WvyjWkTHhtNxg331DwKstIlzdTac8d6fUBmxy3FIpflQsF4o8NUjZ--2CNS0FqCal4TKxqY46Dj8qbzr1DcXQXhB755gTxXYAmJ-LHHtv-FzLtjp6JBbRZG2ortP2dVP2obeDq0Cxw6doVq35ElBVjDXIXV18L6zD64E8lBhzb_FJHIINCbwh9OjMMdz8s85kqmdqzFdEYRbQKKWMjoOuSuoOhJvYXJpo4lwra4AcqNMdICkBQSeF8mRAe9A37oJRltZlZ5cT29E3PrO1tZqAlUIUhOfnnyW6l2gZUjWl7w25um6vf1c0y-IMwxjZtTJHf8sl68Ns5YXvTbOg"
-        }}  );
-   
+      const apiResponse = await axios.post(
+        "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
+        request,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${accesstoken}`,
+          },
+        }
+      );
 
-     
-
-      
       // Handle API response
       console.log(apiResponse.data);
 
@@ -385,10 +378,9 @@ const RequirementForm = (stepperState) => {
       setAttachments([...Attachments, ...newAttachments]);
       setConvertedImages([]); // Reset convertedImages after upload
       setUploadingFiles([]); // Clear uploading files after upload
-
     } catch (error) {
       // Handle error
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -402,31 +394,22 @@ const RequirementForm = (stepperState) => {
   //   });
   // };
 
-
-
-
   const blobToBase64 = (blob) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onloadend = () => {
-      //   if (reader.result) {
-          resolve(reader.result);
-      //   } else {
-      //     reject(new Error('Error reading Blob'));
-      //   }
+        //   if (reader.result) {
+        resolve(reader.result);
+        //   } else {
+        //     reject(new Error('Error reading Blob'));
+        //   }
       };
       reader.onerror = reject;
       reader.readAsDataURL(blob);
     });
   };
-  
-
-
-
 
   //////---------------Doc Link End
-
-
 
   const [DocumentAssign, setDocumentAssign] = useState({
     doc_name: "",
@@ -445,6 +428,7 @@ const RequirementForm = (stepperState) => {
       doc_name: DocumentAssign.doc_name,
       doc_url: convertedImagesString,
     }),
+    
       console.log("Docs", currentTask);
     // handleAssignButtonClick(AssignResourseId);
     HandleUploadingDoc(), handleCancel();
@@ -501,6 +485,34 @@ const RequirementForm = (stepperState) => {
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
   // console.log(AssignName, AssignIndex);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !event.target.closest(".relative.flex")
+      ) {
+        setOpenItemIndex(null); 
+        setopenActionIndex(null)
+      }
+    }
+
+    if (openItemIndex !== null) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else if (openActionIndex !== null) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+
+   
+  }, [openItemIndex,openActionIndex, dropdownRef]);
+
   const openNotification = (placement, type, message) => {
     notification[type]({
       message: message,
@@ -533,7 +545,7 @@ const RequirementForm = (stepperState) => {
   const handleCancel = () => {
     setShowUploadModal(false);
     setIsModalOpen(false);
-  };    
+  };
   const toggleDropDown = (index) => {
     setIsOpen(!isOpen);
   };
@@ -720,7 +732,7 @@ const RequirementForm = (stepperState) => {
                       ) : (
                         <div className="flex gap-2 w-[2]" id="AssigneeImg">
                           <Image
-                            src={data.assigned_to.image}
+                            src={data.assigned_to.image ? data.assigned_to.image : user}
                             alt={data.assigned_to.name}
                             height={34}
                           ></Image>
@@ -841,7 +853,7 @@ const RequirementForm = (stepperState) => {
                                             )
                                           )}
                                         </li>
-                                        <button
+                                        <button ref={dropdownRef}
                                           onClick={() => {
                                             // handleAssignButtonClick(
                                             //   selectedAssign
@@ -871,7 +883,7 @@ const RequirementForm = (stepperState) => {
 
                     <div className="flex items-center space-x-2">
                       <MessageOutlined style={{ fontSize: "20px" }} />
-                      <div className="relative">
+                      <div className="relative" ref={dropdownRef}>
                         <button
                           onClick={() => {
                             toggleOptions(index), setAssignIndex(index);
@@ -941,18 +953,36 @@ const RequirementForm = (stepperState) => {
                           </Button>
                         </Modal>
 
-                        <Modal title="Document Upload" open={isModalOpen} onOk={()=>{handleOk(), handleSubmit()}} onCancel={handleCancel}>
-
-                              <div className="flex flex-col gap-4">
-
-                                <input onChange={(e)=>{inputName(e)}}  className="p-2 border rounded " placeholder="Enter Name"></input>
-                                <div className="flex w-full ">
-                                 <button className="mr-2 border rounded p-2">https://</button>
-                                <input onChange={(e)=>{inputLink(e)}} className="p-2 border rounded  w-full" placeholder="Paste link here "  ></input>
-                                  </div>
-                              </div>
-
-                            </Modal>
+                        <Modal
+                          title="Document Upload"
+                          open={isModalOpen}
+                          onOk={() => {
+                            handleOk(), handleSubmit();
+                          }}
+                          onCancel={handleCancel}
+                        >
+                          <div className="flex flex-col gap-4">
+                            <input
+                              onChange={(e) => {
+                                inputName(e);
+                              }}
+                              className="p-2 border rounded "
+                              placeholder="Enter Name"
+                            ></input>
+                            <div className="flex w-full ">
+                              <button className="mr-2 border rounded p-2">
+                                https://
+                              </button>
+                              <input
+                                onChange={(e) => {
+                                  inputLink(e);
+                                }}
+                                className="p-2 border rounded  w-full"
+                                placeholder="Paste link here "
+                              ></input>
+                            </div>
+                          </div>
+                        </Modal>
                       </div>
                     </div>
                   </div>

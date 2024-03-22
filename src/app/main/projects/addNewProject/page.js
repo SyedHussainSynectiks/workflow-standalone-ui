@@ -220,6 +220,7 @@ export default function page({ formNext }) {
         const result = response.data;
         console.log("success:", result, result.id);
         dispatch(updateId(result.id));
+        dispatch(addProjectId(result.id))
 
         setCurrent(current + 1);
       })
