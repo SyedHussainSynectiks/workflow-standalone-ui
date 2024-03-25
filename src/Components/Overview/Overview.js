@@ -14,13 +14,13 @@ function Overview() {
     <>
       <div className="w-full h-screen bg-white rounded border-t-[2rem] border-[#F5F5F5]">
         <Row align="middle" className="h-full">
-          <Col span={12} className="pr-8">
+          <Col span={10} className="pr-8">
             <Image src={Overviewimage} className="ml-8" alt="Overview" />
           </Col>
-          <Col span={12} className="pl-4">
-            <Row gutter={24} justify="space-around" align="middle">
-              <Col>
-                <div className="w-56 border-gray-300 h-40 border-2 rounded-lg px-9">
+          <Col span={14} className="pl-4">
+            <Row gutter={8} justify="space-around" align="middle">
+              <Col span={10}>
+                <div className="border-gray-300 h-40 border-2 rounded-lg">
                   <Link
                     href="/main/projects/addStages"
                     onClick={() => dispatch(addToggleValue("1"))}
@@ -35,8 +35,8 @@ function Overview() {
                   </Link>
                 </div>
               </Col>
-              <Col>
-                <div className="w-56 border-gray-300 h-40 text-center items-center border-2 rounded-lg px-9">
+              <Col span={10}>
+                <div className="border-gray-300 h-40 text-center items-center border-2 rounded-lg">
                   <Link
                     href="/main/projects/addStages"
                     onClick={() => dispatch(addToggleValue("2"))}
