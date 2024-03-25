@@ -18,7 +18,7 @@ function Overview() {
             <Image src={Overviewimage} className="ml-8" alt="Overview" />
           </Col>
           <Col span={12} className="pl-4">
-            <Row gutter={24} justify="center" align="middle">
+            <Row gutter={24} justify="space-around" align="middle">
               <Col>
                 <div className="w-56 border-gray-300 h-40 border-2 rounded-lg">
                   <Link
