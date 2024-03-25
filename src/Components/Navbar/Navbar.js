@@ -25,11 +25,11 @@ const { Header } = Layout;
 const Navbar = () => {
   return (
     <>
-      <Header className='flex flex-row items-center justify-between w-full '
+      <Header className='flex flex-row items-center justify-between w-full'
         style={{ padding: 32, position: 'sticky', top: 0, right: 0, zIndex: 10 }}>
         {/* <Button theme="light" className='w-1/3' icon={<SearchOutlined />}>Search</Button> */}
-        <Row type="flex" justify="space-between" align='middle'>
-          <Col push={10}>
+        <Row gutter={18} justify="end" align='middle' className='w-full'>
+          <Col span={6} offset={4}>
             <Input
               placeholder="Search"
               suffix={<SearchOutlined />}
@@ -39,7 +39,7 @@ const Navbar = () => {
               }}
             />
           </Col>
-          <Col push={20}>
+          <Col span={6} offset={8}>
             <div className="flex items-center gap-4">
               <QuestionCircleOutlined style={{ color: '#888', fontSize: '20px' }} />
               <Badge count={1} style={{ fontSize: '12px', width: '20px', height: '20px', lineHeight: '20px' }}>

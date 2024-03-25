@@ -181,7 +181,7 @@ const ProjectLayout = () => {
             ]}
           />
           <h1 className="capitalize text-2xl">Projects Overview</h1>
-          <label className="flex items-center justify-center">
+          <Row className="flex items-center justify-center">
             <input
               type="text"
               placeholder="Search projects..."
@@ -189,7 +189,7 @@ const ProjectLayout = () => {
               onChange={handleSearchChange}
               className="border-[1.5px] shadow-slate-400 rounded-none border-gray-900 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-400 focus:outline-none rounded-l transition duration-300"
             /><Button type="primary" className=" rounded-none py-1 px-4 bg-[#1890FF] hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white"><SettingOutlined className='mr-3' />Search</Button>
-          </label>
+          </Row>
         </div>
         <div className="bg-white flex flex-row justify-between items-center py-4 px-5">
           <Dropdown className="border border-gray-300 rounded-none p-2"
