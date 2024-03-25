@@ -20,7 +20,7 @@ function Overview() {
           <Col span={12} className="pl-4">
             <Row gutter={24} justify="space-around" align="middle">
               <Col>
-                <div className="w-56 border-gray-300 h-40 border-2 rounded-lg">
+                <div className="w-56 border-gray-300 h-40 border-2 rounded-lg px-9">
                   <Link
                     href="/main/projects/addStages"
                     onClick={() => dispatch(addToggleValue("1"))}
@@ -36,7 +36,7 @@ function Overview() {
                 </div>
               </Col>
               <Col>
-                <div className="w-56 border-gray-300 h-40 text-center items-center border-2 rounded-lg">
+                <div className="w-56 border-gray-300 h-40 text-center items-center border-2 rounded-lg px-9">
                   <Link
                     href="/main/projects/addStages"
                     onClick={() => dispatch(addToggleValue("2"))}
