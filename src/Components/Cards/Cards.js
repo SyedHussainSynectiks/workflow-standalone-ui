@@ -38,7 +38,7 @@ const DashCards = ({ }) => {
             style={{
               boxShadow: '0px 0px 5px 1px rgba(0, 0, 0, 0.2)',
               borderRadius: '5px',
-              height: 'fit-content',
+              height: '220px',
               padding: '16px',
             }}
           >
@@ -66,7 +66,7 @@ const DashCards = ({ }) => {
             style={{
               boxShadow: '0px 0px 5px 1px rgba(0, 0, 0, 0.2)',
               borderRadius: '5px',
-              height: 'fit-content',
+              height: '220px',
               padding: '16px',
             }}
           >
@@ -94,7 +94,7 @@ const DashCards = ({ }) => {
             style={{
               boxShadow: '0px 0px 5px 1px rgba(0, 0, 0, 0.2)',
               borderRadius: '5px',
-              height: 'fit-content',
+              height: '220px',
               padding: '16px',
             }}
           >
@@ -122,7 +122,7 @@ const DashCards = ({ }) => {
             style={{
               boxShadow: '0px 0px 5px 1px rgba(0, 0, 0, 0.2)',
               borderRadius: '5px',
-              height: 'fit-content',
+              height: '220px',
               padding: '16px',
             }}
           >
