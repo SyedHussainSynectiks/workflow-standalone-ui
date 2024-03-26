@@ -6,7 +6,7 @@ const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
 import { useMediaQuery } from 'react-responsive';
 import api from '@/api';
-const DashCards = ({ data }) => {
+const DashCards = ({ }) => {
   const [size, setSize] = useState('large');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
