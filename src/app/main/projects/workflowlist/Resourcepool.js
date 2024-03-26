@@ -129,7 +129,7 @@ const Resourcepool = () => {
 
               <div className="flex space-x-2 " >
                 <Link
-                  href="/main/projects/developmentUsecases" className="w-[17rem]" onClick={() => { WorkflowId(data.workflow_id) }}>
+                  href="/main/projects/developmentUsecases" className="w-[21rem]" onClick={() => { WorkflowId(data.workflow_id) }}>
                   <div className=" border border-grey-300 rounded-lg px-4 py-5 space-y-2 " >
                     <div key={index} >
                       <div className="flex items-center w-[100%] justify-between">
