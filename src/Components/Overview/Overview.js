@@ -6,35 +6,54 @@ import Selecttemplate from "../../../public/assets/Selecttemplate.svg"
 import Createtemplate from "../../../public/assets/Createtemplate.svg"
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'
+import { Row, Col } from 'antd';
 
 function Overview() {
   const dispatch = useDispatch();
   return (
     <>
-        <div className='w-[100%] flex border h-screen items-center bg-white  rounded border-t-[2rem] border-[#F5F5F5]'>
-           <div className='w-[50%] '>
-                <Image src={Overviewimage} className=' ml-24 ' />
-           </div>
-
-        <div className='w-[50%] flex justify-evenly items-center  space-x-24'>
-
-          <div className='w-[25%] border-blue-200 h-40   border-2 rounded-lg '>
-            <Link href="/main/projects/addStages" onClick={() => { dispatch(addToggleValue("1")) }} className='w-[100%] flex flex-col items-center'>
-              <Image src={Selecttemplate} className='mt-3 mb-4  ' />
-              <h2>Select Template</h2>
-            </Link>
-          </div>
-
-          <div className='w-[25%] border-blue-200 h-40  text-center  items-center border-2 rounded-lg '>
-            <Link href="/main/projects/addStages" onClick={() => { dispatch(addToggleValue("2")) }} className='w-[100%] flex flex-col items-center'>
-              <Image src={Createtemplate} className=' mt-3 mb-4  ' />
-              <h2>Create Template</h2>
-            </Link>
-          </div>
-
-        </div>
-
-
+      <div className="w-full h-screen bg-white rounded border-t-[2rem] border-[#F5F5F5]">
+        <Row align="middle" className="h-full">
+          <Col span={10} className="pr-8">
+            <Image src={Overviewimage} className="ml-8" alt="Overview" />
+          </Col>
+          <Col span={14} className="pl-4">
+            <Row gutter={8} justify="space-around" align="middle">
+              <Col span={10}>
+                <div className="border-gray-300 h-40 border-2 rounded-lg">
+                  <Link
+                    href="/main/projects/addStages"
+                    onClick={() => dispatch(addToggleValue("1"))}
+                    className="w-full flex flex-col items-center"
+                  >
+                    <Image
+                      src={Selecttemplate}
+                      className="mt-3 mb-4"
+                      alt="Select Template"
+                    />
+                    <h2>Select Template</h2>
+                  </Link>
+                </div>
+              </Col>
+              <Col span={10}>
+                <div className="border-gray-300 h-40 text-center items-center border-2 rounded-lg">
+                  <Link
+                    href="/main/projects/addStages"
+                    onClick={() => dispatch(addToggleValue("2"))}
+                    className="w-full flex flex-col items-center"
+                  >
+                    <Image
+                      src={Createtemplate}
+                      className="mt-3 mb-4"
+                      alt="Create Template"
+                    />
+                    <h2>Create Template</h2>
+                  </Link>
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </div>
     </>
   )

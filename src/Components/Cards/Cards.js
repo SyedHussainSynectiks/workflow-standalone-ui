@@ -29,41 +29,52 @@ const DashCards = () => {
     <>
 
       <Row gutter={16} className='gap-6 mt-4 w-full' >
-        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px',height:'fit-content' ,padding: '0px' }}>
-          <Card className='w-full h-[15rem]'
+        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', height: 'fit-content', padding: '0px' }}>
+          <Card className='w-full p-2'
             bordered={false}
             style={{
-              boxShadow: 0
+              boxShadow: 0,
+              height: '25vh'
             }}>
-              <div className='flex flex-col'>
-            <div className="flex items-center justify-between">
-              <Title level={4}>Total Projects </Title> <CheckCircleOutlined style={{ color: '#1890FF' }} />
-            </div>
-            <Title level={4}>{data.total_projects}</Title>
-            <Title level={5}>Progress {data.percentage_completed}%</Title>
-            <Progress type="line" percent={data.percentage_completed} strokeWidth={9}  strokeColor="#F8D236" trailColor='#F6EEFF' />
-            <Paragraph className='py-2'>Total Task {data.total_tasks}</Paragraph>
-            </div>
-          </Card>
-        </Col>
-
-        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px',height: 'fit-content', padding: '0px' }}>
-          <Card className='w-full h-[15rem]'
-            bordered={false}>
-              <div className=''>
-            <div className="flex items-center justify-between">
-              <Title level={4}>Completed Projects </Title> <IssuesCloseOutlined style={{ color: '#52C41A' }} />
-            </div>
-            <Title level={2}>{data.completed}</Title>
-            <Progress type="line" percent={`${Math.round((data.completed / data.total_projects) * 100)}`} strokeWidth={9} strokeLinecap='square' strokeColor="#52C41A" trailColor='#F6EEFF' />
-            <Paragraph className='py-2'>Completed Before 05 Days</Paragraph>
+            <div className='flex flex-col'>
+              <div className="flex items-center justify-between">
+                <Title level={4} className='mb-0'>Total Projects </Title> <CheckCircleOutlined style={{ color: '#1890FF' }} />
+              </div>
+              <Title level={4} className='mb-0'>{data.total_projects}</Title>
+              <Title level={5} className='mb-0'>Progress {data.percentage_completed}%</Title>
+              <span className='border '></span>
+              <Paragraph className='py-2'>Total Task {data.total_tasks}</Paragraph>
             </div>
           </Card>
         </Col>
 
-        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px',height: "fit-content", padding: '0px' }}>
-          <Card className='w-full h-[15rem]'
-            bordered={false}>
+        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', height: 'fit-content', padding: '0px' }}>
+          <Card className='w-full'
+            bordered={false}
+            style={{
+              boxShadow: 0,
+              height: '25vh'
+            }}
+          >
+            <div className=''>
+              <div className="flex items-center justify-between">
+                <Title level={4}>Completed Projects </Title> <IssuesCloseOutlined style={{ color: '#52C41A' }} />
+              </div>
+              <Title level={2}>{data.completed}</Title>
+              <Progress type="line" percent={`${Math.round((data.completed / data.total_projects) * 100)}`} strokeWidth={9} strokeLinecap='square' strokeColor="#52C41A" trailColor='#F6EEFF' />
+              <Paragraph className='py-2'>Completed Before 05 Days</Paragraph>
+            </div>
+          </Card>
+        </Col>
+
+        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', height: "fit-content", padding: '0px' }}>
+          <Card className='w-full'
+            bordered={false}
+            style={{
+              boxShadow: 0,
+              height: '25vh'
+            }}
+          >
             <div className="flex items-center justify-between">
               <Title level={4}>Inprogress Projects </Title> <ClockCircleOutlined style={{ color: '#FAAD14' }} />
             </div>
@@ -74,8 +85,12 @@ const DashCards = () => {
         </Col>
 
         <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', height: 'fit-content', padding: '0px' }}>
-          <Card className='w-full h-[15rem]'
-            bordered={false}>
+          <Card className='w-full'
+            bordered={false}
+            style={{
+              boxShadow: 0,
+              height: '25vh'
+            }}>
             <div className="flex items-center justify-between">
               <Title level={4}>Unassign Projects </Title> <StopOutlined style={{ color: '#FF4D4F' }} />
             </div>

@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 import { addUseCAseName, addUseCaseName, addUsecaseId } from "@/Context/useCaseSlice/useCaseSlice";
 
 import Link from "next/link";
-import { Breadcrumb } from "antd";
+import { Breadcrumb, } from "antd";
+import { SearchOutlined } from "@ant-design/icons"
 
 export default function Page() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function Page() {
   const workFlowId = setWorkFlowIds.id[0].workFlowId;
   const projectName = useSelector((state) => state.addProject.ProjectName);
 
-  
+
   console.log(projectId)
   console.log(workFlowId)
   const dispatch = useDispatch()
@@ -56,16 +57,16 @@ export default function Page() {
     <>
       <main className="h-full  w-full">
         <Breadcrumb
-        className="bg-white p-2"
+          className="bg-white p-2"
           items={[
             {
-              title:<a href="/main"> Project</a>
+              title: <a href="/main"> Project</a>
             },
             {
               title: <a href="/main/projects/workflowlist">{projectName}</a>,
             },
             {
-              title:"WorkFlow",
+              title: "WorkFlow",
             },
           ]}
         />
@@ -73,14 +74,10 @@ export default function Page() {
           <p className="UseCasesTxt">UseCases</p>
           <div className="BtnSearchFlexLeft">
             <div className="SearchTxtSearchBarFlex">
-              <input
-                className="SearchTxt ml-2 border border-neutral-500"
-                type="text"
-                placeholder="Search text"
-              />
+              <input className="SearchTxt ml-2 border border-neutral-500" type="text" placeholder="Search text" />
               <span>
-                <button className="UseCaseBtnClr">
-                  {/* <Image src={Search} alt="#" /> */}
+                <button className="UseCaseBtnClr" style={{ backgroundColor: '#2563EB' }}>
+                  <SearchOutlined style={{ color: 'white' }} />
                 </button>
               </span>
             </div>
@@ -104,7 +101,7 @@ export default function Page() {
                 {stageUsecases.length > 0 ? (
                   <div className="w-[100%]">
                     {stageUsecases.map((usecase, index) => ( //assignee_id
-                      <Link href="/main/projects/usecaseFormStepper" onClick={()=>{dispatchData(usecase.usecase_id); dispatch(addUseCaseName(usecase.usecase_name))}}>
+                      <Link href="/main/projects/usecaseFormStepper" onClick={() => { dispatchData(usecase.usecase_id); dispatch(addUseCaseName(usecase.usecase_name)) }}>
                         <div
                           key={index}
                           className=" w-[100%] rounded-lg p-3 leading-4 gap-3"
