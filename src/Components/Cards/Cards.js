@@ -30,20 +30,23 @@ const DashCards = () => {
 
       <Row gutter={16} className='gap-6 mt-4 w-full' >
         <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', height: 'fit-content', padding: '0px' }}>
-          <Card className='w-full p-2'
+          <Card className='w-full p-0'
             bordered={false}
             style={{
               boxShadow: 0,
-              height: '25vh'
             }}>
             <div className='flex flex-col'>
               <div className="flex items-center justify-between">
-                <Title level={4} className='mb-0'>Total Projects </Title> <CheckCircleOutlined style={{ color: '#1890FF' }} />
+                <Title level={4} className='m-0' >Total Projects </Title> <CheckCircleOutlined style={{ color: '#1890FF' }} />
               </div>
-              <Title level={4} className='mb-0'>{data.total_projects}</Title>
-              <Title level={5} className='mb-0'>Progress {data.percentage_completed}%</Title>
-              <span className='border '></span>
-              <Paragraph className='py-2'>Total Task {data.total_tasks}</Paragraph>
+              <Title level={4} style={{
+                marginTop: '-5px'
+              }}>{data.total_projects}</Title>
+              <Title level={5} style={{
+                marginTop: '5px'
+              }}>Progress {data.percentage_completed}%</Title>
+              <hr />
+              <Paragraph className='pt-2 m-0'>Total Task {data.total_tasks}</Paragraph>
             </div>
           </Card>
         </Col>
@@ -53,7 +56,6 @@ const DashCards = () => {
             bordered={false}
             style={{
               boxShadow: 0,
-              height: '25vh'
             }}
           >
             <div className=''>
@@ -72,7 +74,6 @@ const DashCards = () => {
             bordered={false}
             style={{
               boxShadow: 0,
-              height: '25vh'
             }}
           >
             <div className="flex items-center justify-between">
@@ -89,14 +90,13 @@ const DashCards = () => {
             bordered={false}
             style={{
               boxShadow: 0,
-              height: '25vh'
             }}>
             <div className="flex items-center justify-between">
               <Title level={4}>Unassign Projects </Title> <StopOutlined style={{ color: '#FF4D4F' }} />
             </div>
             <Title level={2}>{data.unassigned}</Title>
             {/* <Progress type="line" percent={30} strokeWidth={16} strokeLinecap='square' strokeColor="#FF4D4F" trailColor='#F6EEFF' /> */}
-            <Progress type="line" percent={`${Math.round((data.unassigned / data.total_projects) * 100)}`} strokeWidth={16} strokeLinecap='square' strokeColor="#FF4D4F" trailColor='#F6EEFF' />
+            <Progress type="line" percent={`${Math.round((data.unassigned / data.total_projects) * 100)}`} strokeWidth={9} strokeLinecap='square' strokeColor="#FF4D4F" trailColor='#F6EEFF' />
             <Paragraph className='py-3'>view Details</Paragraph>
           </Card>
         </Col>
