@@ -31,8 +31,7 @@ const Resourcepool = () => {
     dispatch(addProjectId(ProjectId))
     // console.log(ProjectId)
   }
-  const setprojectIds = useSelector((state) => state.addResources);
-  const projectId = setprojectIds.id[0].prjectId;
+  const projectId = useSelector((state) => state.addProject.id);
   console.log(projectId)
   useEffect(() => {
     let config = {

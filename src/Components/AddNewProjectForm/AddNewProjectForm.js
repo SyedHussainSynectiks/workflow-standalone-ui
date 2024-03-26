@@ -122,7 +122,7 @@ const handleImageUpload = async (info) => {
     startDate: "",
     endDate: "",
     projectId: "",
-    image_url: "https://i.imgur.com/PujQY5Y.png",
+    image_url: "",
   });
 
   const projectData = useSelector(state => state.addProject);

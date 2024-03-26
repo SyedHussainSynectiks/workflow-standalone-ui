@@ -11,12 +11,15 @@ const initialState = {
   end_date: "",
   image_url: "",
   id: isBrowser
-  ? JSON.parse(localStorage.getItem("ProjectId")) || []
-  : [],
-  ProjectName:isBrowser
-  ? JSON.parse(localStorage.getItem("ProjectName")) || []
-  : [],
-  ProjectStepperValue:""
+    ? JSON.parse(localStorage.getItem("ProjectId")) || []
+    : [],
+  ProjectName: isBrowser
+    ? JSON.parse(localStorage.getItem("ProjectName")) || []
+    : [],
+  ProjectStepperValue: "",
+  resourcePoolProjectID: isBrowser
+    ? JSON.parse(localStorage.getItem("resourcePoolID")) || []
+    : [],
 };
 
 const addProjectSlice = createSlice({
@@ -26,9 +29,9 @@ const addProjectSlice = createSlice({
     updateFormData: (state, action) => {
       // Update the form data in the state
       console.log(action.payload);
-      
+
       return { ...state, ...action.payload };
-      
+
     },
     updateId: (state, action) => {
       console.log("project d", action.payload);
@@ -46,10 +49,18 @@ const addProjectSlice = createSlice({
     },
     addStepperValue(state, action) {
       state.ProjectStepperValue = action.payload;
-    console.log("toggleValue",action.payload)}
+      console.log("toggleValue", action.payload)
+    },
+    resourcePoolID: (state, action) => {
+      state.resourcePoolProjectID = action.payload
+      console.log("ResourcePoolId", action.payload)
+      
+      let setresourcePoolID = JSON.stringify(state.resourcePoolProjectID);
+      localStorage.setItem("resourcePoolID", setresourcePoolID);
+    }
   },
 });
 
-export const { updateFormData, updateId,updateProjectName,addStepperValue } = addProjectSlice.actions;
+export const { updateFormData, updateId, updateProjectName, addStepperValue, resourcePoolID } = addProjectSlice.actions;
 
 export default addProjectSlice.reducer;

@@ -73,9 +73,9 @@ const addresourcesSlice = createSlice({
     "DevOpsEngineer": [],
     "AutomationTester": [],
     "ProjectManager": [],
-    "ProjectManagerLength":"",
+    "ProjectManagerLength": "",
     "UXDesigner": [],
-    "UxDesignerLength":"",
+    "UxDesignerLength": "",
     "UIDeveloper": [],
     "UIDeveloperLength": "",
     "APIDeveloper": [],
@@ -110,8 +110,12 @@ const addresourcesSlice = createSlice({
       localStorage.setItem("workFlowId", setWorkFlowId);
     },
     addResourcesData: (state, action) => {
-      state.resoucesInfo.push(action.payload);
-      console.log("resources Data: ", action.payload);
+      const newData = action.payload;
+      if (newData.isChecked === true) {
+        state.resoucesInfo.push(newData);
+      } else if (newData.isChecked === false) {
+        state.resoucesInfo = state.resoucesInfo.filter(item => item.id !== newData.id);
+      }
     },
     addResourcesPM: (state, action) => {
       state.ProjectManager = action.payload;
@@ -154,7 +158,7 @@ const addresourcesSlice = createSlice({
       console.log("ProjectManager Data: ", action.payload);
     },
     addResourcesUxResearch: (state, action) => {
-      state.UXResearcher= action.payload;
+      state.UXResearcher = action.payload;
       console.log("UXResearcher Data: ", action.payload);
     },
     addResourcesUxResearcherLength: (state, action) => {

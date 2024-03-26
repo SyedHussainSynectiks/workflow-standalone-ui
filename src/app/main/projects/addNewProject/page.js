@@ -1,9 +1,8 @@
 "use client";
-"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, message, Steps, theme,notification, Breadcrumb } from "antd";
-import {AddResourcePool2} from "@/Components/AddResourcePool/AddresoucrePool2";
+import { Button, message, Steps, theme, notification, Breadcrumb } from "antd";
+import { AddResourcePool2 } from "@/Components/AddResourcePool/AddresoucrePool2";
 import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm";
 import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,23 +29,7 @@ const steps = [
 
 export default function page({ formNext }) {
   const projectData = useSelector((state) => state.addProject);
-  const ProductManager = useSelector((state) => state.addResources.ProjectManager);
-  const Uxdesigner = useSelector((state) => state.addResources.UXDesigner);
-  const UiDesigner = useSelector((state) => state.addResources.UIDeveloper);
-  const ApiDeveloper = useSelector((state) => state.addResources.APIDeveloper);
-  const Tester = useSelector((state) => state.addResources.Tester);
-  const UxResearcher = useSelector((state) => state.addResources.UXResearcher);
-  const CiCd = useSelector((state) => state.addResources.CICDSpecialist);
-
-  const openNotification = (placement, type, message) => {
-    notification[type]({
-      message: message,
-      placement: placement,
-    });
-  };
-
-
-
+  const EditButton = useSelector((state) => state.addProject.ProjectStepperValue)
   const projectId = useSelector((state) => state.addProject.id);
 
   console.log("projectId : ", projectId);
@@ -110,144 +93,111 @@ export default function page({ formNext }) {
       !projectData.projectDescription ||
       !projectData.projectDepartment ||
       !projectData.startDate ||
-      !projectData.endDate
+      !projectData.endDate ||
+      !projectData.image_url
     ) {
       message.error(
         "Please fill in all fields before proceeding to the next step"
       );
       return;
     }
-    if (current === 0) {
+    setCurrent(current + 1);
+    // if (current === 0) {
 
-      try {
-        // console.log(projectData)
-        await Apisubmit(projectData);
+    //   try {
+    //     // console.log(projectData)
+    //     await Apisubmit(projectData);
 
-      } catch (error) {
-        console.error("Error submitting data:", error);
-      }
-    }
-    // Apisubmit(projectData);
-    // console.log(projectData);
+    //   } catch (error) {
+    //     console.error("Error submitting data:", error);
+    //   }
+    // }
+    // // Apisubmit(projectData);
+    // // console.log(projectData);
 
-    const roles = [
-      { ProductManagerId: ProductManager },
-      { UxdesignerId: Uxdesigner },
-      { UiDesignerId: UiDesigner },
-      { ApiDeveloperId: ApiDeveloper },
-      { TesterId: Tester },
-      { UxResearcherId: UxResearcher },
-      { CiCdId: CiCd},
-    ];
+    // const roles = [
+    //   { ProductManagerId: ProductManager },
+    //   { UxdesignerId: Uxdesigner },
+    //   { UiDesignerId: UiDesigner },
+    //   { ApiDeveloperId: ApiDeveloper },
+    //   { TesterId: Tester },
+    //   { UxResearcherId: UxResearcher },
+    //   { CiCdId: CiCd},
+    // ];
 
-    const filteredRoles = roles.filter(role => Object.values(role)[0].length > 0);
+    // const filteredRoles = roles.filter(role => Object.values(role)[0].length > 0);
 
-    console.log("filteredRoles", filteredRoles)
-    if (current === 1) {
-      // console.log("TesterId", TesterId)
-      // console.log(object)
-      const postData = {
-        project_id: projectId,
-        team_name: projectData.projectName,
-        created_by_id: "550e8400-e29b-41d4-a716-446655440001",
-        roles: filteredRoles,
-      };
+    // console.log("filteredRoles", filteredRoles)
+    // if (current === 1) {
+    //   // console.log("TesterId", TesterId)
+    //   // console.log(object)
+    //   const postData = {
+    //     project_id: projectId,
+    //     team_name: projectData.projectName,
+    //     created_by_id: "550e8400-e29b-41d4-a716-446655440001",
+    //     roles: filteredRoles,
+    //   };
 
-      console.log("Before PUT request");
-      // console.log(project.projectId);
-      console.log(JSON.stringify(postData));
-      console.log("projectData", postData);
+    //   console.log("Before PUT request");
+    //   // console.log(project.projectId);
+    //   console.log(JSON.stringify(postData));
+    //   console.log("projectData", postData);
 
-      let config = {
-        method: "put",
-        maxBodyLength: Infinity,
-        url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        data: postData,
-      };
+    //   let config = {
+    //     method: "put",
+    //     maxBodyLength: Infinity,
+    //     url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Accept: "application/json",
+    //     },
+    //     data: postData,
+    //   };
 
-      axios
-        .request(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
+    //   axios
+    //     .request(config)
+    //     .then((response) => {
+    //       console.log(JSON.stringify(response.data));
 
-          setCurrent(current + 1);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    //       setCurrent(current + 1);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
 
-
-    }
+    // }
   };
 
-  const axios = require("axios");
-
-  const Apisubmit = async (project) => {
-
-
-    const projectname = project.projectName;
-    console.log(projectname);
-    dispatch(updateProjectName(projectname))
-    
-    let data = JSON.stringify({
-      name: project.projectName,
-      description: project.projectDescription,
-      department: project.projectDepartment,
-      start_date: project.startDate,
-      end_date: project.endDate,
-      image_url: "https://i.imgur.com/PujQY5Y.png",
-    });
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        const result = response.data;
-        console.log("success:", result, result.id);
-        dispatch(updateId(result.id));
-        dispatch(addProjectId(result.id))
-
-        setCurrent(current + 1);
-      })
-      .catch((error) => {
-        console.log(error);
-        const errorStatus = error.response.data.message
-        console.log(errorStatus)
-        openNotification("topRight", "error", ` ${errorStatus}`);
-      });
-  };
+  console.log("editbutton ", EditButton)
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (EditButton === "0") {
+      setCurrent(current - 2); // Dispatch action to update stepper's current step
+    } else if (EditButton === "1") {
+      setCurrent(current - 1)
+    }
+  }, [EditButton]);
+
+
+  const DefaultToggleValue = useSelector((state) => state.addProject.ProjectStepperValue)
+  console.log("pageToggle", DefaultToggleValue)
 
   return (
     <>
 
       <div className="w-auto py-2 px-1 mb-2 bg-white">
-      <Breadcrumb
-        className="bg-white p-2"
+        <Breadcrumb
+          className="bg-white p-2"
           items={[
             {
-              title:<a href="/main"> Home</a>
+              title: <a href="/main"> Home</a>
             },
             {
               title: <a href="/main/projects">Projects Overview</a>,
             },
             {
-              title:"Create Project",
+              title: "Create Project",
             },
           ]}
         />
@@ -266,7 +216,6 @@ export default function page({ formNext }) {
           ))}
         </Steps>
         <div style={{ marginTop: 24 }}>
-          {/* Render content based on current step */}
           {steps[current].content}
         </div>
 
@@ -280,20 +229,10 @@ export default function page({ formNext }) {
               Next
             </Button>
           )}
-
-          {current === steps.length - 1 && (
-            <Link href="/main/projects/workflowlist">
-              <Button
-                type="primary"
-                className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
-
-              >
-                Create
-              </Button>
-            </Link>
-          )}
         </div>
       </div>
     </>
   );
 }
+
+
