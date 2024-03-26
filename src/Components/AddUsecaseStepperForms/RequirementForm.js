@@ -221,6 +221,7 @@ const RequirementForm = (stepperState) => {
   const [fileuploaded, setfileuploaded] = useState(false);
   const [convertedImages, setConvertedImages] = useState([]);
   const [convertedImagesString, setconvertedImagesString] = useState("");
+  const [convertedLinkString, setconvertedLinkString] = useState("");
   const [Attachments, setAttachments] = useState([]);
   const [uploadingFiles, setUploadingFiles] = useState([]);
 
@@ -374,7 +375,7 @@ const RequirementForm = (stepperState) => {
 
       // Handle API response
       console.log(apiResponse.data);
-
+      setconvertedLinkString(apiResponse.data.link);
       newAttachments.push(apiResponse.data.link);
       setAttachments([...Attachments, ...newAttachments]);
       setConvertedImages([]); // Reset convertedImages after upload
@@ -434,11 +435,51 @@ const RequirementForm = (stepperState) => {
     // handleAssignButtonClick(AssignResourseId);
     HandleUploadingDoc(), handleCancel();
   };
+  const UploadingLink = () => {
+    const currentTask = requiretasks.at(AssignIndex);
+    // console.log("Docs", currentTask)
+    (currentTask.docs[0] = {
+      link_name: name,
+      link_url: convertedLinkString,
+    }),
+    
+      console.log("Docs", currentTask);
+    // handleAssignButtonClick(AssignResourseId);
+    HandleUploadingLink(), handleCancel();
+  };
 
   const HandleUploadingDoc = async () => {
     let data = JSON.stringify({
       doc_name: DocumentAssign.doc_name,
       doc_url: convertedImagesString,
+    });
+    console.log("request :", data);
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/doc`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  /////-----HandelLinkUpload
+  const HandleUploadingLink = async () => {
+    let data = JSON.stringify({
+      doc_name: name,
+      doc_url: convertedLinkString
     });
     console.log("request :", data);
     let config = {
@@ -470,6 +511,7 @@ const RequirementForm = (stepperState) => {
   const [openActionIndex, setopenActionIndex] = useState(null);
   const [openImageIndex, setopenImageIndex] = useState([]);
   const dropdownRef = useRef(null);
+  const closedropdownRef = useRef(null);
   const [showOptions, setShowOptions] = useState(
     requiretasks ? Array(requiretasks.length).fill(false) : []
   );
@@ -487,29 +529,50 @@ const RequirementForm = (stepperState) => {
   const [AssigneeImg, setAssigneeImg] = useState(null);
   // console.log(AssignName, AssignIndex);
 
+
   useEffect(() => {
+      function handleClickOutside(event) {
+        if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target) &&
+          !event.target.closest(".relative.flex")
+        ) {
+          setOpenItemIndex(null);
+        }
+      }
+  
+      if (openItemIndex !== null) {
+        document.addEventListener("mousedown", handleClickOutside);
+      } else {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [openItemIndex, dropdownRef]);
+
+    // action button 
+useEffect(() => {
     function handleClickOutside(event) {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        !event.target.closest(".relative.flex")
+        closedropdownRef.current &&
+        !closedropdownRef.current.contains(event.target) &&
+        !event.target.closest(".relative")
       ) {
-        setOpenItemIndex(null); 
-        setopenActionIndex(null)
+        setopenActionIndex(null);
       }
     }
 
-    if (openItemIndex !== null) {
+    if (openActionIndex !== null) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-
-   
-  }, [openItemIndex,openActionIndex, dropdownRef]);
+  }, [openActionIndex]);
 
   const openNotification = (placement, type, message) => {
     notification[type]({
@@ -739,13 +802,15 @@ const RequirementForm = (stepperState) => {
                           {data.docs &&
                             data.docs.length > 0 &&
                             data.docs.map((doc, index) => (
+                              <div key={index}>
                               <Image
-                                key={index}
                                 src={doc.doc_url}
                                 alt={doc.doc_name}
                                 height={34}
-                                width={30}
+                                width={30} 
                               />
+                              <a href={doc.doc_url} target="_blank">{doc.doc_name}</a>
+                              </div>
                             ))}
 
                           {/* {AssignDocs === data.id && ( */}
@@ -883,7 +948,7 @@ const RequirementForm = (stepperState) => {
 
                     <div className="flex items-center space-x-2">
                       <MessageOutlined style={{ fontSize: "20px" }} />
-                      <div className="relative" ref={dropdownRef}>
+                      <div className="relative" ref={closedropdownRef}>
                         <button
                           onClick={() => {
                             toggleOptions(index), setAssignIndex(index);
@@ -898,7 +963,7 @@ const RequirementForm = (stepperState) => {
                         </button>
 
                         {openActionIndex === index && (
-                          <div className="  absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
+                          <div className=" cursor-pointer absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
                             <ul>
                               <li onClick={handleOptionClick}>
                                 <FileProtectOutlined /> Upload Document
@@ -958,12 +1023,13 @@ const RequirementForm = (stepperState) => {
                           open={isModalOpen}
                           onOk={() => {
                             handleOk(), handleSubmit();
+                            UploadingLink()
                           }}
                           onCancel={handleCancel}
                         >
                           <div className="flex flex-col gap-4">
                             <input
-                            value={DocumentAssign.doc_name}
+                            
                               onChange={(e) => {
                                 inputName(e);
                               }}
