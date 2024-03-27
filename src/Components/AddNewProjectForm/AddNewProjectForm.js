@@ -20,7 +20,8 @@ const { RangePicker } = DatePicker;
 
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { updateFormData ,UpdateStartDate} from "@/Context/AddNewProjectSlice/addProjectSlice";
+import { updateFormData, UpdateStartDate } from "@/Context/AddNewProjectSlice/addProjectSlice";
+import { notosans } from "@/font/font";
 
 const layout = {
   labelCol: {
@@ -48,7 +49,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   const formData = useSelector((state) => state.addProject);
   const [startDate, setStartDate] = useState(null);
 
-  
+
   const disabledEndDate = (current) => {
     // Disable dates that are before the selected start date or are the selected start date
     return current && (current <= startDate);
@@ -69,7 +70,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
       ...project,
       startDate: formattedStartDate,
     });
-  
+
     // Dispatch the updated form data with the startDate included
     dispatch(updateFormData({ ...project, startDate: formattedStartDate }));
   };
@@ -77,38 +78,38 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
 
   const handleEndDateChange = (date, dateString) => {
     const formattedStartDate = moment(dateString).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-    
+
     setProject({
       ...project,
       endDate: formattedStartDate,
     });
-  
+
     // Dispatch the updated form data with the startDate included
     dispatch(updateFormData({ ...project, endDate: formattedStartDate }));
   };
 
-const handleImageUpload = async (info) => {
-  const file = info.file.originFileObj;
-  dispatch(updateFormData({ ...project, image_url: imageBase64 }));
+  const handleImageUpload = async (info) => {
+    const file = info.file.originFileObj;
+    dispatch(updateFormData({ ...project, image_url: imageBase64 }));
 
-  try {
-    // Convert the image file to base64 format
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      const base64String = event.target.result;
-      setImageBase64(base64String);
+    try {
+      // Convert the image file to base64 format
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const base64String = event.target.result;
+        setImageBase64(base64String);
 
-      // Dispatch the updated form data with the image base64 string
-      setProject({
-        ...project,
-        image_url: base64String,
-      });
-    };
-    reader.readAsDataURL(file);
-  } catch (error) {
-    console.error("Error uploading image:", error);
-  }
-};
+        // Dispatch the updated form data with the image base64 string
+        setProject({
+          ...project,
+          image_url: base64String,
+        });
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
 
 
@@ -137,12 +138,13 @@ const handleImageUpload = async (info) => {
         <Form
           {...layout}
           name="nest-messages"
+          className={notosans.className}
           style={{
             maxWidth: 600,
           }}
           validateMessages={validateMessages}
         >
-          <Form.Item
+          <Form.Item className={notosans.className}
             name={["ProjectName"]}
             label="Project Name"
             rules={[
@@ -156,10 +158,11 @@ const handleImageUpload = async (info) => {
               onChange={handleChange}
               name="projectName"
               id="projectName"
+              className={notosans.className}
             />
           </Form.Item>
 
-          <Form.Item
+          <Form.Item className={notosans.className}
             name={["projectDescription"]}
             label="Project Description"
             rules={[
@@ -173,6 +176,7 @@ const handleImageUpload = async (info) => {
               id="projectDescription"
               value={project.projectDescription}
               onChange={handleChange}
+              className={notosans.className}
             />
           </Form.Item>
 
@@ -190,10 +194,11 @@ const handleImageUpload = async (info) => {
               id="projectDepartment"
               value={project.projectDepartment}
               onChange={handleChange}
+              className={notosans.className}
             />
           </Form.Item>
 
-          <Form.Item name="range-time-picker" label="Project Duration">
+          <Form.Item className={notosans.className} name="range-time-picker" label="Project Duration">
             <div className="flex">
               <DatePicker
                 id="projectStartDate"
@@ -202,7 +207,7 @@ const handleImageUpload = async (info) => {
                 // value={project.startDate}
                 onChange={handleStartDateChange}
                 disabledDate={disabledDate}
-                // value={project.startDate}
+              // value={project.startDate}
               />
               <span>-</span>
               <DatePicker
@@ -215,7 +220,7 @@ const handleImageUpload = async (info) => {
             </div>
           </Form.Item>
 
-          <Form.Item
+          <Form.Item className={notosans.className}
             name="Project Icon"
             label="Project Icon"
             valuePropName="fileList"
@@ -227,11 +232,11 @@ const handleImageUpload = async (info) => {
             >
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload> */}
-            
+
 
             <Upload
               name="image_url"
-              type="file" 
+              type="file"
               accept="image/*"
               className="flex flex-col items-start ml-1"
               action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"

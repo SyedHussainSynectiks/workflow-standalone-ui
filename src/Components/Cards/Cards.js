@@ -6,6 +6,7 @@ const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
 import { useMediaQuery } from 'react-responsive';
 import api from '@/api';
+import { notosans } from '@/font/font';
 const DashCards = ({ }) => {
   const [size, setSize] = useState('large');
   const [data, setData] = useState([]);
@@ -44,20 +45,21 @@ const DashCards = ({ }) => {
           >
             <div className="flex flex-col">
               <div className="flex items-center justify-between">
-                <Title level={4} className="m-0">
+
+                <Title level={4} className={`${notosans.className} m-0`}>
                   Total Projects
                 </Title>
                 {/* <Badge status="processing" /> */}
-                <CheckCircleOutlined className='text-blue-400' />
+                <CheckCircleOutlined className={`${notosans.className} text-blue-400`} />
               </div>
-              <Title level={4} style={{ marginTop: '-5px' }}>
+              <Title level={4} style={{ marginTop: '-5px' }} className={notosans.className}>
                 {data.total_projects}
               </Title>
-              <Title level={5} style={{ marginTop: '5px' }}>
+              <Title level={5} style={{ marginTop: '5px' }} className={notosans.className}>
                 Progress {data.percentage_completed}%
               </Title>
               <hr />
-              <Paragraph className="pt-2 m-0">Total Task {data.total_tasks}</Paragraph>
+              <Paragraph className={`${notosans.className} pt-2 m-0`}>Total Task {data.total_tasks}</Paragraph>
             </div>
           </Card>
         </Col>
@@ -75,9 +77,9 @@ const DashCards = ({ }) => {
               <div className="flex items-center justify-between">
                 <Title level={4}>Completed Projects</Title>
                 {/* <Badge status="success" /> */}
-                <IssuesCloseOutlined className='text-green-500' />
+                <IssuesCloseOutlined className={`${notosans.className} text-green-500`} />
               </div>
-              <Title level={2}>{data.completed}</Title>
+              <Title level={2} className={notosans.className}>{data.completed}</Title>
               <Progress
                 type="line"
                 percent={Math.round((data.completed / data.total_projects) * 100)}
@@ -86,7 +88,7 @@ const DashCards = ({ }) => {
                 strokeColor="#52C41A"
                 trailColor="#F6EEFF"
               />
-              <Paragraph className="py-2">Completed Before 05 Days</Paragraph>
+              <Paragraph className={`${notosans.className} py-2`}>Completed Before 05 Days</Paragraph>
             </div>
           </Card>
         </Col>
@@ -102,11 +104,11 @@ const DashCards = ({ }) => {
           >
             <div>
               <div className="flex items-center justify-between">
-                <Title level={4}>Inprogress Projects</Title>
+                <Title level={4} className={notosans.className}>Inprogress Projects</Title>
                 {/* <Badge status="warning" /> */}
-                <ClockCircleOutlined className='text-yellow-400' />
+                <ClockCircleOutlined className={`${notosans.className} text-yellow-400`} />
               </div>
-              <Title level={2}>{data.in_progress}</Title>
+              <Title level={2} className={notosans.className}>{data.in_progress}</Title>
               <Progress
                 type="line"
                 percent={Math.round((data.in_progress / data.total_projects) * 100)}
@@ -115,7 +117,7 @@ const DashCards = ({ }) => {
                 strokeColor="#F8D236"
                 trailColor="#F6EEFF"
               />
-              <Paragraph className="my-3">View Details</Paragraph>
+              <Paragraph className={`${notosans.className} my-3`}>View Details</Paragraph>
             </div>
           </Card>
         </Col>
@@ -131,11 +133,11 @@ const DashCards = ({ }) => {
           >
             <div>
               <div className="flex items-center justify-between">
-                <Title level={4}>Unassign Projects</Title>
+                <Title level={4} className={notosans.className}>Unassign Projects</Title>
                 {/* <Badge status="error" /> */}
-                <StopOutlined className='text-red-500' />
+                <StopOutlined className={`${notosans.className} text-red-500`} />
               </div>
-              <Title level={2}>{data.unassigned}</Title>
+              <Title level={2} className={notosans.className}>{data.unassigned}</Title>
               <Progress
                 type="line"
                 percent={Math.round((data.unassigned / data.total_projects) * 100)}
@@ -144,7 +146,7 @@ const DashCards = ({ }) => {
                 strokeColor="#FF4D4F"
                 trailColor="#F6EEFF"
               />
-              <Paragraph className="py-3">View Details</Paragraph>
+              <Paragraph className={`${notosans.className} py-3`}>View Details</Paragraph>
             </div>
           </Card>
         </Col>

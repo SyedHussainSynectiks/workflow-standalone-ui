@@ -3,6 +3,7 @@ import { Avatar, Card, Col, Row, Typography, Tooltip, Button, Divider, Flex, Rad
 import { AntDesignOutlined, UserOutlined, } from '@ant-design/icons';
 import axios from 'axios';
 import api from '@/api';
+import { notosans } from '@/font/font';
 
 
 const { Title, Paragraph, Text } = Typography;
@@ -58,12 +59,12 @@ const Resources = () => {
         <>
             <div style={{ background: '#FFF', padding: '20px' }}>
                 <Row gutter={16}>
-                    <div className="flex flex-row justify-between items-center w-full">
+                    <div className={`${notosans.className} flex flex-row justify-between items-center w-full`}>
                         <Title level={2}>Project Resources Lists</Title>
                         <Radio.Group value={size} onChange={(e) => setSize(e.target.value)}>
-                            <Radio.Button value="All Projects">All</Radio.Button>
-                            <Radio.Button value="In Progress">Inprogress</Radio.Button>
-                            <Radio.Button value="Completed">Completed</Radio.Button>
+                            <Radio.Button value="All Projects" className={notosans.className}>All</Radio.Button>
+                            <Radio.Button value="In Progress" className={notosans.className}>Inprogress</Radio.Button>
+                            <Radio.Button value="Completed" className={notosans.className}>Completed</Radio.Button>
                         </Radio.Group>
                     </div>
                 </Row>
@@ -83,10 +84,10 @@ const Resources = () => {
                                     title={item.manager_name}
                                     description="Project Manager"
                                 />
-                                <Title level={5}>Current Task <span className=' ml-2'>{item.current_task}</span></Title>
-                                <Paragraph>Created Date {item.due_date}12/09/2023</Paragraph>
-                                <Paragraph>Due Date 12/09/2023</Paragraph>
-                                <Paragraph>Total Task <strong>{item.total_tasks}</strong></Paragraph>
+                                <Title level={5}>Current Task <span className={`${notosans.className} ml-2`}>{item.current_task}</span></Title>
+                                <Paragraph className={notosans.className}>Created Date {item.due_date}12/09/2023</Paragraph>
+                                <Paragraph className={notosans.className}>Due Date 12/09/2023</Paragraph>
+                                <Paragraph className={notosans.className}>Total Task <strong>{item.total_tasks}</strong></Paragraph>
                                 <Avatar.Group
                                     maxCount={4}
                                     size="large"
@@ -104,7 +105,7 @@ const Resources = () => {
                                             icon={<UserOutlined />}
                                         />
                                     </Tooltip>
-                                   
+
                                 </Avatar.Group>
                             </Card>
                         </Col>
