@@ -47,7 +47,8 @@ const DashCards = ({ }) => {
                 <Title level={4} className="m-0">
                   Total Projects
                 </Title>
-                <Badge status="processing" />
+                {/* <Badge status="processing" /> */}
+                <CheckCircleOutlined className='text-blue-400' />
               </div>
               <Title level={4} style={{ marginTop: '-5px' }}>
                 {data.total_projects}
@@ -73,7 +74,8 @@ const DashCards = ({ }) => {
             <div>
               <div className="flex items-center justify-between">
                 <Title level={4}>Completed Projects</Title>
-                <Badge status="success" />
+                {/* <Badge status="success" /> */}
+                <IssuesCloseOutlined className='text-green-500' />
               </div>
               <Title level={2}>{data.completed}</Title>
               <Progress
@@ -101,7 +103,8 @@ const DashCards = ({ }) => {
             <div>
               <div className="flex items-center justify-between">
                 <Title level={4}>Inprogress Projects</Title>
-                <Badge status="warning" />
+                {/* <Badge status="warning" /> */}
+                <ClockCircleOutlined className='text-yellow-400' />
               </div>
               <Title level={2}>{data.in_progress}</Title>
               <Progress
@@ -129,7 +132,8 @@ const DashCards = ({ }) => {
             <div>
               <div className="flex items-center justify-between">
                 <Title level={4}>Unassign Projects</Title>
-                <Badge status="error" />
+                {/* <Badge status="error" /> */}
+                <StopOutlined className='text-red-500' />
               </div>
               <Title level={2}>{data.unassigned}</Title>
               <Progress
