@@ -68,10 +68,15 @@ const Resources = () => {
                         </Radio.Group>
                     </div>
                 </Row>
-                <Row gutter={16} className='gap-6 mt-6'>
+                <Row gutter={[16, 16]}
+                    className="gap-9 mt-6 flex flex-wrap">
 
                     {filteredData.map((item, index) => (
-                        <Col span={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+                        <Col xs={24}
+                            sm={12}
+                            md={12}
+                            lg={8}
+                            xl={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
                             <Card className='w-full flex justify-center'
                                 bordered={false}
                                 style={{
@@ -85,8 +90,8 @@ const Resources = () => {
                                     description="Project Manager"
                                 />
                                 <Title level={5}>Current Task <span className={`${notosans.className} ml-2`}>{item.current_task}</span></Title>
-                                <Paragraph className={notosans.className}>Created Date {item.due_date}12/09/2023</Paragraph>
-                                <Paragraph className={notosans.className}>Due Date 12/09/2023</Paragraph>
+                                <Paragraph className={notosans.className}>Created Date {item.created_date}12/09/2023</Paragraph>
+                                <Paragraph className={notosans.className}>Due Date {item.due_date}12/09/2023</Paragraph>
                                 <Paragraph className={notosans.className}>Total Task <strong>{item.total_tasks}</strong></Paragraph>
                                 <Avatar.Group
                                     maxCount={4}

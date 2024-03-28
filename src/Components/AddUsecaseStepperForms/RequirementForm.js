@@ -409,7 +409,7 @@ const RequirementForm = (stepperState) => {
       link_name: name,
       link_url: convertedLinkString,
     }),
-    
+
       console.log("Docs", currentTask);
     // handleAssignButtonClick(AssignResourseId);
     HandleUploadingLink(), handleCancel();
@@ -494,32 +494,35 @@ const RequirementForm = (stepperState) => {
   const [AssignResourseId, setAssignResurseId] = useState();
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
+  // const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for main dropdown
+
   // console.log(AssignName, AssignIndex);
 
 
   useEffect(() => {
-      function handleClickOutside(event) {
-        if (
-          dropdownRef.current &&
-          !dropdownRef.current.contains(event.target) &&
-          !event.target.closest(".relative.flex")
-        ) {
-          setOpenItemIndex(null);
-        }
+    function handleClickOutside(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !event.target.closest(".relative.flex")
+      ) {
+        setOpenItemIndex(null);
+        // setIsDropdownOpen(false);
       }
-  
-      if (openItemIndex !== null) {
-        document.addEventListener("mousedown", handleClickOutside);
-      } else {
-        document.removeEventListener("mousedown", handleClickOutside);
-      }
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [openItemIndex, dropdownRef]);
+    }
 
-    // action button 
-useEffect(() => {
+    if (openItemIndex !== null) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openItemIndex, dropdownRef]);
+
+  // action button
+  useEffect(() => {
     function handleClickOutside(event) {
       if (
         closedropdownRef.current &&
@@ -580,6 +583,7 @@ useEffect(() => {
 
   const toggleSubItems = (index) => {
     setOpenItemIndex(openItemIndex === index ? null : index);
+    // setIsDropdownOpen(!isDropdownOpen);
   };
   const handleSubItemClick = (subItem) => {
     setSelectedSubItem(subItem);
@@ -599,6 +603,7 @@ useEffect(() => {
       (currentTask.assigned_to.name = AssignName),
       (currentTask.assigned_to.image = AssignImg);
     handleAssignButtonClick(AssignResourseId);
+    setOpenItemIndex(null);
   };
 
   const handleAssignButtonClick = (id) => {
@@ -696,13 +701,13 @@ useEffect(() => {
                             data.docs.length > 0 &&
                             data.docs.map((doc, index) => (
                               <div key={index}>
-                              <Image
-                                src={doc.doc_url}
-                                alt={doc.doc_name}
-                                height={34}
-                                width={30} 
-                              />
-                              <a href={doc.doc_url} target="_blank">{doc.doc_name}</a>
+                                <Image
+                                  src={doc.doc_url}
+                                  alt={doc.doc_name}
+                                  height={34}
+                                  width={30}
+                                />
+                                <a href={doc.doc_url} target="_blank">{doc.doc_name}</a>
                               </div>
                             ))}
 
@@ -811,7 +816,7 @@ useEffect(() => {
                                             )
                                           )}
                                         </li>
-                                        <button ref={dropdownRef}
+                                        <button
                                           onClick={() => {
                                             // handleAssignButtonClick(
                                             //   selectedAssign
@@ -822,10 +827,16 @@ useEffect(() => {
                                                 ? null
                                                 : itemIndex
                                             );
-
                                             toggleSaved(index);
+                                            // setIsDropdownOpen(false)
                                           }}
-                                          className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
+                                          style={{
+                                            backgroundColor: '#4299e1',
+                                            padding: '0.5rem 0.75rem',
+                                            color: '#ffffff',
+                                            borderRadius: '0.375rem',
+                                          }}
+                                        // className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
                                         >
                                           Assign
                                         </button>
@@ -922,7 +933,7 @@ useEffect(() => {
                         >
                           <div className="flex flex-col gap-4">
                             <input
-                            
+
                               onChange={(e) => {
                                 inputName(e);
                               }}
@@ -936,7 +947,7 @@ useEffect(() => {
                               <input
                                 onChange={(e) => {
                                   inputLink(e);
-                                 
+
                                 }}
                                 className="p-2 border rounded  w-full"
                                 placeholder="Paste link here "
