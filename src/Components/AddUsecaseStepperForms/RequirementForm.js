@@ -831,7 +831,7 @@ const RequirementForm = (stepperState) => {
                                             // setIsDropdownOpen(false)
                                           }}
                                           style={{
-                                            position: relative,
+                                            position: 'relative',
                                             zIndex: 100,
                                             backgroundColor: '#4299e1',
                                             padding: '0.5rem 0.75rem',
