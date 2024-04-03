@@ -87,28 +87,73 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     dispatch(updateFormData({ ...project, endDate: formattedStartDate }));
   };
 
-const handleImageUpload = async (info) => {
-  const file = info.file.originFileObj;
-  dispatch(updateFormData({ ...project, image_url: imageBase64 }));
+  const [fileuploaded, setfileuploaded] = useState(false);
+  const [convertedImages, setConvertedImages] = useState([]);
+  const [convertedImagesString, setconvertedImagesString] = useState("");
+  const [Attachments, setAttachments] = useState([]);
+  const [uploadingFiles, setUploadingFiles] = useState([]);
 
-  try {
-    // Convert the image file to base64 format
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      const base64String = event.target.result;
-      setImageBase64(base64String);
+  const handleFileChange = (info) => {
+    const allFiles = info.fileList;
+    const imgarray = allFiles.map((e) => e.originFileObj);
+    setfileuploaded(true);
+    setUploadingFiles(allFiles);
+    convertImagesToBase64(imgarray);
+  };
 
-      // Dispatch the updated form data with the image base64 string
-      setProject({
-        ...project,
-        image_url: base64String,
-      });
-    };
-    reader.readAsDataURL(file);
-  } catch (error) {
-    console.error("Error uploading image:", error);
-  }
-};
+  const convertImagesToBase64 = async (images) => {
+    const newConvertedImages = [];
+    for (let i = 0; i < images.length; i++) {
+      const file = images[i];
+      if (file) {
+        const reader = new FileReader();
+        const base64 = await new Promise((resolve, reject) => {
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        newConvertedImages.push({ fileName: file.name, data: base64 });
+      }
+    }
+    setConvertedImages(newConvertedImages);
+  };
+  let accesstoken =
+    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1NDk4ZDQ0OC00MGExLTcwNzQtMzZhNi00MGFiYjkyM2EyNzkiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiI4YTU2MzY3Ni00NGY1LTQ2NjgtOTgzZC1hZDVlZTU3ZTFmNDgiLCJjdXN0b206b3JnX2lkIjoiMmQ5OGJhNzctNjk1Yi00ZWI0LTgwN2MtNGVmYmI4MTU5OTQwIiwiY29nbml0bzp1c2VybmFtZSI6IjU0OThkNDQ4LTQwYTEtNzA3NC0zNmE2LTQwYWJiOTIzYTI3OSIsIm9yaWdpbl9qdGkiOiIwNWY3Y2Y0MS1jMGU1LTQ2YTUtYWZhMi1hOGIyMTlmZTlhN2MiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiZTkxMzk5ZDMtZGJkNi00MzBkLWFiM2QtZWNjODI3OGJhYTE3IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTIxMzc2MzMsImV4cCI6MTcxMjIyNDAzMywiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjEzNzYzMywianRpIjoiZTc3Njk4MTMtYjAzZi00OGQ1LWJiNWQtYjVjYTAwMjVhZWU0IiwiZW1haWwiOiJhYmR1bGxhaGFoaWw3ODYxQGdtYWlsLmNvbSJ9.ptAD_sCKGvnX6eXl2wkYB-JMXr6vBcwSCBtnWp3Aky3rOxxXNmESuJL2DITr3FNtYfIiy7inJH_q4KSjfR4KhhIIDy3wXF9UKOgMqN06706ELQEkrnU61bdDScHsxk-k00fRYESjL_DGxfwTHX3nosIcR7pMraliiaRjT1G6VfOsehPTfaR7p441l3pztpaS2IidWZs8D9FNiU22AyiEKOiAxzZb7YQhvOdDSgclm7TIrzh-51jQ_TbW4qIMYduRV-P9mCmCWV-ZVYXN-u6XBkzd_JleGdpBNhh7R9um0ciFTyCrWhAPuLRrXvD7wmHPuzkNBA0XWP0NE_eFJyhHcA";
+    
+  const uploadingImages = async () => {
+    const newAttachments = [];
+    for (let i = 0; i < convertedImages.length; i++) {
+      try {
+        const response = await axios.post(
+          "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
+          convertedImages[i],
+          {
+            headers: {
+              Authorization: `Bearer ${accesstoken}`,
+            },
+          }
+        );
+        newAttachments.push(response.data.link);
+        // setconvertedImagesString(response.data.link);
+        console.log(response.data.link)
+        setProject({ ...project, image_url: response.data.link })
+        dispatch(updateFormData({ ...project, image_url: response.data.link }))
+      } catch (error) {
+        console.error(error);
+        alert("Error uploading image. Please try again.");
+      }
+    }
+    setAttachments([...newAttachments]);
+    setConvertedImages([]); // Reset convertedImages after upload
+    setUploadingFiles([]); // Clear uploading files after upload
+  };
+
+  useEffect(() => {
+    if (fileuploaded && convertedImages.length > 0) {
+      uploadingImages();
+      setfileuploaded(false);
+    }
+  }, [fileuploaded, convertedImages]);
 
 
 
@@ -237,7 +282,7 @@ const handleImageUpload = async (info) => {
               action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
               listType="picture"
               alt="Uploaded Image"
-              onChange={handleImageUpload}
+              onChange={handleFileChange}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>

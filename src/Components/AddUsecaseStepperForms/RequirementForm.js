@@ -891,7 +891,7 @@ const RequirementForm = (stepperState) => {
                           {data.docs &&
                             data.docs.length > 0 &&
                             data.docs.map((doc, index) => (
-                              <div key={index} className="bg-white border relative right-0 text-black p-4 rounded-md flex flex-col items-center items-center gap-1 ">
+                              <div key={index} className="bg-white border relative right-0 text-black p-4 rounded-md flex flex-col items-center gap-1 ">
                                 <Image
                                   src={doc.doc_url}
                                   alt={doc.doc_name}

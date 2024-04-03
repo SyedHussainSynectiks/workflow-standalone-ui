@@ -6,7 +6,7 @@ import { AddResourcePool2 } from "@/Components/AddResourcePool/AddresoucrePool2"
 import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm";
 import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 import { useDispatch, useSelector } from "react-redux";
-import { updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
+import { addStepperValue, updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 import Link from "next/link";
 
@@ -88,6 +88,7 @@ export default function page({ formNext }) {
   // Api project push
 
   const handleSubmit = async () => {
+
     if (
       !projectData.projectName ||
       !projectData.projectDescription ||
@@ -174,8 +175,10 @@ export default function page({ formNext }) {
   useEffect(() => {
     if (EditButton === "0") {
       setCurrent(current - 2); // Dispatch action to update stepper's current step
+      dispatch(addStepperValue(false))
     } else if (EditButton === "1") {
       setCurrent(current - 1)
+      dispatch(addStepperValue(false))
     }
   }, [EditButton]);
 

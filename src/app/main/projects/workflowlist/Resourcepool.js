@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Button } from "antd";
+import { Button, notification } from "antd";
 import { Input } from "antd";
 import { Progress } from "antd";
 import { PlusCircleFilled } from "@ant-design/icons";
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 import user from "../../../../../public/assets/user.png"
 import Image from "next/image"
+import { useRouter } from "next/navigation";
 
 const Resourcepool = () => {
   const axios = require("axios");
@@ -26,7 +27,7 @@ const Resourcepool = () => {
   const apiDeveloperIdData = teamData.find(team => team.ApiDeveloperId)
 
 
-
+  const route = useRouter();
   const ProjectId = (ProjectId) => {
     dispatch(addProjectId(ProjectId))
     // console.log(ProjectId)
@@ -59,7 +60,21 @@ const Resourcepool = () => {
     // console.log(ProjectId)
   };
   console.log(workflowData);
+  const openNotification = (placement, type, message) => {
+    notification[type]({
+      message: message,
+      placement: placement,
+    });
+  };
 
+  const handleDevUseCases  = (data) => {
+     if (data > 0) {
+      route.push("/main/projects/developmentUsecases")
+     } else {
+      openNotification("topRight", "error", "No Usecases Added")
+     }
+
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -128,9 +143,8 @@ const Resourcepool = () => {
             return (
 
               <div className="flex space-x-2 " >
-                <Link
-                  href="/main/projects/developmentUsecases" className="w-[21rem]" onClick={() => { WorkflowId(data.workflow_id) }}>
-                  <div className=" border border-grey-300 rounded-lg px-4 py-5 space-y-2 " >
+                
+                  <div className=" border border-grey-300 rounded-lg px-4 py-5 space-y-2 w-[21rem]" onClick={() => { WorkflowId(data.workflow_id), handleDevUseCases(data.total_usecases) }}>
                     <div key={index} >
                       <div className="flex items-center w-[100%] justify-between">
                         <h3 className="font-semibold text-blue-600">
@@ -163,7 +177,7 @@ const Resourcepool = () => {
                       />
                     </div>
                   </div>
-                </Link>
+               
               </div>
             );
           })}
