@@ -102,7 +102,7 @@ const AddEmployReview = () => {
       })
       .catch((error) => {
         console.log(error);
-        const errorStatus = error.response.data.message;
+        const errorStatus = error.response.data.error.name;
         console.log(errorStatus);
         openNotification("topRight", "error", ` ${errorStatus}`);
       });
