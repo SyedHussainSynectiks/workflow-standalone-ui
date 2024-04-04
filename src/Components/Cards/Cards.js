@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Card, Col, Row, Typography, Tooltip, Button, Progress, Radio } from 'antd';
+import { Avatar, Card, Col, Row, Typography, Tooltip, Button, Progress, Radio, Badge } from 'antd';
 import { CheckCircleOutlined, IssuesCloseOutlined, ClockCircleOutlined, StopOutlined } from '@ant-design/icons';
 import axios from 'axios';
 const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
+import { useMediaQuery } from 'react-responsive';
 import api from '@/api';
-const DashCards = () => {
+import { notosans } from '@/font/font';
+const DashCards = ({ }) => {
   const [size, setSize] = useState('large');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const isSmallScreen = useMediaQuery({ maxWidth: 768 });
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,6 +31,7 @@ const DashCards = () => {
   }, []);
   return (
     <>
+
 
       <Row gutter={16} className='mt-4 w-full space-x-7 gap-5' >
         <Col span={5} style={{ borderRadius: '5px', height: 'fit-content', padding: '0px',width:"full" }}>
@@ -56,13 +61,13 @@ const DashCards = () => {
             bordered={false}>
             <div className="flex items-center justify-between">
               <span className="text-lg leading-snug text-left text-black font-semibold">Completed Projects </span> <IssuesCloseOutlined style={{ color: '#52C41A' }} />
+
             </div>
             <Title level={2}>{data.completed}</Title>
             <Progress type="line" percent={`${Math.round((data.completed / data.total_projects) * 100)}`} strokeWidth={9} strokeLinecap='square' strokeColor="#52C41A" trailColor='#F6EEFF' />
             <Paragraph className='pt-4 text-sm font-normal leading-snug text-left text-black'>Completed Before 05 Days</Paragraph>
           </Card>
         </Col>
-
         <Col span={5} style={{ borderRadius: '5px', height: "fit-content", padding: '0px',width:"full"  }}>
           <Card className='h-[12rem]'
             style={{
@@ -93,6 +98,7 @@ const DashCards = () => {
             {/* <Progress type="line" percent={30} strokeWidth={16} strokeLinecap='square' strokeColor="#FF4D4F" trailColor='#F6EEFF' /> */}
             <Progress type="line" percent={`${Math.round((data.unassigned / data.total_projects) * 100)}`} strokeWidth={16} strokeLinecap='square' strokeColor="#FF4D4F" trailColor='#F6EEFF' />
             <Paragraph className='pt-4 text-sm font-normal leading-snug text-left text-black'>view Details</Paragraph>
+
           </Card>
         </Col>
       </Row>

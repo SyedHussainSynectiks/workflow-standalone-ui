@@ -4,7 +4,8 @@ import axios from 'axios';
 const { Title, Paragraph, Text } = Typography;
 import { InProgress, Completed, Unassigned } from '@/Components/Badges'
 import api from '@/api';
-
+import { notosans } from '@/font/font';
+import dayjs from 'dayjs';
 const getData = async () => {
     try {
         // const response = await axios.get('https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/projects_overview?');
@@ -62,32 +63,38 @@ const ProjectsList = () => {
 
                 <Row gutter={16}>
                     <div className="flex flex-row justify-between items-center w-full">
-                        <Title level={2}>Project  Lists</Title>
+                        <Title level={2} className={notosans.className}>Project  Lists</Title>
                         <Radio.Group value={size} onChange={(e) => setSize(e.target.value)}>
-                            <Radio.Button value="All Projects">All</Radio.Button>
-                            <Radio.Button value="In Progress">Inprogress</Radio.Button>
+                            <Radio.Button value="All Projects" className={notosans.className}>All</Radio.Button>
+                            <Radio.Button value="In Progress" className={notosans.className}>Inprogress</Radio.Button>
                             {/* <Radio.Button value="Unassigned">Un Assigned</Radio.Button> */}
-                            <Radio.Button value="Completed">Completed</Radio.Button>
+                            <Radio.Button value="Completed" className={notosans.className}>Completed</Radio.Button>
                         </Radio.Group>
                     </div>
 
                 </Row>
-                <Row gutter={16} className='gap-6 mt-4' >
-
+                <Row gutter={[16, 16]}
+                    className="gap-9 mt-4 flex flex-wrap">
                     {filteredData().map((item, index) => (
-                        <Col span={6} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px' }}>
+                        <Col Col
+                            xs={24}
+                            sm={12}
+                            md={12}
+                            lg={8}
+                            xl={5} style={{ boxShadow: "0px 0px 5px 1px rgba(0 , 0, 0, 0.2)", borderRadius: '5px', marginBottom: '10px' }}>
                             <Card className='w-full flex justify-center'
                                 bordered={false}
                                 style={{
                                     boxShadow: 'none',
                                 }}
                             >
-                                <Title level={3} className='capitalize'>{item.project_name}</Title>
+                                <Title level={3} className={`${notosans.className} capitalize`}>{item.project_name}</Title>
                                 {checkStatus(item.status)}
-                                <Title level={5}>Total Usecase {item.total_usecases} </Title>
-                                <Paragraph>Due Date {item.due_date}</Paragraph>
+                                <Title level={5} className={notosans.className}>Total Usecase {item.total_usecases} </Title>
+                                <Paragraph className={notosans.className}>Due Date {dayjs(item.due_date).format('MMMM D, YYYY')}</Paragraph>
+                                {/* <Paragraph className={notosans.className}>Due Date {item.due_date}</Paragraph> */}
                                 <Progress type="circle" percent={item.completed_tasks_percentage} strokeWidth={16} strokeLinecap='square' strokeColor="#F8D236" trailColor='#F6EEFF' />
-                                <Title level={4} className='mt-2 mx-auto'>
+                                <Title level={4} className={`${notosans.className} mt-2 mx-auto`}>
                                     Task Completed</Title>
                             </Card>
                         </Col>

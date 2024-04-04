@@ -2,14 +2,10 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { PlusSquareFilled, DownOutlined, SettingOutlined, PlusOutlined } from "@ant-design/icons";
-
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
-
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
 import { addResources } from "@/Context/AddresourcesSlice/addresourcesSlice";
-
 import {
   Avatar,
   Space,
@@ -33,6 +29,7 @@ import Meta from "antd/es/card/Meta";
 import Image from "next/image";
 import slice from "@/Context/Slice";
 import { MdOutlineWatchLater } from "react-icons/md";
+
 import { updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
 import { useRouter } from "next/navigation";
 // import { useDispatch } from "react-redux";
@@ -189,25 +186,25 @@ const ProjectLayout = () => {
               },
             ]}
           />
-          <h1 className="capitalize text-2xl">Projects Overview</h1>
+          <h1 className={`${notosans.className} capitalize text-2xl`}>Projects Overview</h1>
           <Row className="flex items-center justify-center">
             <input
               type="text"
               placeholder="Search projects..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="border-[1.5px] shadow-slate-400 rounded-none border-gray-900 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-400 focus:outline-none rounded-l transition duration-300"
-            /><Button type="primary" className=" rounded-none py-1 px-4 bg-[#1890FF] hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white"><SettingOutlined className='mr-3' />Search</Button>
+              className={`${notosans.className} border-[1.5px] shadow-slate-400 rounded-none border-gray-900 border-r-0 p-1 w-[38vw] focus:border focus:border-gray-400 focus:outline-none rounded-l transition duration-300`}
+            /><Button type="primary" className={`${notosans.className} rounded-none py-1 px-4 bg-[#1890FF] hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 cursor-default text-white hover:text-white`} ><SettingOutlined className='mr-3' />Search</Button>
           </Row>
         </div>
         <div className="bg-white flex flex-row justify-between items-center py-4 px-5">
           <Dropdown className="border border-gray-300 rounded-none p-2"
             overlay={
               <Menu onClick={handleMenuClick}>
-                <Menu.Item key="all">All Projects</Menu.Item>
-                <Menu.Item key="inprogress">In Progress</Menu.Item>
-                <Menu.Item key="completed">Completed</Menu.Item>
-                <Menu.Item key="unassigned">Unassigned</Menu.Item>
+                <Menu.Item key="all" className={`${notosans.className} `}>All Projects</Menu.Item>
+                <Menu.Item key="inprogress" className={`${notosans.className} `}>In Progress</Menu.Item>
+                <Menu.Item key="completed" className={`${notosans.className} `}>Completed</Menu.Item>
+                <Menu.Item key="unassigned" className={`${notosans.className} `}>Unassigned</Menu.Item>
               </Menu>
             }
           >
@@ -219,9 +216,9 @@ const ProjectLayout = () => {
             </a>
           </Dropdown>
 
-          <div className="flex items-center space-x-60">
+          <div className={`${notosans.className} flex items-center space-x-60`}>
 
-            <Link className="py-2 px-4 bg-blue-500 text-white  hover:bg-blue-700 hover:text-white" href="/main/projects/addNewProject"> <PlusOutlined className='mr-4' />Create Project</Link>
+            <Link className="py-2 px-4 bg-blue-500 text-white  hover:bg-blue-700 hover:text-white" href="/main/projects/addNewProject"> <PlusOutlined className={`${notosans.className} mr-4`} />Create Project</Link>
 
           </div>
         </div>
@@ -260,34 +257,34 @@ const ProjectLayout = () => {
                         <Meta
                           avatar={
                             <Avatar
-                              className="bg-blue-200 rounded-full p-2"
+                              className={`${notosans.className} bg-blue-200 rounded-full p-2`}
                               src={item.image_url}
                               size={34}
                               shape="square"
                             />
                           }
                           title={item.name}
-                          className="text-lg flex align-middle"
+                          className={`${notosans.className} text-lg flex align-middle`}
                         />
-                        <div className="w-full h-[2px] bg-gray-100 mt-2 mb-4"></div>
+                        <div className={`${notosans.className} w-full h-[2px] bg-gray-100 mt-2 mb-4`} ></div>
 
-                        <div className="flex flex-row justify-start items-center p-0">
-                          <Text className="text-xl">
+                        <div className={`${notosans.className} flex flex-row justify-start items-center p-0`}>
+                          <Text className={`${notosans.className} text-xl`}>
                             Total Use cases : {item.total_usecases}
                           </Text>
                         </div>
-                        <div className="flex flex-row justify-start items-center my-4">
-                          <h4>{item.total_resources} Use cases in Progress</h4>
+                        <div className={`${notosans.className} flex flex-row justify-start items-center my-4`}>
+                          <h4 className={`${notosans.className} `}>{item.total_resources} Use cases in Progress</h4>
                         </div>
 
                         <div className="flex ">
                           {" "}
                           <MdOutlineWatchLater className="size-6" />{" "}
-                          <div className="pl-6 pb-2"> 7 Days</div>{" "}
+                          <div className={`${notosans.className} pl-6 pb-2`}> 7 Days</div>{" "}
                         </div>
 
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-row justify-start items-center pt-1">
+                        <div className={`${notosans.className} flex items-center justify-between`}>
+                          <div className={`${notosans.className} flex flex-row justify-start items-center pt-1`}>
                             {checkStatus(item.status)}
                           </div>
 
@@ -312,7 +309,7 @@ const ProjectLayout = () => {
                 pageSize={itemsPerPage}
                 current={currentPage}
                 onChange={handlePageChange}
-                className="flex justify-end"
+                className={`${notosans.className} flex justify-end`}
               />
             </div>
           </Row>

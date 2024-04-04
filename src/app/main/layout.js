@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { roboto } from '@/font/font'
 import {
     AccountBookFilled,
     BellFilled,
@@ -45,7 +46,7 @@ const MainLayout = ({ children }) => {
                     </h5>
                     {/* ... your existing Sider content */}
                     <Menu
-                        className="relative"
+                        className={`${roboto.className} relative`}
                         theme="light"
                         mode="inline"
                         defaultSelectedKeys={["1"]}

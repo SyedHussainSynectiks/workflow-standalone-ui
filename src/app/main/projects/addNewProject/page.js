@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addStepperValue, updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 import Link from "next/link";
+import { notosans } from "@/font/font";
 
 const { Step } = Steps;
 
@@ -194,10 +195,10 @@ export default function page({ formNext }) {
           className="bg-white p-2"
           items={[
             {
-              title: <a href="/main"> Home</a>
+              title: <a className={notosans.className} href="/main"> Home</a>
             },
             {
-              title: <a href="/main/projects">Projects Overview</a>,
+              title: <a className={notosans.className} href="/main/projects">Projects Overview</a>,
             },
             {
               title: "Create Project",
@@ -205,17 +206,17 @@ export default function page({ formNext }) {
           ]}
         />
 
-        <h1 className="text-2xl font-semibold ">Create Project</h1>
+        <h1 className={`${notosans.className} text-2xl font-semibold`}>Create Project</h1>
         <p>
           Form pages are used to collect or verify information to users, and
           basic forms are common in scenarios where there are fewer data items.
         </p>
         {toggleValue.toString()}
       </div>
-      <div className="w-auto py-1 bg-white m-5">
+      <div className={`${notosans.className} w-auto py-1 bg-white m-5`}>
         <Steps current={current} className="px-[10rem] py-3 p-5">
           {steps.map((item) => (
-            <Step key={item.title} title={item.title} />
+            <Step key={item.title} title={item.title} className={notosans.className} />
           ))}
         </Steps>
         <div style={{ marginTop: 24 }}>
@@ -227,7 +228,7 @@ export default function page({ formNext }) {
             <Button
               type="primary"
               onClick={handleSubmit}
-              className="ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse"
+              className={`${notosans.className} ml-[90%] m-10 px-2 py-1 justify-center items-center rounded-sm border border-blue-500 bg-blue-500 shadow-sm h-8 font-sans text-center text-white text-sm font-normal not-italic leading-3 flex-row-reverse`}
             >
               Next
             </Button>
