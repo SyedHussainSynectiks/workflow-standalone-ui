@@ -4,7 +4,7 @@ import { CheckCircleOutlined, IssuesCloseOutlined, ClockCircleOutlined, StopOutl
 import axios from 'axios';
 const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
-import { useMediaQuery } from 'react-responsive';
+// import { useMediaQuery } from 'react-responsive';
 import api from '@/api';
 import { notosans } from '@/font/font';
 const DashCards = ({ }) => {
@@ -12,7 +12,7 @@ const DashCards = ({ }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const isSmallScreen = useMediaQuery({ maxWidth: 768 });
+  // const isSmallScreen = useMediaQuery({ maxWidth: 768 });
   useEffect(() => {
     const fetchData = async () => {
       try {

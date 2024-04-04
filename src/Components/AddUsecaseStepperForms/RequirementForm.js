@@ -552,7 +552,6 @@ const RequirementForm = (stepperState) => {
         !event.target.closest(".relative.flex")
       ) {
         setOpenItemIndex(null);
-
       }
     }
 
@@ -566,7 +565,7 @@ const RequirementForm = (stepperState) => {
     };
   }, [openItemIndex, dropdownRef]);
 
-  // action button
+  // action button 
   useEffect(() => {
     function handleClickOutside(event) {
       if (

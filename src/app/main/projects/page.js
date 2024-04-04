@@ -32,7 +32,8 @@ import slice from "@/Context/Slice";
 import { MdOutlineWatchLater } from "react-icons/md";
 
 import { updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
-
+import { useRouter } from "next/navigation";
+import { notosans } from "@/font/font";
 // import { useDispatch } from "react-redux";
 
 const { Title, Paragraph, Text } = Typography;
@@ -45,6 +46,7 @@ const ProjectLayout = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const route = useRouter();
 
 
   const getData = async () => {
@@ -158,12 +160,18 @@ const ProjectLayout = () => {
   };
   const dispatch = useDispatch();
   const ProjectId = (id) => {
-    dispatch(addProjectId(id));
     dispatch(updateId(id));
+    dispatch(addProjectId(id));
   };
   const updateProjectNames = (name) => {
     dispatch(updateProjectName(name));
   };
+
+  const handleProjectIdUpdate = (id , name) => {
+    // ProjectId(id);
+    // updateProjectNames(name)
+    route.push("/main/projects/workflowlist")
+  }
 
   return (
     <>
@@ -244,14 +252,10 @@ const ProjectLayout = () => {
               <>
                 {paginatedData.map((item, index) => (
                   <Col span={6} className="mb-4" key={index}>
-                    <Link
-                      href="/main/projects/workflowlist"
-                      onClick={() => {
-                        ProjectId(item.id);
-                        updateProjectNames(item.name)
-                      }}
-                    >
-                      <Card headerFontSize={22} bordered={false}>
+                      <Card headerFontSize={22} bordered={false}  onClick={() => {ProjectId(item.id),updateProjectNames(item.name), handleProjectIdUpdate(item.id , item.name)
+                        // ProjectId(item.id);
+                        // updateProjectNames(item.name)
+                      }}>
                         <Meta
                           avatar={
                             <Avatar
@@ -293,7 +297,7 @@ const ProjectLayout = () => {
                           </div>
                         </div>
                       </Card>
-                    </Link>
+                 
                   </Col>
                 ))}
               </>
