@@ -32,6 +32,7 @@ import { MdOutlineWatchLater } from "react-icons/md";
 
 import { updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
 import { useRouter } from "next/navigation";
+import { notosans } from "@/font/font";
 // import { useDispatch } from "react-redux";
 
 const { Title, Paragraph, Text } = Typography;
