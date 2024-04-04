@@ -29,8 +29,9 @@ import Meta from "antd/es/card/Meta";
 import Image from "next/image";
 import slice from "@/Context/Slice";
 import { MdOutlineWatchLater } from "react-icons/md";
-import { updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
-import { notosans } from "@/font/font";
+
+import { updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
+
 // import { useDispatch } from "react-redux";
 
 const { Title, Paragraph, Text } = Typography;
@@ -157,6 +158,7 @@ const ProjectLayout = () => {
   const dispatch = useDispatch();
   const ProjectId = (id) => {
     dispatch(addProjectId(id));
+    dispatch(updateId(id));
   };
   const updateProjectNames = (name) => {
     dispatch(updateProjectName(name));
