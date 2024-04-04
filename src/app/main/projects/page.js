@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { notosans } from "@/font/font";
 import { PlusSquareFilled, DownOutlined, SettingOutlined, PlusOutlined } from "@ant-design/icons";
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 import { useDispatch } from "react-redux";
