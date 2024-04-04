@@ -444,6 +444,7 @@ const RequirementForm = (stepperState) => {
       doc_name: name,
       doc_url: convertedLinkString,
     }),
+
       console.log("Docs", currentTask);
     // handleAssignButtonClick(AssignResourseId);
     const updatedTask = {
@@ -539,6 +540,8 @@ const RequirementForm = (stepperState) => {
   const [AssignResourseId, setAssignResurseId] = useState();
   const [TaskId, setTaskId] = useState();
   const [AssigneeImg, setAssigneeImg] = useState(null);
+  // const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for main dropdown
+
   // console.log(AssignName, AssignIndex);
 
   useEffect(() => {
@@ -549,6 +552,7 @@ const RequirementForm = (stepperState) => {
         !event.target.closest(".relative.flex")
       ) {
         setOpenItemIndex(null);
+
       }
     }
 
@@ -624,6 +628,7 @@ const RequirementForm = (stepperState) => {
 
   const toggleSubItems = (index) => {
     setOpenItemIndex(openItemIndex === index ? null : index);
+    // setIsDropdownOpen(!isDropdownOpen);
   };
   const handleSubItemClick = (subItem) => {
     setSelectedSubItem(subItem);
@@ -643,6 +648,7 @@ const RequirementForm = (stepperState) => {
       (currentTask.assigned_to.name = AssignName),
       (currentTask.assigned_to.image = AssignImg);
     handleAssignButtonClick(AssignResourseId);
+    setOpenItemIndex(null);
   };
 
   const handleAssignButtonClick = (id) => {
@@ -721,6 +727,7 @@ const RequirementForm = (stepperState) => {
                       >
                         <Image src={AssignBtnImg} />
                       </button>
+
                       {openItemIndex === index && showOptions && (
                         <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[3]">
                           <div className="flex items-center justify-center">
@@ -824,6 +831,7 @@ const RequirementForm = (stepperState) => {
                                         </li>
                                         <button
                                           ref={dropdownRef}
+
                                           onClick={() => {
                                             // handleAssignButtonClick(
                                             //   selectedAssign
@@ -834,10 +842,16 @@ const RequirementForm = (stepperState) => {
                                                 ? null
                                                 : itemIndex
                                             );
-
                                             toggleSaved(index);
+                                            // setIsDropdownOpen(false)
                                           }}
-                                          className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
+                                          style={{
+                                            backgroundColor: '#4299e1',
+                                            padding: '0.5rem 0.75rem',
+                                            color: '#ffffff',
+                                            borderRadius: '0.375rem',
+                                          }}
+                                        // className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
                                         >
                                           Assign
                                         </button>
@@ -993,6 +1007,7 @@ const RequirementForm = (stepperState) => {
                         >
                           <div className="flex flex-col gap-4">
                             <input
+
                               onChange={(e) => {
                                 inputName(e);
                               }}
@@ -1006,6 +1021,7 @@ const RequirementForm = (stepperState) => {
                               <input
                                 onChange={(e) => {
                                   inputLink(e);
+
                                 }}
                                 className="p-2 border rounded  w-full"
                                 placeholder="Paste link here "
