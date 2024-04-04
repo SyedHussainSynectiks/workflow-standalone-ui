@@ -114,7 +114,7 @@ const Resourcepool = () => {
             </h1>
             <Button
               icon={<PlusCircleFilled style={{ color: "white" }} />}
-              className="bg-[#1890FF;] w-[7.5rem] px-4 py-1 font-medium text-white"
+              type='primary' className="bg-[#1890FF;] w-[7.5rem] px-4 py-1 font-medium text-white"
             >
               Workflow
             </Button>
@@ -142,7 +142,7 @@ const Resourcepool = () => {
                             WorkflowId(data.workflow_id);
                           }}
                         >
-                          <Button className="bg-blue-500 text-white">Add</Button>
+                          <Button type='primary' className="bg-blue-500 text-white">Add</Button>
                         </Link>
                       </div>
                       <p>
@@ -187,7 +187,7 @@ const Resourcepool = () => {
             />
             <Button
               icon={<PlusCircleFilled style={{ color: "white" }} />}
-              className="bg-[#1890FF] w-[7.5rem] px-4 py-1 font-medium text-white"
+              type='primary' className="bg-[#1890FF] w-[7.5rem] px-4 py-1 font-medium text-white"
             >
               Resources
             </Button>

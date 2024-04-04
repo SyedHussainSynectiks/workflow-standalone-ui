@@ -1,7 +1,7 @@
 "use client";
 
 // export default page;
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Input, Button, notification } from "antd";
 import Link from "next/link";
 import {
@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import { useRouter } from 'next/navigation'
 import { useSelector } from "react-redux";
-import  api  from "@/api/index"
+import api from "@/api/index"
 
 const CreatingTemplate = () => {
   const [workFlowName, setWorkFlowName] = useState("");
@@ -121,7 +121,7 @@ const CreatingTemplate = () => {
       </div>
 
       {stages.map((stage, index) => (
-        <div key={index} className="py-2 mt-2 flex flex-col space-y-2">
+        <div key={index} className="py-2 px-4 mt-2 flex flex-col space-y-2">
           <h3 className="text-base font-medium leading-normal tracking-normal text-left">
             Add Stage
           </h3>
@@ -231,7 +231,7 @@ const CreatingTemplate = () => {
                   //     e.target.value;
                   //   setStages(updatedStages);
                   // }}
-                  onChange={(e)=>{
+                  onChange={(e) => {
                     const newChecklistValue = e.target.value;
                     const updatedChecklist = [...stages]
                     const isUniqueValue = !updatedChecklist[index].checklist.includes(newChecklistValue)
@@ -245,7 +245,7 @@ const CreatingTemplate = () => {
                       console.error("Checklist value must be unique within the same stage.");
                       openNotification("topRight", "error", "Checklist value should be different")
                     }
-                  }}  
+                  }}
                 />
                 <Button
                   type="primary"
@@ -264,9 +264,9 @@ const CreatingTemplate = () => {
         </div>
       ))}
 
-      <div className="flex justify-center mt-6 w-[100%]">
+      <div className="flex justify-center mt-6 mb-5 w-[100%]">
         {/* <Link href="/main/projects/workflowlist"> */}
-        <Button className="bg-blue-500 text-white" onClick={postWorkflow} >
+        <Button type='primary' className="bg-blue-500 text-white" onClick={postWorkflow} >
           Save
         </Button>
         {contextHolder}

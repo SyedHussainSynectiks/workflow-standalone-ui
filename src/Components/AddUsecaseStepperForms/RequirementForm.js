@@ -677,7 +677,7 @@ const RequirementForm = (stepperState) => {
                     >
                       <button
                         onClick={() => toggleSubItems(index)}
-                        className="bg-white border text-black p-2 rounded-md flex items-center gap-1 "
+                        className="bg-white border text-black p-2 rounded-md flex items-center gap-1"
                       >
                         Assign
                         <img
@@ -867,7 +867,7 @@ const RequirementForm = (stepperState) => {
                         </button>
 
                         {openActionIndex === index && (
-                          <div className=" cursor-pointer absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
+                          <div className=" cursor-pointer absolute z-50 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
                             <ul>
                               <li onClick={handleOptionClick}>
                                 <FileProtectOutlined /> Upload Document
