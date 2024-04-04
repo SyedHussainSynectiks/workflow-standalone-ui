@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from "react";
-import { Button } from "antd";
+import { Button, notification } from "antd";
 import { Input } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,7 +28,16 @@ const AddEmployReview = () => {
   const [data, setData] = useState([]);
   const projectId = useSelector((state) => state.addProject.id);
   const projectData = useSelector((state) => state.addProject);
+  const [api, contextHolder] = notification.useNotification();
+
   // const projectId = useSelector((state) => state.addProject.id);
+
+  const openNotification = (placement, type, message) => {
+    api[type]({
+      message: message,
+      placement: placement,
+    });
+  };
 
 
   // console.log(projectId);
@@ -93,7 +102,7 @@ const AddEmployReview = () => {
       })
       .catch((error) => {
         console.log(error);
-        const errorStatus = error.response.data.message;
+        const errorStatus = error.response.data.error.name;
         console.log(errorStatus);
         openNotification("topRight", "error", ` ${errorStatus}`);
       });
@@ -183,6 +192,7 @@ const AddEmployReview = () => {
               >
                 create
               </Button>
+              {contextHolder}
             </div>
           </div>
           <div className="flex space-x-10 w-screen items-center">

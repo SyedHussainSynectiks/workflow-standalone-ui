@@ -30,8 +30,9 @@ import Meta from "antd/es/card/Meta";
 import Image from "next/image";
 import slice from "@/Context/Slice";
 import { MdOutlineWatchLater } from "react-icons/md";
-import { updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
-import { notosans } from "@/font/font";
+
+import { updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
+import { useRouter } from "next/navigation";
 // import { useDispatch } from "react-redux";
 
 const { Title, Paragraph, Text } = Typography;
@@ -44,6 +45,7 @@ const ProjectLayout = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const route = useRouter();
 
 
   const getData = async () => {
@@ -157,11 +159,18 @@ const ProjectLayout = () => {
   };
   const dispatch = useDispatch();
   const ProjectId = (id) => {
+    dispatch(updateId(id));
     dispatch(addProjectId(id));
   };
   const updateProjectNames = (name) => {
     dispatch(updateProjectName(name));
   };
+
+  const handleProjectIdUpdate = (id, name) => {
+    // ProjectId(id);
+    // updateProjectNames(name)
+    route.push("/main/projects/workflowlist")
+  }
 
   return (
     <>
@@ -242,56 +251,53 @@ const ProjectLayout = () => {
               <>
                 {paginatedData.map((item, index) => (
                   <Col span={6} className="mb-4" key={index}>
-                    <Link
-                      href="/main/projects/workflowlist"
-                      onClick={() => {
-                        ProjectId(item.id);
-                        updateProjectNames(item.name)
-                      }}
-                    >
-                      <Card headerFontSize={22} bordered={false}>
-                        <Meta
-                          avatar={
-                            <Avatar
-                              className={`${notosans.className} bg-blue-200 rounded-full p-2`}
-                              src={item.image_url}
-                              size={34}
-                              shape="square"
-                            />
-                          }
-                          title={item.name}
-                          className={`${notosans.className} text-lg flex align-middle`}
-                        />
-                        <div className={`${notosans.className} w-full h-[2px] bg-gray-100 mt-2 mb-4`} ></div>
+                    <Card headerFontSize={22} bordered={false} onClick={() => {
+                      ProjectId(item.id), updateProjectNames(item.name), handleProjectIdUpdate(item.id, item.name)
+                      // ProjectId(item.id);
+                      // updateProjectNames(item.name)
+                    }}>
+                      <Meta
+                        avatar={
+                          <Avatar
+                            className={`${notosans.className} bg-blue-200 rounded-full p-2`}
+                            src={item.image_url}
+                            size={34}
+                            shape="square"
+                          />
+                        }
+                        title={item.name}
+                        className={`${notosans.className} text-lg flex align-middle`}
+                      />
+                      <div className={`${notosans.className} w-full h-[2px] bg-gray-100 mt-2 mb-4`} ></div>
 
-                        <div className={`${notosans.className} flex flex-row justify-start items-center p-0`}>
-                          <Text className={`${notosans.className} text-xl`}>
-                            Total Use cases : {item.total_usecases}
-                          </Text>
-                        </div>
-                        <div className={`${notosans.className} flex flex-row justify-start items-center my-4`}>
-                          <h4 className={`${notosans.className} `}>{item.total_resources} Use cases in Progress</h4>
+                      <div className={`${notosans.className} flex flex-row justify-start items-center p-0`}>
+                        <Text className={`${notosans.className} text-xl`}>
+                          Total Use cases : {item.total_usecases}
+                        </Text>
+                      </div>
+                      <div className={`${notosans.className} flex flex-row justify-start items-center my-4`}>
+                        <h4 className={`${notosans.className} `}>{item.total_resources} Use cases in Progress</h4>
+                      </div>
+
+                      <div className="flex ">
+                        {" "}
+                        <MdOutlineWatchLater className="size-6" />{" "}
+                        <div className={`${notosans.className} pl-6 pb-2`}> 7 Days</div>{" "}
+                      </div>
+
+                      <div className={`${notosans.className} flex items-center justify-between`}>
+                        <div className={`${notosans.className} flex flex-row justify-start items-center pt-1`}>
+                          {checkStatus(item.status)}
                         </div>
 
-                        <div className="flex ">
-                          {" "}
-                          <MdOutlineWatchLater className="size-6" />{" "}
-                          <div className={`${notosans.className} pl-6 pb-2`}> 7 Days</div>{" "}
+                        <div className="pl-5 flex">
+                          <Avatar src="{}" />
+                          <Avatar src="{}" />
+                          <Avatar src="{}" />
                         </div>
+                      </div>
+                    </Card>
 
-                        <div className={`${notosans.className} flex items-center justify-between`}>
-                          <div className={`${notosans.className} flex flex-row justify-start items-center pt-1`}>
-                            {checkStatus(item.status)}
-                          </div>
-
-                          <div className="pl-5 flex">
-                            <Avatar src="{}" />
-                            <Avatar src="{}" />
-                            <Avatar src="{}" />
-                          </div>
-                        </div>
-                      </Card>
-                    </Link>
                   </Col>
                 ))}
               </>
