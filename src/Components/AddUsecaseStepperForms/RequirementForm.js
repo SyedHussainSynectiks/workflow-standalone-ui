@@ -726,7 +726,7 @@ const RequirementForm = (stepperState) => {
             (data, index) => (
               console.log("taskData", data),
               (
-                <div className="mb-8 z-0" key={index}>
+                <div className="mb-8 " style={{zIndex:"0" }} key={index}>
                   <div
                     className="flex items-center justify-between py-3 px-2"
                     style={{ background: "rgba(230, 247, 255, 1)" }}
@@ -737,7 +737,7 @@ const RequirementForm = (stepperState) => {
                    
                   </div>
                   <div
-                    className="flex items-start h-36 justify-between mt-2 px-4"
+                    className="flex items-start justify-between mt-2 px-4" style={{height:"8rem"}}
                     key={index}
                   >
                     <div className="Main-Wrap">
@@ -753,7 +753,7 @@ const RequirementForm = (stepperState) => {
                       </button>
 
                       {openItemIndex === index && showOptions && (
-                        <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[3]">
+                        <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md " style={{zIndex:"10"}}>
                           <div className="flex items-center justify-center">
                             <SearchOutlined className="pl-2" />
                             <input

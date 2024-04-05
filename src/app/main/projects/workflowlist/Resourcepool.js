@@ -131,12 +131,6 @@ const Resourcepool = () => {
             <h1 className="font-semibold text-2xl leading-normal tracking-normal text-left">
               {projectName}
             </h1>
-            <Button
-              icon={<PlusCircleFilled style={{ color: "white" }} />}
-              className="bg-[#1890FF;] w-[7.5rem] px-4 py-1 font-medium text-white"
-            >
-              Workflow
-            </Button>
           </div>
         </div>
         <div className="p-5 space-y-3 border border-x-2 border-t-0 border-gray-300 bg-white rounded-b-lg  flex gap-2 items-center overflow-x-auto">
@@ -203,22 +197,6 @@ const Resourcepool = () => {
           <h1 className="text-2xl font-semibold leading-normal tracking-normal text-left">
             Procurement Resource Pool
           </h1>
-          <div className="space-x-5">
-            <Search
-              placeholder="Search employe"
-              onSearch={onSearch}
-              style={{
-                width: "16.5rem",
-                height: "2rem",
-              }}
-            />
-            <Button
-              icon={<PlusCircleFilled style={{ color: "white" }} />}
-              className="bg-[#1890FF] w-[7.5rem] px-4 py-1 font-medium text-white"
-            >
-              Resources
-            </Button>
-          </div>
         </div>
         <div className="flex space-x-2 overflow-x-scroll">
           {teamData.map((data) => (
