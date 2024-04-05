@@ -106,7 +106,7 @@ const CreatingTemplate = () => {
     <div className="border rounded border-t-[2rem] border-[#F5F5F5]">
       <div className="flex justify-between p-4 items-center bg-white">
         <Input
-          placeholder="example"
+          placeholder="WorkFlow Usecases"
           className="w-1/2"
           onChange={(e) => setWorkFlowName(e.target.value)}
         />

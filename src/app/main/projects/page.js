@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { notosans } from "@/font/font";
 import { PlusSquareFilled, DownOutlined, SettingOutlined, PlusOutlined } from "@ant-design/icons";
 import { addProjectId } from "@/Context/AddresourcesSlice/addresourcesSlice";
 import { useDispatch } from "react-redux";
@@ -252,7 +251,7 @@ const ProjectLayout = () => {
               <>
                 {paginatedData.map((item, index) => (
                   <Col span={6} className="mb-4" key={index}>
-                      <Card headerFontSize={22} bordered={false}  onClick={() => {ProjectId(item.id),updateProjectNames(item.name), handleProjectIdUpdate(item.id , item.name)
+                      <Card headerFontSize={22} bordered={false} className="cursor-pointer"  onClick={() => {ProjectId(item.id),updateProjectNames(item.name), handleProjectIdUpdate(item.id , item.name)
                         // ProjectId(item.id);
                         // updateProjectNames(item.name)
                       }}>
