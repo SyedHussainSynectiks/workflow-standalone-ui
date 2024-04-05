@@ -250,7 +250,7 @@ const RequirementForm = (stepperState) => {
     for (let i = 0; i < convertedImages.length; i++) {
       try {
         const response = await axios.post(
-          "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
+          "https://68v4n18rx1.execute-api.us-east-1.amazonaws.com/dev/docUpload",
           convertedImages[i],
           {
             headers: {
@@ -355,7 +355,7 @@ const RequirementForm = (stepperState) => {
 
       // Send data to API
       const apiResponse = await axios.post(
-        "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
+        "https://68v4n18rx1.execute-api.us-east-1.amazonaws.com/doc/docUpload",
         request,
         {
           headers: {
