@@ -14,12 +14,12 @@ const items = [
   {
     key: "1",
     label: "Select Template",
-    children: <Templates/>,
+    children: <Templates />,
   },
   {
     key: "2",
     label: "Create Template",
-    children: <CreatingTemplate/>,
+    children: <CreatingTemplate />,
   },
 ];
 const page = () => {
@@ -35,26 +35,26 @@ const page = () => {
 
   return (
     <div className="p-2">
-        <Breadcrumb
+      <Breadcrumb
         className="bg-white p-2"
-          items={[
-            {
-              title:<a href="/main"> Home</a>
-            },
-            {
-              title: <a href="/main/projects">Projects Overview</a>,
-            },
-            {
-              title:`${projectName}`,
-            },
-          ]}
-        />
-       <h1 className="text-2xl font-semibold p-2 bg-white">{projectName}</h1>
-        <p className="p-2 bg-white">
-          Form pages are used to collect or verify information to users, and
-          basic forms are common in scenarios where there are fewer data items.
-        </p>
-      <Tabs className="bg-white" defaultActiveKey={DefaultToggleValue} items={items} onChange={onChange} />
+        items={[
+          {
+            title: <a href="/main"> Home</a>
+          },
+          {
+            title: <a href="/main/projects">Projects Overview</a>,
+          },
+          {
+            title: `${projectName}`,
+          },
+        ]}
+      />
+      <h1 className="text-2xl font-semibold p-2 bg-white">{projectName}</h1>
+      <p className="p-2 bg-white">
+        Form pages are used to collect or verify information to users, and
+        basic forms are common in scenarios where there are fewer data items.
+      </p>
+      <Tabs className="bg-white px-4" defaultActiveKey={DefaultToggleValue} items={items} onChange={onChange} />
     </div>
   );
 };

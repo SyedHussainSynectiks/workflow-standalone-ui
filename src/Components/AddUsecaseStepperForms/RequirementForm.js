@@ -407,6 +407,7 @@ const RequirementForm = (stepperState) => {
   };
   //------------Docs Post
   const UploadingDoc = () => {
+
     // const currentTask = requiretasks.at(AssignIndex);
     // const updatedDocs = [...currentTask.docs]; 
     // // console.log("Docs", currentTask)
@@ -433,12 +434,13 @@ const RequirementForm = (stepperState) => {
     
     //   // Update the state with the new array
     //   setrequireTasks(updatedTasks);
+
     HandleUploadingDoc(), handleCancel();
   };
   const UploadingLink = () => {
     const currentTask = requiretasks.at(AssignIndex);
-    const updatedDocs = [...currentTask.docs]; 
-    
+    const updatedDocs = [...currentTask.docs];
+
     // console.log("Docs", currentTask)
     updatedDocs.push({
       doc_name: name,
@@ -451,11 +453,11 @@ const RequirementForm = (stepperState) => {
       ...currentTask,
       docs: updatedDocs,
     };
-  
+
     // Create a new array with updatedTask at AssignIndex
     const updatedTasks = [...requiretasks];
     updatedTasks[AssignIndex] = updatedTask;
-  
+
     // Update the state with the new array
     setrequireTasks(updatedTasks);
     HandleUploadingLink(), handleCancel();
@@ -590,7 +592,7 @@ const RequirementForm = (stepperState) => {
     };
   }, [openItemIndex, dropdownRef]);
 
-  // action button 
+  // action button
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -734,173 +736,173 @@ const RequirementForm = (stepperState) => {
                     <h1 className="text-base font-bold leading-tight tracking-normal text-left">
                       {data.name}
                     </h1>
-                   
+
                   </div>
                   <div
                     className="flex items-start h-36 justify-between mt-2 px-4"
                     key={index}
                   >
                     <div className="Main-Wrap">
-                    <div className="flex items-center gap-1">
-                    <div ref={dropdownRef} className=" Assinee-Btn relative flex items-center gap-4"
-                    >
-                     
-                      <button
-                        onClick={() => toggleSubItems(index)}
-                        className="z-0"
-                      >
-                        <Image src={AssignBtnImg} />
-                      </button>
+                      <div className="flex items-center gap-1">
+                        <div ref={dropdownRef} className=" Assinee-Btn relative flex items-center gap-4"
+                        >
 
-                      {openItemIndex === index && showOptions && (
-                        <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[3]">
-                          <div className="flex items-center justify-center">
-                            <SearchOutlined className="pl-2" />
-                            <input
-                              type="text"
-                              placeholder="Search Role"
-                              className="outline-none ml-2"
-                            />
-                          </div>
-                          {teamData.map(
-                            (itemsData, itemIndex) => (
-                              console.log(itemsData),
-                              (
-                                <li key={itemIndex} className="p-2">
-                                  <div className="flex items-center justify-between">
-                                    {Object.keys(itemsData).map(
-                                      (key, inx) => (
-                                        console.log(key),
-                                        (
-                                          <button
-                                            key={inx}
-                                            onClick={() =>
-                                              handleSubItemClick(
-                                                itemIndex === selectedSubItem
-                                                  ? null
-                                                  : itemIndex
-                                              )
-                                            }
-                                            className="font-semibold"
-                                          >
-                                            {key}
-                                          </button>
-                                        )
-                                      )
-                                    )}
-                                    <CaretDownOutlined />
-                                  </div>
-                                  {selectedSubItem === itemIndex &&
-                                    itemsData && (
-                                      <ul>
-                                        <li className=" ">
-                                          {Object.values(itemsData).map(
-                                            (subItem, i) => (
-                                              <React.Fragment key={i}>
-                                                {Array.isArray(subItem) &&
-                                                  subItem.map(
-                                                    (item, j) => (
-                                                      console.log(
-                                                        item.resource_id
-                                                      ),
-                                                      (
-                                                        <button
-                                                          key={j}
-                                                          className="py-1 w-[100%]"
-                                                          style={{
-                                                            backgroundColor:
-                                                              selectedAssign ===
-                                                              item.resource_id // Assuming selectedSubItem is the selected name
-                                                                ? "#E6F7FF"
-                                                                : "transparent",
-                                                          }}
-                                                          onClick={() => {
-                                                            setAssignIndex(
-                                                              index
-                                                            );
-                                                            setAssignResurseId(
-                                                              item.resource_id
-                                                            ),
-                                                              setAssignName(
-                                                                item.name
-                                                              ),
-                                                              setAssignImg(
-                                                                items.image_url
-                                                              );
+                          <button
+                            onClick={() => toggleSubItems(index)}
+                            className="bg-white border text-black p-2 rounded-md flex items-center gap-1 "
+                          >
+                            <Image src={AssignBtnImg} />
+                          </button>
 
-                                                            handleTaskId(
-                                                              data.id
-                                                            );
-                                                            // handleSelectedResourse(
-                                                            //   item.resource_id
-                                                            // );
-
-                                                            handleAssigneName(
-                                                              item.name
-                                                            );
-                                                            setSelectedAssign(
-                                                              item.resource_id
-                                                            );
-                                                          }}
-                                                        >
-                                                          {item.name}
-                                                          {/* Assuming name is the property to be displayed */}
-                                                        </button>
-                                                      )
-                                                    )
-                                                  )}
-                                              </React.Fragment>
+                          {openItemIndex === index && showOptions && (
+                            <ul className="absolute top-10 left-0 bg-white text-black shadow-md rounded-md z-[3]">
+                              <div className="flex items-center justify-center">
+                                <SearchOutlined className="pl-2" />
+                                <input
+                                  type="text"
+                                  placeholder="Search Role"
+                                  className="outline-none ml-2"
+                                />
+                              </div>
+                              {teamData.map(
+                                (itemsData, itemIndex) => (
+                                  console.log(itemsData),
+                                  (
+                                    <li key={itemIndex} className="p-2">
+                                      <div className="flex items-center justify-between">
+                                        {Object.keys(itemsData).map(
+                                          (key, inx) => (
+                                            console.log(key),
+                                            (
+                                              <button
+                                                key={inx}
+                                                onClick={() =>
+                                                  handleSubItemClick(
+                                                    itemIndex === selectedSubItem
+                                                      ? null
+                                                      : itemIndex
+                                                  )
+                                                }
+                                                className="font-semibold"
+                                              >
+                                                {key}
+                                              </button>
                                             )
-                                          )}
-                                        </li>
-                                        <button
-                                          ref={dropdownRef}
+                                          )
+                                        )}
+                                        <CaretDownOutlined />
+                                      </div>
+                                      {selectedSubItem === itemIndex &&
+                                        itemsData && (
+                                          <ul>
+                                            <li className=" ">
+                                              {Object.values(itemsData).map(
+                                                (subItem, i) => (
+                                                  <React.Fragment key={i}>
+                                                    {Array.isArray(subItem) &&
+                                                      subItem.map(
+                                                        (item, j) => (
+                                                          console.log(
+                                                            item.resource_id
+                                                          ),
+                                                          (
+                                                            <button
+                                                              key={j}
+                                                              className="py-1 w-[100%]"
+                                                              style={{
+                                                                backgroundColor:
+                                                                  selectedAssign ===
+                                                                    item.resource_id // Assuming selectedSubItem is the selected name
+                                                                    ? "#E6F7FF"
+                                                                    : "transparent",
+                                                              }}
+                                                              onClick={() => {
+                                                                setAssignIndex(
+                                                                  index
+                                                                );
+                                                                setAssignResurseId(
+                                                                  item.resource_id
+                                                                ),
+                                                                  setAssignName(
+                                                                    item.name
+                                                                  ),
+                                                                  setAssignImg(
+                                                                    items.image_url
+                                                                  );
 
-                                          onClick={() => {
-                                            // handleAssignButtonClick(
-                                            //   selectedAssign
-                                            // );
-                                            assigndbutton();
-                                            handleSubItemClick(
-                                              itemIndex === selectedSubItem
-                                                ? null
-                                                : itemIndex
-                                            );
-                                            toggleSaved(index);
-                                            // setIsDropdownOpen(false)
-                                          }}
-                                          style={{
-                                            backgroundColor: '#4299e1',
-                                            padding: '0.5rem 0.75rem',
-                                            color: '#ffffff',
-                                            borderRadius: '0.375rem',
-                                          }}
-                                        // className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
-                                        >
-                                          Assign
-                                        </button>
-                                      </ul>
-                                    )}
-                                </li>
-                              )
-                            )
+                                                                handleTaskId(
+                                                                  data.id
+                                                                );
+                                                                // handleSelectedResourse(
+                                                                //   item.resource_id
+                                                                // );
+
+                                                                handleAssigneName(
+                                                                  item.name
+                                                                );
+                                                                setSelectedAssign(
+                                                                  item.resource_id
+                                                                );
+                                                              }}
+                                                            >
+                                                              {item.name}
+                                                              {/* Assuming name is the property to be displayed */}
+                                                            </button>
+                                                          )
+                                                        )
+                                                      )}
+                                                  </React.Fragment>
+                                                )
+                                              )}
+                                            </li>
+                                            <button
+                                              ref={dropdownRef}
+
+                                              onClick={() => {
+                                                // handleAssignButtonClick(
+                                                //   selectedAssign
+                                                // );
+                                                assigndbutton();
+                                                handleSubItemClick(
+                                                  itemIndex === selectedSubItem
+                                                    ? null
+                                                    : itemIndex
+                                                );
+                                                toggleSaved(index);
+                                                // setIsDropdownOpen(false)
+                                              }}
+                                              style={{
+                                                backgroundColor: '#4299e1',
+                                                padding: '0.5rem 0.75rem',
+                                                color: '#ffffff',
+                                                borderRadius: '0.375rem',
+                                              }}
+                                            // className="action-button bg-sky-500 px-2 py-1 text-white rounded-sm  "
+                                            >
+                                              Assign
+                                            </button>
+                                          </ul>
+                                        )}
+                                    </li>
+                                  )
+                                )
+                              )}
+                            </ul>
                           )}
-                        </ul>
-                      )}
-                    </div>
-                    <div className="Assignee">
-                    {loading ? (
-                        <p></p>
-                      ) : (
-                        <div className="flex gap-2 w-[2]" id="AssigneeImg">
-                          <h5>{data.assigned_to.name}</h5>
-                          {/* <Image
+                        </div>
+                        <div className="Assignee">
+                          {loading ? (
+                            <p></p>
+                          ) : (
+                            <div className="flex gap-2 w-[2]" id="AssigneeImg">
+                              <h5>{data.assigned_to.name}</h5>
+                              {/* <Image
                             src={data.assigned_to.image}
                             alt={data.assigned_to.name}
                             height={34}
                             width={34}
                           ></Image> */}
-                          {/* {data.docs &&
+                              {/* {data.docs &&
                             data.docs.length > 0 &&
                             data.docs.map((doc, index) => (
                               <div key={index} className="bg-white border relative right-0 text-black p-4 rounded-md flex flex-col items-center items-center gap-1 ">
@@ -916,36 +918,36 @@ const RequirementForm = (stepperState) => {
                               </div>
                             ))} */}
 
-                          {/* {AssignDocs === data.id && ( */}
+                              {/* {AssignDocs === data.id && ( */}
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    </div>
-                    <div className="Assignee-Doc mt-2">
-                    {loading ? (
-                        <p></p>
-                      ) : (
-                        <div className="flex gap-2 w-[2]" id="AssigneeImg">
-                          {data.docs &&
-                            data.docs.length > 0 &&
-                            data.docs.map((doc, index) => (
-                              <div key={index} className="bg-white border relative right-0 text-black p-4 rounded-md flex flex-col items-center gap-1 ">
-                                <Image
-                                  src={doc.doc_url}
-                                  alt={doc.doc_name}
-                                  height={34}
-                                  width={30}
-                                />
-                                <a href={doc.doc_url} target="_blank">
-                                  {doc.doc_name}
-                                </a>
-                              </div>
-                            ))}
+                      </div>
+                      <div className="Assignee-Doc mt-2">
+                        {loading ? (
+                          <p></p>
+                        ) : (
+                          <div className="flex gap-2 w-[2]" id="AssigneeImg">
+                            {data.docs &&
+                              data.docs.length > 0 &&
+                              data.docs.map((doc, index) => (
+                                <div key={index} className="bg-white border relative right-0 text-black p-4 rounded-md flex flex-col items-center gap-1 ">
+                                  <Image
+                                    src={doc.doc_url}
+                                    alt={doc.doc_name}
+                                    height={34}
+                                    width={30}
+                                  />
+                                  <a href={doc.doc_url} target="_blank">
+                                    {doc.doc_name}
+                                  </a>
+                                </div>
+                              ))}
 
-                          {/* {AssignDocs === data.id && ( */}
-                        </div>
-                      )}
-                    </div>
+                            {/* {AssignDocs === data.id && ( */}
+                          </div>
+                        )}
+                      </div>
                     </div>
 
                     <div className="flex items-center space-x-2">
@@ -965,7 +967,7 @@ const RequirementForm = (stepperState) => {
                         </button>
 
                         {openActionIndex === index && (
-                          <div className=" cursor-pointer absolute z-10 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
+                          <div className=" cursor-pointer absolute z-50 bg-white w-[10rem] p-2 -left-[50%] rounded-lg shadow-lg overflow-hidden">
                             <ul>
                               <li onClick={handleOptionClick}>
                                 <FileProtectOutlined /> Upload Document
