@@ -244,13 +244,13 @@ const RequirementForm = (stepperState) => {
   };
   // const accessToken = getAccessTokenFromCookie();
   const accessToken =
-    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjNGI4YjRhOC05MDExLTcwMmUtOTY2ZC1lZDQ3NmUzODY5ZDciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiI2NDY4ZjIzNi02NmM4LTRlMjItYWVlYS0xMDA0YjE0YzVjMjkiLCJjdXN0b206b3JnX2lkIjoiYjk0YTU2NGQtODlmNy00NmQxLWJkNDEtYzZmNzQwMzQ5N2JjIiwiY29nbml0bzp1c2VybmFtZSI6ImM0YjhiNGE4LTkwMTEtNzAyZS05NjZkLWVkNDc2ZTM4NjlkNyIsIm9yaWdpbl9qdGkiOiJiMTBlYzg0Mi1lYzkyLTRiMmMtYTBmOC0xNTI1MjQwMzU1NmYiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiYTZkNDRjZWItNjNhZi00M2RiLTgwMGMtYzkyOGFiMzFjMTkzIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTIxMjYxNzcsImV4cCI6MTcxMjIxMjU3NywiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjEyNjE3NywianRpIjoiNzRjZmVhNDktYjNjNS00ZTNlLWJiM2QtZjViYmJkMWU4YTRkIiwiZW1haWwiOiJpdHphbHRhZmh1c2FpbkBnbWFpbC5jb20ifQ.RIw1Rdfowv-RnzpEXacHaN7jFvI9l3frzeH-LfMSj4NB_vPLclIBllYPGD0SYx6qziiSWMYxYc7Nn96_kYH4MtZY-SrF8qo2tJBVTsbPEn7Xl5YspyLUdHbaT2cvi6pZrfdKMRyslOZwQ7HfNoBdHYo-KvH-9Fk3bMRC68cbdnVCbb_VE7M-ywKdfFT43uAcW8lJwJ0GzGEGaJ7NODx_wZrFpm66U3B24SbPEtR6IWhQeXKPq3NFeN5teiz_EZhemE-Xre6I_4wrtZl4lS8sHh7oo57noJgEgtCPFBopqVdtFcxcqtuFqJGt3QpsR7aGo_ipkpE4Z4HD-ddhgh226w";
+    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNDA4NjQ2OC1kMDUxLTcwMmQtOTY2Mi1hNWRmNTQ5ZjRlMzQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiIyNGUyOTU0Yi05MzQzLTQ3MWQtODI2Yi0wMDAzYTBlNzZiYjEiLCJjdXN0b206b3JnX2lkIjoiNWM3NWE0MDQtMTJhOC00Yzc5LTkwZDgtNmIzMzgyNTE1NDlkIiwiY29nbml0bzp1c2VybmFtZSI6IjA0MDg2NDY4LWQwNTEtNzAyZC05NjYyLWE1ZGY1NDlmNGUzNCIsIm9yaWdpbl9qdGkiOiI0YjgyMTg1Zi1jZjFmLTRhNmEtOWQwYS1lZDU0ZjdiYWFhMTMiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiZjY2N2I5OTEtODliMS00OWJhLWEyNDYtMzUyZTlhMTBmNmUyIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTIzMDc2NTUsImV4cCI6MTcxMjM5NDA1NSwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjMwNzY1NSwianRpIjoiMTY1M2UyNzMtY2Y4ZC00MmJiLThkODUtOWVlNjcwYmZhZmJlIiwiZW1haWwiOiJqZWRlZmVsMTU1QGNlbnRlcmYuY29tIn0.aFDIxpwQYQt1tTEPjJ-kPsJYprKVrXoL13ChiF6Y10yrbrGySYT7LI0uuWG09cse6Q96AcnGUK0d6gp5d_qjCaBjvf70DZ2MMjex0vLVFqXbEUv2Z9MCzybrSgR9IreYYkklzfMdFiCeL524L8S8hqrznZKWb-kpr4uB6ECZ2-45rvwa1iPzQ1LesMc-QvrKInENYDona49upkZZOv9cRHLxZ-p3u43P0-nOP0b50ZO7p8Xvmqe2G7Yu7fRVKeTD9fWkb0z_FQKavrrV07bctVXacRgrSflRM3kWnNtSaGrzpzNOnKnxKAHn62S2LaJG--XWrvVlyiLP2SfmTXkQcg";
   const uploadingImages = async () => {
     const newAttachments = [];
     for (let i = 0; i < convertedImages.length; i++) {
       try {
         const response = await axios.post(
-          "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
+          "https://68v4n18rx1.execute-api.us-east-1.amazonaws.com/dev/docUpload",
           convertedImages[i],
           {
             headers: {
@@ -355,7 +355,7 @@ const RequirementForm = (stepperState) => {
 
       // Send data to API
       const apiResponse = await axios.post(
-        "https://i3mdnxvgrf.execute-api.us-east-1.amazonaws.com/dev/docUpload",
+        "https://68v4n18rx1.execute-api.us-east-1.amazonaws.com/doc/docUpload",
         request,
         {
           headers: {
@@ -407,32 +407,34 @@ const RequirementForm = (stepperState) => {
   };
   //------------Docs Post
   const UploadingDoc = () => {
-    const currentTask = requiretasks.at(AssignIndex);
-    const updatedDocs = [...currentTask.docs];
-    // console.log("Docs", currentTask)
-    // (currentTask.docs[0] = {
-    //   doc_name: DocumentAssign.doc_name,
-    //   doc_url: convertedImagesString,
-    // }),
-    //   console.log("Docs", currentTask);
 
-    updatedDocs.push({
-      doc_name: DocumentAssign.doc_name,
-      doc_url: convertedImagesString,
-    });
+    // const currentTask = requiretasks.at(AssignIndex);
+    // const updatedDocs = [...currentTask.docs]; 
+    // // console.log("Docs", currentTask)
+    // // (currentTask.docs[0] = {
+    // //   doc_name: DocumentAssign.doc_name,
+    // //   doc_url: convertedImagesString,
+    // // }),
+    // //   console.log("Docs", currentTask);
 
-    // Create a new object for currentTask to ensure immutability
-    const updatedTask = {
-      ...currentTask,
-      docs: updatedDocs,
-    };
+    //   updatedDocs.push({
+    //     doc_name: DocumentAssign.doc_name,
+    //     doc_url: convertedImagesString,
+    //   });
+    
+    //   // Create a new object for currentTask to ensure immutability
+    //   const updatedTask = {
+    //     ...currentTask,
+    //     docs: updatedDocs,
+    //   };
+    
+    //   // Create a new array with updatedTask at AssignIndex
+    //   const updatedTasks = [...requiretasks];
+    //   updatedTasks[AssignIndex] = updatedTask;
+    
+    //   // Update the state with the new array
+    //   setrequireTasks(updatedTasks);
 
-    // Create a new array with updatedTask at AssignIndex
-    const updatedTasks = [...requiretasks];
-    updatedTasks[AssignIndex] = updatedTask;
-
-    // Update the state with the new array
-    setrequireTasks(updatedTasks);
     HandleUploadingDoc(), handleCancel();
   };
   const UploadingLink = () => {
@@ -463,6 +465,7 @@ const RequirementForm = (stepperState) => {
 
   const HandleUploadingDoc = async () => {
     let data = JSON.stringify({
+      created_by: "bb933ca1-df71-413a-9f96-f0f289e4417a",
       doc_name: DocumentAssign.doc_name,
       doc_url: convertedImagesString,
     });
@@ -482,9 +485,33 @@ const RequirementForm = (stepperState) => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+        if (response.status === 200){
+          const currentTask = requiretasks.at(AssignIndex);
+          const updatedDocs = [...currentTask.docs]; 
+         
+      
+            updatedDocs.push({
+              doc_name: DocumentAssign.doc_name,
+              doc_url: convertedImagesString,
+            });
+          
+           
+            const updatedTask = {
+              ...currentTask,
+              docs: updatedDocs,
+            };
+          
+           
+            const updatedTasks = [...requiretasks];
+            updatedTasks[AssignIndex] = updatedTask;
+          
+           
+            setrequireTasks(updatedTasks);
+        }
       })
       .catch((error) => {
         console.log(error);
+        openNotification("topRight", "error", `${error.response.data.message}`);
       });
   };
 
@@ -701,7 +728,7 @@ const RequirementForm = (stepperState) => {
             (data, index) => (
               console.log("taskData", data),
               (
-                <div className="mb-8" key={index}>
+                <div className="mb-8 z-0" key={index}>
                   <div
                     className="flex items-center justify-between py-3 px-2"
                     style={{ background: "rgba(230, 247, 255, 1)" }}

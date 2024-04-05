@@ -25,7 +25,7 @@ const Resourcepool = () => {
   const productManagerIdData = teamData.find((team) => team.UxResearcherId);
   const uiDeveloperData = teamData.find((team) => team.UiDesignerId);
   const apiDeveloperIdData = teamData.find((team) => team.ApiDeveloperId);
-
+  const projectName = useSelector((state) => state.addProject.ProjectName);
   const route = useRouter();
   const ProjectId = (ProjectId) => {
     dispatch(addProjectId(ProjectId));
@@ -129,7 +129,7 @@ const Resourcepool = () => {
         <div className="p-5 space-y-3 border border-x-2 border-b-0 border-gray-300 bg-white  rounded-t-lg">
           <div className="flex justify-between">
             <h1 className="font-semibold text-2xl leading-normal tracking-normal text-left">
-              Procurement Workflows
+              {projectName}
             </h1>
             <Button
               icon={<PlusCircleFilled style={{ color: "white" }} />}
@@ -139,12 +139,12 @@ const Resourcepool = () => {
             </Button>
           </div>
         </div>
-        <div className="p-5 space-y-3 border border-x-2 border-t-0 border-gray-300 bg-white rounded-b-lg flex gap-2 items-center overflow-x-auto">
+        <div className="p-5 space-y-3 border border-x-2 border-t-0 border-gray-300 bg-white rounded-b-lg  flex gap-2 items-center overflow-x-auto">
           {workflowData.map((data, index) => {
             console.log("mapingData: ", data);
             console.log(data.workflow_name);
             return (
-              <div className="flex space-x-2 ">
+              <div className="flex space-x-2 cursor-pointer">
                 <div
                   className=" border border-grey-300 rounded-lg px-4 py-5 space-y-2 w-[21rem]"
                   onClick={() => {
@@ -160,6 +160,8 @@ const Resourcepool = () => {
 
                       <Button
                         className="bg-blue-500 text-white"
+                        type="primary"
+                        
                         onClick={(e) => {
                           e.stopPropagation();
                           WorkflowId(data.workflow_id);
