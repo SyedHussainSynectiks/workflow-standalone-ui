@@ -1,7 +1,7 @@
 "use client";
-import { Form, Input, Upload, Button, message, DatePicker,notification,Select, Breadcrumb } from "antd";
+import { Form, Input, Upload, Button, message, DatePicker, notification, Select, Breadcrumb } from "antd";
 import Link from "next/link";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from 'next/navigation'
 // import { useRouter } from 'next/router';
@@ -61,13 +61,13 @@ const newform = () => {
   };
   const [startDate, setStartDate] = useState(null);
 
-  
+
   const disabledEndDate = (current) => {
     // Disable dates that are before the selected start date or are the selected start date
     return current && (current <= startDate);
   };
 
-  const handleAssigneChange = (value,name,) => {
+  const handleAssigneChange = (value, name,) => {
     // const { name, value } = e.target;
     setProject({ ...project, [value]: name });
     // dispatch(setSelectedAssignee(value));
@@ -119,7 +119,8 @@ const newform = () => {
       .then((response) => {
         console.log(JSON.stringify(response.data));
         openNotification("topRight", "success", "UseCase saved successfully!");
-        router.push("/main/projects/developmentUsecases") })
+        router.push("/main/projects/developmentUsecases")
+      })
       .catch((error) => {
         console.log(error);
         openNotification("topRight", "error", "Fill the Form Correctly.");
@@ -154,25 +155,25 @@ const newform = () => {
     // Disable all dates before today
     return current && current < moment().startOf('day');
   }
-  
+
   return (
     <div className="">
       <div className="flex w-[100%] flex-col items-start gap-5">
         <div className=" bg-white px-2 py-2 w-[100%] ">
-        <Breadcrumb
-        className="bg-white p-2 mb-3"
-          items={[
-            {
-              title:<a href="/main"> Home</a>
-            },
-            {
-              title: <a href="/main/projects">Projects Overview</a>,
-            },
-            {
-              title:"Use Cases",
-            },
-          ]}
-        />
+          <Breadcrumb
+            className="bg-white p-2 mb-3"
+            items={[
+              {
+                title: <a href="/main"> Home</a>
+              },
+              {
+                title: <a href="/main/projects">Projects Overview</a>,
+              },
+              {
+                title: "Use Cases",
+              },
+            ]}
+          />
           <h1 className="flex w-[100%] h-7 flex-col justify-center text-black  text-2xl non-italic font-semibold leading-snug">
             {projectName}(Development workflow)
           </h1>
@@ -184,11 +185,11 @@ const newform = () => {
         </div>
       </div>
 
-      <section className="flex flex-col items-center flex-shrink-0 mt-4  w-auto py-1 h-screen bg-white">
+      <section className="flex flex-col items-center flex-shrink-0 mt-4 mx-auto  w-auto py-1 h-screen bg-white">
         <h1 className="text-black text-2xl font-semibold leading-normal  px-4 py-4 w-[100%] flex items-center">
           Basic Details
         </h1>
-        <Form
+        <Form className="flex flex-col"
           {...layout}
           name="nest-messages"
           style={{
@@ -225,8 +226,10 @@ const newform = () => {
             <Select
               placeholder="Select assignee"
               loading={loading}
-              onChange={(value,name,resource_id) => {handleAssigneChange("assigned_to_id", value,name);
-            console.log(resource_id)}}
+              onChange={(value, name, resource_id) => {
+                handleAssigneChange("assigned_to_id", value, name);
+                console.log(resource_id)
+              }}
             >
               {assignees.map((assignee, index) => (
                 // console.log("Assigne Data", assignee),
@@ -260,7 +263,7 @@ const newform = () => {
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200  px-1 py-1 h-8 w-[184px] m-1"
                 onChange={handleStartDateChange}
                 disabledDate={disabledDate}
-                // value={project.startDate}
+              // value={project.startDate}
               />
               <span>-</span>
               <DatePicker
@@ -290,7 +293,11 @@ const newform = () => {
             Submit
           </Button> */}
 
-          <Button
+          <Button type="primary" className="bg-blue-500 "
+            style={{
+              width: '150px',
+              marginLeft: '50%'
+            }}
             onClick={() => {
               handleSubmit();
             }}
