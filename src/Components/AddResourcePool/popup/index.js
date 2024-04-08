@@ -226,7 +226,7 @@ export const ApiDeveloper = (props) => {
                                                             name: Manager.resource_name,
                                                             email: Manager.work_email,
                                                             image: Manager.image,
-                                                            Designation: "Project Manager",
+                                                            Designation: "API Developer",
                                                             isChecked: true
                                                         };
                                                         dispatch(addResources(selectedData));
@@ -375,7 +375,7 @@ export const CiCdResourcePool = (props) => {
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation: "Project Manager",
+                                                        Designation: "CI/CD developer",
                                                         isChecked: true
                                                     };
                                                     dispatch(addResources(selectedData));
@@ -496,7 +496,7 @@ export const TesterResourcePool = (props) => {
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation: "Project Manager",
+                                                        Designation: "Tester",
                                                         isChecked: true
                                                     };
                                                     dispatch(addResources(selectedData));
@@ -630,7 +630,7 @@ export const UxDesignResourcePool = (props) => {
                                                                     name: Manager.resource_name,
                                                                     email: Manager.work_email,
                                                                     image: Manager.image,
-                                                                    Designation: "Project Manager",
+                                                                    Designation: "UX Designer",
                                                                     isChecked: true
                                                                 };
                                                                 dispatch(addResources(selectedData));
@@ -762,7 +762,7 @@ export const UiDeveloperResourcePool = (props) => {
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation: "Project Manager",
+                                                        Designation: "UI Developer",
                                                         isChecked: true
                                                     };
                                                     dispatch(addResources(selectedData));
@@ -886,7 +886,7 @@ export const UxResearcher = (props) => {
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation: "Project Manager",
+                                                        Designation: "UX Researcher",
                                                         isChecked: true
                                                     };
                                                     dispatch(addResources(selectedData));
