@@ -65,6 +65,7 @@ const addresourcesSlice = createSlice({
           : [],
       },
     ],
+
     resoucesInfo: [],
     "UIUXDeveloper": [],
     "FrontEndDeveloper": [],
@@ -90,11 +91,13 @@ const addresourcesSlice = createSlice({
 
   reducers: {
     addResources: (state, action) => {
-      state.id[0].resourcesId.push(action.payload);
-      console.log(action.payload);
+      const newData = action.payload;
+      if (newData.isChecked === true) {
+        state.id[0].resourcesId.push({ id: newData.id });
+      } else if (newData.isChecked === false) {
+        state.id[0].resourcesId = state.id[0].resourcesId.filter(item => item.id !== newData.id);
+      }
     },
-    //-- re
-
     addProjectId: (state, action) => {
       state.id[0].prjectId = action.payload;
       console.log(action.payload);
@@ -118,60 +121,95 @@ const addresourcesSlice = createSlice({
       }
     },
     addResourcesPM: (state, action) => {
-      state.ProjectManager = action.payload;
-      console.log("ProjectManager Data: ", action.payload);
+      const newData = action.payload;
+      console.log("ProjectManager Data: ", newData);
+      if (newData.isChecked === true) {
+        state.ProjectManager.push(newData.id); // Push only the ID
+      } else if (newData.isChecked === false) {
+        state.ProjectManager = state.ProjectManager.filter(item => item !== newData.id);
+      }
     },
     addResourcesPMLength: (state, action) => {
       state.ProjectManagerLength = action.payload;
-      console.log("ProjectManager Data: ", action.payload);
+      console.log("ProjectManagerLength: ", action.payload);
     },
     addResourcesUxDesigner: (state, action) => {
-      state.UXDesigner = action.payload;
-      console.log("UXDesigner Data: ", action.payload);
+      const newData = action.payload;
+      console.log("UXDesigner Data: ", newData);
+      if (newData.isChecked === true) {
+        state.UXDesigner.push(newData.id); // Push only the ID
+      } else if (newData.isChecked === false) {
+        state.UXDesigner = state.UXDesigner.filter(item => item !== newData.id);
+      }
     },
     addResourcesUxDesignerLength: (state, action) => {
       state.UxDesignerLength = action.payload;
-      console.log("ProjectManager Data: ", action.payload);
+      console.log("UxDesignerLength: ", action.payload);
     },
     addResourcesUiDeveloper: (state, action) => {
-      state.UIDeveloper = action.payload;
-      console.log("UIDeveloper Data: ", action.payload);
+      const newData = action.payload;
+      console.log("UIDeveloper Data: ", newData);
+      if (newData.isChecked === true) {
+        state.UIDeveloper.push(newData.id); // Push only the ID
+      } else if (newData.isChecked === false) {
+        state.UIDeveloper = state.UIDeveloper.filter(item => item !== newData.id);
+      }
     },
     addResourcesUiDeveloperLength: (state, action) => {
       state.UIDeveloperLength = action.payload;
-      console.log("ProjectManager Data: ", action.payload);
+      console.log("UIDeveloperLength: ", action.payload);
     },
     addResourcesApiDeveloper: (state, action) => {
-      state.APIDeveloper = action.payload;
-      console.log("APIDeveloper Data: ", action.payload);
+      const newData = action.payload;
+      console.log("APIDeveloper Data: ", newData);
+      if (newData.isChecked === true) {
+        state.APIDeveloper.push(newData.id); // Push only the ID
+      } else if (newData.isChecked === false) {
+        state.APIDeveloper = state.APIDeveloper.filter(item => item !== newData.id);
+      }
     },
     addResourcesApiDeveLength: (state, action) => {
       state.APIDeveloperLength = action.payload;
-      console.log("ProjectManager Data: ", action.payload);
+      console.log("APIDeveloperLength: ", action.payload);
     },
     addResourcesTester: (state, action) => {
-      state.Tester = action.payload;
-      console.log("Tester Data: ", action.payload);
+      const newData = action.payload;
+      console.log("Tester Data: ", newData);
+      if (newData.isChecked === true) {
+        state.Tester.push(newData.id); // Push only the ID
+      } else if (newData.isChecked === false) {
+        state.Tester = state.Tester.filter(item => item !== newData.id);
+      }
     },
     addResourcesTesterLength: (state, action) => {
       state.TesterLength = action.payload;
-      console.log("ProjectManager Data: ", action.payload);
+      console.log("TesterLength: ", action.payload);
     },
     addResourcesUxResearch: (state, action) => {
-      state.UXResearcher = action.payload;
-      console.log("UXResearcher Data: ", action.payload);
+      const newData = action.payload;
+      console.log("UXResearcher Data: ", newData);
+      if (newData.isChecked === true) {
+        state.UXResearcher.push(newData.id); // Push only the ID
+      } else if (newData.isChecked === false) {
+        state.UXDesigner = state.UXResearcher.filter(item => item !== newData.id);
+      }
     },
     addResourcesUxResearcherLength: (state, action) => {
       state.UXResearcherLength = action.payload;
-      console.log("ProjectManager Data: ", action.payload);
+      console.log("UXResearcherLength: ", action.payload);
     },
     addResourcesCiCd: (state, action) => {
-      state.CICDSpecialist = action.payload;
-      console.log("CICDSpecialist Data: ", action.payload);
+      const newData = action.payload;
+      console.log("CICDSpecialist Data: ", newData);
+      if (newData.isChecked === true) {
+        state.CICDSpecialist.push(newData.id); // Push only the ID
+      } else if (newData.isChecked === false) {
+        state.CICDSpecialist = state.CICDSpecialist.filter(item => item !== newData.id);
+      }
     },
     addResourcesCiCdLength: (state, action) => {
       state.CICDSpecialistLength = action.payload;
-      console.log("ProjectManager Data: ", action.payload);
+      console.log("CICDSpecialistLength: ", action.payload);
     },
     // console.log(action.title)
     removeResources: (state, action) => {
@@ -224,7 +262,7 @@ export const {
   addResourcesTesterLength,
   addResourcesUxResearcherLength,
   CICDSpecialistLength,
-  removeResourcesInfo
+  removeResourcesInfo,
 } = addresourcesSlice.actions;
 export default addresourcesSlice.reducer;
 

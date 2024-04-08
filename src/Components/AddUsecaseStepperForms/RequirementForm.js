@@ -244,7 +244,7 @@ const RequirementForm = (stepperState) => {
   };
   // const accessToken = getAccessTokenFromCookie();
   const accessToken =
-    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNDA4NjQ2OC1kMDUxLTcwMmQtOTY2Mi1hNWRmNTQ5ZjRlMzQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiIyNGUyOTU0Yi05MzQzLTQ3MWQtODI2Yi0wMDAzYTBlNzZiYjEiLCJjdXN0b206b3JnX2lkIjoiNWM3NWE0MDQtMTJhOC00Yzc5LTkwZDgtNmIzMzgyNTE1NDlkIiwiY29nbml0bzp1c2VybmFtZSI6IjA0MDg2NDY4LWQwNTEtNzAyZC05NjYyLWE1ZGY1NDlmNGUzNCIsIm9yaWdpbl9qdGkiOiI0YjgyMTg1Zi1jZjFmLTRhNmEtOWQwYS1lZDU0ZjdiYWFhMTMiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiZjY2N2I5OTEtODliMS00OWJhLWEyNDYtMzUyZTlhMTBmNmUyIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTIzMDc2NTUsImV4cCI6MTcxMjM5NDA1NSwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjMwNzY1NSwianRpIjoiMTY1M2UyNzMtY2Y4ZC00MmJiLThkODUtOWVlNjcwYmZhZmJlIiwiZW1haWwiOiJqZWRlZmVsMTU1QGNlbnRlcmYuY29tIn0.aFDIxpwQYQt1tTEPjJ-kPsJYprKVrXoL13ChiF6Y10yrbrGySYT7LI0uuWG09cse6Q96AcnGUK0d6gp5d_qjCaBjvf70DZ2MMjex0vLVFqXbEUv2Z9MCzybrSgR9IreYYkklzfMdFiCeL524L8S8hqrznZKWb-kpr4uB6ECZ2-45rvwa1iPzQ1LesMc-QvrKInENYDona49upkZZOv9cRHLxZ-p3u43P0-nOP0b50ZO7p8Xvmqe2G7Yu7fRVKeTD9fWkb0z_FQKavrrV07bctVXacRgrSflRM3kWnNtSaGrzpzNOnKnxKAHn62S2LaJG--XWrvVlyiLP2SfmTXkQcg";
+    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNDA4NjQ2OC1kMDUxLTcwMmQtOTY2Mi1hNWRmNTQ5ZjRlMzQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiIyNGUyOTU0Yi05MzQzLTQ3MWQtODI2Yi0wMDAzYTBlNzZiYjEiLCJjdXN0b206b3JnX2lkIjoiNWM3NWE0MDQtMTJhOC00Yzc5LTkwZDgtNmIzMzgyNTE1NDlkIiwiY29nbml0bzp1c2VybmFtZSI6IjA0MDg2NDY4LWQwNTEtNzAyZC05NjYyLWE1ZGY1NDlmNGUzNCIsIm9yaWdpbl9qdGkiOiIxNjNlNTIyNy1lY2I3LTRiNGEtODRkMS05M2EwZGNiMTZjYjgiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiMDYwMDI5YTUtZjY1MS00ZWYwLThkZmEtMDg4YzQ5OGRiZWNmIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTI1NTM1ODksImV4cCI6MTcxMjYzOTk4OSwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjU1MzU4OSwianRpIjoiMjQyOTdlZjUtOTkyZi00MWU3LWIyOTctZDQ1MzU5Njk2OTFjIiwiZW1haWwiOiJqZWRlZmVsMTU1QGNlbnRlcmYuY29tIn0.I1TILhvxHUgsOc1uiyuf5cxKks11-jBCyLmnjgT55Lr2sWNAHtClSmJFflxUgSCOWMAGrZCvD8ZyNvozW9RNz9iYeBo0ER1i8yElcO5o6egNQC0rPWRKvViYnu38enpr4EpUjdG_EKDy1_zWhNF1NE2etLmYY-D2VCysFcfQ2z-z1E1eVlvwC-6OjcO6DXUqRbESqyGbxRTBDArbypXkq8POQFhyagOAQ_rKtEx0YeTzpNAKFo-x7oId8Q9va4mT0hZIdENATnT1gIuzi2hbAhM7bUsgBVboB3EZSMJpA5JWK9mGprilzYeFz1IszmgMR-gJjvV9b3WxrBXrg5P4Dg";
   const uploadingImages = async () => {
     const newAttachments = [];
     for (let i = 0; i < convertedImages.length; i++) {
@@ -737,7 +737,7 @@ const RequirementForm = (stepperState) => {
                    
                   </div>
                   <div
-                    className="flex items-start justify-between mt-2 px-4" style={{height:"8rem"}}
+                    className="flex items-start justify-between mt-2 px-4 " style={{height:"9.5rem"}}
                     key={index}
                   >
                     <div className="Main-Wrap">
@@ -1028,6 +1028,22 @@ const RequirementForm = (stepperState) => {
                             UploadingLink();
                           }}
                           onCancel={handleCancel}
+                          footer={[ // Customizing the footer of the Modal
+                          <Button key="cancel" onClick={handleCancel}>Cancel</Button>, // Cancel button
+                          <Button key="submit" type="primary" onClick={() => { // Submit button with primary type
+                              handleOk();
+                              handleSubmit();
+                              UploadingLink();
+                          }}
+                          style={{
+                            backgroundColor: '#4299e1',
+                            padding: '0.2rem 0.75rem',
+                            color: '#ffffff',
+                            borderRadius: '0.375rem',
+                          }}>
+                              OK
+                          </Button>,
+                      ]}
                         >
                           <div className="flex flex-col gap-4">
                             <input

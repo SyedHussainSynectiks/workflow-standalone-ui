@@ -20,8 +20,7 @@ const { RangePicker } = DatePicker;
 
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { updateFormData, UpdateStartDate } from "@/Context/AddNewProjectSlice/addProjectSlice";
-import { notosans } from "@/font/font";
+import { FormData, updateProjectName, UpdateStartDate } from "@/Context/AddNewProjectSlice/addProjectSlice";
 
 const layout = {
   labelCol: {
@@ -46,8 +45,24 @@ const validateMessages = {
 const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   const [imageBase64, setImageBase64] = useState();
 
-  const formData = useSelector((state) => state.addProject);
+  const formData = useSelector((state) => state.addProject.Projectform);
   const [startDate, setStartDate] = useState(null);
+  const initialProjectState = formData || {
+    projectName: "",
+    projectDescription: "",
+    projectDepartment: "",
+    startDate: "",
+    endDate: "",
+    projectId: "",
+    image_url: "",
+  };
+  const [project, setProject] = useState(initialProjectState);
+
+  // Update project state when Redux data changes
+  useEffect(() => {
+    setProject(formData || initialProjectState);
+  }, [formData]);
+
 
 
   const disabledEndDate = (current) => {
@@ -59,7 +74,8 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   const handleChange = (e) => {
     // Update the project state as the user types
     setProject({ ...project, [e.target.name]: e.target.value });
-    dispatch(updateFormData({ ...project, [e.target.name]: e.target.value }));
+    dispatch(FormData({ ...project, [e.target.name]: e.target.value }));
+    // dispatch(updateFormData({ ...project, [e.target.name]: e.target.value }));
 
     console.log(project)
   };
@@ -72,7 +88,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     });
 
     // Dispatch the updated form data with the startDate included
-    dispatch(updateFormData({ ...project, startDate: formattedStartDate }));
+    dispatch(FormData({ ...project, startDate: formattedStartDate }));
   };
 
 
@@ -85,9 +101,8 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     });
 
     // Dispatch the updated form data with the startDate included
-    dispatch(updateFormData({ ...project, endDate: formattedStartDate }));
+    dispatch(FormData({ ...project, endDate: formattedStartDate }));
   };
-
 
   const [fileuploaded, setfileuploaded] = useState(false);
   const [convertedImages, setConvertedImages] = useState([]);
@@ -119,9 +134,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     }
     setConvertedImages(newConvertedImages);
   };
-  let accesstoken =
-    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNDA4NjQ2OC1kMDUxLTcwMmQtOTY2Mi1hNWRmNTQ5ZjRlMzQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiIyNGUyOTU0Yi05MzQzLTQ3MWQtODI2Yi0wMDAzYTBlNzZiYjEiLCJjdXN0b206b3JnX2lkIjoiNWM3NWE0MDQtMTJhOC00Yzc5LTkwZDgtNmIzMzgyNTE1NDlkIiwiY29nbml0bzp1c2VybmFtZSI6IjA0MDg2NDY4LWQwNTEtNzAyZC05NjYyLWE1ZGY1NDlmNGUzNCIsIm9yaWdpbl9qdGkiOiJkOThhODQ2ZC01MGQ3LTQwODEtYjdmNy0zOTY2YTA2ZDYzZTgiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiYWY1NmQxMDctMjkwZC00NzQ2LTlhZWMtYjIwOTNmZmM3MDg5IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTIzMTYyMjgsImV4cCI6MTcxMjQwMjYyOCwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjMxNjIyOCwianRpIjoiNjI5ZmE1ZmQtODE2MC00N2MzLWE3MTAtOTNmZjQyMDJiYmZjIiwiZW1haWwiOiJqZWRlZmVsMTU1QGNlbnRlcmYuY29tIn0.mw_d5hYoXo1HCtOaIOxN8yEeRP7v0Yy1mnkfVxycEbJGCG_XW7AkHbn6nAc_QnsmoIW_7D2sG5jl_fLi8TS47yNefqU7QAQDbCt_ew8FIGv7sGlk_wwMQpA4RbnxNn0NBFrS8MWfhd1db4s5JLR-_28doLfNPG3fSSSbsxAWssUDy5-k2bGD-8W5-ybIeV9La6r0sz07NXP-3m7MUr5EdTST22xED-C0SBlb02Z9uio4QN6dXkqH0B_cewN9HH2if3ywj_fIQNEsiJH38mc1GSTGhXFTutpo8lSXAwz6H6RCzyEwmeK360XykKuj2-4uypRGfgDKlnqm8p1r7Go4lw";
-    
+  let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNDA4NjQ2OC1kMDUxLTcwMmQtOTY2Mi1hNWRmNTQ5ZjRlMzQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiIyNGUyOTU0Yi05MzQzLTQ3MWQtODI2Yi0wMDAzYTBlNzZiYjEiLCJjdXN0b206b3JnX2lkIjoiNWM3NWE0MDQtMTJhOC00Yzc5LTkwZDgtNmIzMzgyNTE1NDlkIiwiY29nbml0bzp1c2VybmFtZSI6IjA0MDg2NDY4LWQwNTEtNzAyZC05NjYyLWE1ZGY1NDlmNGUzNCIsIm9yaWdpbl9qdGkiOiIxNjNlNTIyNy1lY2I3LTRiNGEtODRkMS05M2EwZGNiMTZjYjgiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiMDYwMDI5YTUtZjY1MS00ZWYwLThkZmEtMDg4YzQ5OGRiZWNmIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTI1NTM1ODksImV4cCI6MTcxMjYzOTk4OSwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjU1MzU4OSwianRpIjoiMjQyOTdlZjUtOTkyZi00MWU3LWIyOTctZDQ1MzU5Njk2OTFjIiwiZW1haWwiOiJqZWRlZmVsMTU1QGNlbnRlcmYuY29tIn0.I1TILhvxHUgsOc1uiyuf5cxKks11-jBCyLmnjgT55Lr2sWNAHtClSmJFflxUgSCOWMAGrZCvD8ZyNvozW9RNz9iYeBo0ER1i8yElcO5o6egNQC0rPWRKvViYnu38enpr4EpUjdG_EKDy1_zWhNF1NE2etLmYY-D2VCysFcfQ2z-z1E1eVlvwC-6OjcO6DXUqRbESqyGbxRTBDArbypXkq8POQFhyagOAQ_rKtEx0YeTzpNAKFo-x7oId8Q9va4mT0hZIdENATnT1gIuzi2hbAhM7bUsgBVboB3EZSMJpA5JWK9mGprilzYeFz1IszmgMR-gJjvV9b3WxrBXrg5P4Dg"
   const uploadingImages = async () => {
     const newAttachments = [];
     for (let i = 0; i < convertedImages.length; i++) {
@@ -139,7 +152,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
         // setconvertedImagesString(response.data.link);
         console.log(response.data.link)
         setProject({ ...project, image_url: response.data.link })
-        dispatch(updateFormData({ ...project, image_url: response.data.link }))
+        dispatch(FormData({ ...project, image_url: response.data.link }))
       } catch (error) {
         console.error(error);
         alert("Error uploading image. Please try again.");
@@ -156,42 +169,30 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
       setfileuploaded(false);
     }
   }, [fileuploaded, convertedImages]);
-
-
-
-
   const router = useRouter();
 
   // useProject
-  const [project, setProject] = useState({
-    projectName: "",
-    projectDescription: "",
-    projectDepartment: "",
-    startDate: "",
-    endDate: "",
-    projectId: "",
-    image_url: "",
-  });
-
   const projectData = useSelector(state => state.addProject);
   console.log(projectData)
   function disabledDate(current) {
     // Disable all dates before today
     return current && current < moment().startOf('day');
   }
+
+
   return (
     <div>
       <section className="flex flex-col items-center flex-shrink-0  w-auto py-1 bg-white ">
         <Form
           {...layout}
           name="nest-messages"
-          className={notosans.className}
           style={{
             maxWidth: 600,
           }}
           validateMessages={validateMessages}
+          initialValues={project}
         >
-          <Form.Item className={notosans.className}
+          <Form.Item
             name={["ProjectName"]}
             label="Project Name"
             rules={[
@@ -201,15 +202,14 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
             ]}
           >
             <Input
+              name="ProjectName"
+              id="ProjectName"
               value={project.projectName}
               onChange={handleChange}
-              name="projectName"
-              id="projectName"
-              className={notosans.className}
             />
           </Form.Item>
 
-          <Form.Item className={notosans.className}
+          <Form.Item
             name={["projectDescription"]}
             label="Project Description"
             rules={[
@@ -222,9 +222,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
               name="projectDescription"
               id="projectDescription"
               value={project.projectDescription}
-              onChange={handleChange}
-              className={notosans.className}
-            />
+              onChange={handleChange} />
           </Form.Item>
 
           <Form.Item
@@ -240,12 +238,10 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
               name="projectDepartment"
               id="projectDepartment"
               value={project.projectDepartment}
-              onChange={handleChange}
-              className={notosans.className}
-            />
+              onChange={handleChange} />
           </Form.Item>
 
-          <Form.Item className={notosans.className} name="range-time-picker" label="Project Duration">
+          <Form.Item name="range-time-picker" label="Project Duration">
             <div className="flex">
               <DatePicker
                 id="projectStartDate"
@@ -267,7 +263,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
             </div>
           </Form.Item>
 
-          <Form.Item className={notosans.className}
+          <Form.Item
             name="Project Icon"
             label="Project Icon"
             valuePropName="fileList"

@@ -98,33 +98,33 @@ const Resourcepool = () => {
 
   return (
     <div className="space-y-4 border-t-[2rem] border-[#F5F5F5]">
-      <div className="bg-white flex px-5 justify-between items-center border border-gray-300 rounded-lg pt-2">
-        <div>
-          <h1 className="text-2xl font-semibold leading-snug tracking-normal text-left">
-            Solution
-          </h1>
-          <p className="text-xs font-normal leading-tight tracking-normal">
-            Procurement is the systematic process of identifying, acquiring, and
-            managing the goods, services, or works needed by an organization to
-            meet its operational requirements.
-          </p>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="text-xs font-normal leading-tight tracking-normal text-left">
-            Created By
-          </p>
-          <img
-            src="https://cdn.pixabay.com/photo/2015/07/20/12/53/gehlert-852762_1280.jpg"
-            className="w-[2.5rem] h-[2.5rem] rounded-full"
-          />
-          <p
-            className="text-xs f
-                    ont-semibold leading-tight tracking-normal text-left"
-          >
-            Siddhesh
-          </p>
-        </div>
-      </div>
+      {/* // <div className="bg-white flex px-5 justify-between items-center border border-gray-300 rounded-lg pt-2">
+      //   // <div>
+      //   //   <h1 className="text-2xl font-semibold leading-snug tracking-normal text-left">
+      //   //     Solution
+      //   //   </h1>
+      //   //   <p className="text-xs font-normal leading-tight tracking-normal">
+      //   //     Procurement is the systematic process of identifying, acquiring, and
+      //   //     managing the goods, services, or works needed by an organization to
+      //   //     meet its operational requirements.
+      //   //   </p>
+      //   // </div>
+      //   // <div className="flex flex-col items-center">
+      //   //   <p className="text-xs font-normal leading-tight tracking-normal text-left">
+      //   //     Created By
+      //   //   </p>
+      //   //   <img */}
+      {/* //   //     src="https://cdn.pixabay.com/photo/2015/07/20/12/53/gehlert-852762_1280.jpg"
+      //   //     className="w-[2.5rem] h-[2.5rem] rounded-full"
+      //   //   /> */}
+      {/* //   //   <p
+      //   //     className="text-xs f
+      //   //             ont-semibold leading-tight tracking-normal text-left"
+      //   //   >
+      //   //     Siddhesh
+      //   //   </p>
+      //   // </div>
+      // </div> */}
       <div>
         <div className="p-5 space-y-3 border border-x-2 border-b-0 border-gray-300 bg-white  rounded-t-lg">
           <div className="flex justify-between">
@@ -226,11 +226,7 @@ const Resourcepool = () => {
                       </div>
                     </div>
                   ))}
-                  <div className="text-blue-500 text-right">
-                    <button className="hover:text-blue-700 hover:underline">
-                      View All
-                    </button>
-                  </div>
+                  
                 </div>
               ))}
             </div>
