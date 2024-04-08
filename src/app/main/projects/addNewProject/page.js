@@ -93,8 +93,8 @@ export default function page({ formNext }) {
       !projectData.projectDescription ||
       !projectData.projectDepartment ||
       !projectData.startDate ||
-      !projectData.endDate
-      // !projectData.image_url
+      !projectData.endDate||
+      !projectData.image_url
     ) {
       message.error(
         "Please fill in all fields before proceeding to the next step"
