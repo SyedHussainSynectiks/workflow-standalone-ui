@@ -46,7 +46,7 @@ const CreatingTemplate = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/workflow",
+      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/workflow",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

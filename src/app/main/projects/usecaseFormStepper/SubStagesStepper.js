@@ -19,7 +19,7 @@
 //         const fetchData = async () => {
 //           try {
 //             const response = await axios.get(
-//               `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
+//               `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
 //               {
 //                 headers: {
 //                   Accept: "application/json",
@@ -128,7 +128,7 @@ const SubStagesStepper = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
+          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
           {
             headers: {
               Accept: "application/json",

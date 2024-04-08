@@ -27,7 +27,7 @@ const Page = () => {
       console.log(data)
 
       const response = await axios.post(
-        "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/workflow",
+        "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/workflow",
         data,
         {
           headers: {
@@ -63,7 +63,7 @@ const id = "  skjdf"
 let config = {
   method: 'get',
   maxBodyLength: Infinity,
-  url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${id}`,
+  url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${id}`,
   headers: { 
     'Accept': 'application/json'
   }

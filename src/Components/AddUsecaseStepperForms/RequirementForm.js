@@ -81,7 +81,7 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}/task`,
+      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}/task`,
       headers: {
         Accept: "application/json",
       },
@@ -133,7 +133,7 @@ const RequirementForm = (stepperState) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
+          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
         );
         const responseData = response.data;
         console.log("responsedata ", responseData);
@@ -471,7 +471,7 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/doc`,
+      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/doc`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -523,7 +523,7 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/doc`,
+      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/doc`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -683,7 +683,7 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/assign/${id}`,
+      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/assign/${id}`,
       headers: {
         Accept: "application/json",
       },

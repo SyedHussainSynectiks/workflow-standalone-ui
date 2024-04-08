@@ -106,7 +106,7 @@ const newform = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase",
+      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -130,7 +130,7 @@ const newform = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
+          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
         );
         const responseData = response.data;
         console.log("responsedata ", responseData);

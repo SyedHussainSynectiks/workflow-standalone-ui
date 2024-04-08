@@ -29,7 +29,7 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase",
+          "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase",
           {
             params: {
               project_id: `${projectId}`,
