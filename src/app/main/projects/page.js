@@ -64,7 +64,7 @@ const ProjectLayout = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await getData();
-      setData(result);
+      setData(result.projects);
     };
     fetchData();
   }, []);
@@ -101,6 +101,7 @@ const ProjectLayout = () => {
   //     item.description.toLowerCase().includes(searchTerm.toLowerCase());
   //   return matchesStatus && matchesSearch;
   // });
+  console.log("FetchData ", data)
   const filteredData = data.filter((item) => {
     const statusLowerCase = item.status ? item.status.toLowerCase() : null;
 
