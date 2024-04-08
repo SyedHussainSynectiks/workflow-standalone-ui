@@ -20,7 +20,7 @@ const Planning = () => {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}/planning`,
+      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}/planning`,
       headers: {
         'Accept': 'application/json'
       }

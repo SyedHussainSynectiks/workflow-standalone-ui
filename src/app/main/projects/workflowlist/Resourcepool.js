@@ -37,7 +37,7 @@ const Resourcepool = () => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/workflow`,
+      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/workflow`,
       headers: {
         Accept: "application/json",
       },
@@ -82,7 +82,7 @@ const Resourcepool = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
+          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
         );
         const responseData = response.data;
         console.log("responsedata ", responseData);

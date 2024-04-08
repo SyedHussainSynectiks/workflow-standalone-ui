@@ -29,7 +29,7 @@ const UseCasesOverView = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
+          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
           {
             headers: {
               Accept: "application/json",
@@ -77,8 +77,8 @@ const UseCasesOverView = () => {
                 <Image
                 height={64}
                 width={64} 
-                  // src={requireData.image ? requireData.image : user}
-                  src={user}
+                  src={requireData.image ? requireData.image : user}
+                  // src={user}
                   className="w-[7rem] h-[7rem] rounded-md"
                 /> 
               </div>
