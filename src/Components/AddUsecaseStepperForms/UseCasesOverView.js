@@ -8,6 +8,8 @@ import {
   MessageOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import Image from "next/image";
+import user from "../../../public/assets/user.png"
 // import { axios } from 'axios';
 
 const UseCasesOverView = () => {
@@ -72,10 +74,13 @@ const UseCasesOverView = () => {
           {requireData && (
             <div className="flex space-x-5 items-center mb-3">
               <div>
-                <img
-                  src={requireData.image}
+                <Image
+                height={64}
+                width={64} 
+                  // src={requireData.image ? requireData.image : user}
+                  src={user}
                   className="w-[7rem] h-[7rem] rounded-md"
-                />
+                /> 
               </div>
               <div>
                 <h1 className="my-3 text-xl font-medium leading-7 tracking-normal text-left">

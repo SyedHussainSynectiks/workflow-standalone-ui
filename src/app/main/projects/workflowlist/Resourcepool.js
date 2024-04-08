@@ -98,7 +98,7 @@ const Resourcepool = () => {
 
   return (
     <div className="space-y-4 border-t-[2rem] border-[#F5F5F5]">
-      // <div className="bg-white flex px-5 justify-between items-center border border-gray-300 rounded-lg pt-2">
+      {/* // <div className="bg-white flex px-5 justify-between items-center border border-gray-300 rounded-lg pt-2">
       //   // <div>
       //   //   <h1 className="text-2xl font-semibold leading-snug tracking-normal text-left">
       //   //     Solution
@@ -113,30 +113,24 @@ const Resourcepool = () => {
       //   //   <p className="text-xs font-normal leading-tight tracking-normal text-left">
       //   //     Created By
       //   //   </p>
-      //   //   <img
-      //   //     src="https://cdn.pixabay.com/photo/2015/07/20/12/53/gehlert-852762_1280.jpg"
+      //   //   <img */}
+      {/* //   //     src="https://cdn.pixabay.com/photo/2015/07/20/12/53/gehlert-852762_1280.jpg"
       //   //     className="w-[2.5rem] h-[2.5rem] rounded-full"
-      //   //   />
-      //   //   <p
+      //   //   /> */}
+      {/* //   //   <p
       //   //     className="text-xs f
       //   //             ont-semibold leading-tight tracking-normal text-left"
       //   //   >
       //   //     Siddhesh
       //   //   </p>
       //   // </div>
-      // </div>
+      // </div> */}
       <div>
         <div className="p-5 space-y-3 border border-x-2 border-b-0 border-gray-300 bg-white  rounded-t-lg">
           <div className="flex justify-between">
             <h1 className="font-semibold text-2xl leading-normal tracking-normal text-left">
               {projectName}
             </h1>
-            // <Button
-            //   icon={<PlusCircleFilled style={{ color: "white" }} />}
-            //   type='primary' className="bg-[#1890FF;] w-[7.5rem] px-4 py-1 font-medium text-white"
-            // >
-            //   Workflow
-            // </Button>
           </div>
         </div>
         <div className="p-5 space-y-3 border border-x-2 border-t-0 border-gray-300 bg-white rounded-b-lg  flex gap-2 items-center overflow-x-auto">
@@ -203,22 +197,6 @@ const Resourcepool = () => {
           <h1 className="text-2xl font-semibold leading-normal tracking-normal text-left">
             Procurement Resource Pool
           </h1>
-          // <div className="space-x-5">
-          //   <Search
-          //     placeholder="Search employe"
-          //     onSearch={onSearch}
-          //     style={{
-          //       width: "16.5rem",
-          //       height: "2rem",
-          //     }}
-          //   />
-          //   <Button
-          //     icon={<PlusCircleFilled style={{ color: "white" }} />}
-          //     type='primary' className="bg-[#1890FF] w-[7.5rem] px-4 py-1 font-medium text-white"
-          //   >
-          //     Resources
-          //   </Button>
-          // </div>
         </div>
         <div className="flex space-x-2 overflow-x-scroll">
           {teamData.map((data) => (
@@ -248,11 +226,7 @@ const Resourcepool = () => {
                       </div>
                     </div>
                   ))}
-                  <div className="text-blue-500 text-right">
-                    <button className="hover:text-blue-700 hover:underline">
-                      View All
-                    </button>
-                  </div>
+                  
                 </div>
               ))}
             </div>

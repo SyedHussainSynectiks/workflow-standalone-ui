@@ -10,6 +10,15 @@ const initialState = {
   start_date: "",
   end_date: "",
   image_url: "",
+  Projectform: {
+    projectName: "",
+    projectDescription: "",
+    projectDepartment: "",
+    startDate: "",
+    endDate: "",
+    projectId: "",
+    image_url: "",
+  },
   id: isBrowser
     ? JSON.parse(localStorage.getItem("ProjectId")) || []
     : [],
@@ -54,13 +63,19 @@ const addProjectSlice = createSlice({
     resourcePoolID: (state, action) => {
       state.resourcePoolProjectID = action.payload
       console.log("ResourcePoolId", action.payload)
-      
+
       let setresourcePoolID = JSON.stringify(state.resourcePoolProjectID);
       localStorage.setItem("resourcePoolID", setresourcePoolID);
+    },
+    removeFormData: (state, action) => {
+      state.Projectform = action.payload
+    },
+    FormData: (state, action) => {
+      state.Projectform = { ...state.Projectform, ...action.payload };
     }
   },
 });
 
-export const { updateFormData, updateId, updateProjectName, addStepperValue, resourcePoolID } = addProjectSlice.actions;
+export const { updateFormData, updateId, updateProjectName, addStepperValue, resourcePoolID, removeFormData, FormData } = addProjectSlice.actions;
 
 export default addProjectSlice.reducer;

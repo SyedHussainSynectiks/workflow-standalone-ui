@@ -6,9 +6,6 @@ import useProject from "@/HOC/Project/Project";
 import user from "../../../../public/assets/user.png"
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
-
-// import user from "../../../../public/assets/profile1.svg";
-// import { useDispatch } from "react-redux";
 import {
     addResources, addResourcesData, addResourcesPMLength,
     addResourcesUxDesignerLength,
@@ -62,19 +59,6 @@ export const Projectmanager = (props) => {
         fetchData();
     }, []);
     const dispatch = useDispatch();
-
-    var handleResourcesAdd = (emp_id, data) => {
-
-        dispatch(addResources({ id: emp_id, }));
-        console.log(emp_id, data);
-    };
-
-    const [selectedDataPM, setSelectedDataPM] = useState([]);
-    const handleAddResourcesPM = (data) => {
-        const newData = [...selectedDataPM, data];
-        setSelectedDataPM(newData);
-        dispatch(addResourcesPM(newData));
-    };
     const Data = useSelector((state) => state.addResources)
     const checkboxData = Data.ProjectManager
     console.log(checkboxData);
@@ -107,32 +91,26 @@ export const Projectmanager = (props) => {
                                             type="checkbox"
                                             onClick={(e) => {
                                                 const isChecked = e.target.checked;
-                                                const selectedId = Manager.emp_id;
-                                                if (isChecked) {
-                                                    handleResourcesAdd(selectedId);
-                                                    handleAddResourcesPM(selectedId); // Add resource to PM list
-                                                } else {
-                                                    // Handle deselection: remove data and update PM list
-                                                    const updatedSelectedData = selectedDataPM.filter(id => id !== selectedId);
-                                                    setSelectedDataPM(updatedSelectedData);
-                                                    dispatch(addResourcesPM(updatedSelectedData));
-                                                }
                                                 if (isChecked) {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation:"Project Manager",
+                                                        Designation: "Project Manager",
                                                         isChecked: true
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesPM(selectedData));
                                                 } else {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         isChecked: false
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesPM(selectedData));
                                                 }
                                                 setIsCheckboxChecked(prevState => {
                                                     const newState = [...prevState];
@@ -145,7 +123,7 @@ export const Projectmanager = (props) => {
                                         />
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} />
+                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} alt="" />
                                         <div>
                                             <h1 className={`text-sm leading-tight tracking-normal text-left ${isCheckboxChecked[index] ? 'font-bold' : ''} `}>
                                                 {Manager.resource_name}
@@ -206,20 +184,6 @@ export const ApiDeveloper = (props) => {
         };
         fetchData();
     }, []);
-
-    // HandleCheckBoxChanges
-    const dispatch = useDispatch();
-    var handleResourcesAdd = (emp_id) => {
-        dispatch(addResources({ id: emp_id, }));
-        console.log(emp_id);
-    };
-    const [selectedDataApiD, setSelectedDataApiD] = useState([]);
-
-    const handleAddResourcesApiDeveloper = (data) => {
-        const newData = [...selectedDataApiD, data];
-        setSelectedDataApiD(newData);
-        dispatch(addResourcesApiDeveloper(newData));
-    };
     const Data = useSelector((state) => state.addResources)
     const checkboxData = Data.APIDeveloper
     console.log(checkboxData);
@@ -256,31 +220,26 @@ export const ApiDeveloper = (props) => {
                                                 type="checkbox"
                                                 onClick={(e) => {
                                                     const isChecked = e.target.checked;
-                                                    const selectedId = Manager.emp_id;
-                                                    if (isChecked) {
-                                                        handleResourcesAdd(selectedId);
-                                                        handleAddResourcesApiDeveloper(selectedId);
-                                                    } else {
-                                                        const updatedSelectedData = selectedDataApiD.filter(id => id !== selectedId);
-                                                        setSelectedDataApiD(updatedSelectedData);
-                                                        dispatch(addResourcesApiDeveloper(updatedSelectedData));
-                                                    }
                                                     if (isChecked) {
                                                         const selectedData = {
                                                             id: Manager.emp_id,
                                                             name: Manager.resource_name,
                                                             email: Manager.work_email,
                                                             image: Manager.image,
-                                                            Designation:"API Developer",
+                                                            Designation: "Project Manager",
                                                             isChecked: true
                                                         };
+                                                        dispatch(addResources(selectedData));
                                                         dispatch(addResourcesData(selectedData))
+                                                        dispatch(addResourcesApiDeveloper(selectedData));
                                                     } else {
                                                         const selectedData = {
                                                             id: Manager.emp_id,
                                                             isChecked: false
                                                         };
+                                                        dispatch(addResources(selectedData));
                                                         dispatch(addResourcesData(selectedData))
+                                                        dispatch(addResourcesApiDeveloper(selectedData));
                                                     }
                                                     setIsCheckboxChecked(prevState => {
                                                         const newState = [...prevState];
@@ -293,7 +252,7 @@ export const ApiDeveloper = (props) => {
                                             />
                                         </div>
                                         <div className="flex items-center gap-3">
-                                            <Image src={Manager.image ? Manager.image : user} height={35} width={35} />
+                                            <Image src={Manager.image ? Manager.image : user} height={35} width={35} alt="" />
                                             <div>
                                                 <h1 className={`text-sm leading-tight tracking-normal text-left ${isCheckboxChecked[index] ? 'font-bold' : ''} `}>
                                                     {Manager.resource_name}
@@ -347,18 +306,6 @@ export const CiCdResourcePool = (props) => {
         });
 
         props.onSubmit();
-    };
-    var handleResourcesAdd = (emp_id) => {
-        dispatch(addResources({ id: emp_id, }));
-        console.log(emp_id, data);
-    };
-    const [selectedDataCiCd, setSelectedDataCiCd] = useState([]);
-
-
-    const handleAddResourcesCiCd = (data) => {
-        const newData = [...selectedDataCiCd, data];
-        setSelectedDataCiCd(newData);
-        dispatch(addResourcesCiCd(newData));
     };
     const Data = useSelector((state) => state.addResources)
     const checkboxData = Data.CICDSpecialist
@@ -421,49 +368,40 @@ export const CiCdResourcePool = (props) => {
                                         <input
                                             type="checkbox"
                                             onClick={(e) => {
-                                                const selectedId = Manager.emp_id;
                                                 const isChecked = e.target.checked;
-
-                                                if (isChecked) {
-                                                    handleResourcesAdd(selectedId);
-                                                    handleAddResourcesCiCd(selectedId);
-                                                } else {
-                                                    // Handle deselecting the checkbox
-                                                    const updatedSelectedData = selectedDataCiCd.filter(id => id !== selectedId);
-                                                    setSelectedDataCiCd(updatedSelectedData);
-                                                    dispatch(addResourcesCiCd(updatedSelectedData));
-                                                }
                                                 if (isChecked) {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation:"CI/CD Developer",
+                                                        Designation: "Project Manager",
                                                         isChecked: true
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesCiCd(selectedData));
                                                 } else {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         isChecked: false
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesCiCd(selectedData));
                                                 }
                                                 setIsCheckboxChecked(prevState => {
                                                     const newState = [...prevState];
                                                     newState[index] = isChecked;
                                                     return newState;
                                                 });
-
                                             }}
                                             checked={isCheckboxChecked[index]}
-
                                             className="cursor-pointer"
                                         />
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} />
+                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} alt="" />
                                         <div>
                                             <h1 className={`text-sm leading-tight tracking-normal text-left ${isCheckboxChecked[index] ? 'font-bold' : ''} `}>
                                                 {Manager.resource_name}
@@ -494,17 +432,6 @@ export const TesterResourcePool = (props) => {
     const [projectResource, setprojectResource] = useState({
         Tester: [],
     });
-    var handleResourcesAdd = (emp_id) => {
-        dispatch(addResources({ id: emp_id, }));
-        console.log(emp_id);
-    };
-    const [selectedDataTester, setSelectedDataTester] = useState([]);
-
-    const handleAddResourcesTester = (data) => {
-        const newData = [...selectedDataTester, data];
-        setSelectedDataTester(newData);
-        dispatch(addResourcesTester(newData));
-    };
     const Data = useSelector((state) => state.addResources)
     const checkboxData = Data.Tester
     console.log(checkboxData);
@@ -563,32 +490,26 @@ export const TesterResourcePool = (props) => {
                                             type="checkbox"
                                             onClick={(e) => {
                                                 const isChecked = e.target.checked;
-                                                const selectedId = Manager.emp_id;
-                                                if (isChecked) {
-                                                    handleResourcesAdd(selectedId);
-                                                    handleAddResourcesTester(selectedId);
-                                                } else {
-                                                    // Handle deselecting the checkbox
-                                                    const updatedSelectedData = selectedDataTester.filter(id => id !== selectedId);
-                                                    setSelectedDataTester(updatedSelectedData);
-                                                    dispatch(addResourcesTester([updatedSelectedData]));
-                                                }
                                                 if (isChecked) {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation:"Tester",
+                                                        Designation: "Project Manager",
                                                         isChecked: true
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesTester(selectedData));
                                                 } else {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         isChecked: false
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesTester(selectedData));
                                                 }
                                                 setIsCheckboxChecked(prevState => {
                                                     const newState = [...prevState];
@@ -601,7 +522,7 @@ export const TesterResourcePool = (props) => {
                                         />
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} />
+                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} alt="" />
                                         <div>
                                             <h1 className={`text-sm leading-tight tracking-normal text-left ${isCheckboxChecked[index] ? 'font-bold' : ''} `}>
                                                 {Manager.resource_name}
@@ -637,18 +558,6 @@ export const UxDesignResourcePool = (props) => {
             },
         ],
     });
-
-    // HandleCheckBoxChange
-    var handleResourcesAdd = (emp_id) => {
-        dispatch(addResources({ id: emp_id }));
-        console.log(emp_id);
-    };
-    const [selectedDataUxDesign, setSelectedDataUxDesign] = useState([]);
-    const handleAddResourcesUxDesigner = (data) => {
-        const newData = [...selectedDataUxDesign, data];
-        setSelectedDataUxDesign(newData);
-        dispatch(addResourcesUxDesigner(newData));
-    };
     const Data = useSelector((state) => state.addResources)
     const checkboxData = Data.UXDesigner
     console.log(checkboxData);
@@ -715,32 +624,26 @@ export const UxDesignResourcePool = (props) => {
                                                         type="checkbox"
                                                         onClick={(e) => {
                                                             const isChecked = e.target.checked;
-                                                            const selectedId = Manager.emp_id;
-                                                            if (isChecked) {
-                                                                handleResourcesAdd(selectedId);
-                                                                handleAddResourcesUxDesigner(selectedId);
-                                                            } else {
-                                                                // Handle deselecting the checkbox
-                                                                const updatedSelectedData = selectedDataUxDesign.filter(id => id !== selectedId);
-                                                                setSelectedDataUxDesign(updatedSelectedData);
-                                                                dispatch(addResourcesUxDesigner(updatedSelectedData));
-                                                            }
                                                             if (isChecked) {
                                                                 const selectedData = {
                                                                     id: Manager.emp_id,
                                                                     name: Manager.resource_name,
                                                                     email: Manager.work_email,
                                                                     image: Manager.image,
-                                                                    Designation:"Ux Designer",
+                                                                    Designation: "Project Manager",
                                                                     isChecked: true
                                                                 };
+                                                                dispatch(addResources(selectedData));
                                                                 dispatch(addResourcesData(selectedData))
+                                                                dispatch(addResourcesUxDesigner(selectedData));
                                                             } else {
                                                                 const selectedData = {
                                                                     id: Manager.emp_id,
                                                                     isChecked: false
                                                                 };
+                                                                dispatch(addResources(selectedData));
                                                                 dispatch(addResourcesData(selectedData))
+                                                                dispatch(addResourcesUxDesigner(selectedData));
                                                             }
                                                             setIsCheckboxChecked(prevState => {
                                                                 const newState = [...prevState];
@@ -753,7 +656,7 @@ export const UxDesignResourcePool = (props) => {
                                                     />
                                                 </div>
                                                 <div className="flex items-center gap-3">
-                                                    <Image src={Manager.image ? Manager.image : user} height={35} width={35} />
+                                                    <Image src={Manager.image ? Manager.image : user} height={35} width={35} alt="" />
                                                     <div>
                                                         <h1 className={`text-sm leading-tight tracking-normal text-left ${isCheckboxChecked[index] ? 'font-bold' : ''} `}>
                                                             {Manager.resource_name}
@@ -790,19 +693,6 @@ export const UiDeveloperResourcePool = (props) => {
             },
         ],
     });
-
-    // HandleCheckBoxChange
-    var handleResourcesAdd = (emp_id) => {
-        dispatch(addResources({ id: emp_id, }));
-        console.log(emp_id);
-    };
-    const [selectedDataUiDeveloper, setSelectedDataUiDeveloper] = useState([]);
-
-    const handleAddResourcesUiDeveloper = (data) => {
-        const newData = [...selectedDataUiDeveloper, data];
-        setSelectedDataUiDeveloper(newData);
-        dispatch(addResourcesUiDeveloper(newData));
-    };
     const Data = useSelector((state) => state.addResources)
     const checkboxData = Data.UIDeveloper
     console.log(checkboxData);
@@ -866,32 +756,26 @@ export const UiDeveloperResourcePool = (props) => {
                                             type="checkbox"
                                             onClick={(e) => {
                                                 const isChecked = e.target.checked;
-                                                const selectedId = Manager.emp_id;
-                                                if (isChecked) {
-                                                    handleResourcesAdd(selectedId);
-                                                    handleAddResourcesUiDeveloper(selectedId);
-                                                } else {
-                                                    // Handle deselecting the checkbox
-                                                    const updatedSelectedData = selectedDataUiDeveloper.filter(id => id !== selectedId);
-                                                    setSelectedDataUiDeveloper(updatedSelectedData);
-                                                    dispatch(addResourcesUiDeveloper(updatedSelectedData));
-                                                }
                                                 if (isChecked) {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation:"Ui Developer",
+                                                        Designation: "Project Manager",
                                                         isChecked: true
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesUiDeveloper(selectedData));
                                                 } else {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         isChecked: false
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesUiDeveloper(selectedData));
                                                 }
                                                 setIsCheckboxChecked(prevState => {
                                                     const newState = [...prevState];
@@ -904,7 +788,7 @@ export const UiDeveloperResourcePool = (props) => {
                                         />
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} />
+                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} alt="" />
                                         <div>
                                             <h1 className={`text-sm leading-tight tracking-normal text-left ${isCheckboxChecked[index] ? 'font-bold' : ''} `}>
                                                 {Manager.resource_name}
@@ -961,20 +845,6 @@ export const UxResearcher = (props) => {
         fetchData();
     }, []);
     const dispatch = useDispatch();
-
-    console.log(selectUser);
-    var handleResourcesAdd = (emp_id) => {
-        dispatch(addResources({ id: emp_id, }));
-        console.log(emp_id);
-    };
-
-    const [selectedDataUxResearch, setSelectedDataUxResearch] = useState([]);
-
-    const handleAddResourcesUxResearch = (data) => {
-        const newData = [...selectedDataUxResearch, data];
-        setSelectedDataUxResearch(newData);
-        dispatch(addResourcesUxResearch(newData));
-    };
     const Data = useSelector((state) => state.addResources)
     const checkboxData = Data.UXResearcher
     console.log(checkboxData);
@@ -1009,32 +879,27 @@ export const UxResearcher = (props) => {
                                             type="checkbox"
                                             onClick={(e) => {
                                                 const isChecked = e.target.checked;
-                                                const selectedId = Manager.emp_id;
-                                                if (isChecked) {
-                                                    handleResourcesAdd(selectedId);
-                                                    handleAddResourcesUxResearch(selectedId);
-                                                } else {
-                                                    // Handle deselecting the checkbox
-                                                    const updatedSelectedData = selectedDataUxResearch.filter(id => id !== selectedId);
-                                                    setSelectedDataUxResearch(updatedSelectedData);
-                                                    dispatch(addResourcesUxResearch(updatedSelectedData));
-                                                }
+
                                                 if (isChecked) {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         name: Manager.resource_name,
                                                         email: Manager.work_email,
                                                         image: Manager.image,
-                                                        Designation:"Ux Researcher",
+                                                        Designation: "Project Manager",
                                                         isChecked: true
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesUxResearch(selectedData));
                                                 } else {
                                                     const selectedData = {
                                                         id: Manager.emp_id,
                                                         isChecked: false
                                                     };
+                                                    dispatch(addResources(selectedData));
                                                     dispatch(addResourcesData(selectedData))
+                                                    dispatch(addResourcesUxResearch(selectedData));
                                                 }
                                                 setIsCheckboxChecked(prevState => {
                                                     const newState = [...prevState];
@@ -1043,12 +908,11 @@ export const UxResearcher = (props) => {
                                                 });
                                             }}
                                             checked={isCheckboxChecked[index]}
-
                                             className="cursor-pointer"
                                         />
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} />
+                                        <Image src={Manager.image ? Manager.image : user} height={35} width={35} alt="" />
                                         <div>
                                             <h1 className={`text-sm leading-tight tracking-normal text-left ${isCheckboxChecked[index] ? 'font-bold' : ''} `}>
                                                 {Manager.resource_name}
