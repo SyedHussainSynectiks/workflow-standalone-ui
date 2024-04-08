@@ -261,7 +261,7 @@ export const {
   addResourcesApiDeveLength,
   addResourcesTesterLength,
   addResourcesUxResearcherLength,
-  CICDSpecialistLength,
+  addResourcesCiCdLength,
   removeResourcesInfo,
 } = addresourcesSlice.actions;
 export default addresourcesSlice.reducer;

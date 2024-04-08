@@ -70,7 +70,7 @@ const AddEmployReview = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project",
+      url: "https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -134,7 +134,7 @@ const AddEmployReview = () => {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${id}/team`,
+      url: `https://spj7xgf470.execute-api.us-east-1.amazonaws.com/dev/project/${id}/team`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -159,7 +159,7 @@ const AddEmployReview = () => {
   return (
     <div>
       <div>
-        <div className="rounded-md mt-5 space-y-5 p-5 bg-white">
+        <div className="rounded-md mt-5 space-y-5 p-5 bg-white ml-7">
           <div className="flex justify-between">
             <h1 className="text-xl font-bold leading-snug tracking-normal text-left">
               Setup project
