@@ -108,6 +108,7 @@ const RequirementForm = (stepperState) => {
         const tasks = stage[0][propsValue].tasks;
         const Docs = tasks.docs;
         console.log(tasks);
+        console.log("tasks", JSON.stringify(tasks));
         console.log(Docs);
         const checkList = stage[0][propsValue].checklist;
         // console.log("tassks", tasks);
@@ -216,6 +217,7 @@ const RequirementForm = (stepperState) => {
   const [convertedLinkString, setconvertedLinkString] = useState("");
   const [Attachments, setAttachments] = useState([]);
   const [uploadingFiles, setUploadingFiles] = useState([]);
+  const [uploadingBase64, setuploadingBase64] = useState([])
 
   console.log(Attachments);
   const handleFileChange = (info) => {
@@ -241,6 +243,8 @@ const RequirementForm = (stepperState) => {
       }
     }
     setConvertedImages(newConvertedImages);
+    setuploadingBase64(newConvertedImages[0].data)
+    console.log("NEWcONVERiMAGE",newConvertedImages,newConvertedImages[0].data)
   };
   // const accessToken = getAccessTokenFromCookie();
   const accessToken =
@@ -436,35 +440,45 @@ const RequirementForm = (stepperState) => {
     HandleUploadingDoc(), handleCancel();
   };
   const UploadingLink = () => {
-    const currentTask = requiretasks.at(AssignIndex);
-    const updatedDocs = [...currentTask.docs];
+    // const currentTask = requiretasks.at(AssignIndex);
+    // const updatedDocs = [...currentTask.docs];
 
-    // console.log("Docs", currentTask)
-    updatedDocs.push({
-      doc_name: name,
-      doc_url: convertedLinkString,
-    }),
-      console.log("Docs", currentTask);
-    // handleAssignButtonClick(AssignResourseId);
-    const updatedTask = {
-      ...currentTask,
-      docs: updatedDocs,
-    };
+    // // console.log("Docs", currentTask)
+    // updatedDocs.push({
+    //   doc_name: name,
+    //   doc_url: convertedLinkString,
+    //   type: "url"
+    // }),
+    //   console.log("Docs", currentTask);
+    // // handleAssignButtonClick(AssignResourseId);
+    // const updatedTask = {
+    //   ...currentTask,
+    //   docs: updatedDocs,
+    // };
 
-    // Create a new array with updatedTask at AssignIndex
-    const updatedTasks = [...requiretasks];
-    updatedTasks[AssignIndex] = updatedTask;
+    // // Create a new array with updatedTask at AssignIndex
+    // const updatedTasks = [...requiretasks];
+    // updatedTasks[AssignIndex] = updatedTask;
 
-    // Update the state with the new array
-    setrequireTasks(updatedTasks);
+    // // Update the state with the new array
+    // setrequireTasks(updatedTasks);
     HandleUploadingLink(), handleCancel();
   };
 
   const HandleUploadingDoc = async () => {
+    const response = await fetch(link);
+    const response1 = response.url;
+    console.log(response1);
+    console.log(response);
+    const blob = await response.blob();
+
+    // Convert the blob to base64
+    const base64 = await blobToBase64(blob);
+
     let data = JSON.stringify({
       // created_by: "bb933ca1-df71-413a-9f96-f0f289e4417a",
       doc_name: DocumentAssign.doc_name,
-      doc_url: convertedImagesString,
+      data: uploadingBase64,
     });
     console.log("request :", data);
     let config = {
@@ -489,6 +503,7 @@ const RequirementForm = (stepperState) => {
           updatedDocs.push({
             doc_name: DocumentAssign.doc_name,
             doc_url: convertedImagesString,
+            type: "png",
           });
 
           const updatedTask = {
@@ -512,7 +527,7 @@ const RequirementForm = (stepperState) => {
   const HandleUploadingLink = async () => {
     let data = JSON.stringify({
       doc_name: name,
-      doc_url: convertedLinkString,
+      data: link,
     });
     console.log("request :", data);
     let config = {
@@ -530,6 +545,30 @@ const RequirementForm = (stepperState) => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+        if (response.status === 200) {
+          const currentTask = requiretasks.at(AssignIndex);
+          const updatedDocs = [...currentTask.docs];
+
+          // console.log("Docs", currentTask)
+          updatedDocs.push({
+            doc_name: name,
+            doc_url: convertedLinkString,
+            type: "url",
+          }),
+            console.log("Docs", currentTask);
+          // handleAssignButtonClick(AssignResourseId);
+          const updatedTask = {
+            ...currentTask,
+            docs: updatedDocs,
+          };
+
+          // Create a new array with updatedTask at AssignIndex
+          const updatedTasks = [...requiretasks];
+          updatedTasks[AssignIndex] = updatedTask;
+
+          // Update the state with the new array
+          setrequireTasks(updatedTasks);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -732,7 +771,7 @@ const RequirementForm = (stepperState) => {
                   </div>
                   <div
                     className="flex items-start justify-between mt-2 px-4 "
-                    style={{ height: "9.5rem" }}
+                    style={{ minHeight: "9.5rem", maxHeight: "auto" }}
                     key={index}
                   >
                     <div className="Main-Wrap">
@@ -924,23 +963,47 @@ const RequirementForm = (stepperState) => {
                         {loading ? (
                           <p></p>
                         ) : (
-                          <div className="flex gap-2 w-[2]" id="AssigneeImg">
+                          <div
+                            className="flex flex-wrap gap-2 "
+                            id="AssigneeImg"
+                            style={{
+                              width: "40rem",
+                            }}
+                          >
                             {data.docs &&
                               data.docs.length > 0 &&
                               data.docs.map((doc, index) => (
                                 <div
                                   key={index}
-                                  className="bg-white border relative right-0 text-black p-4 rounded-md flex flex-col items-center gap-1 "
+                                  className="bg-white border relative right-0 text-black p-4 rounded-md flex  flex-col items-center gap-1 "
                                 >
-                                  <Image
-                                    src={doc.doc_url}
-                                    alt={doc.doc_name}
-                                    height={34}
-                                    width={30}
-                                  />
-                                  <a href={doc.doc_url} target="_blank">
-                                    {doc.doc_name}
-                                  </a>
+                                  {(doc.type === "html" && (
+                                    <>
+                                      <Image
+                                        src={doc.doc_url}
+                                        alt={doc.doc_name}
+                                        height={34}
+                                        width={34}
+                                      />
+                                      <p>{doc.doc_name}</p>
+                                    </>
+                                  ))}
+                                  {(doc.type === "png" && (
+                                    <>
+                                      <Image
+                                        src={doc.doc_url}
+                                        alt={doc.doc_name}
+                                        height={34}
+                                        width={34}
+                                      />
+                                      <p>{doc.doc_name}</p>
+                                    </>
+                                  ))}
+                                  {doc.type === "url"  && (
+                                    <a href={doc.doc_url} target="_blank">
+                                      {doc.doc_name}
+                                    </a>
+                                  )}
                                 </div>
                               ))}
 
@@ -1041,7 +1104,7 @@ const RequirementForm = (stepperState) => {
                               onClick={() => {
                                 // Submit button with primary type
                                 handleOk();
-                                handleSubmit();
+                                // handleSubmit();
                                 UploadingLink();
                               }}
                               style={{
