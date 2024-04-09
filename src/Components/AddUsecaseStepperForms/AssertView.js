@@ -141,7 +141,7 @@ const AssetView = () => {
                   >
                     {key}
                   </button>
-                  <span
+                  {/* <span
                     className={`${
                         data[key].status === "inprogress"
                           ? "bg-[#ffbf3f88] px-2 py-1 rounded"
@@ -151,7 +151,7 @@ const AssetView = () => {
                       }`}
                   >
                     {data[key].status}
-                  </span>
+                  </span> */}
                 </div>
                 <div className="flex justify-between items-center gap-2">
                   <p className="text-gray-400">Assigned Date:</p>

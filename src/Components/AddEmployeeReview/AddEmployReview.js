@@ -65,6 +65,7 @@ const AddEmployReview = () => {
       start_date: projectData.startDate,
       end_date: projectData.endDate,
       image_url: "https://i.imgur.com/PujQY5Y.png",
+      // image_url: projectData.image_url,
     });
 
     let config = {
