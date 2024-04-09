@@ -143,7 +143,7 @@ const AssetView = () => {
                   </button>
                   <span
                     className={`${
-                        data[key].status === "unassigned"
+                        data[key].status === "inprogress"
                           ? "bg-[#ffbf3f88] px-2 py-1 rounded"
                           : data[key].status === "pending"
                           ? "bg-gray-400 px-2 py-1 rounded" // Change to your desired color for pending status
