@@ -6,7 +6,7 @@ import otpBg from '../../../../../public/assets/otpBg.svg';
 import './style.css';
 
 const Page = () => {
-    const [otpInputs, setOtpInputs] = useState(['', '', '', '']);
+    const [otpInputs, setOtpInputs] = useState(['', '', '', '', '' , '']);
 
     const handleInputChange = (index, value) => {
         const newInputs = [...otpInputs];
@@ -14,7 +14,7 @@ const Page = () => {
         setOtpInputs(newInputs);
 
         // Enable the next input field if the current one is filled
-        if (value && index < 3) {
+        if (value && index < 5) {
             const nextInput = document.getElementById(`otp-input-${index + 1}`);
             nextInput.removeAttribute('disabled');
             nextInput.focus();
