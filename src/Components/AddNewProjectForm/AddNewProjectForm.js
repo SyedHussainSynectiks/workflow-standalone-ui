@@ -8,11 +8,12 @@ import NavLink from "@/app/nav-link";
 
 import { Form, Input, Upload, Button, message, DatePicker,notification } from "antd";
 import { useSelector } from "react-redux";
-import api from "@/api";
+import apiFetch from "@/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { UploadOutlined } from "@ant-design/icons";
 import useProject from "@/HOC/Project/Project";
+
 
 const { RangePicker } = DatePicker;
 
@@ -45,6 +46,7 @@ const validateMessages = {
 const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   const [imageBase64, setImageBase64] = useState();
   const [api, contextHolder] = notification.useNotification();
+ 
 
   const openNotification = (placement, type, message) => {
     api[type]({
@@ -53,6 +55,9 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
     });
   };
 
+
+
+  
   const formData = useSelector((state) => state.addProject.Projectform);
   const [startDate, setStartDate] = useState(null);
   const initialProjectState = formData || {

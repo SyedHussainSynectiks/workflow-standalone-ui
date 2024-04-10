@@ -38,6 +38,31 @@ export default function page({ formNext }) {
 
   const [toggleValue, setToggleValue] = useState(false);
   const [formData, setFormData] = useState({});
+  const [fetchProject, setfetchProject] = useState()
+  const axios = require('axios');
+  useEffect(()=>{
+  
+  let config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: 'https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project',
+    headers: { 
+      'Accept': 'application/json'
+    }
+  };
+  
+  axios.request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+    setfetchProject(response.data.projects);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  
+  },[])
+  
+  console.log("Projectfetch",fetchProject)
 
   // Function to receive the form data from the child component
   const receiveFormDataFromChild = (data) => {
@@ -150,7 +175,6 @@ export default function page({ formNext }) {
           Form pages are used to collect or verify information to users, and
           basic forms are common in scenarios where there are fewer data items.
         </p>
-        {toggleValue.toString()}
       </div>
       <div className="w-auto py-1 bg-white m-5">
         <Steps current={current} className="px-[10rem] py-3 p-5">
