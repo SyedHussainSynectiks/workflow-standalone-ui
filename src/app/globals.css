@@ -66,7 +66,7 @@
 }
  
 .NameProfileColUsecaseComp{
-  @apply text-black font-sans text-sm not-italic font-semibold leading-7 w-24 h-6 text-start
+  @apply text-black font-sans text-sm not-italic font-semibold leading-7 w-32 h-6 text-start
 }
  
 .NameProfileColUsecaseCompDate{

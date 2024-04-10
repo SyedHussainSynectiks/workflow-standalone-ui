@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import NavLink from "@/app/nav-link";
 
-import { Form, Input, Upload, Button, message, DatePicker } from "antd";
+import { Form, Input, Upload, Button, message, DatePicker,notification } from "antd";
 import { useSelector } from "react-redux";
 import api from "@/api";
 import axios from "axios";
@@ -44,6 +44,14 @@ const validateMessages = {
 
 const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   const [imageBase64, setImageBase64] = useState();
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (placement, type, message) => {
+    api[type]({
+      message: message,
+      placement: placement,
+    });
+  };
 
   const formData = useSelector((state) => state.addProject.Projectform);
   const [startDate, setStartDate] = useState(null);
@@ -112,6 +120,14 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
 
   const handleFileChange = (info) => {
     const allFiles = info.fileList;
+    if (allFiles.length > 1) {
+      // If more than one file is uploaded, keep only the first one
+      // openNotification("topRight", "error", "No Multiple Project Logo");
+      message.error(
+        "Only one logo per project allowed"
+      );
+      allFiles.splice(1);
+    }
     const imgarray = allFiles.map((e) => e.originFileObj);
     setfileuploaded(true);
     setUploadingFiles(allFiles);
@@ -120,7 +136,8 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
 
   const convertImagesToBase64 = async (images) => {
     const newConvertedImages = [];
-    for (let i = 0; i < images.length; i++) {
+    // for (let i = 0; i < images.length; i++) {
+      const i = 0
       const file = images[i];
       if (file) {
         const reader = new FileReader();
@@ -132,38 +149,10 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
         newConvertedImages.push({ fileName: file.name, data: base64 });
         setProject({ ...project, image_url: base64 })
         dispatch(FormData({ ...project, image_url: base64 }))
-      }
+      // }
     }
     setConvertedImages(newConvertedImages);
   };
-  let accesstoken = "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNDA4NjQ2OC1kMDUxLTcwMmQtOTY2Mi1hNWRmNTQ5ZjRlMzQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiIyNGUyOTU0Yi05MzQzLTQ3MWQtODI2Yi0wMDAzYTBlNzZiYjEiLCJjdXN0b206b3JnX2lkIjoiNWM3NWE0MDQtMTJhOC00Yzc5LTkwZDgtNmIzMzgyNTE1NDlkIiwiY29nbml0bzp1c2VybmFtZSI6IjA0MDg2NDY4LWQwNTEtNzAyZC05NjYyLWE1ZGY1NDlmNGUzNCIsIm9yaWdpbl9qdGkiOiJjZmZlMzI3MC00ZWM3LTQwYzYtYjQzMC02NTk3OTA0MzNjODUiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiNzYyYjk3M2MtOGZkYS00MWQxLWIyNGQtMGY4N2JhMzk5Y2E1IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTI1Njg3MTgsImV4cCI6MTcxMjY1NTExOCwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjU2ODcxOCwianRpIjoiYmU0Mzg0NzItNjQ1Yi00ZTdkLWI2YTItNGQyODdlOGYzMzBmIiwiZW1haWwiOiJqZWRlZmVsMTU1QGNlbnRlcmYuY29tIn0.C_IgEAsz3Irzi3UjTHDrNZjb9kgB3k4N-72OP-9KjYJv8yxqZX3i7m26vtaK4pPaJvGQTwcBe-1LcZUo0oilzWzWmrx47LPdYM2WtBaL4nxt1KKToFPDNXJsGTeZHA14l0LarPuxY7Yg-t4dl-ZT9J6hSs3rnawVIgmX9Lq9x-lw6-V4zxF6D31cotvKLHoAq2-SdDgZChPbwtJ9MDeV2S2cyut4tLBu0JxrjfWWTV2Aq4g9FOnFLbzBIy9YuS5W-Xjww1gfmyG0CEs5g90nO7AnCMOvLWpG5cpm8Sg6c3ZFkctXpCYcJjXXf37mEpwAeZwEVwoFCKWjk9k3hYdcGg"
-  // const uploadingImages = async () => {
-  //   const newAttachments = [];
-  //   for (let i = 0; i < convertedImages.length; i++) {
-  //     try {
-  //       const response = await axios.post(
-  //         "https://68v4n18rx1.execute-api.us-east-1.amazonaws.com/dev/docUpload",
-  //         convertedImages[i],
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${accesstoken}`,
-  //           },
-  //         }
-  //       );
-  //       newAttachments.push(response.data.link);
-  //       // setconvertedImagesString(response.data.link);
-  //       console.log(response.data.link)
-  //       setProject({ ...project, image_url: response.data.link })
-  //       dispatch(FormData({ ...project, image_url: response.data.link }))
-  //     } catch (error) {
-  //       console.error(error);
-  //       alert("Error uploading image. Please try again.");
-  //     }
-  //   }
-  //   setAttachments([...newAttachments]);
-  //   setConvertedImages([]); // Reset convertedImages after upload
-  //   setUploadingFiles([]); // Clear uploading files after upload
-  // };
 
   useEffect(() => {
     if (fileuploaded && convertedImages.length > 0) {
@@ -290,6 +279,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
               onChange={handleFileChange}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              {contextHolder}
             </Upload>
           </Form.Item>
 

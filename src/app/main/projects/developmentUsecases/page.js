@@ -93,7 +93,7 @@ export default function Page() {
             return (
               <div
                 key={index}
-                className="bg-white w-64 flex flex-col px-3 py-3 items-center justify-center"
+                className="bg-white min-w-80 flex  flex-col px-3 py-3 items-center justify-center"
               >
                 <div className="pb-3  flex flex-row  justify-center">
                   <p className="RequirementText">{stage}</p>
@@ -110,9 +110,9 @@ export default function Page() {
                           <p className="UseCaseTxt">{usecase.usecase_name}</p>
                           <div className="flex flex-row justify-start items-center w-[100%] gap-2">
                             <div className="w-[100%]">
-                              <div className="flex flex-row justify-between">
+                              <div className="flex flex-row ">
                                 <p className="AssignedColTxtUsecaseComp">
-                                  Assigned to
+                                  Assigned to :
                                 </p>
                                 <p className="NameProfileColUsecaseComp ">
                                   {usecase.assignee_name}
