@@ -1,4 +1,3 @@
-
 // import axios from 'axios';
 // import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
 
@@ -38,7 +37,6 @@
 
 //         fetchData();
 //     }, []);
-
 
 //     const ChartData = [
 //         {
@@ -153,41 +151,86 @@
 // };
 
 // export default StackedBarChart;
-import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import axios from "axios";
 
 const StackedBarChart = () => {
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('/api/resources_task_status');
-                console.log(response) // Replace with your API endpoint
-                setData(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+  useEffect(() => {
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await axios.get(`api/resources_task_status`);
+    //         console.log(response) // Replace with your API endpoint
+    //         setData(response.data);
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
 
-        fetchData();
-    }, []);
+    // fetchData();
 
-    return (
-        <ResponsiveContainer width="100%" height={400}>
-            <BarChart width={500} height={300} data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="resource_name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="completed_tasks" barSize={40} stackId="a" fill="#006D75" />
-                <Bar dataKey="inprogress_tasks" barSize={40} stackId="a" fill="#13C2C2" />
-                <Bar dataKey="pending_tasks" barSize={40} stackId="a" fill="#87E8DE" />
-            </BarChart>
-        </ResponsiveContainer>
-    );
+    const axios = require("axios");
+
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/resources_task_status",
+      headers: {
+        Accept: "application/json",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  return (
+    <ResponsiveContainer width="100%" height={400}>
+      <BarChart
+        width={500}
+        height={300}
+        data={data}
+        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="resource_name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar
+          dataKey="completed_tasks"
+          barSize={40}
+          stackId="a"
+          fill="#006D75"
+        />
+        <Bar
+          dataKey="inprogress_tasks"
+          barSize={40}
+          stackId="a"
+          fill="#13C2C2"
+        />
+        <Bar dataKey="pending_tasks" barSize={40} stackId="a" fill="#87E8DE" />
+      </BarChart>
+    </ResponsiveContainer>
+  );
 };
 
 export default StackedBarChart;

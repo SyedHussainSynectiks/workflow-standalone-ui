@@ -27,7 +27,7 @@ const Resources = () => {
         const fetchData = async () => {
             try {
                 const response = await api.get('/projects_resource_overview');
-                console.log(response.data);
+                // console.log(response.data);
                 setData(response.data);
                 setFilteredData(response.data);
             } catch (error) {

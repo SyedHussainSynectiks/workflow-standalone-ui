@@ -46,7 +46,7 @@ const validateMessages = {
 const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
   const [imageBase64, setImageBase64] = useState();
   const [api, contextHolder] = notification.useNotification();
- 
+
 
   const openNotification = (placement, type, message) => {
     api[type]({
@@ -54,6 +54,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
       placement: placement,
     });
   };
+
 
 
 
@@ -243,7 +244,7 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
                 id="projectStartDate"
                 placeholder="Start Date"
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200  px-1 py-1 h-8 w-[184px] m-1"
-                value={project.startDate}
+                // value={project.startDate}
                 onChange={handleStartDateChange}
                 disabledDate={disabledDate}
               // value={project.startDate}
@@ -252,7 +253,6 @@ const AddNewProjectForm = ({ receiveFormDataFromChild }) => {
               <DatePicker
                 id="projectEndDate"
                 placeholder="End Date"
-                value={project.endDate}
                 className="text-slate-500 font-sans text-sm font-normal not-italic leading-6 pb-1 self-stretch items-center flex-1 border rounded-sm border-slate-200shadow px-1 py-1 h-8 w-[184px] m-1"
                 disabledDate={disabledEndDate}
                 onChange={handleEndDateChange}
