@@ -114,9 +114,9 @@ const Login = () => {
                   <input type="checkbox" /> <span> Remember me</span>
                 </div>
 
-                <Link href="/account/password/reset" className="text-blue-500">
+                {/* <Link href="/account/password/reset" className="text-blue-500">
                   Forgot your Password?
-                </Link>
+                </Link> */}
               </div>
 
               <div className="mt-8 flex flex-col gap-2 items-center">
@@ -128,12 +128,12 @@ const Login = () => {
                 /> */}
                 submit
                 </Link>
-                <p>
+                {/* <p>
                   Need an account?{" "}
                   <span className="text-blue-500">
                     <Link href="/account/emailsignup">Create one</Link>
                   </span>
-                </p>
+                </p> */}
               </div>
             </div>
           </form>
