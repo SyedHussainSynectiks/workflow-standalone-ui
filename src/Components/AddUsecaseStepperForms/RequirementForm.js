@@ -477,8 +477,8 @@ const RequirementForm = (stepperState) => {
           const updatedDocs = [...currentTask.docs];
 
           updatedDocs.push({
-            doc_name: DocumentAssign.doc_name,
-            doc_url: convertedImagesString,
+            doc_name: response.data.doc_name,
+            doc_url: response.data.doc_url,
             type: "png",
           });
 
