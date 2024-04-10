@@ -141,17 +141,19 @@ const AssetView = () => {
                   >
                     {key}
                   </button>
-                  {/* <span
+                  <span
                     className={`${
                         data[key].status === "inprogress"
                           ? "bg-[#ffbf3f88] px-2 py-1 rounded"
                           : data[key].status === "pending"
                           ? "bg-gray-400 px-2 py-1 rounded" // Change to your desired color for pending status
+                          : data[key].status === "unassigned"
+                          ? "bg-[#ffbf3f88] px-2 py-1 rounded" // Change to your desired color for pending status
                           : "bg-lime-300 px-2 py-1 rounded" // Default color for complete status
                       }`}
                   >
                     {data[key].status}
-                  </span> */}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center gap-2">
                   <p className="text-gray-400">Assigned Date:</p>

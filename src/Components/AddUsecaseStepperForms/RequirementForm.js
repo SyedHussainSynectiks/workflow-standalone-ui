@@ -305,6 +305,7 @@ const RequirementForm = (stepperState) => {
 
   const inputLink = (e) => {
     setLink(e.target.value);
+    console.log("link", e.target.value);
   };
 
   const handleSubmit = async () => {
@@ -477,8 +478,8 @@ const RequirementForm = (stepperState) => {
           const updatedDocs = [...currentTask.docs];
 
           updatedDocs.push({
-            doc_name: DocumentAssign.doc_name,
-            doc_url: convertedImagesString,
+            doc_name: response.data.doc_name,
+            doc_url: response.data.doc_url,
             type: "png",
           });
 
@@ -528,7 +529,7 @@ const RequirementForm = (stepperState) => {
           // console.log("Docs", currentTask)
           updatedDocs.push({
             doc_name: name,
-            doc_url: convertedLinkString,
+            doc_url: response.data.doc_url,
             type: "url",
           }),
             console.log("Docs", currentTask);

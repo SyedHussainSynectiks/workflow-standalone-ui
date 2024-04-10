@@ -6,7 +6,10 @@ import { AddResourcePool2 } from "@/Components/AddResourcePool/AddresoucrePool2"
 import AddNewProjectForm from "@/Components/AddNewProjectForm/AddNewProjectForm";
 import AddEmployReview from "@/Components/AddEmployeeReview/AddEmployReview";
 import { useDispatch, useSelector } from "react-redux";
-import { updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
+import {
+  updateId,
+  updateProjectName,
+} from "@/Context/AddNewProjectSlice/addProjectSlice";
 import { addStepperValue } from "@/Context/AddNewProjectSlice/addProjectSlice";
 import Link from "next/link";
 
@@ -29,7 +32,9 @@ const steps = [
 
 export default function page({ formNext }) {
   const projectData = useSelector((state) => state.addProject.Projectform);
-  const EditButton = useSelector((state) => state.addProject.ProjectStepperValue)
+  const EditButton = useSelector(
+    (state) => state.addProject.ProjectStepperValue
+  );
   const projectId = useSelector((state) => state.addProject.id);
 
   console.log("projectId : ", projectId);
@@ -38,6 +43,30 @@ export default function page({ formNext }) {
 
   const [toggleValue, setToggleValue] = useState(false);
   const [formData, setFormData] = useState({});
+  const [fetchProject, setfetchProject] = useState();
+  const axios = require("axios");
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project",
+      headers: {
+        Accept: "application/json",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        setfetchProject(response.data.projects);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  console.log("Projectfetch", fetchProject);
 
   // Function to receive the form data from the child component
   const receiveFormDataFromChild = (data) => {
@@ -102,39 +131,53 @@ export default function page({ formNext }) {
       );
       return;
     }
+
+    let projectExists = false;
+
+    for (let i = 0; i < fetchProject.length; i++) {
+      if (fetchProject[i].name === projectData.ProjectName) {
+        projectExists = true;
+        break;
+      }
+    }
+    if (projectExists) {
+      message.error("ProjectName Already exists");
+      return;
+    }
+
     if (EditButton === "0") {
       setCurrent(current + 2);
     } else {
       setCurrent(current + 1);
     }
 
-    dispatch(addStepperValue(""))
+    dispatch(addStepperValue(""));
   };
 
-  console.log("editbutton ", EditButton)
+  console.log("editbutton ", EditButton);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (EditButton === "0") {
       setCurrent(current - 2); // Dispatch action to update stepper's current step
     } else if (EditButton === "1") {
-      setCurrent(current - 1)
+      setCurrent(current - 1);
     }
   }, [EditButton]);
 
-
-  const DefaultToggleValue = useSelector((state) => state.addResources.ProjectStepperValue)
-  console.log("pageToggle", DefaultToggleValue)
+  const DefaultToggleValue = useSelector(
+    (state) => state.addResources.ProjectStepperValue
+  );
+  console.log("pageToggle", DefaultToggleValue);
 
   return (
     <>
-
       <div className="w-auto py-2 px-1 mb-2 bg-white">
         <Breadcrumb
           className="bg-white p-2"
           items={[
             {
-              title: <a href="/main"> Home</a>
+              title: <a href="/main"> Home</a>,
             },
             {
               title: <a href="/main/projects">Projects Overview</a>,
@@ -150,7 +193,6 @@ export default function page({ formNext }) {
           Form pages are used to collect or verify information to users, and
           basic forms are common in scenarios where there are fewer data items.
         </p>
-        {toggleValue.toString()}
       </div>
       <div className="w-auto py-1 bg-white m-5">
         <Steps current={current} className="px-[10rem] py-3 p-5">
@@ -158,9 +200,7 @@ export default function page({ formNext }) {
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
-        <div style={{ marginTop: 24 }}>
-          {steps[current].content}
-        </div>
+        <div style={{ marginTop: 24 }}>{steps[current].content}</div>
 
         <div style={{ marginTop: 24 }}>
           {current < steps.length - 1 && (
@@ -177,4 +217,3 @@ export default function page({ formNext }) {
     </>
   );
 }
-
