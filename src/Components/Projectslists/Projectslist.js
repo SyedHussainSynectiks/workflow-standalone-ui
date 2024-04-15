@@ -6,10 +6,17 @@ import { InProgress, Completed, Unassigned } from '@/Components/Badges'
 import api from '@/api';
 import { notosans } from '@/font/font';
 import dayjs from 'dayjs';
+import getAccessTokenFromCookie from '@/utils/getAccessToken';
+const accessToken = getAccessTokenFromCookie();
 const getData = async () => {
     try {
         // const response = await axios.get('https://jp2malu3r8.execute-api.us-east-1.amazonaws.com/dev/projects_overview?');
-        const response = await api.get('/projects_overview');
+        const response = await api.get('/projects_overview',
+        {headers: {
+            'Accept': 'application/json',
+            "Content-Type" : "application/json", 
+            Authorization: `Bearer ${accessToken}`,
+          }});
         console.log(response.data);
         return response.data;
     } catch (error) {

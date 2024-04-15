@@ -1,4 +1,5 @@
 "use client";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 import { FileOutlined } from "@ant-design/icons";
 import { Collapse } from "antd";
 import axios from "axios";
@@ -14,12 +15,17 @@ const AssetView = () => {
   const [error, setError] = useState(null);
   const addUsecaseId = useSelector((state) => state.addUsecase.useCaseId);
   const projectId = useSelector((state) => state.addProject.id);
+  const accessToken = getAccessTokenFromCookie();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${addUsecaseId}/asset`
+          `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase/${addUsecaseId}/asset`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
         );
         console.log("AssertView", response.data);
         setData(response.data);

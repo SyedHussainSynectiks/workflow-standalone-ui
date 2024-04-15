@@ -19,7 +19,7 @@
 //         const fetchData = async () => {
 //           try {
 //             const response = await axios.get(
-//               `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
+//               `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase/${UsecaseId}`,
 //               {
 //                 headers: {
 //                   Accept: "application/json",
@@ -112,6 +112,7 @@ import "./stepper.css";
 import { TiTick } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import RequirementForm from "@/Components/AddUsecaseStepperForms/RequirementForm";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 
 
 const SubStagesStepper = () => {
@@ -122,16 +123,18 @@ const SubStagesStepper = () => {
   const UsecaseId = setUsecaseId.useCaseId;
   const [requireData, setRequireData] = useState();
   const [activeStepTitle, setActiveStepTitle] = useState("");
+  const accessToken = getAccessTokenFromCookie();
 
   useEffect(() => {
     const axios = require("axios");
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
+          `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase/${UsecaseId}`,
           {
             headers: {
               Accept: "application/json",
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );

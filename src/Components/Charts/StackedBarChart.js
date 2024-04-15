@@ -163,10 +163,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import axios from "axios";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 
 const StackedBarChart = () => {
   const [data, setData] = useState([]);
-
+  const accessToken = getAccessTokenFromCookie();
   useEffect(() => {
     // const fetchData = async () => {
     //     try {
@@ -181,13 +182,15 @@ const StackedBarChart = () => {
     // fetchData();
 
     const axios = require("axios");
+    
 
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/resources_task_status",
+      url: "https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/resources_task_status",
       headers: {
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     };
 

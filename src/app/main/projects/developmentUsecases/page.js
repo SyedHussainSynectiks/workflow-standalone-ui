@@ -5,11 +5,16 @@ import Image from "next/image";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { addUseCAseName, addUseCaseName, addUsecaseId } from "@/Context/useCaseSlice/useCaseSlice";
+import {
+  addUseCAseName,
+  addUseCaseName,
+  addUsecaseId,
+} from "@/Context/useCaseSlice/useCaseSlice";
 
 import Link from "next/link";
-import { Breadcrumb, } from "antd";
-import { SearchOutlined } from "@ant-design/icons"
+import { Breadcrumb } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 
 export default function Page() {
   const router = useRouter();
@@ -21,16 +26,21 @@ export default function Page() {
   const workFlowId = setWorkFlowIds.id[0].workFlowId;
   const projectName = useSelector((state) => state.addProject.ProjectName);
 
+  console.log(projectId);
+  console.log(workFlowId);
+  const dispatch = useDispatch();
+  const accessToken = getAccessTokenFromCookie();
 
-  console.log(projectId)
-  console.log(workFlowId)
-  const dispatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase",
+          "https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase",
+
           {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
             params: {
               project_id: `${projectId}`,
               workflow_id: `${workFlowId}`,
@@ -49,9 +59,8 @@ export default function Page() {
   }, []);
 
   const dispatchData = (data) => {
-    dispatch(addUsecaseId(data))
-  }
-
+    dispatch(addUsecaseId(data));
+  };
 
   return (
     <>
@@ -60,7 +69,7 @@ export default function Page() {
           className="bg-white p-2"
           items={[
             {
-              title: <a href="/main"> Project</a>
+              title: <a href="/main"> Project</a>,
             },
             {
               title: <a href="/main/projects/workflowlist">{projectName}</a>,
@@ -74,10 +83,17 @@ export default function Page() {
           <p className="UseCasesTxt">UseCases</p>
           <div className="BtnSearchFlexLeft">
             <div className="SearchTxtSearchBarFlex">
-              <input className="SearchTxt ml-2 border border-neutral-500" type="text" placeholder="Search text" />
+              <input
+                className="SearchTxt ml-2 border border-neutral-500"
+                type="text"
+                placeholder="Search text"
+              />
               <span>
-                <button className="UseCaseBtnClr" style={{ backgroundColor: '#2563EB' }}>
-                  <SearchOutlined style={{ color: 'white' }} />
+                <button
+                  className="UseCaseBtnClr"
+                  style={{ backgroundColor: "#2563EB" }}
+                >
+                  <SearchOutlined style={{ color: "white" }} />
                 </button>
               </span>
             </div>
@@ -100,45 +116,55 @@ export default function Page() {
                 </div>
                 {stageUsecases.length > 0 ? (
                   <div className="w-[100%]">
-                    {stageUsecases.map((usecase, index) => ( //assignee_id
-                      <Link href="/main/projects/usecaseFormStepper" onClick={() => { dispatchData(usecase.usecase_id); dispatch(addUseCaseName(usecase.usecase_name)) }}>
-                        <div
-                          key={index}
-                          className=" w-[100%] rounded-lg p-3 leading-4 gap-3"
-
+                    {stageUsecases.map(
+                      (
+                        usecase,
+                        index //assignee_id
+                      ) => (
+                        <Link
+                          href="/main/projects/usecaseFormStepper"
+                          onClick={() => {
+                            dispatchData(usecase.usecase_id);
+                            dispatch(addUseCaseName(usecase.usecase_name));
+                          }}
                         >
-                          <p className="UseCaseTxt">{usecase.usecase_name}</p>
-                          <div className="flex flex-row justify-start items-center w-[100%] gap-2">
-                            <div className="w-[100%]">
-                              <div className="flex flex-row ">
-                                <p className="AssignedColTxtUsecaseComp">
-                                  Assigned to :
-                                </p>
-                                <p className="NameProfileColUsecaseComp ">
-                                  {usecase.assignee_name}
-                                </p>
-                              </div>
-                              <div className="flex justify-between">
-                                <p className="AssignedColTxtUsecaseComp">
-                                  No. of Resources:
-                                </p>
-                                <p className="NameProfileColUsecaseComp">
-                                  {usecase.total_resources}
-                                </p>
-                              </div>
-                              <div className="flex">
-                                <p className="AssignedColTxtUsecaseComp">
-                                  Dates:
-                                </p>
-                                <p className="NameProfileColUsecaseCompDate">
-                                  {usecase.end_date}
-                                </p>
+                          <div
+                            key={index}
+                            className=" w-[100%] rounded-lg p-3 leading-4 gap-3"
+                          >
+                            <p className="UseCaseTxt">{usecase.usecase_name}</p>
+                            <div className="flex flex-row justify-start items-center w-[100%] gap-2">
+                              <div className="w-[100%]">
+                                <div className="flex flex-row ">
+                                  <p className="AssignedColTxtUsecaseComp">
+                                    Assigned to :
+                                  </p>
+                                  <p className="NameProfileColUsecaseComp ">
+                                    {usecase.assignee_name}
+                                  </p>
+                                </div>
+                                <div className="flex justify-between">
+                                  <p className="AssignedColTxtUsecaseComp">
+                                    No. of Resources:
+                                  </p>
+                                  <p className="NameProfileColUsecaseComp">
+                                    {usecase.total_resources}
+                                  </p>
+                                </div>
+                                <div className="flex">
+                                  <p className="AssignedColTxtUsecaseComp">
+                                    Dates:
+                                  </p>
+                                  <p className="NameProfileColUsecaseCompDate">
+                                    {usecase.end_date}
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      )
+                    )}
                   </div>
                 ) : (
                   <p></p>

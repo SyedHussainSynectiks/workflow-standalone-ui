@@ -3,13 +3,14 @@ import { Button, Table } from "antd"
 import { CaretRightOutlined } from "@ant-design/icons"
 import axios from 'axios'
 import { useSelector } from "react-redux"
+import getAccessTokenFromCookie from '@/utils/getAccessToken'
 const Planning = () => {
   const setUsecaseId = useSelector((state) => state.addUsecase);
   const UsecaseId = setUsecaseId.useCaseId;
   // const [open, setOpen] = useState(false)
   const [reciveddata, setRecivedData] = useState([]);
   const [open, setOpen] = useState(Array(reciveddata.length).fill(false));
-
+  const accessToken = getAccessTokenFromCookie();
   const toggleRequirement = (index) => {
     const newOpenState = [...open];
     newOpenState[index] = !newOpenState[index];
@@ -20,9 +21,10 @@ const Planning = () => {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}/planning`,
+      url: `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase/${UsecaseId}/planning`,
       headers: {
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       }
     };
 

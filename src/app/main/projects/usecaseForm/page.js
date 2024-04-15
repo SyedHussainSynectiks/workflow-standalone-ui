@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from 'next/navigation'
 // import { useRouter } from 'next/router';
 import moment from "moment";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -87,7 +88,7 @@ const newform = () => {
       end_date: moment(dateString).format("YYYY-MM-DD"),
     });
   };
-
+  const accessToken = getAccessTokenFromCookie();
   const axios = require("axios");
   const handleSubmit = async () => {
     let data = JSON.stringify({
@@ -106,10 +107,11 @@ const newform = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase",
+      url: "https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       data: data,
     };
@@ -130,7 +132,11 @@ const newform = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
+          `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/project/${projectId}/team`,{
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
         );
         const responseData = response.data;
         console.log("responsedata ", responseData);

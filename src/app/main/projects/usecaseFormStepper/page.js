@@ -14,6 +14,7 @@ import { Tabs } from "antd";
 const Stepper = () => {
   const projectName = useSelector((state) => state.addProject.ProjectName);
   const UseCaseNames = useSelector((state) => state.addUsecase.UseCaseNames);
+  const [activeTab, setActiveTab] = useState("1"); 
   console.log(UseCaseNames)
   const items = [
     {
@@ -37,7 +38,9 @@ const Stepper = () => {
       children: <Planning />,
     },
   ];
-
+  const handleTabChange = (key) => {
+    setActiveTab(key); // Update the active tab state when tab is changed
+  };
   return (
     <>
       <div className=" px-2 ">
@@ -75,7 +78,7 @@ const Stepper = () => {
           </p>
 
           <div className="mt-3   ">
-            <Tabs defaultActiveKey="1" items={items} />
+            <Tabs defaultActiveKey="1" activeKey={activeTab} onChange={handleTabChange} items={items} />
           </div>
         </div>
       </div>

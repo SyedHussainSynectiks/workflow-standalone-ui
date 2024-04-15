@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmail } from "@/Context/Slices/resetPasswordSlice";
 import Link from "next/link";
-
+import { Button } from "antd"
 const Reset = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -93,15 +93,15 @@ const Reset = () => {
             <div className="flex new justify-between mt-5"></div>
             <div className="mt-8 flex flex-col gap-2 items-center">
               <div className="w-[100%]">
-                <button
+                <Button
                   type="button"
                   value="Send otp"
                   disabled={isButtonDisabled}
                   className={` ${
                     isButtonDisabled
                       ? "bg-slate-400"
-                      : "cursor-pointer hover:bg-blue-600 transition-all"
-                  } w-[380px] bg-blue-500 text-white px-3 py-2 rounded`}
+                      : "cursor-pointer hover:bg-blue-600 transition-all "
+                  } w-[380px] bg-blue-500 text-white px-3 py rounded`}
                   onClick={async () => {
                     console.log(reset);
                     dispatch(setEmail(email));
@@ -122,7 +122,7 @@ const Reset = () => {
                   }}
                 >
                   Send otp
-                </button>
+                </Button>
               </div>
             </div>
           </form>

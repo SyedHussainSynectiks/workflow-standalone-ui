@@ -1,5 +1,6 @@
 "use client";
 import api from "@/api";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -13,7 +14,7 @@ import {
   ResponsiveContainer,
   Rectangle,
 } from "recharts";
-
+const accessToken = getAccessTokenFromCookie();
 const Barchart = () => {
     const  [data, setData] = useState([])
   const axios = require("axios");
@@ -21,9 +22,10 @@ useEffect(()=>{
   let config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/projects_usecase_overview",
+    url: "https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/projects_usecase_overview",
     headers: {
       Accept: "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
   };
 

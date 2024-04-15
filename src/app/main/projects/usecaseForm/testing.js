@@ -4,6 +4,7 @@ import { Input, Button, notification } from "antd";
 import { DeleteFilled, SaveOutlined, CloseCircleFilled } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 
 const Page = () => {
   const [workFlowName, setWorkFlowName] = useState("");
@@ -12,6 +13,7 @@ const Page = () => {
   const ProjectId = setprojectIds.id[0].prjectId;
   const [api, contextHolder] = notification.useNotification();
   console.log(ProjectId)
+  const accessToken = getAccessTokenFromCookie();
   const postWorkflow = async () => {
     try {
       const data = {
@@ -27,12 +29,13 @@ const Page = () => {
       console.log(data)
 
       const response = await axios.post(
-        "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/workflow",
+        "https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/workflow",
         data,
         {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
@@ -63,9 +66,10 @@ const id = "  skjdf"
 let config = {
   method: 'get',
   maxBodyLength: Infinity,
-  url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${id}`,
+  url: `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase/${id}`,
   headers: { 
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    Authorization: `Bearer ${accessToken}`,
   }
 };
 

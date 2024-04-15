@@ -16,6 +16,7 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
 import user from "../../../../../public/assets/user.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 
 const Resourcepool = () => {
   const axios = require("axios");
@@ -32,14 +33,17 @@ const Resourcepool = () => {
     // console.log(ProjectId)
   };
   const projectId = useSelector((state) => state.addProject.id);
+  const accessToken = getAccessTokenFromCookie();
+
   console.log(projectId);
   useEffect(() => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/workflow`,
+      url: `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/project/${projectId}/workflow`,
       headers: {
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     };
 
@@ -82,7 +86,11 @@ const Resourcepool = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
+          `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/project/${projectId}/team`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
         );
         const responseData = response.data;
         console.log("responsedata ", responseData);

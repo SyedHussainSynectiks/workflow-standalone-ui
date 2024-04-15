@@ -10,6 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import user from "../../../public/assets/user.png"
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 // import { axios } from 'axios';
 
 const UseCasesOverView = () => {
@@ -22,6 +23,7 @@ const UseCasesOverView = () => {
   const [requireData, setRequireData] = useState();
   const setUsecaseId = useSelector((state) => state.addUsecase);
   const UsecaseId = setUsecaseId.useCaseId;
+  const accessToken = getAccessTokenFromCookie();
 
   console.log(UsecaseId);
   useEffect(() => {
@@ -29,10 +31,11 @@ const UseCasesOverView = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}`,
+          `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase/${UsecaseId}`,
           {
             headers: {
               Accept: "application/json",
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );

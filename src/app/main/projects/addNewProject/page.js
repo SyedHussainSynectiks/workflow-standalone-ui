@@ -12,6 +12,7 @@ import {
 } from "@/Context/AddNewProjectSlice/addProjectSlice";
 import { addStepperValue } from "@/Context/AddNewProjectSlice/addProjectSlice";
 import Link from "next/link";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 
 const { Step } = Steps;
 
@@ -44,14 +45,16 @@ export default function page({ formNext }) {
   const [toggleValue, setToggleValue] = useState(false);
   const [formData, setFormData] = useState({});
   const [fetchProject, setfetchProject] = useState();
+  const accessToken = getAccessTokenFromCookie();
   const axios = require("axios");
   useEffect(() => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project",
+      url: "https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/project",
       headers: {
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     };
 

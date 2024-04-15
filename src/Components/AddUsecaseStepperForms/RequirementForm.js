@@ -74,6 +74,7 @@ const RequirementForm = (stepperState) => {
   const [teamData, setTeamData] = useState([]);
   const setprojectIds = useSelector((state) => state.addResources);
   const projectId = setprojectIds.id[0].prjectId;
+  const accessToken = getAccessTokenFromCookie();
   console.log(UsecaseId);
   useEffect(() => {
     const axios = require("axios");
@@ -81,9 +82,10 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/usecase/${UsecaseId}/task`,
+      url: `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/usecase/${UsecaseId}/task`,
       headers: {
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     };
     setLoading(true); // Set loading state to true when fetching data
@@ -134,8 +136,12 @@ const RequirementForm = (stepperState) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${projectId}/team`
-        );
+          `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/project/${projectId}/team`
+          , {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
         const responseData = response.data;
         console.log("responsedata ", responseData);
         console.log(JSON.stringify(responseData));
@@ -247,10 +253,7 @@ const RequirementForm = (stepperState) => {
     console.log("NEWcONVERiMAGE",newConvertedImages,newConvertedImages[0].data)
   };
   // const accessToken = getAccessTokenFromCookie();
-  const accessToken =
-    "eyJraWQiOiJ0WExXYzd1ZGhyaVwvVEhLYldwK3F2bEw4SGtJTXQwZVBhUmlzQXhCd0lwRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNDA4NjQ2OC1kMDUxLTcwMmQtOTY2Mi1hNWRmNTQ5ZjRlMzQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSlA1QjRXWGJIIiwiY3VzdG9tOnVzZXJfaWQiOiIyNGUyOTU0Yi05MzQzLTQ3MWQtODI2Yi0wMDAzYTBlNzZiYjEiLCJjdXN0b206b3JnX2lkIjoiNWM3NWE0MDQtMTJhOC00Yzc5LTkwZDgtNmIzMzgyNTE1NDlkIiwiY29nbml0bzp1c2VybmFtZSI6IjA0MDg2NDY4LWQwNTEtNzAyZC05NjYyLWE1ZGY1NDlmNGUzNCIsIm9yaWdpbl9qdGkiOiJjZmZlMzI3MC00ZWM3LTQwYzYtYjQzMC02NTk3OTA0MzNjODUiLCJhdWQiOiI3OXFhMDR1bXY1bzFoc2tvajVmcXRkMnM4cCIsImV2ZW50X2lkIjoiNzYyYjk3M2MtOGZkYS00MWQxLWIyNGQtMGY4N2JhMzk5Y2E1IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MTI1Njg3MTgsImV4cCI6MTcxMjY1NTExOCwiY3VzdG9tOnJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjU2ODcxOCwianRpIjoiYmU0Mzg0NzItNjQ1Yi00ZTdkLWI2YTItNGQyODdlOGYzMzBmIiwiZW1haWwiOiJqZWRlZmVsMTU1QGNlbnRlcmYuY29tIn0.C_IgEAsz3Irzi3UjTHDrNZjb9kgB3k4N-72OP-9KjYJv8yxqZX3i7m26vtaK4pPaJvGQTwcBe-1LcZUo0oilzWzWmrx47LPdYM2WtBaL4nxt1KKToFPDNXJsGTeZHA14l0LarPuxY7Yg-t4dl-ZT9J6hSs3rnawVIgmX9Lq9x-lw6-V4zxF6D31cotvKLHoAq2-SdDgZChPbwtJ9MDeV2S2cyut4tLBu0JxrjfWWTV2Aq4g9FOnFLbzBIy9YuS5W-Xjww1gfmyG0CEs5g90nO7AnCMOvLWpG5cpm8Sg6c3ZFkctXpCYcJjXXf37mEpwAeZwEVwoFCKWjk9k3hYdcGg";
-
-
+  
   useEffect(() => {
     if (fileuploaded && convertedImages.length > 0) {
       setfileuploaded(false);
@@ -461,10 +464,11 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/doc`,
+      url: `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/task/${TaskId}/doc`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       data: data,
     };
@@ -510,10 +514,11 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/doc`,
+      url: `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/task/${TaskId}/doc`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       data: data,
     };
@@ -695,9 +700,10 @@ const RequirementForm = (stepperState) => {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/task/${TaskId}/assign/${id}`,
+      url: `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/task/${TaskId}/assign/${id}`,
       headers: {
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     };
 

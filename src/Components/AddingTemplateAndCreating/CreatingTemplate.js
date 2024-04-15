@@ -12,6 +12,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useSelector } from "react-redux";
 import api from "@/api/index"
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 
 const CreatingTemplate = () => {
   const [workFlowName, setWorkFlowName] = useState("");
@@ -29,7 +30,7 @@ const CreatingTemplate = () => {
 
   const router = useRouter();
   console.log(ProjectId);
-
+  const accessToken = getAccessTokenFromCookie();
   const postWorkflow = async () => {
     const axios = require("axios");
     let data = JSON.stringify({
@@ -46,10 +47,11 @@ const CreatingTemplate = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/workflow",
+      url: "https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/workflow",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       data: data,
     };

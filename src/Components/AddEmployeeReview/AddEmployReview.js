@@ -11,6 +11,7 @@ import Image from "next/image";
 import user from "../../../public/assets/user.png"
 import { useRouter } from "next/navigation";
 import {addStepperValue, removeFormData, resourcePoolID, updateId, updateProjectName } from "@/Context/AddNewProjectSlice/addProjectSlice";
+import getAccessTokenFromCookie from "@/utils/getAccessToken";
 
 const { Search } = Input;
 
@@ -52,6 +53,7 @@ const AddEmployReview = () => {
 
     console.log("Dispatched-ProjectID", ProjectId)
   };
+  const accessToken = getAccessTokenFromCookie();
 
 
   const Apisubmit = async (projectData) => {
@@ -71,10 +73,11 @@ const AddEmployReview = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project",
+      url: "https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/project",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       data: data,
     };
@@ -135,10 +138,11 @@ const AddEmployReview = () => {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: `https://m41stqhs8f.execute-api.us-east-1.amazonaws.com/dev/project/${id}/team`,
+      url: `https://sux5ckl6l6.execute-api.us-east-1.amazonaws.com/stage/project/${id}/team`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       data: postData,
     };
